@@ -1,0 +1,40 @@
+must replace:
+
+ - higher resolutions
+ - atlas						*
+ - 2d prites with 3d models
+ - better effects
+ 
+ 
+ 
+			TODO HERE? where to set stretch to whole window SetRenderTarget of device? or present ?Present
+				or CreateViewport :
+/*
+			// Create a viewpoint
+			memset(&Viewdata,0,sizeof(Viewdata));
+			Viewdata.dwSize = sizeof(Viewdata);
+			Viewdata.dwWidth = ScreenWidth;
+			Viewdata.dwHeight = ScreenHeight;
+			Viewdata.dvClipX = -1.0f;
+			Viewdata.dvClipWidth = 2.0f;
+			Viewdata.dvClipY = 1.0f;
+			Viewdata.dvClipHeight = 2.0f;
+			Viewdata.dvMinZ = -10.0f;
+			Viewdata.dvMaxZ = 25.0f;
+
+			// Create the viewport
+			if (FAILED(Direct3D->CreateViewport(&Viewport,NULL))) {
+				ReportError("Failed to create a viewport");
+			};
+			if (FAILED(D3DDevice->AddViewport(Viewport))) {
+				ReportError("Failed to add a viewport");
+			};
+			if (FAILED(Viewport->SetViewport2(&Viewdata))) {
+				ReportError("Failed to set Viewport data");
+			};
+
+			// This isn't strictly necessary - but I've found it can crash if I
+			// don't put this here. Odd.
+			D3DDevice->SetCurrentViewport(Viewport);
+*/
+ 

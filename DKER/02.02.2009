@@ -1,0 +1,415 @@
+Line Counter - Version 1.01 (build 4.3)
+Counts the code and comment lines in C/C++/C# source files.
+Copyright (c) 2003-2004, Noel Danjou <webmaster@noeld.com>.
+
+> Process files in sub-directories
+
+
+Processing path: E:\Projects\HPS\trunk\Natural Born Keeper\DKER
+
+..
+
+Processing path: E:\Projects\HPS\trunk\Natural Born Keeper\DKER\.svn
+
+
+
+Processing path: E:\Projects\HPS\trunk\Natural Born Keeper\DKER\.svn\prop-base
+
+
+
+Processing path: E:\Projects\HPS\trunk\Natural Born Keeper\DKER\.svn\props
+
+
+
+Processing path: E:\Projects\HPS\trunk\Natural Born Keeper\DKER\.svn\text-base
+
+
+
+Processing path: E:\Projects\HPS\trunk\Natural Born Keeper\DKER\.svn\tmp
+
+
+
+Processing path: E:\Projects\HPS\trunk\Natural Born Keeper\DKER\.svn\tmp\prop-base
+
+
+
+Processing path: E:\Projects\HPS\trunk\Natural Born Keeper\DKER\.svn\tmp\props
+
+
+
+Processing path: E:\Projects\HPS\trunk\Natural Born Keeper\DKER\.svn\tmp\text-base
+
+
+
+Processing path: E:\Projects\HPS\trunk\Natural Born Keeper\DKER\D3DIM_DLL_loader_dll
+
+.
+
+Processing path: E:\Projects\HPS\trunk\Natural Born Keeper\DKER\D3DIM_DLL_loader_dll\.svn
+
+
+
+Processing path: E:\Projects\HPS\trunk\Natural Born Keeper\DKER\D3DIM_DLL_loader_dll\.svn\prop-base
+
+
+
+Processing path: E:\Projects\HPS\trunk\Natural Born Keeper\DKER\D3DIM_DLL_loader_dll\.svn\props
+
+
+
+Processing path: E:\Projects\HPS\trunk\Natural Born Keeper\DKER\D3DIM_DLL_loader_dll\.svn\text-base
+
+
+
+Processing path: E:\Projects\HPS\trunk\Natural Born Keeper\DKER\D3DIM_DLL_loader_dll\.svn\tmp
+
+
+
+Processing path: E:\Projects\HPS\trunk\Natural Born Keeper\DKER\D3DIM_DLL_loader_dll\.svn\tmp\prop-base
+
+
+
+Processing path: E:\Projects\HPS\trunk\Natural Born Keeper\DKER\D3DIM_DLL_loader_dll\.svn\tmp\props
+
+
+
+Processing path: E:\Projects\HPS\trunk\Natural Born Keeper\DKER\D3DIM_DLL_loader_dll\.svn\tmp\text-base
+
+
+
+Processing path: E:\Projects\HPS\trunk\Natural Born Keeper\DKER\screens
+
+
+
+Processing path: E:\Projects\HPS\trunk\Natural Born Keeper\DKER\screens\.svn
+
+
+
+Processing path: E:\Projects\HPS\trunk\Natural Born Keeper\DKER\screens\.svn\prop-base
+
+
+
+Processing path: E:\Projects\HPS\trunk\Natural Born Keeper\DKER\screens\.svn\props
+
+
+
+Processing path: E:\Projects\HPS\trunk\Natural Born Keeper\DKER\screens\.svn\text-base
+
+
+
+Processing path: E:\Projects\HPS\trunk\Natural Born Keeper\DKER\screens\.svn\tmp
+
+
+
+Processing path: E:\Projects\HPS\trunk\Natural Born Keeper\DKER\screens\.svn\tmp\prop-base
+
+
+
+Processing path: E:\Projects\HPS\trunk\Natural Born Keeper\DKER\screens\.svn\tmp\props
+
+
+
+Processing path: E:\Projects\HPS\trunk\Natural Born Keeper\DKER\screens\.svn\tmp\text-base
+
+
+
+Processing path: E:\Projects\HPS\trunk\Natural Born Keeper\DKER\TestDLL
+
+...............
+
+Processing path: E:\Projects\HPS\trunk\Natural Born Keeper\DKER\TestDLL\.svn
+
+
+
+Processing path: E:\Projects\HPS\trunk\Natural Born Keeper\DKER\TestDLL\.svn\prop-base
+
+
+
+Processing path: E:\Projects\HPS\trunk\Natural Born Keeper\DKER\TestDLL\.svn\props
+
+
+
+Processing path: E:\Projects\HPS\trunk\Natural Born Keeper\DKER\TestDLL\.svn\text-base
+
+
+
+Processing path: E:\Projects\HPS\trunk\Natural Born Keeper\DKER\TestDLL\.svn\tmp
+
+
+
+Processing path: E:\Projects\HPS\trunk\Natural Born Keeper\DKER\TestDLL\.svn\tmp\prop-base
+
+
+
+Processing path: E:\Projects\HPS\trunk\Natural Born Keeper\DKER\TestDLL\.svn\tmp\props
+
+
+
+Processing path: E:\Projects\HPS\trunk\Natural Born Keeper\DKER\TestDLL\.svn\tmp\text-base
+
+
+
+Processing path: E:\Projects\HPS\trunk\Natural Born Keeper\DKER\TestDLL\DKER_home
+
+
+
+Processing path: E:\Projects\HPS\trunk\Natural Born Keeper\DKER\TestDLL\DKER_home\.svn
+
+
+
+Processing path: E:\Projects\HPS\trunk\Natural Born Keeper\DKER\TestDLL\DKER_home\.svn\prop-base
+
+
+
+Processing path: E:\Projects\HPS\trunk\Natural Born Keeper\DKER\TestDLL\DKER_home\.svn\props
+
+
+
+Processing path: E:\Projects\HPS\trunk\Natural Born Keeper\DKER\TestDLL\DKER_home\.svn\text-base
+
+
+
+Processing path: E:\Projects\HPS\trunk\Natural Born Keeper\DKER\TestDLL\DKER_home\.svn\tmp
+
+
+
+Processing path: E:\Projects\HPS\trunk\Natural Born Keeper\DKER\TestDLL\DKER_home\.svn\tmp\prop-base
+
+
+
+Processing path: E:\Projects\HPS\trunk\Natural Born Keeper\DKER\TestDLL\DKER_home\.svn\tmp\props
+
+
+
+Processing path: E:\Projects\HPS\trunk\Natural Born Keeper\DKER\TestDLL\DKER_home\.svn\tmp\text-base
+
+
+
+Processing path: E:\Projects\HPS\trunk\Natural Born Keeper\DKER\TestDLL\home_hook_dbg
+
+
+
+Processing path: E:\Projects\HPS\trunk\Natural Born Keeper\DKER\TestDLL\home_hook_dbg\.svn
+
+
+
+Processing path: E:\Projects\HPS\trunk\Natural Born Keeper\DKER\TestDLL\home_hook_dbg\.svn\prop-base
+
+
+
+Processing path: E:\Projects\HPS\trunk\Natural Born Keeper\DKER\TestDLL\home_hook_dbg\.svn\props
+
+
+
+Processing path: E:\Projects\HPS\trunk\Natural Born Keeper\DKER\TestDLL\home_hook_dbg\.svn\text-base
+
+
+
+Processing path: E:\Projects\HPS\trunk\Natural Born Keeper\DKER\TestDLL\home_hook_dbg\.svn\tmp
+
+
+
+Processing path: E:\Projects\HPS\trunk\Natural Born Keeper\DKER\TestDLL\home_hook_dbg\.svn\tmp\prop-base
+
+
+
+Processing path: E:\Projects\HPS\trunk\Natural Born Keeper\DKER\TestDLL\home_hook_dbg\.svn\tmp\props
+
+
+
+Processing path: E:\Projects\HPS\trunk\Natural Born Keeper\DKER\TestDLL\home_hook_dbg\.svn\tmp\text-base
+
+
+
+Processing path: E:\Projects\HPS\trunk\Natural Born Keeper\DKER\TestDLL\hook_dll_dbg
+
+
+
+Processing path: E:\Projects\HPS\trunk\Natural Born Keeper\DKER\TestDLL\hook_dll_dbg\.svn
+
+
+
+Processing path: E:\Projects\HPS\trunk\Natural Born Keeper\DKER\TestDLL\hook_dll_dbg\.svn\prop-base
+
+
+
+Processing path: E:\Projects\HPS\trunk\Natural Born Keeper\DKER\TestDLL\hook_dll_dbg\.svn\props
+
+
+
+Processing path: E:\Projects\HPS\trunk\Natural Born Keeper\DKER\TestDLL\hook_dll_dbg\.svn\text-base
+
+
+
+Processing path: E:\Projects\HPS\trunk\Natural Born Keeper\DKER\TestDLL\hook_dll_dbg\.svn\tmp
+
+
+
+Processing path: E:\Projects\HPS\trunk\Natural Born Keeper\DKER\TestDLL\hook_dll_dbg\.svn\tmp\prop-base
+
+
+
+Processing path: E:\Projects\HPS\trunk\Natural Born Keeper\DKER\TestDLL\hook_dll_dbg\.svn\tmp\props
+
+
+
+Processing path: E:\Projects\HPS\trunk\Natural Born Keeper\DKER\TestDLL\hook_dll_dbg\.svn\tmp\text-base
+
+
+
+Processing path: E:\Projects\HPS\trunk\Natural Born Keeper\DKER\TestDLL\src
+
+..........
+
+Processing path: E:\Projects\HPS\trunk\Natural Born Keeper\DKER\TestDLL\src\.svn
+
+
+
+Processing path: E:\Projects\HPS\trunk\Natural Born Keeper\DKER\TestDLL\src\.svn\prop-base
+
+
+
+Processing path: E:\Projects\HPS\trunk\Natural Born Keeper\DKER\TestDLL\src\.svn\props
+
+
+
+Processing path: E:\Projects\HPS\trunk\Natural Born Keeper\DKER\TestDLL\src\.svn\text-base
+
+
+
+Processing path: E:\Projects\HPS\trunk\Natural Born Keeper\DKER\TestDLL\src\.svn\tmp
+
+
+
+Processing path: E:\Projects\HPS\trunk\Natural Born Keeper\DKER\TestDLL\src\.svn\tmp\prop-base
+
+
+
+Processing path: E:\Projects\HPS\trunk\Natural Born Keeper\DKER\TestDLL\src\.svn\tmp\props
+
+
+
+Processing path: E:\Projects\HPS\trunk\Natural Born Keeper\DKER\TestDLL\src\.svn\tmp\text-base
+
+
+
+Processing path: E:\Projects\HPS\trunk\Natural Born Keeper\DKER\TestDLL\src\host
+
+.............
+
+Processing path: E:\Projects\HPS\trunk\Natural Born Keeper\DKER\TestDLL\src\host\.svn
+
+
+
+Processing path: E:\Projects\HPS\trunk\Natural Born Keeper\DKER\TestDLL\src\host\.svn\prop-base
+
+
+
+Processing path: E:\Projects\HPS\trunk\Natural Born Keeper\DKER\TestDLL\src\host\.svn\props
+
+
+
+Processing path: E:\Projects\HPS\trunk\Natural Born Keeper\DKER\TestDLL\src\host\.svn\text-base
+
+
+
+Processing path: E:\Projects\HPS\trunk\Natural Born Keeper\DKER\TestDLL\src\host\.svn\tmp
+
+
+
+Processing path: E:\Projects\HPS\trunk\Natural Born Keeper\DKER\TestDLL\src\host\.svn\tmp\prop-base
+
+
+
+Processing path: E:\Projects\HPS\trunk\Natural Born Keeper\DKER\TestDLL\src\host\.svn\tmp\props
+
+
+
+Processing path: E:\Projects\HPS\trunk\Natural Born Keeper\DKER\TestDLL\src\host\.svn\tmp\text-base
+
+
+
+Processing path: E:\Projects\HPS\trunk\Natural Born Keeper\DKER\TestDLL\src\host\res
+
+
+
+Processing path: E:\Projects\HPS\trunk\Natural Born Keeper\DKER\TestDLL\src\host\res\.svn
+
+
+
+Processing path: E:\Projects\HPS\trunk\Natural Born Keeper\DKER\TestDLL\src\host\res\.svn\prop-base
+
+
+
+Processing path: E:\Projects\HPS\trunk\Natural Born Keeper\DKER\TestDLL\src\host\res\.svn\props
+
+
+
+Processing path: E:\Projects\HPS\trunk\Natural Born Keeper\DKER\TestDLL\src\host\res\.svn\text-base
+
+
+
+Processing path: E:\Projects\HPS\trunk\Natural Born Keeper\DKER\TestDLL\src\host\res\.svn\tmp
+
+
+
+Processing path: E:\Projects\HPS\trunk\Natural Born Keeper\DKER\TestDLL\src\host\res\.svn\tmp\prop-base
+
+
+
+Processing path: E:\Projects\HPS\trunk\Natural Born Keeper\DKER\TestDLL\src\host\res\.svn\tmp\props
+
+
+
+Processing path: E:\Projects\HPS\trunk\Natural Born Keeper\DKER\TestDLL\src\host\res\.svn\tmp\text-base
+
+
+
+Processing path: E:\Projects\HPS\trunk\Natural Born Keeper\DKER\TestLauncher
+
+.
+
+Processing path: E:\Projects\HPS\trunk\Natural Born Keeper\DKER\TestLauncher\.svn
+
+
+
+Processing path: E:\Projects\HPS\trunk\Natural Born Keeper\DKER\TestLauncher\.svn\prop-base
+
+
+
+Processing path: E:\Projects\HPS\trunk\Natural Born Keeper\DKER\TestLauncher\.svn\props
+
+
+
+Processing path: E:\Projects\HPS\trunk\Natural Born Keeper\DKER\TestLauncher\.svn\text-base
+
+
+
+Processing path: E:\Projects\HPS\trunk\Natural Born Keeper\DKER\TestLauncher\.svn\tmp
+
+
+
+Processing path: E:\Projects\HPS\trunk\Natural Born Keeper\DKER\TestLauncher\.svn\tmp\prop-base
+
+
+
+Processing path: E:\Projects\HPS\trunk\Natural Born Keeper\DKER\TestLauncher\.svn\tmp\props
+
+
+
+Processing path: E:\Projects\HPS\trunk\Natural Born Keeper\DKER\TestLauncher\.svn\tmp\text-base
+
+
+
+Global Summary (288 KB, actual: 264 KB)
+--------------------------------------------------------
+  Total number of lines:               9036
+  Total number of lines of code:       6825
+  Total number of empty lines:         1775
+  Total number of comment lines:       380
+  Total number of empty comment lines: 56
+--------------------------------------------------------
+
+42 file(s) processed.
+
+Done.

@@ -1,0 +1,8 @@
+LIBRARY TESTDLL
+DESCRIPTION "DirectDraw Hooking Test DLL."
+SECTIONS .HookSection READ WRITE SHARED
+EXPORTS
+	InstallHook
+	RemoveHook
+	HookProc
+

@@ -1,0 +1,11 @@
+Claimed_and_room.gif description
+
+This file is constructed from 16 4x4 textures. 
+
+Row 1: fsm_claimed_land_texture for player 0 to player 4.
+
+Row 2: fsm_room_texture for player 0 to player 4.
+
+Row 3: fsm_textures: earth, rock, wall, gold, unlocked doors
+
+Row 4: fsm_textures: lava, water, unclaimed land, locked doors, selected block

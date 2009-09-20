@@ -1,0 +1,9 @@
+BR5				- 	Every BR5 model starts with this 3 chars
+char(256 bytes) - 	Texture name.
+uint(4 bytes) 	- 	Number of vertices == number of texture coordinates == number of normals (#NUM)
+float*			- 	Array of floats size of #NUM*2 representing the texture coordinates, 
+					this coordinates do not change in time (animation).
+uinit(4 bytes)	-	Number of animation frames.
+float*			-	Array of floats size of #NUM*3 representing the model vertices.
+float*			-	Array of floats size of #NUM*3 representing the model normals.
+EOF

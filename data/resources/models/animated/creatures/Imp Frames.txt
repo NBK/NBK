@@ -1,0 +1,7 @@
+Animation frames:
+1-5 Claiming land
+6-10 running
+11-15 Standing
+16-20 Digging
+21-25 "Chilling"
+26-30 Dragging trap/corpse
