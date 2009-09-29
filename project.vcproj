@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="9,00"
+	Version="9.00"
 	Name="NBKE"
 	ProjectGUID="{B7849B62-A5D0-424D-9661-96BAE1E2BA9E}"
+	RootNamespace="NBKE"
 	TargetFrameworkVersion="131072"
 	>
 	<Platforms>
@@ -143,8 +144,8 @@
 				Optimization="2"
 				InlineFunctionExpansion="2"
 				FavorSizeOrSpeed="1"
-				AdditionalIncludeDirectories="&quot;C:\Program Files\lua5.1\include&quot;"
-				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS"
+				AdditionalIncludeDirectories="&quot;C:\Program Files\lua5.1\include&quot;;.\externals"
+				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATED"
 				StringPooling="true"
 				RuntimeLibrary="0"
 				EnableFunctionLevelLinking="true"
@@ -155,6 +156,7 @@
 				ProgramDataBaseFileName=".\Release/"
 				WarningLevel="3"
 				SuppressStartupBanner="true"
+				DisableSpecificWarnings="4996"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -169,7 +171,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="winmm.lib opengl32.lib glu32.lib glaux.lib odbc32.lib odbccp32.lib wininet.lib glew32.lib LUA/lua5.1.lib"
+				AdditionalDependencies="winmm.lib opengl32.lib glu32.lib odbc32.lib odbccp32.lib wininet.lib glew32.lib LUA/lua5.1.lib"
 				OutputFile=".\Release/project.exe"
 				LinkIncremental="2"
 				SuppressStartupBanner="true"
@@ -450,6 +452,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Primitives.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Gui\Primitives.cpp"
 				>
 				<FileConfiguration
@@ -468,10 +474,6 @@
 						ObjectFile="$(IntDir)/$(InputName)1.obj"
 					/>
 				</FileConfiguration>
-			</File>
-			<File
-				RelativePath=".\Primitives.cpp"
-				>
 			</File>
 			<File
 				RelativePath=".\Gui\ProgressBar.cpp"
@@ -811,11 +813,11 @@
 				>
 			</File>
 			<File
-				RelativePath=".\Gui\Primitives.h"
+				RelativePath=".\Primitives.h"
 				>
 			</File>
 			<File
-				RelativePath=".\Primitives.h"
+				RelativePath=".\Gui\Primitives.h"
 				>
 			</File>
 			<File

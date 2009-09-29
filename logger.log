@@ -1,22 +1,22 @@
-New entry: 1.5.2009 - 18:26:51
+New entry: 29.9.2009 - 10:15:59
 ------------------------------
-Settings manager creation and init.                             Time taken: 1 ms
-Resource manager creation and init.                             Time taken: 2335 ms
+Settings manager creation and init.                             Time taken: 3 ms
+Resource manager creation and init.                             Time taken: 13618 ms
 Creature manager creation and init.                             Time taken: 0 ms
-	Global deformed cube creation.                                 Time taken: 13 ms
-Block manager creation and init.                                Time taken: 14 ms
-Lighting manager creation and init.                             Time taken: 0 ms
-	Creating a map ob blocks 85x85 new blocks.                     Time taken: 146 ms
-	Initializing 85x85 blocks.                                     Time taken: 1 ms
+	Global deformed cube creation.                                 Time taken: 23 ms
+Block manager creation and init.                                Time taken: 25 ms
+Lighting manager creation and init.                             Time taken: 1 ms
+	Creating a map ob blocks 85x85 new blocks.                     Time taken: 275 ms
+	Initializing 85x85 blocks.                                     Time taken: 2 ms
 	Calculating ceiling 85x85 blocks.                              Time taken: 0 ms
-	Finalizing 85x85 blocks.                                       Time taken: 361 ms
-Level manager creation and init.                                Time taken: 1801 ms
+	Finalizing 85x85 blocks.                                       Time taken: 541 ms
+Level manager creation and init.                                Time taken: 3151 ms
 Collision manager creation and init.                            Time taken: 0 ms
 Control manager creation and init.                              Time taken: 0 ms
-Render manager creation and init.                               Time taken: 41 ms
+Render manager creation and init.                               Time taken: 227 ms
 Animated terrain manager creation and init.                     Time taken: 0 ms
 Room manager creation and init.                                 Time taken: 1 ms
 Picking manager creation and init.                              Time taken: 0 ms
-Economy manager creation and init.                              Time taken: 1 ms
-GUI manager (wraper) creation and init.                         Time taken: 247 ms
-Game managers (all above) init.                                 Time taken: 4531 ms
+Economy manager creation and init.                              Time taken: 0 ms
+GUI manager (wraper) creation and init.                         Time taken: 2768 ms
+Game managers (all above) init.                                 Time taken: 19965 ms
