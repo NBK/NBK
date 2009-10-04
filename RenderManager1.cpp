@@ -10,6 +10,7 @@
 
 using namespace game_objects;
 using namespace game_objects::lighting;
+using namespace game_objects::block_objects;
 using namespace game_utils;
 using namespace utils;
 using namespace cml;
@@ -93,6 +94,11 @@ namespace game_utils
 			static float color[] = { 1.0f, 1.0f, 1.0f, 1.0f };
 			glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, color);	
 
+			//Set global ambient colour
+			GLfloat globalAmbientColor[] = { 0.2f, 0.2f, 0.2f, 1.0f };
+			memcpy(&globalAmbientColor[0],&CV_GAME_MANAGER->getSettingsManager()->getSetting_vector3f(CV_SETTINGS_GLOBAL_AMBIENCE),sizeof(GLfloat)*3);
+			glLightModelfv(GL_LIGHT_MODEL_AMBIENT, globalAmbientColor);
+
 			// register to console
 			CV_GAME_MANAGER->getConsole()->registerClass(this,"RENDER MANAGER");
 			CV_GAME_MANAGER->getConsole()->addParam(PPL,"() Enables/Disables the perpixel lighting.");
@@ -117,7 +123,8 @@ namespace game_utils
 
 			CCamera *camera = CV_GAME_MANAGER->getControlManager()->getCamera();								
 
-			if (lightsCount>0 && usePPL)
+			//if (lightsCount>0 && usePPL)
+			if (usePPL)
 			{
 				shaderManager->useShaderProgram(shaderInUse);
 				shaderManager->getShaderObject(shaderInUse)->setUniform1i("numberOfLights",lightsCount);
@@ -176,7 +183,9 @@ namespace game_utils
 
 		bool CRenderManager1::update()
 		{			
-			// Draw the map and items that fall into view frustum. 								
+			// Draw the map and items that fall into view frustum. 	
+
+			glColor3f(1.0f,1.0f,1.0f);
 
 			// get camera
 			CCamera *camera = CV_GAME_MANAGER->getControlManager()->getCamera();		
@@ -189,6 +198,12 @@ namespace game_utils
 			GLint centerY = center[1];
 
 			bool isFPS = CV_GAME_MANAGER->getControlManager()->isFPS();
+
+			if (isFPS)
+			{
+				// fog only in FPS mode
+				glEnable(GL_FOG);
+			}
 
 			/*
 				In FPS mode we can't use height to determine visible offset. 
@@ -208,6 +223,7 @@ namespace game_utils
 			CBlock *block;
 
 			GLint	maxVertInput = 0,
+					creaturesVisible = 0,
 					maxTexInput  = 0;
 
 			tmpVboVertexBufferSize = 0;
@@ -233,6 +249,8 @@ namespace game_utils
 			// transform view
 			camera->transformView();
 
+			renderedBlocks.clear();
+
 			for (GLint y=minY; y<=maxY; y++)
 			{
 				for (GLint x=minX; x<=maxX; x++)
@@ -241,6 +259,7 @@ namespace game_utils
 
 					if (block)
 					{
+						//block->getBoundingBox()->draw(); // just for testing
 						if (frustum->containsBBOX(block->getBoundingBox()))
 						{
 							blockVisible++;
@@ -256,9 +275,47 @@ namespace game_utils
 
 							setupLights(block);
 
+							renderedBlocks.push_back(block);
+
+							// draw block objects
+							if (block->getBlockObjects()->size()>0)
+							{
+								for (std::vector<CBlockObject*>::iterator rmIter = block->getBlockObjects()->begin(); rmIter != block->getBlockObjects()->end(); rmIter++)
+								{
+									CBlockObject *bObj = *rmIter;
+
+									bObj->moveTo();
+									glRotatef(bObj->getRotateY(),0.0f,1.0f,0.0f);
+									bObj->drawModel(delta);
+									glRotatef(-bObj->getRotateY(),0.0f,1.0f,0.0f);
+									bObj->moveBack();
+								}
+							}
+
+							bool isRoom = block->isRoom();
+
+							if (isRoom)
+							{
+								std::vector<GLuint> *dls = block->getDisplayLists();
+								if (dls->size()!=0)
+								{			
+									glEnable(GL_TEXTURE_2D);
+									glBindTexture(GL_TEXTURE_2D,textureAtlasColor);
+									glBegin(GL_QUADS);
+									{
+										for (std::vector<GLuint>::iterator dlIter = dls->begin(); dlIter != dls->end(); dlIter++)
+										{
+											glCallList(*dlIter);									
+										}
+									}
+									glEnd();
+									glDisable(GL_TEXTURE_2D);									
+								}
+							}		
+
 							for (GLint f=CBlock::BFS_FRONT; f<=CBlock::BFS_CEILING; f++)
 							{
-								if ((!isFPS && f==CBlock::BFS_CEILING) || (isFPS && f==CBlock::BFS_TOP))
+								if ((!isFPS && f==CBlock::BFS_CEILING) || (isFPS && f==CBlock::BFS_TOP) || (isRoom && f!=CBlock::BFS_CEILING))
 								{
 									continue;
 								}
@@ -303,6 +360,7 @@ namespace game_utils
 								vbo->setElementsCount(CVBO::IDT_vertex,tmpVboVertexBufferSize/3);
 								vbo->setElementsCount(CVBO::IDT_normal,tmpVboVertexBufferSize/3);
 								vbo->setElementsCount(CVBO::IDT_texture0,tmpVboTexCoordBufferSize/2);
+								vbo->setElementsCount(CVBO::IDT_texture1,tmpVboTexCoordBufferSize/2);
 								vbo->draw();
 								allVerticesCount+=tmpVboVertexBufferSize;
 								tmpVboVertexBufferSize=0;
@@ -313,8 +371,62 @@ namespace game_utils
 				}
 			}
 
+			// draw creatures
+			CCreatureManager *cManager = CV_GAME_MANAGER->getCreatureManager();
+			GLint cCount = cManager->getCreatureVector()->size();
+			if (cCount>0)
+			{		
+				CCreature *creature = NULL;
+				for (std::vector<CCreature*>::iterator cIter = cManager->getCreatureVector()->begin(); cIter != cManager->getCreatureVector()->end(); cIter++)
+				{
+					creature = (*cIter);
+
+					if (creature)
+					{
+						sBoundingBox *cBBOX = creature->getModel()->getBoundingBox();
+						cBBOX->translate(creature->getPosition());
+						if (frustum->containsBBOX(cBBOX))
+						{
+							creature->draw(delta);
+							creaturesVisible++;
+						}
+						cBBOX->translate(-creature->getPosition());
+					}
+				}
+			}
+
 			shaderManager->useFFPipeline();
 			glDisable(GL_LIGHTING);
+
+			// draw transparent block objects
+			for (std::vector<CBlock*>::iterator vbIter = renderedBlocks.begin(); vbIter != renderedBlocks.end(); vbIter++)
+			{
+				block = *vbIter;
+				if (block->getBlockObjects()->size()>0)
+				{
+					for (std::vector<CBlockObject*>::iterator rmIter = block->getBlockObjects()->begin(); rmIter != block->getBlockObjects()->end(); rmIter++)
+					{
+						CBlockObject *bObj = *rmIter;
+
+						bObj->moveTo();
+						glRotatef(bObj->getRotateY(),0.0f,1.0f,0.0f);
+						bObj->drawEffect();
+						glRotatef(-bObj->getRotateY(),0.0f,1.0f,0.0f);
+						bObj->moveBack();
+					}
+				}
+			}
+
+			glDisable(GL_FOG);
+			
+			if (!isFPS)
+			{
+				handlePickedObjects();
+			}
+
+			CV_GAME_MANAGER->getTextPrinter()->print((GLfloat)0,(GLfloat)(CV_SETTINGS_WINDOW_HEIGHT-15*3),"Visible blocks: %d",blockVisible);
+			CV_GAME_MANAGER->getTextPrinter()->print((GLfloat)0,(GLfloat)(CV_SETTINGS_WINDOW_HEIGHT-15*2),"Visible creatures: %d",creaturesVisible);
+			CV_GAME_MANAGER->getTextPrinter()->print((GLfloat)0,(GLfloat)(CV_SETTINGS_WINDOW_HEIGHT-15),"Triangles drawn: %d",(allVerticesCount/4)*2);
 
 			// render the lights representations. usefull for debugging
 			CV_GAME_MANAGER->getLightingManager()->drawLightSources(frustum);

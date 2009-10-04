@@ -175,6 +175,7 @@
 				OutputFile=".\Release/project.exe"
 				LinkIncremental="2"
 				SuppressStartupBanner="true"
+				GenerateManifest="false"
 				ProgramDatabaseFile=".\Release/project.pdb"
 				SubSystem="2"
 				RandomizedBaseAddress="1"
@@ -452,10 +453,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\Primitives.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\Gui\Primitives.cpp"
 				>
 				<FileConfiguration
@@ -474,6 +471,10 @@
 						ObjectFile="$(IntDir)/$(InputName)1.obj"
 					/>
 				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\Primitives.cpp"
+				>
 			</File>
 			<File
 				RelativePath=".\Gui\ProgressBar.cpp"
@@ -813,11 +814,11 @@
 				>
 			</File>
 			<File
-				RelativePath=".\Primitives.h"
+				RelativePath=".\Gui\Primitives.h"
 				>
 			</File>
 			<File
-				RelativePath=".\Gui\Primitives.h"
+				RelativePath=".\Primitives.h"
 				>
 			</File>
 			<File

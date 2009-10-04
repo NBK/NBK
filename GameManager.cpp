@@ -102,8 +102,8 @@ namespace game_utils
 			CLogger::setEntryEnd("Control manager creation and init.");
 
 			CLogger::setEntryStart();
-			renderManager = new CRenderManager();
-			//renderManager = new CRenderManager1();
+			//renderManager = new CRenderManager();
+			renderManager = new CRenderManager1();
 			result&=renderManager->init();
 			CLogger::setEntryEnd("Render manager creation and init.");
 

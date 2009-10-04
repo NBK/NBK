@@ -197,8 +197,8 @@ namespace game_utils
 			for (GLint i=0; i<bfVis; i++)
 			{
 				// get a light from the light pool
-				/*CLightSource *light = lightSourcePool[lightSourceType].popObject();
-
+				//CLightSource *light = lightSourcePool[lightSourceType].popObject();
+				CLightSource *light = new CLightSource(lightIndexName[lightSourceType]);
 				if (light)
 				{
 					// set its position
@@ -262,7 +262,7 @@ namespace game_utils
 							}
 						}
 					}
-				}*/
+				}
 			}	
 		}
 

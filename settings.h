@@ -24,6 +24,8 @@ namespace game_utils
 	#define CV_SETTINGS_TEXTURE_ATLAS_INDEX				"ST_TEXTURE_ATLAS_INDEX"
 
 	#define CV_SETTINGS_USE_PPL							"ST_USE_PPL"
+
+	#define CV_SETTINGS_GLOBAL_AMBIENCE					"ST_GLOBAL_AMBIENCE"
 };
 
 #endif // SETTINGS_H

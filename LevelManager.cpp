@@ -227,6 +227,17 @@ namespace game_utils
 					{
 						liManager->addLightSource(levelMap[y][x]->getLogicalPosition(), CV_LIGHT_TYPE_TORCH);
 					}
+					
+					for (std::vector<CBlockObject*>::iterator rmIter = levelMap[y][x]->getBlockObjects()->begin(); rmIter != levelMap[y][x]->getBlockObjects()->end(); rmIter++)
+					{
+						CBlockObject *bObject = *rmIter;
+
+						if (bObject->getEffectName() == "EFFECTS_CANDLE")
+						{
+							liManager->addLightSource(levelMap[y][x]->getLogicalPosition(), CV_LIGHT_TYPE_CANDLE);
+							break;
+						}
+					}
 
 					if (levelMap[y][x]->getType()==CV_BLOCK_TYPE_LAVA_ID && rand()%3==0)
 					{
