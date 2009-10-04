@@ -16,6 +16,7 @@ namespace geometry
 
 		// setup frustum
 		GLvoid	initialize(GLfloat fieldOfView, GLfloat ratio, GLfloat nearPlaneDistance, GLfloat farPlaneDistance);
+		GLvoid  updateRatio(GLfloat ratio);
 		GLvoid	update(control::CCamera *camera);
 		GLvoid	draw();
 

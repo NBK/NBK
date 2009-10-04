@@ -369,7 +369,7 @@ namespace game_utils
 
 			GLfloat thing_x,thing_y;
 
-			srand(time(NULL));
+			srand((unsigned int)time(NULL));
 		    
 			// read the number of thing in the dk_map
 			fread(&things_count,1,2,f_tng);			

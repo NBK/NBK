@@ -421,7 +421,7 @@ namespace game_utils
 	{
 		CBlockManager::CBlockManager(): CManager(), globalDeformedMap(NULL)
 		{
-			srand(time(NULL));
+			srand((unsigned int)time(NULL));
 		}
 
 		CBlockManager::~CBlockManager()

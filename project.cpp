@@ -40,6 +40,7 @@ using namespace control;
 #define WINDOW_TITLE "Natural Born Keeper Extreme"
 
 managers::CGameManager *game_utils::CV_GAME_MANAGER = NULL;
+bool allInited = false;
 
 std::string	G_startDir = "";
 
@@ -63,6 +64,12 @@ GLvoid ReSizeGLScene(GLsizei width, GLsizei height)
 
 	glMatrixMode(GL_MODELVIEW);	
 	glLoadIdentity();
+
+	if (allInited)
+	{
+		CV_GAME_MANAGER->getControlManager()->getViewFrustum()->updateRatio((GLfloat)width/(GLfloat)height);
+		//CV_GAME_MANAGER->getConsole()->writeLine("Ratio changed: "+CConversions::floatToStr((GLfloat)width/(GLfloat)height));
+	}
 }
 
 void DetectMemoryLeaks() 
@@ -75,8 +82,6 @@ void DetectMemoryLeaks()
 // extern from commons
 HWND game_utils::CV_WINDOW_HANDLE;
 HDC	game_utils::CV_DEVICE_CONTEXT;
-
-bool allInited = false;
 
 //TODO: remove LUA, add lighting with fixed functionality
 

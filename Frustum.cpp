@@ -34,6 +34,13 @@ namespace geometry
 		farPlaneWidth = farPlaneHeight*ratio;
 	}
 
+	GLvoid CFrustum::updateRatio(GLfloat ratio)
+	{
+		this->ratio=ratio;
+		nearPlaneWidth = nearPlaneHeight*ratio;
+		farPlaneWidth = farPlaneHeight*ratio;
+	}
+
 	GLvoid CFrustum::update(CCamera *camera)
 	{
 		// calculate 8 points that represent 6 planes of frustum
