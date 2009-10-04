@@ -21,10 +21,10 @@ namespace game_utils
 	};
 
 	// commons for window settings. CV stands for "common variable"
-	static GLint	CV_SETTINGS_WINDOW_WIDTH		= 1024;
-	static GLint	CV_SETTINGS_WINDOW_HEIGHT		= 768;
-	static GLint	CV_SETTINGS_WINDOW_WIDTH_HALF	= CV_SETTINGS_WINDOW_WIDTH/2;
-	static GLint	CV_SETTINGS_WINDOW_HEIGHT_HALF	= CV_SETTINGS_WINDOW_HEIGHT/2;
+	extern GLint	CV_SETTINGS_WINDOW_WIDTH;
+	extern GLint	CV_SETTINGS_WINDOW_HEIGHT;
+	extern GLint	CV_SETTINGS_WINDOW_WIDTH_HALF;
+	extern GLint	CV_SETTINGS_WINDOW_HEIGHT_HALF;
 	static GLfloat	CV_SETTINGS_FOV					= 45.0f;
 	static bool		CV_SETTINGS_WINDOW_FULLSCREEN	= false;
 	static GLint	CV_NORMAL_MAP_START_INDEX		= 5000;

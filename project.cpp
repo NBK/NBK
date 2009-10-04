@@ -69,6 +69,13 @@ GLvoid ReSizeGLScene(GLsizei width, GLsizei height)
 	{
 		CV_GAME_MANAGER->getControlManager()->getViewFrustum()->updateRatio((GLfloat)width/(GLfloat)height);
 		//CV_GAME_MANAGER->getConsole()->writeLine("Ratio changed: "+CConversions::floatToStr((GLfloat)width/(GLfloat)height));
+
+		CV_GAME_MANAGER->getGUIManager()->getPlayGUI()->get_active_gui()->updateRatio(width,height);
+
+		game_utils::CV_SETTINGS_WINDOW_WIDTH = width;
+		game_utils::CV_SETTINGS_WINDOW_HEIGHT = height;
+		game_utils::CV_SETTINGS_WINDOW_WIDTH_HALF = CV_SETTINGS_WINDOW_WIDTH/2;
+		game_utils::CV_SETTINGS_WINDOW_HEIGHT_HALF = CV_SETTINGS_WINDOW_HEIGHT/2;
 	}
 }
 
@@ -82,6 +89,11 @@ void DetectMemoryLeaks()
 // extern from commons
 HWND game_utils::CV_WINDOW_HANDLE;
 HDC	game_utils::CV_DEVICE_CONTEXT;
+
+GLint game_utils::CV_SETTINGS_WINDOW_WIDTH;
+GLint game_utils::CV_SETTINGS_WINDOW_HEIGHT;
+GLint game_utils::CV_SETTINGS_WINDOW_WIDTH_HALF;
+GLint game_utils::CV_SETTINGS_WINDOW_HEIGHT_HALF;
 
 //TODO: remove LUA, add lighting with fixed functionality
 
@@ -416,15 +428,12 @@ int WINAPI WinMain(	HINSTANCE	hInstance,
 	MSG		msg;									
 	BOOL	done=FALSE;
 
-	GLint windowWidth = 1024;
-	GLint windowHeight = 768;
+	CV_SETTINGS_WINDOW_WIDTH = 1024;
+	CV_SETTINGS_WINDOW_HEIGHT = 768;
+	CV_SETTINGS_WINDOW_WIDTH_HALF = CV_SETTINGS_WINDOW_WIDTH/2;
+	CV_SETTINGS_WINDOW_HEIGHT_HALF = CV_SETTINGS_WINDOW_HEIGHT/2;
 
-	windowWidth = CV_SETTINGS_WINDOW_WIDTH;
-	windowHeight = CV_SETTINGS_WINDOW_HEIGHT;
-	fullscreen = CV_SETTINGS_WINDOW_FULLSCREEN;
-	//fullscreen = true;
-
-	if (!CreateGLWindow(WINDOW_TITLE,windowWidth,windowHeight,32,fullscreen))
+	if (!CreateGLWindow(WINDOW_TITLE,CV_SETTINGS_WINDOW_WIDTH,CV_SETTINGS_WINDOW_HEIGHT,32,CV_SETTINGS_WINDOW_FULLSCREEN))
 	{
 		return 0;									
 	}

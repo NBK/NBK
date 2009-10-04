@@ -41,7 +41,7 @@ namespace DK_GUI
 			set_value(PLAYER0_MONEY);
 		}
 
-		GLfloat tx=start_x;
+		GLfloat tx=extent.pixel_pos_x + extent.pixel_width / 2.0f - (20.0f*(GLfloat)count)/2.0f;
 		for (GLint i=0; i<count; i++)
 		{
 			glPushMatrix();
@@ -62,7 +62,6 @@ namespace DK_GUI
 		}
 		string_value = IntToStrDK(value);
 		count = strlen(string_value);
-		start_x = extent.pixel_pos_x + extent.pixel_width / 2.0f - (20.0f*(GLfloat)count)/2.0f;
 	}
 
 	GLvoid CMoneyLabel::set_value(GLint amount)

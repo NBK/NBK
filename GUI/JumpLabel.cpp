@@ -12,7 +12,7 @@ CJumpLabel::CJumpLabel(GLfloat x, GLfloat y, GLint value)
 	yp=y/(GLfloat)CV_SETTINGS_WINDOW_HEIGHT;
 	sy=yp;
 	
-	label.set_extent(CAbstractGUIItem::EXTENT(x/(GLfloat)CV_SETTINGS_WINDOW_WIDTH,yp,0.0f,0.05f,0.05f));
+	label.set_extent(CAbstractGUIItem::EXTENT(x/((GLfloat)CV_SETTINGS_WINDOW_HEIGHT/0.75f),yp,0.0f,0.05f,0.05f));
 	label.init(CV_SETTINGS_WINDOW_WIDTH,CV_SETTINGS_WINDOW_HEIGHT);
 	label.set_value(value);
 	label.set_check_updated_value(false);

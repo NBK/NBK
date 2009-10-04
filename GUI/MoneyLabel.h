@@ -25,7 +25,6 @@ namespace DK_GUI
 
 		char *string_value;
 		GLint count;
-		GLfloat start_x;
 
 		bool check_updated_value;
 	};

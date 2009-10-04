@@ -23,6 +23,7 @@ namespace GUI
 		~CGUI();
 
 		GLvoid init();
+		GLvoid updateRatio(GLint screen_width, GLint screen_height);
 		GLvoid draw();
 		GLvoid do_actions();
 

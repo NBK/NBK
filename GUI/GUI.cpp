@@ -35,6 +35,13 @@ namespace GUI
 		}
 	}
 
+	GLvoid CGUI::updateRatio(GLint screen_width, GLint screen_height)
+	{
+		this->screen_width=screen_width;
+		this->screen_height=screen_height;
+		init();
+	}
+
 	GLvoid CGUI::draw()
 	{
 		glColor3f(1.0f,1.0f,1.0f);

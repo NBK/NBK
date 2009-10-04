@@ -85,13 +85,13 @@ namespace GUI
 
 	GLvoid CAbstractGUIItem::init()
 	{
-		extent.pixel_pos_x=extent.x_pos*(GLfloat)screen_width;
+		extent.pixel_pos_x=extent.x_pos*((GLfloat)screen_height/0.75f);
 		extent.pixel_pos_y=extent.y_pos*(GLfloat)screen_height;
-		extent.pixel_width=extent.width*(GLfloat)screen_width;
+		extent.pixel_width=extent.width*((GLfloat)screen_height/0.75f);
 		extent.pixel_height=extent.height*(GLfloat)screen_height;
 		
-		mouse_detection_offset.pixel_correction_from_left=mouse_detection_offset.correction_from_left*(GLfloat)screen_width;
-		mouse_detection_offset.pixel_correction_from_rigth=mouse_detection_offset.correction_from_rigth*(GLfloat)screen_width;
+		mouse_detection_offset.pixel_correction_from_left=mouse_detection_offset.correction_from_left*((GLfloat)screen_height/0.75f);
+		mouse_detection_offset.pixel_correction_from_rigth=mouse_detection_offset.correction_from_rigth*((GLfloat)screen_height/0.75f);
 		mouse_detection_offset.pixel_correction_from_top=mouse_detection_offset.correction_from_top*(GLfloat)screen_height;
 		mouse_detection_offset.pixel_correction_from_bottom=mouse_detection_offset.correction_from_bottom*(GLfloat)screen_height;
 
@@ -107,9 +107,9 @@ namespace GUI
 
 	GLvoid CAbstractGUIItem::init(EXTENT *extent)
 	{
-		extent->pixel_pos_x=extent->x_pos*(GLfloat)screen_width;
+		extent->pixel_pos_x=extent->x_pos*((GLfloat)screen_height/0.75f);
 		extent->pixel_pos_y=extent->y_pos*(GLfloat)screen_height;
-		extent->pixel_width=extent->width*(GLfloat)screen_width;
+		extent->pixel_width=extent->width*((GLfloat)screen_height/0.75f);
 		extent->pixel_height=extent->height*(GLfloat)screen_height;
 
 		shape->set_screen_extent(screen_width,screen_height);
