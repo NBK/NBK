@@ -194,7 +194,11 @@ namespace game_objects
 
 	GLvoid CBlock::setType(GLint type)	
 	{
+		if(this->type == CV_BLOCK_TYPE_UNCLAIMED_LAND_ID)
+			CV_GAME_MANAGER->getLevelManager()->removeUnclaimedBlock(this);
+
 		this->type=type;
+		this->taken=false;
 
 		disposeBlockObjects();
 		disposeDisplayLists();
@@ -254,6 +258,11 @@ namespace game_objects
 			// we are a room, notify the RoomManager
 			CV_GAME_MANAGER->getRoomManager()->addRoomTile(this);
 		}
+
+		if(this->type == CV_BLOCK_TYPE_UNCLAIMED_LAND_ID)
+			CV_GAME_MANAGER->getLevelManager()->addUnclaimedBlock(this);
+
+		resetLife();
 	}
 
 	GLint CBlock::getType()
@@ -301,7 +310,7 @@ namespace game_objects
 
 	bool CBlock::isWalkable(bool walkOnLava)
 	{
-		return low && walkOnLava?true:lava;
+		return low && walkOnLava?true:!lava;
 	}
 
 	bool CBlock::isWater()
@@ -579,9 +588,75 @@ namespace game_objects
 		return roomIndex;
 	}
 
+	GLvoid CBlock::resetLife()
+	{
+		if (type==CV_BLOCK_TYPE_WALL_ID || type==CV_BLOCK_TYPE_WALL_WITH_TORCH_PLATE_ID)
+		{
+			life=3.0f;
+		}
+		else if (type==CV_BLOCK_TYPE_EARTH_ID || type==CV_BLOCK_TYPE_EARTH_WITH_TORCH_PLATE_ID)
+		{
+			life=0.5f;
+		}
+		else if (type==CV_BLOCK_TYPE_GOLD_ID)
+		{
+			life=3.0f;
+		}
+		else if (type==CV_BLOCK_TYPE_UNCLAIMED_LAND_ID)
+		{
+			life=0.2f;
+		}
+		else
+		{
+			life=1.0f;
+		}
+	}
+
+	GLfloat CBlock::getLife()
+	{
+		return life;
+	}
+
+	GLvoid CBlock::addLife(GLfloat life)
+	{
+		this->life+=life;
+	}
+
+	GLvoid CBlock::decLife(GLfloat life)
+	{
+		this->life-=life;
+		if(life< 0.0f)
+			life = 0.0f;
+	}
+
 	GLvoid CBlock::setVisible(BLOCK_FACE_SELECTOR faceSelector, bool visibility)
 	{
 		visible[faceSelector] = visibility;
+	}
+
+	GLvoid CBlock::claimBlock(GLubyte owner)
+	{
+		this->owner = owner;
+		setType(CV_BLOCK_TYPE_CLAIMED_LAND_ID);
+		this->taken = false;
+		
+		//init and finalize surrounding blocks aswell as this one
+		CV_GAME_MANAGER->getLevelManager()->getBlock(logicalPosition[0],logicalPosition[1]-1)->init();
+		CV_GAME_MANAGER->getLevelManager()->getBlock(logicalPosition[0]-1,logicalPosition[1])->init();
+		CV_GAME_MANAGER->getLevelManager()->getBlock(logicalPosition[0]+1,logicalPosition[1])->init();
+		CV_GAME_MANAGER->getLevelManager()->getBlock(logicalPosition[0],logicalPosition[1]+1)->init();
+		init();
+		
+		CV_GAME_MANAGER->getLevelManager()->getBlock(logicalPosition[0],logicalPosition[1]-1)->finalize();
+		CV_GAME_MANAGER->getLevelManager()->getBlock(logicalPosition[0]-1,logicalPosition[1])->finalize();
+		CV_GAME_MANAGER->getLevelManager()->getBlock(logicalPosition[0]+1,logicalPosition[1])->finalize();
+		CV_GAME_MANAGER->getLevelManager()->getBlock(logicalPosition[0],logicalPosition[1]+1)->finalize();
+		finalize();
+
+		if(CV_GAME_MANAGER->getControlManager()->getViewFrustum()->containsBBOX(getBoundingBox()))
+		{
+			//since the block is visible, create the claim effect (TODO)
+		}
 	}
 
 	std::vector<GLuint> *CBlock::getDisplayLists()

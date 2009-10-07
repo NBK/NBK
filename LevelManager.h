@@ -45,9 +45,12 @@ namespace game_utils
 			GLint getBlockType(GLint x, GLint y);
 			GLint getBlockTypeOld(GLint x, GLint y); // for being able to use old code
 
-			bool isBlockTypeNear(GLint blockType, GLint x, GLint y, bool diagonal, GLubyte owner);
-			bool isBlockTypeNear(GLint blockType, cml::vector2i logicalPos, bool diagonal, GLubyte owner);
+			bool isBlockTypeNear(GLint blockType, GLint x, GLint y, bool diagonal, GLubyte owner, std::vector<game_objects::CBlock*> *blocks = NULL);
+			bool isBlockTypeNear(GLint blockType, cml::vector2i logicalPos, bool diagonal, GLubyte owner, std::vector<game_objects::CBlock*> *blocks = NULL);
 			game_objects::CBlock *getUnclaimedBlock(GLubyte owner);
+			std::map<game_objects::CBlock*,game_objects::CBlock*> *getUnclaimedBlocksList();
+			GLvoid addUnclaimedBlock(game_objects::CBlock *block);
+			GLvoid removeUnclaimedBlock(game_objects::CBlock *block);
 
 			// returns true if this block is full type, 
 			bool isFullBlock(game_objects::CBlock *block);

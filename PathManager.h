@@ -28,7 +28,8 @@ namespace game_utils
 			// from CConsoleListener
 			virtual std::string onAction(std::string keyword, std::string params);
 
-			std::vector<cml::vector2i> CPathManager::findPath(GLint startX, GLint startY, GLint endX, GLint endY);
+			void CPathManager::findPath(GLint startX, GLint startY, GLint endX, GLint endY, std::vector<cml::vector2i> *path);
+			void CPathManager::findPath(cml::vector2i start, cml::vector2i end, std::vector<cml::vector2i> *path);
 
 		private:
 			BinaryHeap Heap;

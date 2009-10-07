@@ -4,8 +4,8 @@
 void BinaryHeap::ResetHeap()
 {
 	lSize = 0;
-    Heap.resize(lSize);
-	Heap.reserve(85*85);
+    Heap.resize(lSize+1);
+	Heap.reserve(85*85*sizeof(BinHeapData));
 }
 
 //Remove the Root Object from the heap
@@ -74,15 +74,15 @@ void BinaryHeap::Add(int inScore,int inX, int inY)
 	//Increment the array count
 	lSize += 1;
 
-	//BinHeapData tmp;
-	//tmp.Score = inScore;
-	//tmp.X = inX;
-	//tmp.Y = inY;
+	BinHeapData tmp;
+	tmp.Score = inScore;
+	tmp.X = inX;
+	tmp.Y = inY;
 	//Heap.resize(lSize);
-	Heap[lSize].Score = inScore;
-	Heap[lSize].X = inX;
-	Heap[lSize].Y = inY;
-	//Heap.push_back(tmp);
+	//Heap[lSize].Score = inScore;
+	//Heap[lSize].X = inX;
+	//Heap[lSize].Y = inY;
+	Heap.push_back(tmp);
 
 	//Bubble the item to its correct location
     int sPos = lSize;

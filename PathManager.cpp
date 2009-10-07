@@ -52,23 +52,26 @@ namespace game_utils
 			return "<>";
 		}
 
-		std::vector<cml::vector2i> CPathManager::findPath(GLint startX, GLint startY, GLint endX, GLint endY)
+		void CPathManager::findPath(cml::vector2i start, cml::vector2i end, std::vector<cml::vector2i> *path)
+		{
+			return findPath(start[0],start[1],end[0],end[1],path);
+		}
+
+		void CPathManager::findPath(GLint startX, GLint startY, GLint endX, GLint endY, std::vector<cml::vector2i> *path)
 		{
 			int xCnt, yCnt;	
 			int ParentX, ParentY;
-
-			std::vector<cml::vector2i> path;
 
 			cellData PathMap[85][85];
 
 //Make sure the starting point and ending point are not the same
 			if((startX == endX) && (startY == endY))
-				return (std::vector<cml::vector2i>)NULL;
+				return;
 
 			CLevelManager *lvlMan = CV_GAME_MANAGER->getLevelManager();
 //Make sure the starting/ending point is not a wall
 			if(!lvlMan->getBlock(startX,startY)->isLow())
-				return (std::vector<cml::vector2i>)NULL;
+				return;
 
 //Set the flags
 			bool PathFound = false;
@@ -204,7 +207,7 @@ namespace game_utils
 				{
 					PathFound = false;
 					PathHunt = false;
-					return (std::vector<cml::vector2i>)NULL;
+					return;
 				}
 
 //If we find a path
@@ -219,18 +222,22 @@ namespace game_utils
 			{
 				int tX = endX;
 				int tY = endY;
+				int sX;
+				int sY;
 				if(lvlMan->getBlock(tX,tY)->isLow())
-					path.push_back(cml::vector2i(tX,tY));
+					path->push_back(cml::vector2i(tX,tY));
 				while(true)
 				{
-					path.push_back(PathMap[tX][tY].Parent);
-					tX = PathMap[tX][tY].Parent[0];
-					tY = PathMap[tX][tY].Parent[1];
+					sX = tX;
+					sY = tY;
+					path->push_back(PathMap[sX][sY].Parent);
+					tX = PathMap[sX][sY].Parent[0];
+					tY = PathMap[sX][sY].Parent[1];
 					if(tX == startX && tY == startY)
-						return path;
+						return;
 				}
 			}
-			return (std::vector<cml::vector2i>)NULL;
+			return;
 		}
 	}
 }

@@ -42,6 +42,9 @@ namespace game_objects
 		// creature params, TODO add more
 		GLfloat			moveSpeed;
 		cml::vector3f	moveVector;
+
+		/* holds the current path */
+		std::vector<cml::vector2i> path;
 		
 	};
 };

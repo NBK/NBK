@@ -17,6 +17,26 @@ namespace game_objects
 		~CImp();
 
 		virtual GLvoid update(GLfloat deltaTime);
+
+		enum IMP_STATE
+		{
+			IS_NONE,
+			IS_IDLE,
+			IS_GOING_TO_CLAIMING_DESTINATION,
+			IS_AT_CLAIMING_BLOCK, 
+			IS_CLAIMING,
+			IS_GOING_TO_DIGGING_DESTINATION,
+			IS_AT_DIGGING_BLOCK,
+			IS_DIGGING,
+
+			// utility enums
+			IS_ROTATING
+		};
+	private:
+		GLvoid checkNearestForClaiming();
+		GLvoid checkForClaiming();
+		GLvoid walkPath();
+		IMP_STATE impState;
 	};
 };
 

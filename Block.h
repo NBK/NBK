@@ -185,6 +185,13 @@ namespace game_objects
 		// removes a block object from the block object list. Usefull when selling traps, or picking gold...
 		GLvoid removeBlockObject(block_objects::CBlockObject *blockObject);
 
+		GLvoid CBlock::claimBlock(GLubyte owner);
+
+		GLvoid addLife(GLfloat life);
+		GLvoid decLife(GLfloat life);
+		GLfloat getLife();
+		GLvoid resetLife();
+
 	private:
 
 		GLubyte			owner;
@@ -249,6 +256,8 @@ namespace game_objects
 				animatedTexturePos[8]; // any face may have texture animation
 
 		GLfloat	animatedTextureChange[8];
+
+		GLfloat life;
 
 		/*
 			Bounding box of our blocks geometry.

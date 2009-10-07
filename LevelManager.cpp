@@ -699,21 +699,73 @@ namespace game_utils
 			return getBlock(pos[0],pos[1]);
 		}
 
-		bool CLevelManager::isBlockTypeNear(GLint blockType, GLint x, GLint y, bool diagonal, GLubyte owner)
+		bool CLevelManager::isBlockTypeNear(GLint blockType, GLint x, GLint y, bool diagonal, GLubyte owner, std::vector<CBlock*> *blocks)
 		{
 			if (!(getBlock(x-1,y-1) && getBlock(x+1,y+1)))
 				return false;
 			
 			for(GLint x1 = -1; x1<=1; x1++)
 				for(GLint y1 = -1; y1<=1; y1++)
-					if ((getBlock(x1,y1)->getType()==blockType) && (owner==getBlock(x1,y1)->getOwner()) )
-						return true;
-			return false;
+					if ((diagonal || x1==0 || y1==0) && !(x1==0 && y1==0) &&
+						(getBlock(x+x1,y+y1)->getType()==blockType) && (owner==getBlock(x+x1,y+y1)->getOwner()))
+					{
+						if(blocks) blocks->push_back(getBlock(x+x1,y+y1));
+						else return true;
+					}
+
+			/*CBlock block;
+			block.setOwner(owner);
+			block.setType(blockType);
+			if(owner <= 8)
+			{
+				if(isSameTypeAndOwner(x-1,y,&block)){ if(!blocks) return true; else blocks->push_back(getBlock(x-1,y));}
+				if(isSameTypeAndOwner(x+1,y,&block)){ if(!blocks) return true; else blocks->push_back(getBlock(x+1,y));}
+				if(isSameTypeAndOwner(x,y-1,&block)){ if(!blocks) return true; else blocks->push_back(getBlock(x,y-1));}
+				if(isSameTypeAndOwner(x,y+1,&block)){ if(!blocks) return true; else blocks->push_back(getBlock(x,y+1));}
+			
+				if(diagonal)
+				{
+					if(isSameTypeAndOwner(x-1,y-1,&block)){ if(!blocks) return true; else blocks->push_back(getBlock(x-1,y-1));}
+					if(isSameTypeAndOwner(x-1,y+1,&block)){ if(!blocks) return true; else blocks->push_back(getBlock(x-1,y+1));}
+					if(isSameTypeAndOwner(x+1,y-1,&block)){ if(!blocks) return true; else blocks->push_back(getBlock(x+1,y-1));}
+					if(isSameTypeAndOwner(x+1,y-1,&block)){ if(!blocks) return true; else blocks->push_back(getBlock(x+1,y+1));}
+				}
+			} else {
+				if(isSameType(x-1,y,&block)){ if(!blocks) return true; else blocks->push_back(getBlock(x-1,y));}
+				if(isSameType(x+1,y,&block)){ if(!blocks) return true; else blocks->push_back(getBlock(x+1,y));}
+				if(isSameType(x,y-1,&block)){ if(!blocks) return true; else blocks->push_back(getBlock(x,y-1));}
+				if(isSameType(x,y+1,&block)){ if(!blocks) return true; else blocks->push_back(getBlock(x,y+1));}
+			
+				if(diagonal)
+				{
+					if(isSameType(x-1,y-1,&block)){ if(!blocks) return true; else blocks->push_back(getBlock(x-1,y-1));}
+					if(isSameType(x-1,y+1,&block)){ if(!blocks) return true; else blocks->push_back(getBlock(x-1,y+1));}
+					if(isSameType(x+1,y-1,&block)){ if(!blocks) return true; else blocks->push_back(getBlock(x+1,y-1));}
+					if(isSameType(x+1,y-1,&block)){ if(!blocks) return true; else blocks->push_back(getBlock(x+1,y+1));}
+				}
+			}*/
+
+			return (blocks?blocks->size()>0:false);
 		}
 
-		bool CLevelManager::isBlockTypeNear(GLint blockType, cml::vector2i logicalPos, bool diagonal, GLubyte owner)
+		bool CLevelManager::isBlockTypeNear(GLint blockType, cml::vector2i logicalPos, bool diagonal, GLubyte owner, std::vector<CBlock*> *blocks)
 		{
-			return isBlockTypeNear(blockType,logicalPos[0], logicalPos[1], diagonal,owner);
+			return isBlockTypeNear(blockType,logicalPos[0], logicalPos[1], diagonal,owner,blocks);
+		}
+
+		std::map<CBlock*,CBlock*> *CLevelManager::getUnclaimedBlocksList()
+		{
+			return &unclaimedBlocksList;
+		}
+
+		GLvoid CLevelManager::removeUnclaimedBlock(CBlock *block)
+		{
+			unclaimedBlocksList.erase(block);
+		}
+
+		GLvoid CLevelManager::addUnclaimedBlock(CBlock *block)
+		{
+			unclaimedBlocksList[block] = block;
 		}
 
 		CBlock *CLevelManager::getUnclaimedBlock(GLubyte owner)
@@ -722,7 +774,7 @@ namespace game_utils
 			{
 				if(!((CBlock*)iter->second)->isTaken())
 				{
-					if(isBlockTypeNear(CV_BLOCK_TYPE_CLAIMED_LAND_ID,((CBlock*)iter->second)->getLogicalPosition(),false,CV_CURRENT_PLAYER_ID))
+					if(isBlockTypeNear(CV_BLOCK_TYPE_CLAIMED_LAND_ID,((CBlock*)iter->second)->getLogicalPosition(),false,owner))
 					{
 						((CBlock*)iter->second)->setTaken(true);
 						return iter->second;
