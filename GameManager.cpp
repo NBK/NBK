@@ -33,6 +33,7 @@ namespace game_utils
 			economyManager	= NULL;
 			creatureManager	= NULL;
 			guiManager		= NULL;
+			pathManager		= NULL;
 			deltaTime		= NULL;
 			textPrinter		= NULL;
 			console			= NULL;
@@ -132,6 +133,11 @@ namespace game_utils
 			result&=guiManager->init();
 			CLogger::setEntryEnd("GUI manager (wraper) creation and init.");			
 
+			CLogger::setEntryStart();
+			pathManager = new CPathManager();
+			result&=pathManager->init();
+			CLogger::setEntryEnd("Path manager creation and init.");
+
 			console->init();
 
 			CLogger::setEntryEnd("Game managers (all above) init.");						
@@ -150,6 +156,7 @@ namespace game_utils
 			result&=creatureManager->update();	
 			result&=blockManager->update();
 			result&=levelManager->update();
+			result&=pathManager->update();
 
 			// usefull for calculating terrain-camera collisions
 			CV_CAMERA_OLD_POSITION = controlManager->getCamera()->getPosition();
@@ -183,7 +190,7 @@ namespace game_utils
 			result&=creatureManager->shutdown();
 			result&=roomManager->shutdown();
 			result&=blockManager->shutdown();
-			result&=levelManager->shutdown();
+			result&=levelManager->shutdown(); // TODO: fix error when shutting down
 			result&=renderManager->shutdown();
 			result&=collisionManager->shutdown();
 			result&=controlManager->shutdown();
@@ -192,6 +199,7 @@ namespace game_utils
 			result&=pickingManager->shutdown();			
 			result&=economyManager->shutdown();			
 			result&=guiManager->shutdown();			
+			result&=pathManager->shutdown();
 
 			delete CV_TEXTURE_LIST;
 			delete settingsManager;
@@ -208,6 +216,7 @@ namespace game_utils
 			delete economyManager;
 			delete creatureManager;
 			delete guiManager;
+			delete pathManager;
 			delete deltaTime;
 			delete textPrinter;
 			delete console;			
@@ -293,6 +302,11 @@ namespace game_utils
 		CGUIManager *CGameManager::getGUIManager()
 		{
 			return guiManager;
+		}
+
+		CPathManager *CGameManager::getPathManager()
+		{
+			return pathManager;
 		}
 
 		CText *CGameManager::getTextPrinter()

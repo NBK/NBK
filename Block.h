@@ -88,6 +88,7 @@ namespace game_objects
 		bool isLava();
 		bool isRoom();
 		bool isInRoom();
+		bool isWalkable(bool walkOnLava);
 		bool hasTorch();
 
 		GLvoid setRoomIndex(GLint roomIndex);
@@ -173,6 +174,10 @@ namespace game_objects
 		bool isSellable(GLint playerID);
 		bool isBuildable(GLint playerID);
 
+		// returns true if block is taken
+		bool isTaken();
+		GLvoid setTaken(bool taken);
+
 		// call this to add room model
 		GLvoid addModel(std::string modelName, cml::vector3f position, bool marked = false, GLfloat rotateY = 0.0f);
 		GLvoid addModel(block_objects::CBlockObject *blockObject);
@@ -227,6 +232,8 @@ namespace game_objects
 				room,
 				// true, if this block contains a torch
 				torch,
+				// true, if this block is taken
+				taken,
 				/* 
 					Used in terrain animation. Fields marked with true will 
 					not get deformed. Must be setup in finalize.

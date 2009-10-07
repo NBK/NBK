@@ -24,6 +24,7 @@ namespace game_objects
 		lava(false),
 		room(false),
 		torch(false),
+		taken(false),
 		roomIndex(-1),
 		finalized(false),
 		ceilingHeight(-1)
@@ -296,6 +297,11 @@ namespace game_objects
 	bool CBlock::isLow()
 	{
 		return low;
+	}
+
+	bool CBlock::isWalkable(bool walkOnLava)
+	{
+		return low && walkOnLava?true:lava;
 	}
 
 	bool CBlock::isWater()
@@ -669,6 +675,16 @@ namespace game_objects
 		}
 
 		return (type == CV_BLOCK_TYPE_CLAIMED_LAND_ID && playerID == owner && !isSellable(playerID));
+	}
+
+	bool CBlock::isTaken()
+	{
+		return taken;
+	}
+
+	GLvoid CBlock::setTaken(bool taken)
+	{
+		this->taken = taken;
 	}
 
 	GLvoid CBlock::addModel(string modelName, vector3f position, bool marked, GLfloat rotateY)

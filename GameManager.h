@@ -20,6 +20,7 @@
 #include "EconomyManager.h"
 #include "CreatureManager.h"
 #include "GUIManager.h"
+#include "PathManager.h"
 
 /*
 	Game manager controls every module of the game. From
@@ -54,6 +55,7 @@ namespace game_utils
 			CEconomyManager			*getEconomyManager();
 			CCreatureManager		*getCreatureManager();
 			CGUIManager				*getGUIManager();
+			CPathManager			*getPathManager();
 
 			control::CDeltaTime		*getDeltaTimeObject();
 			GLfloat					getDeltaTime();
@@ -76,6 +78,7 @@ namespace game_utils
 			CEconomyManager			*economyManager;
 			CCreatureManager		*creatureManager;
 			CGUIManager				*guiManager;
+			CPathManager			*pathManager;
 
 			control::CDeltaTime		*deltaTime;
 			utils::CText			*textPrinter;

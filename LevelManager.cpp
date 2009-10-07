@@ -308,12 +308,16 @@ namespace game_utils
 
 			fclose(inSLB);			
 
+			unclaimedBlocksList.clear();
+
 			// process the data
 			for (GLint y=0; y<CV_LEVEL_MAP_SIZE; y++)
 			{
 				for (GLint x=0; x<CV_LEVEL_MAP_SIZE; x++)
 				{
 					levelMap[y][x]->setType(slb[y][x].typeID);				
+					if(slb[y][x].typeID == CV_BLOCK_TYPE_UNCLAIMED_LAND_ID)
+						unclaimedBlocksList[getBlock(x,y)] = getBlock(x,y);
 				}
 			}
 
@@ -693,6 +697,39 @@ namespace game_utils
 		CBlock *CLevelManager::getBlock(vector2i pos)
 		{
 			return getBlock(pos[0],pos[1]);
+		}
+
+		bool CLevelManager::isBlockTypeNear(GLint blockType, GLint x, GLint y, bool diagonal, GLubyte owner)
+		{
+			if (!(getBlock(x-1,y-1) && getBlock(x+1,y+1)))
+				return false;
+			
+			for(GLint x1 = -1; x1<=1; x1++)
+				for(GLint y1 = -1; y1<=1; y1++)
+					if ((getBlock(x1,y1)->getType()==blockType) && (owner==getBlock(x1,y1)->getOwner()) )
+						return true;
+			return false;
+		}
+
+		bool CLevelManager::isBlockTypeNear(GLint blockType, cml::vector2i logicalPos, bool diagonal, GLubyte owner)
+		{
+			return isBlockTypeNear(blockType,logicalPos[0], logicalPos[1], diagonal,owner);
+		}
+
+		CBlock *CLevelManager::getUnclaimedBlock(GLubyte owner)
+		{
+			for (map<CBlock*,CBlock*>::iterator iter=unclaimedBlocksList.begin(); iter!=unclaimedBlocksList.end(); iter++)
+			{
+				if(!((CBlock*)iter->second)->isTaken())
+				{
+					if(isBlockTypeNear(CV_BLOCK_TYPE_CLAIMED_LAND_ID,((CBlock*)iter->second)->getLogicalPosition(),false,CV_CURRENT_PLAYER_ID))
+					{
+						((CBlock*)iter->second)->setTaken(true);
+						return iter->second;
+					}
+				}
+			}
+			return NULL;
 		}
 
 		bool CLevelManager::isNotSameTypeAndOwnerAndNotRockOrEarth(GLint targetX, GLint targetY, CBlock *sourceBlock)

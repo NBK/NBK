@@ -231,6 +231,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\BinaryHeap.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Block.cpp"
 				>
 			</File>
@@ -244,10 +248,6 @@
 			</File>
 			<File
 				RelativePath=".\BR5Model.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\BR5Model.h"
 				>
 			</File>
 			<File
@@ -447,11 +447,19 @@
 				>
 			</File>
 			<File
+				RelativePath=".\PathManager.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\PickingManager.cpp"
 				>
 			</File>
 			<File
 				RelativePath=".\Gui\PlayGUI.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Primitives.cpp"
 				>
 			</File>
 			<File
@@ -473,10 +481,6 @@
 						ObjectFile="$(IntDir)/$(InputName)1.obj"
 					/>
 				</FileConfiguration>
-			</File>
-			<File
-				RelativePath=".\Primitives.cpp"
-				>
 			</File>
 			<File
 				RelativePath=".\Gui\ProgressBar.cpp"
@@ -588,6 +592,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\BinaryHeap.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Block.h"
 				>
 			</File>
@@ -601,6 +609,10 @@
 			</File>
 			<File
 				RelativePath=".\boundingBox.h"
+				>
+			</File>
+			<File
+				RelativePath=".\BR5Model.h"
 				>
 			</File>
 			<File
@@ -805,6 +817,10 @@
 			</File>
 			<File
 				RelativePath=".\OGLUtils.h"
+				>
+			</File>
+			<File
+				RelativePath=".\PathManager.h"
 				>
 			</File>
 			<File

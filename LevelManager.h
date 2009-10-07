@@ -33,7 +33,7 @@ namespace game_utils
 			/*
 				Checks is all necessary level files are present.
 			*/
-			bool				levelExists(std::string levelFileName);
+			bool levelExists(std::string levelFileName);
 
 			/*
 				Returns block if x&y are in normal bounds else NULL.
@@ -44,6 +44,10 @@ namespace game_utils
 
 			GLint getBlockType(GLint x, GLint y);
 			GLint getBlockTypeOld(GLint x, GLint y); // for being able to use old code
+
+			bool isBlockTypeNear(GLint blockType, GLint x, GLint y, bool diagonal, GLubyte owner);
+			bool isBlockTypeNear(GLint blockType, cml::vector2i logicalPos, bool diagonal, GLubyte owner);
+			game_objects::CBlock *getUnclaimedBlock(GLubyte owner);
 
 			// returns true if this block is full type, 
 			bool isFullBlock(game_objects::CBlock *block);
@@ -87,6 +91,11 @@ namespace game_utils
 				A list of playable levels stored in data\resources\levels.conf.
 			*/
 			std::vector<std::string> levelFileNames;
+
+			/*
+				The block lists used for imps
+			*/
+			std::map<game_objects::CBlock*,game_objects::CBlock*> unclaimedBlocksList;
 
 			/*
 				A currently playing level;
