@@ -12,6 +12,7 @@
 #include <stdio.h>
 #include <time.h>
 #include "Resource.h"
+#include "CrashHandler.h"
 
 HDC			hDC=NULL;
 HGLRC		hRC=NULL;
@@ -425,6 +426,10 @@ int WINAPI WinMain(	HINSTANCE	hInstance,
 					LPSTR		lpCmdLine,			
 					int			nCmdShow)			
 {
+#ifdef _DEBUG
+	__try
+	{
+#endif
 	MSG		msg;									
 	BOOL	done=FALSE;
 
@@ -471,4 +476,11 @@ int WINAPI WinMain(	HINSTANCE	hInstance,
 	cleanupGameSystems();
 
 	return (msg.wParam);							
+#ifdef _DEBUG
+	}
+	__except( utils::CrashHandler::CreateMiniDump( GetExceptionInformation() ), EXCEPTION_EXECUTE_HANDLER ) 
+	{
+	}
+	return 0;
+#endif
 }

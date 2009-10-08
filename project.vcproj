@@ -76,7 +76,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="winmm.lib opengl32.lib glu32.lib odbc32.lib odbccp32.lib wininet.lib glew32.lib LUA/lua5.1.lib"
+				AdditionalDependencies="winmm.lib dbghelp.lib opengl32.lib glu32.lib odbc32.lib odbccp32.lib wininet.lib glew32.lib LUA/lua5.1.lib"
 				OutputFile=".\Debug/project.exe"
 				LinkIncremental="2"
 				SuppressStartupBanner="true"
@@ -273,6 +273,18 @@
 			<File
 				RelativePath=".\Conversions.cpp"
 				>
+			</File>
+			<File
+				RelativePath=".\CrashHandler.cpp"
+				>
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath=".\Creature.cpp"
@@ -646,6 +658,18 @@
 			<File
 				RelativePath=".\Conversions.h"
 				>
+			</File>
+			<File
+				RelativePath=".\CrashHandler.h"
+				>
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath=".\Creature.h"
