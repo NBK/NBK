@@ -62,7 +62,7 @@ namespace game_objects
 		}
 	}
 
-	GLvoid CImp::walkPath()
+	GLvoid CImp::walkPath(GLfloat deltaTime)
 	{
 		if(path.size() == 0)
 		{
@@ -90,6 +90,18 @@ namespace game_objects
 		//calculate new movement direction
 		moveVector[0] = tX-position[0];
 		moveVector[2] = tZ-position[2];
+		moveVector.normalize();
+
+		cml::vector3f oldPos = position;
+		position += moveVector*moveSpeed*deltaTime;
+
+		if ((position[0]-tX > 0.0f && oldPos[0]-tX<0.0f)
+			|| (position[0]-tX < 0.0f && oldPos[0]-tX>0.0f))
+			position[0] = tX;
+		if ((position[2]-tZ > 0.0f && oldPos[2]-tZ<0.0f)
+			|| (position[2]-tZ < 0.0f && oldPos[2]-tZ>0.0f))
+			position[2] = tZ;
+			
 	}
 
 	GLvoid CImp::update(GLfloat deltaTime)
@@ -97,7 +109,7 @@ namespace game_objects
 		// tmp update pos
 		//moveVector[0] = 0.0f;
 		//moveVector[2] = 0.1f;
-		moveSpeed = 0.005f;
+		moveSpeed = 0.001f;
 
 		if (impState == IS_IDLE)
 		{
@@ -118,8 +130,7 @@ namespace game_objects
 			//checkForWalling();
 		} else if (impState == IS_GOING_TO_CLAIMING_DESTINATION)
 		{
-			walkPath();
-			position += moveVector*moveSpeed*deltaTime;
+			walkPath(deltaTime);
 		} else if (impState == IS_AT_CLAIMING_BLOCK)
 		{
 			impState = IS_CLAIMING;

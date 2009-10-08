@@ -35,7 +35,7 @@ namespace game_objects
 	private:
 		GLvoid checkNearestForClaiming();
 		GLvoid checkForClaiming();
-		GLvoid walkPath();
+		GLvoid walkPath(GLfloat deltaTime);
 		IMP_STATE impState;
 	};
 };
