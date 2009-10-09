@@ -3327,13 +3327,13 @@ namespace game_utils
 					{
 						GLfloat py = y<=5||y>6?(GLfloat)y*step_y:3.0f*step_y+(GLfloat)y*step_y*0.5f;						
 
-						//globalDeformedMap[z][y][x] = calculatePerlin3D(vector3f((GLfloat)x*step_xz,py,(GLfloat)z*step_xz));
-						globalDeformedMap[z][y][x] = vector3f((GLfloat)x*step_xz,(GLfloat)y*step_y,(GLfloat)z*step_xz);
+						globalDeformedMap[z][y][x] = calculatePerlin3D(vector3f((GLfloat)x*step_xz,py,(GLfloat)z*step_xz));
+						//globalDeformedMap[z][y][x] = vector3f((GLfloat)x*step_xz,(GLfloat)y*step_y,(GLfloat)z*step_xz);
 
-						/*if (y>5)
+						if (y>5)
 						{
 							globalDeformedMap[z][y][x][1]+=(GLfloat)(rand()%100-50)/1000.0f;
-						}*/
+						}
 					}
 				}
 			}
