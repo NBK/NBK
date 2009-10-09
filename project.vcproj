@@ -76,7 +76,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="winmm.lib dbghelp.lib opengl32.lib glu32.lib odbc32.lib odbccp32.lib wininet.lib glew32.lib LUA/lua5.1.lib"
+				AdditionalDependencies="winmm.lib Externals\BugTrap\BugTrap.lib opengl32.lib glu32.lib odbc32.lib odbccp32.lib wininet.lib glew32.lib LUA/lua5.1.lib"
 				OutputFile=".\Debug/project.exe"
 				LinkIncremental="2"
 				SuppressStartupBanner="true"
@@ -158,6 +158,7 @@
 				ProgramDataBaseFileName=".\Release/"
 				WarningLevel="3"
 				SuppressStartupBanner="true"
+				DebugInformationFormat="3"
 				DisableSpecificWarnings="4996"
 			/>
 			<Tool
@@ -173,11 +174,12 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="winmm.lib opengl32.lib glu32.lib odbc32.lib odbccp32.lib wininet.lib glew32.lib LUA/lua5.1.lib"
+				AdditionalDependencies="winmm.lib Externals\BugTrap\BugTrap.lib opengl32.lib glu32.lib odbc32.lib odbccp32.lib wininet.lib glew32.lib LUA/lua5.1.lib"
 				OutputFile=".\Release/project.exe"
 				LinkIncremental="2"
 				SuppressStartupBanner="true"
 				GenerateManifest="false"
+				GenerateDebugInformation="true"
 				ProgramDatabaseFile=".\Release/project.pdb"
 				SubSystem="2"
 				RandomizedBaseAddress="1"
@@ -273,18 +275,6 @@
 			<File
 				RelativePath=".\Conversions.cpp"
 				>
-			</File>
-			<File
-				RelativePath=".\CrashHandler.cpp"
-				>
-				<FileConfiguration
-					Name="Release|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
 			</File>
 			<File
 				RelativePath=".\Creature.cpp"
@@ -471,10 +461,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\Primitives.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\Gui\Primitives.cpp"
 				>
 				<FileConfiguration
@@ -493,6 +479,10 @@
 						ObjectFile="$(IntDir)/$(InputName)1.obj"
 					/>
 				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\Primitives.cpp"
+				>
 			</File>
 			<File
 				RelativePath=".\Gui\ProgressBar.cpp"
@@ -658,18 +648,6 @@
 			<File
 				RelativePath=".\Conversions.h"
 				>
-			</File>
-			<File
-				RelativePath=".\CrashHandler.h"
-				>
-				<FileConfiguration
-					Name="Release|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
 			</File>
 			<File
 				RelativePath=".\Creature.h"
@@ -856,11 +834,11 @@
 				>
 			</File>
 			<File
-				RelativePath=".\Gui\Primitives.h"
+				RelativePath=".\Primitives.h"
 				>
 			</File>
 			<File
-				RelativePath=".\Primitives.h"
+				RelativePath=".\Gui\Primitives.h"
 				>
 			</File>
 			<File

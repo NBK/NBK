@@ -12,7 +12,7 @@
 #include <stdio.h>
 #include <time.h>
 #include "Resource.h"
-#include "CrashHandler.h"
+#include "BugTrap\BugTrap.h"
 
 HDC			hDC=NULL;
 HGLRC		hRC=NULL;
@@ -426,10 +426,13 @@ int WINAPI WinMain(	HINSTANCE	hInstance,
 					LPSTR		lpCmdLine,			
 					int			nCmdShow)			
 {
-#ifdef _DEBUG
-	__try
-	{
-#endif
+	// Setup exception handler
+	BT_SetAppName("NBKe");
+	BT_SetSupportEMail("wtfo-bugs@keeperklan.com");
+	BT_SetFlags(BTF_DETAILEDMODE | BTF_DESCRIBEERROR | BTF_INTERCEPTSUEF | BTF_EDITMAIL | BTF_ATTACHREPORT | BTF_SCREENCAPTURE);
+	BT_SetSupportURL("http://forum.keeperklan.com");
+	BT_InstallSehFilter();
+
 	MSG		msg;									
 	BOOL	done=FALSE;
 
@@ -476,11 +479,4 @@ int WINAPI WinMain(	HINSTANCE	hInstance,
 	cleanupGameSystems();
 
 	return (msg.wParam);							
-#ifdef _DEBUG
-	}
-	__except( utils::CrashHandler::CreateMiniDump( GetExceptionInformation() ), EXCEPTION_EXECUTE_HANDLER ) 
-	{
-	}
-	return 0;
-#endif
 }
