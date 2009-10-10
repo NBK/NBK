@@ -38,7 +38,7 @@ using namespace game_utils;
 using namespace utils;
 using namespace control;
 
-#define WINDOW_TITLE "Natural Born Keeper Extreme"
+#define WINDOW_TITLE "War for the Overworld"
 
 managers::CGameManager *game_utils::CV_GAME_MANAGER = NULL;
 bool allInited = false;
