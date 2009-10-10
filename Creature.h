@@ -14,7 +14,8 @@ namespace game_objects
 
 		enum ACTION_ANIMATIONS
 		{
-			AA_WALK = 0
+			AA_WALK = 0,
+			AA_CLAIM
 			// TODO, add the rest
 		};
 

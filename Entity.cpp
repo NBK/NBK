@@ -7,7 +7,9 @@ namespace game_objects
 {
 	GLint CEntity::IDCount = 0;
 
-	CEntity::CEntity(): position(vector3f(0.0f,0.0f,0.0f)), active(false)
+	CEntity::CEntity(): position(vector3f(0.0f,0.0f,0.0f)), 
+						rotation(vector3f(0.0f,0.0f,0.0f)), 
+						active(false)
 	{
 		ID = IDCount++;
 	}
@@ -15,6 +17,7 @@ namespace game_objects
 	CEntity::CEntity(CEntity &entity)
 	{
 		this->position=entity.position;
+		this->rotation=entity.rotation;
 		this->active=entity.active;
 
 		//this->ID=ID;
@@ -30,6 +33,11 @@ namespace game_objects
 		this->position=position;
 	}
 
+	GLvoid CEntity::setRotation(vector3f rotation)
+	{
+		this->rotation=rotation;
+	}
+
 	GLvoid CEntity::setActive(bool active)
 	{
 		this->active=active;
@@ -43,6 +51,11 @@ namespace game_objects
 	GLfloat	*CEntity::getPositionP()
 	{
 		return &position[0];
+	}
+
+	vector3f CEntity::getRotation()
+	{
+		return rotation;
 	}
 
 	bool CEntity::isActive()
@@ -63,5 +76,19 @@ namespace game_objects
 	GLvoid CEntity::moveBack()
 	{
 		glTranslatef(-position[0],-position[1],-position[2]);
+	}
+
+	GLvoid CEntity::rotateTo()
+	{
+		glRotatef(rotation[0],1.0f,0.0f,0.0f);
+		glRotatef(rotation[1],0.0f,1.0f,0.0f);
+		glRotatef(rotation[2],0.0f,0.0f,1.0f);
+	}
+
+	GLvoid CEntity::rotateBack()
+	{
+		glRotatef(-rotation[0],1.0f,0.0f,0.0f);
+		glRotatef(-rotation[1],0.0f,1.0f,0.0f);
+		glRotatef(-rotation[2],0.0f,0.0f,1.0f);
 	}
 };

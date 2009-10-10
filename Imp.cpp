@@ -9,6 +9,7 @@ namespace game_objects
 	CImp::CImp(): CCreature()
 	{
 		impState = IS_IDLE;
+		moveSpeed = 0.0005f;
 	}
 
 	CImp::~CImp()
@@ -91,6 +92,10 @@ namespace game_objects
 		moveVector[0] = tX-position[0];
 		moveVector[2] = tZ-position[2];
 		moveVector.normalize();
+		if(moveVector[2]>0.0f)
+			rotation[1] = atan(moveVector[0]/moveVector[2])/M_PI*180.0f;
+		else
+			rotation[1] = 180.0f+atan(moveVector[0]/moveVector[2])/M_PI*180.0f;
 
 		cml::vector3f oldPos = position;
 		position += moveVector*moveSpeed*deltaTime;
@@ -106,11 +111,6 @@ namespace game_objects
 
 	GLvoid CImp::update(GLfloat deltaTime)
 	{
-		// tmp update pos
-		//moveVector[0] = 0.0f;
-		//moveVector[2] = 0.1f;
-		moveSpeed = 0.001f;
-
 		if (impState == IS_IDLE)
 		{
 			//check for next space digging
@@ -134,6 +134,7 @@ namespace game_objects
 		} else if (impState == IS_AT_CLAIMING_BLOCK)
 		{
 			impState = IS_CLAIMING;
+			useAction(AA_CLAIM);
 		} else if (impState == IS_CLAIMING)
 		{
 			CV_GAME_MANAGER->getLevelManager()->getBlock(cml::vector2i((int)floor(position[0]/CV_BLOCK_WIDTH),(int)floor(position[2]/CV_BLOCK_DEPTH)))->decLife(deltaTime*moveSpeed);
@@ -141,6 +142,7 @@ namespace game_objects
 			{
 				CV_GAME_MANAGER->getLevelManager()->getBlock(cml::vector2i((int)floor(position[0]/CV_BLOCK_WIDTH),(int)floor(position[2]/CV_BLOCK_DEPTH)))->claimBlock(CV_CURRENT_PLAYER_ID);
 				impState = IS_IDLE;
+				useAction(AA_WALK);
 			}
 		}
 	}

@@ -57,6 +57,7 @@ namespace game_utils
 				imp->setName(creatureName);
 				imp->setModel(CV_GAME_MANAGER->getResourceManager()->getModel("MODEL_IMP"));
 				imp->setAction(CCreature::AA_WALK,5,9);
+				imp->setAction(CCreature::AA_CLAIM,0,4);
 				imp->useAction(CCreature::AA_WALK);
 				allCreatures.push_back(imp);
 			}

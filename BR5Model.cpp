@@ -266,9 +266,9 @@ namespace loaders
 
 							GLint nextFrameIndex = currentFrame+1;
 
-							if (connected && nextFrameIndex == endFrame)
+							if (connected && currentFrame == endFrame)
 							{
-								nextFrameIndex = 0;
+								nextFrameIndex = startFrame;
 							}
 
 							vertexCoordinates[v+0] = vertexCoordinatesAnim[nextFrameIndex][v+0]*animNextFrame+vertexCoordinatesAnim[currentFrame][v+0]*(1.0f-animNextFrame);

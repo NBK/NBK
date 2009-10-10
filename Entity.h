@@ -16,20 +16,25 @@ namespace game_objects
 		~CEntity();
 
 		virtual GLvoid setPosition(cml::vector3f position);
+		virtual GLvoid setRotation(cml::vector3f rotation);
 		virtual GLvoid setActive(bool active);
 
 		cml::vector3f	getPosition();
 		GLfloat			*getPositionP();
+		cml::vector3f	getRotation();
 		bool			isActive();
 
 		geometry::sBoundingBox *getBoundingBox();
 
 		GLvoid moveTo();
 		GLvoid moveBack();
+		GLvoid rotateTo();
+		GLvoid rotateBack();
 
 	protected:
 
 		cml::vector3f	position;
+		cml::vector3f	rotation;
 		bool			active;
 
 		/*

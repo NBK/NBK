@@ -57,7 +57,9 @@ namespace game_objects
 		if (model)
 		{
 			CEntity::moveTo();
+			CEntity::rotateTo();
 			model->draw(deltaTime);
+			CEntity::rotateBack();
 			CEntity::moveBack();
 		}
 	}

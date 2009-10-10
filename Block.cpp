@@ -592,23 +592,23 @@ namespace game_objects
 	{
 		if (type==CV_BLOCK_TYPE_WALL_ID || type==CV_BLOCK_TYPE_WALL_WITH_TORCH_PLATE_ID)
 		{
-			life=3.0f;
+			life=9.0f;
 		}
 		else if (type==CV_BLOCK_TYPE_EARTH_ID || type==CV_BLOCK_TYPE_EARTH_WITH_TORCH_PLATE_ID)
 		{
-			life=0.5f;
+			life=1.5f;
 		}
 		else if (type==CV_BLOCK_TYPE_GOLD_ID)
 		{
-			life=3.0f;
+			life=12.0f;
 		}
 		else if (type==CV_BLOCK_TYPE_UNCLAIMED_LAND_ID)
 		{
-			life=0.2f;
+			life=0.6f;
 		}
 		else
 		{
-			life=1.0f;
+			life=3.0f;
 		}
 	}
 
