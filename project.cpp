@@ -427,7 +427,7 @@ int WINAPI WinMain(	HINSTANCE	hInstance,
 					int			nCmdShow)			
 {
 	// Setup exception handler
-	BT_SetAppName("NBKe");
+	BT_SetAppName("WFTO");
 	BT_SetSupportEMail("wtfo-bugs@keeperklan.com");
 	BT_SetFlags(BTF_DETAILEDMODE | BTF_DESCRIBEERROR | BTF_INTERCEPTSUEF | BTF_EDITMAIL | BTF_ATTACHREPORT | BTF_SCREENCAPTURE);
 	BT_SetSupportURL("http://forum.keeperklan.com");
