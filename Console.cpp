@@ -183,6 +183,7 @@ namespace control
 
 	bool CConsole::cutChar(char chr)
 	{
+		if(currentLine.length() == 0) return false;
 		if (currentLine[currentLine.length()-1]==chr)
 		{
 			currentLine=currentLine.substr(0,currentLine.length()-1);

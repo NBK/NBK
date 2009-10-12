@@ -1,8 +1,22 @@
 #include "commons.h"
 #include "PathManager.h"
+#include "Conversions.h"
 
 // Console values here
-#define DUMMY   "DUMMY"
+#define SET_PATH_FORMULA_MANHATTAN			"SPF1"
+#define SET_PATH_FORMULA_MAXDXDY			"SPF2"
+#define SET_PATH_FORMULA_DIAGONAL_SHORTCUT	"SPF3"
+#define SET_PATH_FORMULA_EUCLIDEAN			"SPF4"
+#define SET_PATH_FORMULA_EUCLIDEAN_NO_SQR	"SPF5"
+#define SET_PATH_FORMULA_CUSTOM1			"SPF6"
+#define SET_PATH_FORMULA_NONE				"SPF7"
+
+#define SET_HEURISTIC						"SETHEURISTIC"
+#define SET_PUNISHDIRECTIONCHANGE			"PUNISHDIRCHANGE"
+#define SET_DIAGONALMOVES					"DIAGONALMOVES"
+#define SET_HEAVYDIAGONALS					"HEAVYDIAGONALS"
+#define SET_TIEBREAKER						"TIEBREAKER"
+#define SET_SEARCHLIMIT						"SEARCHLIMIT"
 
 namespace game_utils
 {
@@ -34,8 +48,21 @@ namespace game_utils
 			//CLogger::setEntryStart();
 			//CLogger::setEntryEnd("\tStarting path finder");
 
-			//CV_GAME_MANAGER->getConsole()->registerClass(this,"PATH MANAGER");
-			//CV_GAME_MANAGER->getConsole()->addParam(DUMMY,"() Just here for future use");
+			//DEBUGGING PARAMETERS
+			/*CV_GAME_MANAGER->getConsole()->registerClass(this,"PATH MANAGER");
+			CV_GAME_MANAGER->getConsole()->addParam(SET_PATH_FORMULA_MANHATTAN,"() Set the path formula to Manhattan");
+			CV_GAME_MANAGER->getConsole()->addParam(SET_PATH_FORMULA_MAXDXDY,"() Set the path formula to MaxDXDY");
+			CV_GAME_MANAGER->getConsole()->addParam(SET_PATH_FORMULA_DIAGONAL_SHORTCUT,"() Set the path formula to Diagonal Shortcut");
+			CV_GAME_MANAGER->getConsole()->addParam(SET_PATH_FORMULA_EUCLIDEAN,"() Set the path formula to Euclidean");
+			CV_GAME_MANAGER->getConsole()->addParam(SET_PATH_FORMULA_EUCLIDEAN_NO_SQR,"() Set the path formula to Euclidean no root");
+			CV_GAME_MANAGER->getConsole()->addParam(SET_PATH_FORMULA_CUSTOM1,"() Set the path formula to Custom1");
+			CV_GAME_MANAGER->getConsole()->addParam(SET_PATH_FORMULA_NONE,"() Set the path formula to None");
+			CV_GAME_MANAGER->getConsole()->addParam(SET_HEURISTIC,"(int) Set the heuristic estimate value multiplier");
+			CV_GAME_MANAGER->getConsole()->addParam(SET_PUNISHDIRECTIONCHANGE,"(bool) Set whether direction changes are punished");
+			CV_GAME_MANAGER->getConsole()->addParam(SET_DIAGONALMOVES,"(bool) Allow diagonal moves?");
+			CV_GAME_MANAGER->getConsole()->addParam(SET_HEAVYDIAGONALS,"(bool) Do we punish diagonals?");
+			CV_GAME_MANAGER->getConsole()->addParam(SET_TIEBREAKER,"(bool) Do we turn on tie breaker?");
+			CV_GAME_MANAGER->getConsole()->addParam(SET_SEARCHLIMIT,"(int) How many closed nodes do we go through?");*/
 
 			return true;
 		}
@@ -55,11 +82,71 @@ namespace game_utils
 			string checkResult = "";
 			std::vector<string> tParams;
 
-			if (keyword==DUMMY)
+			if(keyword == SET_PATH_FORMULA_MANHATTAN)
+				setFormula(Manhattan);
+			else if(keyword == SET_PATH_FORMULA_MAXDXDY)
+				setFormula(MaxDXDY);
+			else if(keyword == SET_PATH_FORMULA_DIAGONAL_SHORTCUT)
+				setFormula(DiagonalShortcut);
+			else if(keyword == SET_PATH_FORMULA_EUCLIDEAN)
+				setFormula(Euclidean);
+			else if(keyword == SET_PATH_FORMULA_EUCLIDEAN_NO_SQR)
+				setFormula(EuclideanNoSQR);
+			else if(keyword == SET_PATH_FORMULA_CUSTOM1)
+				setFormula(Custom1);
+			else if(keyword == SET_PATH_FORMULA_NONE)
+				setFormula(None);
+			else if(keyword == SET_HEURISTIC)
 			{
+				if (!CConsoleListener::checkParams(params,1,checkResult,tParams))
+				{
+					return "<>";
+				}
+				heuristicEstimate = CConversions::strToInt(tParams[0]);
 			}
-
-			return "<>";
+			else if(keyword == SET_PUNISHDIRECTIONCHANGE)
+			{
+				punishDirectionChange = !punishDirectionChange;
+				if (punishDirectionChange)
+					return "Done (Set to ON)";
+				else
+					return "Done (Set to OFF)";
+			}
+			else if(keyword == SET_DIAGONALMOVES)
+			{
+				diagonalMoves = !diagonalMoves;
+				if (diagonalMoves)
+					return "Done (Set to ON)";
+				else
+					return "Done (Set to OFF)";
+			}
+			else if(keyword == SET_HEAVYDIAGONALS)
+			{
+				heavyDiagonals = !heavyDiagonals;
+				if (heavyDiagonals)
+					return "Done (Set to ON)";
+				else
+					return "Done (Set to OFF)";
+			}
+			else if(keyword == SET_TIEBREAKER)
+			{
+				tieBreaker = !tieBreaker;
+				if (tieBreaker)
+					return "Done (Set to ON)";
+				else
+					return "Done (Set to OFF)";
+			}
+			else if(keyword == SET_SEARCHLIMIT)
+			{
+				if (!CConsoleListener::checkParams(params,1,checkResult,tParams))
+				{
+					return "<>";
+				}
+				searchLimit = CConversions::strToInt(tParams[0]);
+			}
+			else
+				return "<>";
+			return "Done";
 		}
 
 		void CPathManager::setFormula(HeuristicFormula formula)
@@ -260,7 +347,7 @@ namespace game_utils
 						cml::vector2i newPos = cml::vector2i(currPos[0]+directions[i][0],currPos[1]+directions[i][1]);
 						
 						//Is new position outside the bounds, skip
-						if(newPos[0] < 0 || newPos[0] > CV_LEVEL_MAP_SIZE || newPos[1] < 0 || newPos[1] > CV_LEVEL_MAP_SIZE)
+						if(newPos[0] < 0 || newPos[0] >= CV_LEVEL_MAP_SIZE || newPos[1] < 0 || newPos[1] >= CV_LEVEL_MAP_SIZE)
 							continue;
 
 						//If block is not walkable and isn't the end, skip

@@ -31,6 +31,8 @@ namespace game_objects
 			for(unclaimedBlocksIter=unclaimedBlocks.begin(); unclaimedBlocksIter!=unclaimedBlocks.end(); unclaimedBlocksIter++)
 			{
 				block = *unclaimedBlocksIter;
+				if(block->isTaken())
+					continue;
 				claimedBlocks.clear();
 				if(CV_GAME_MANAGER->getLevelManager()->isBlockTypeNear(CV_BLOCK_TYPE_CLAIMED_LAND_ID,block->getLogicalPosition(),false,CV_CURRENT_PLAYER_ID,&claimedBlocks))
 				{

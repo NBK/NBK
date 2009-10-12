@@ -702,7 +702,7 @@ namespace game_objects
 
 				delete bObject;
 
-				blockObjects.erase(rmIter);
+				rmIter = blockObjects.erase(rmIter);
 			}
 			else
 			{
