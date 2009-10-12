@@ -26,6 +26,8 @@ namespace game_objects
 
 		if(CV_GAME_MANAGER->getLevelManager()->isBlockTypeNear(CV_BLOCK_TYPE_UNCLAIMED_LAND_ID,cml::vector2i((int)floor(position[0]/CV_BLOCK_WIDTH),(int)floor(position[2]/CV_BLOCK_DEPTH)),true,CV_PLAYER_UNDEFINED,&unclaimedBlocks))
 		{
+			int oldSearchLimit = CV_GAME_MANAGER->getPathManager()->getSearchLimit();
+			CV_GAME_MANAGER->getPathManager()->setSearchLimit(2);
 			for(unclaimedBlocksIter=unclaimedBlocks.begin(); unclaimedBlocksIter!=unclaimedBlocks.end(); unclaimedBlocksIter++)
 			{
 				block = *unclaimedBlocksIter;
@@ -33,11 +35,11 @@ namespace game_objects
 				if(CV_GAME_MANAGER->getLevelManager()->isBlockTypeNear(CV_BLOCK_TYPE_CLAIMED_LAND_ID,block->getLogicalPosition(),false,CV_CURRENT_PLAYER_ID,&claimedBlocks))
 				{
 					path.clear();
-					CV_GAME_MANAGER->getPathManager()->findPath(cml::vector2i((int)floor(position[0]/CV_BLOCK_WIDTH),(int)floor(position[2]/CV_BLOCK_DEPTH)),block->getLogicalPosition(),&path);
-					if(path.size()<=2)
+					if(CV_GAME_MANAGER->getPathManager()->findPath(cml::vector2i((int)floor(position[0]/CV_BLOCK_WIDTH),(int)floor(position[2]/CV_BLOCK_DEPTH)),block->getLogicalPosition(),&path))
 						possBlocks.push_back(block);
 				}
 			}
+			CV_GAME_MANAGER->getPathManager()->setSearchLimit(oldSearchLimit);
 			if(possBlocks.size()>0)
 			{
 				GLint blockNum = rand()%possBlocks.size();
@@ -57,9 +59,11 @@ namespace game_objects
 		CBlock *block = CV_GAME_MANAGER->getLevelManager()->getUnclaimedBlock(CV_CURRENT_PLAYER_ID);
 		if (block)
 		{
-			CV_GAME_MANAGER->getPathManager()->findPath(cml::vector2i((int)floor(position[0]/CV_BLOCK_WIDTH),(int)floor(position[2]/CV_BLOCK_DEPTH)),block->getLogicalPosition(),&path);
-			if(path.size() > 0)
+			cml::vector2i currPos = cml::vector2i((int)floor(position[0]/CV_BLOCK_WIDTH),(int)floor(position[2]/CV_BLOCK_DEPTH));
+			if(CV_GAME_MANAGER->getPathManager()->findPath(currPos,block->getLogicalPosition(),&path))
 				impState = IS_GOING_TO_CLAIMING_DESTINATION;
+			else
+				block->setTaken(false);
 		}
 	}
 
@@ -92,10 +96,8 @@ namespace game_objects
 		moveVector[0] = tX-position[0];
 		moveVector[2] = tZ-position[2];
 		moveVector.normalize();
-		if(moveVector[2]>0.0f)
-			rotation[1] = atan(moveVector[0]/moveVector[2])/M_PI*180.0f;
-		else
-			rotation[1] = 180.0f+atan(moveVector[0]/moveVector[2])/M_PI*180.0f;
+		
+		rotation[1] = 90.0f-(float)(atan2(moveVector[2],moveVector[0])*180.0f/M_PI);
 
 		cml::vector3f oldPos = position;
 		position += moveVector*moveSpeed*deltaTime;

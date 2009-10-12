@@ -1,5 +1,5 @@
 #include "commons.h"
-#include "PathManager.h"
+#include "PathManager1.h"
 #include "BinaryHeap.h"
 
 using namespace utils;
@@ -11,15 +11,15 @@ namespace game_utils
 {
 	namespace managers
 	{
-		CPathManager::CPathManager(): CManager(), CConsoleListener()
+		CPathManager1::CPathManager1()
 		{
 		}
 
-		CPathManager::~CPathManager()
+		CPathManager1::~CPathManager1()
 		{
 		}
 
-		bool CPathManager::init()
+		bool CPathManager1::init()
 		{
 			//CLogger::setEntryStart();
 			//CLogger::setEntryEnd("\tStarting path finder");
@@ -30,17 +30,17 @@ namespace game_utils
 			return true;
 		}
 
-		bool CPathManager::update()
+		bool CPathManager1::update()
 		{
 			return true;
 		}
 
-		bool CPathManager::shutdown()
+		bool CPathManager1::shutdown()
 		{
 			return true;
 		}
 
-		string CPathManager::onAction(string keyword, string params)
+		string CPathManager1::onAction(string keyword, string params)
 		{
 			string checkResult = "";
 			std::vector<string> tParams;
@@ -52,12 +52,12 @@ namespace game_utils
 			return "<>";
 		}
 
-		void CPathManager::findPath(cml::vector2i start, cml::vector2i end, std::vector<cml::vector2i> *path)
+		bool CPathManager1::findPath(cml::vector2i start, cml::vector2i end, std::vector<cml::vector2i> *path)
 		{
 			return findPath(start[0],start[1],end[0],end[1],path);
 		}
 
-		void CPathManager::findPath(GLint startX, GLint startY, GLint endX, GLint endY, std::vector<cml::vector2i> *path)
+		bool CPathManager1::findPath(GLint startX, GLint startY, GLint endX, GLint endY, std::vector<cml::vector2i> *path)
 		{
 			int xCnt, yCnt;	
 			int ParentX, ParentY;
@@ -66,12 +66,12 @@ namespace game_utils
 
 //Make sure the starting point and ending point are not the same
 			if((startX == endX) && (startY == endY))
-				return;
+				return true;
 
 			CLevelManager *lvlMan = CV_GAME_MANAGER->getLevelManager();
 //Make sure the starting/ending point is not a wall
 			if(!lvlMan->getBlock(startX,startY)->isLow())
-				return;
+				return false;
 
 //Set the flags
 			bool PathFound = false;
@@ -207,7 +207,7 @@ namespace game_utils
 				{
 					PathFound = false;
 					PathHunt = false;
-					return;
+					return false;
 				}
 
 //If we find a path
@@ -234,10 +234,10 @@ namespace game_utils
 					tX = PathMap[sX][sY].Parent[0];
 					tY = PathMap[sX][sY].Parent[1];
 					if(tX == startX && tY == startY)
-						return;
+						return true;
 				}
 			}
-			return;
+			return false;
 		}
 	}
 }

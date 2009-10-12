@@ -453,6 +453,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\PathManager1.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\PickingManager.cpp"
 				>
 			</File>
@@ -823,6 +827,10 @@
 			</File>
 			<File
 				RelativePath=".\PathManager.h"
+				>
+			</File>
+			<File
+				RelativePath=".\PathManager1.h"
 				>
 			</File>
 			<File

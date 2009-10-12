@@ -784,6 +784,21 @@ namespace game_utils
 			return NULL;
 		}
 
+		void CLevelManager::getUnclaimedBlock(GLubyte owner, std::vector<game_objects::CBlock*> *blocks)
+		{
+			for (map<CBlock*,CBlock*>::iterator iter=unclaimedBlocksList.begin(); iter!=unclaimedBlocksList.end(); iter++)
+			{
+				if(!((CBlock*)iter->second)->isTaken())
+				{
+					if(isBlockTypeNear(CV_BLOCK_TYPE_CLAIMED_LAND_ID,((CBlock*)iter->second)->getLogicalPosition(),false,owner))
+					{
+						blocks->push_back(iter->second);
+					}
+				}
+			}
+			return;
+		}
+
 		bool CLevelManager::isNotSameTypeAndOwnerAndNotRockOrEarth(GLint targetX, GLint targetY, CBlock *sourceBlock)
 		{
 			GLint type = sourceBlock->getType();

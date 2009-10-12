@@ -1,5 +1,5 @@
-#ifndef PATH_MANAGER_H
-#define PATH_MANAGER_H
+#ifndef PATH_MANAGER_1_H
+#define PATH_MANAGER_1_H
 
 #include "Manager.h"
 #include "ConsoleListener.h"
@@ -14,11 +14,11 @@ namespace game_utils
 {
 	namespace managers
 	{
-		class CPathManager: public CManager, public control::CConsoleListener
+		class CPathManager1: public CPathManager
 		{
 		public:
-			CPathManager();
-			~CPathManager();
+			CPathManager1();
+			~CPathManager1();
 
 			// from CManager
 			virtual bool init();
@@ -28,8 +28,8 @@ namespace game_utils
 			// from CConsoleListener
 			virtual std::string onAction(std::string keyword, std::string params);
 
-			void CPathManager::findPath(GLint startX, GLint startY, GLint endX, GLint endY, std::vector<cml::vector2i> *path);
-			void CPathManager::findPath(cml::vector2i start, cml::vector2i end, std::vector<cml::vector2i> *path);
+			virtual bool findPath(GLint startX, GLint startY, GLint endX, GLint endY, std::vector<cml::vector2i> *path);
+			virtual bool findPath(cml::vector2i start, cml::vector2i end, std::vector<cml::vector2i> *path);
 
 		private:
 			BinaryHeap Heap;
@@ -47,4 +47,4 @@ namespace game_utils
 	};
 };
 
-#endif // PATH_MANAGER_H
+#endif // PATH_MANAGER_1_H
