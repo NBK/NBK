@@ -208,12 +208,12 @@ namespace game_utils
 		{
 			return formula;
 		}
-		
+
 		int CPathManager::getHeuristicEstimate()
 		{
 			return heuristicEstimate;
 		}
-		
+
 		bool CPathManager::getPunishDirectionChange()
 		{
 			return punishDirectionChange;
@@ -223,12 +223,12 @@ namespace game_utils
 		{
 			return directionChangePenalty;
 		}
-		
+
 		bool CPathManager::getDiagonalMoves()
 		{
 			return diagonalMoves;
 		}
-		
+
 		bool CPathManager::getHeavyDiagonals()
 		{
 			return heavyDiagonals;
@@ -238,7 +238,7 @@ namespace game_utils
 		{
 			return diagonalPenalty;
 		}
-		
+
 		bool CPathManager::getTieBreaker()
 		{
 			return tieBreaker;
@@ -248,7 +248,7 @@ namespace game_utils
 		{
 			return tieBreakerValue;
 		}
-		
+
 		int CPathManager::getSearchLimit()
 		{
 			return searchLimit;

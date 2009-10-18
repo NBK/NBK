@@ -350,11 +350,7 @@ namespace game_utils
 
 			// if we are not selling or buying we don't have to process blocks (just objects TODO)
 			ACTION_EVENT *ae = CV_GAME_MANAGER->getGUIManager()->getLastActionEvent();
-			if (!(ae->message_group==AEMG_BUILD_ROOMS || ae->message_group==AEMG_BUILD_DOORS || ae->message_group==AEMG_BUILD_TRAPS))
-			{
-				return;
-			}
-
+			
 			// get the block we have our cousor on
 			CBlock *pickedBlock = CV_GAME_MANAGER->getPickingManager()->getLastPickedBlock();
 
@@ -380,6 +376,11 @@ namespace game_utils
 
 				if (pickedBlock->isLow())
 				{
+					if (!(ae->message_group==AEMG_BUILD_ROOMS || ae->message_group==AEMG_BUILD_DOORS || ae->message_group==AEMG_BUILD_TRAPS))
+					{
+						return;
+					}
+
 					// draw the selection box					
 					vector3f e(bbox->E);
 					vector3f f(bbox->F);
@@ -422,8 +423,11 @@ namespace game_utils
 				}
 				else
 				{		
-				
-					glColor3f(type==CV_BLOCK_TYPE_ROCK_ID?1.0f:0.0f,type==CV_BLOCK_TYPE_ROCK_ID?0.0f:1.0f,0.0f);
+					if (!(ae->message_group==AEMG_BUILD_ROOMS || ae->message_group==AEMG_BUILD_DOORS || ae->message_group==AEMG_BUILD_TRAPS))
+						glColor3f(type==CV_BLOCK_TYPE_ROCK_ID?1.0f:0.0f,type==CV_BLOCK_TYPE_ROCK_ID?0.0f:1.0f,0.0f);
+					else
+						glColor3f(1.0f,0.0f,0.0f);
+			
 					glBegin(GL_LINES);
 					{
 						glVertex3fv(&a[0]); glVertex3fv(&b[0]);
