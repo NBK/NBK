@@ -24,6 +24,7 @@ namespace game_objects
 		lava(false),
 		room(false),
 		torch(false),
+		marked(false),
 		taken(false),
 		roomIndex(-1),
 		finalized(false),
@@ -247,6 +248,7 @@ namespace game_objects
 		lava	= (this->type==CV_BLOCK_TYPE_LAVA_ID);
 
 		room	= low && !water && !lava && this->type!=CV_BLOCK_TYPE_CLAIMED_LAND_ID && this->type!=CV_BLOCK_TYPE_UNCLAIMED_LAND_ID;	
+		marked  = false;
 		
 		if (roomIndex!=-1)
 		{
@@ -757,9 +759,19 @@ namespace game_objects
 		return taken;
 	}
 
+	bool CBlock::isMarked()
+	{
+		return marked;
+	}
+
 	GLvoid CBlock::setTaken(bool taken)
 	{
 		this->taken = taken;
+	}
+
+	GLvoid CBlock::setMarked(bool marked)
+	{
+		this->marked = marked;
 	}
 
 	GLvoid CBlock::addModel(string modelName, vector3f position, bool marked, GLfloat rotateY)

@@ -178,6 +178,10 @@ namespace game_objects
 		bool isTaken();
 		GLvoid setTaken(bool taken);
 
+		//returns true if block is marked for digging
+		bool isMarked();
+		GLvoid setMarked(bool marked);
+
 		// call this to add room model
 		GLvoid addModel(std::string modelName, cml::vector3f position, bool marked = false, GLfloat rotateY = 0.0f);
 		GLvoid addModel(block_objects::CBlockObject *blockObject);
@@ -241,6 +245,8 @@ namespace game_objects
 				torch,
 				// true, if this block is taken
 				taken,
+				// true, if block is marked for digging
+				marked,
 				/* 
 					Used in terrain animation. Fields marked with true will 
 					not get deformed. Must be setup in finalize.
