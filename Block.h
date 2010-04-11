@@ -191,6 +191,7 @@ namespace game_objects
 
 		GLvoid CBlock::digBlock();
 		GLvoid CBlock::claimBlock(GLubyte owner);
+		GLvoid CBlock::fortifyBlock(GLubyte owner);
 
 		GLvoid addLife(GLfloat life);
 		GLvoid decLife(GLfloat life);

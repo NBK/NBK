@@ -28,6 +28,9 @@ namespace game_objects
 			IS_GOING_TO_DIGGING_DESTINATION,
 			IS_AT_DIGGING_BLOCK,
 			IS_DIGGING,
+			IS_GOING_TO_WALLING_DESTINATION,
+			IS_AT_WALLING_BLOCK,
+			IS_WALLING,
 
 			// utility enums
 			IS_ROTATING
@@ -35,8 +38,10 @@ namespace game_objects
 	private:
 		GLvoid checkNearestForDigging();
 		GLvoid checkNearestForClaiming();
+		GLvoid checkNearestForWalling();
 		GLvoid checkForDigging();
 		GLvoid checkForClaiming();
+		GLvoid checkForWalling();
 		GLvoid walkPath(GLfloat deltaTime);
 		IMP_STATE impState;
 	};

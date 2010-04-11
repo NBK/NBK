@@ -688,6 +688,30 @@ namespace game_objects
 		}
 	}
 
+	GLvoid CBlock::fortifyBlock(GLubyte owner)
+	{
+		this->owner = owner;
+		setType(CV_BLOCK_TYPE_WALL_ID);
+		
+		//init and finalize surrounding blocks aswell as this one
+		CV_GAME_MANAGER->getLevelManager()->getBlock(logicalPosition[0],logicalPosition[1]-1)->init();
+		CV_GAME_MANAGER->getLevelManager()->getBlock(logicalPosition[0]-1,logicalPosition[1])->init();
+		CV_GAME_MANAGER->getLevelManager()->getBlock(logicalPosition[0]+1,logicalPosition[1])->init();
+		CV_GAME_MANAGER->getLevelManager()->getBlock(logicalPosition[0],logicalPosition[1]+1)->init();
+		init();
+		
+		CV_GAME_MANAGER->getLevelManager()->getBlock(logicalPosition[0],logicalPosition[1]-1)->finalize();
+		CV_GAME_MANAGER->getLevelManager()->getBlock(logicalPosition[0]-1,logicalPosition[1])->finalize();
+		CV_GAME_MANAGER->getLevelManager()->getBlock(logicalPosition[0]+1,logicalPosition[1])->finalize();
+		CV_GAME_MANAGER->getLevelManager()->getBlock(logicalPosition[0],logicalPosition[1]+1)->finalize();
+		finalize();
+
+		if(CV_GAME_MANAGER->getControlManager()->getViewFrustum()->containsBBOX(getBoundingBox()))
+		{
+			//since the block is visible, create the fortify effect (TODO)
+		}
+	}
+
 	std::vector<GLuint> *CBlock::getDisplayLists()
 	{
 		return &displayLists;
