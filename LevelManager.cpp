@@ -758,14 +758,33 @@ namespace game_utils
 			return &unclaimedBlocksList;
 		}
 
+		GLvoid CLevelManager::removeMarkedBlock(CBlock *block)
+		{
+			markedBlocksList.erase(block);
+		}
+
 		GLvoid CLevelManager::removeUnclaimedBlock(CBlock *block)
 		{
 			unclaimedBlocksList.erase(block);
 		}
 
+		GLvoid CLevelManager::addMarkedBlock(CBlock *block)
+		{
+			markedBlocksList[block] = block;
+		}
+
 		GLvoid CLevelManager::addUnclaimedBlock(CBlock *block)
 		{
 			unclaimedBlocksList[block] = block;
+		}
+
+		CBlock *CLevelManager::getMarkedBlock(GLubyte owner)
+		{
+			for (map<CBlock*,CBlock*>::iterator iter=markedBlocksList.begin(); iter!=markedBlocksList.end(); iter++)
+			{
+				return iter->second;
+			}
+			return NULL;
 		}
 
 		CBlock *CLevelManager::getUnclaimedBlock(GLubyte owner)

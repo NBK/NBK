@@ -49,10 +49,14 @@ namespace game_utils
 			bool isBlockTypeNear(GLint blockType, cml::vector2i logicalPos, bool diagonal, GLubyte owner, std::vector<game_objects::CBlock*> *blocks = NULL);
 			game_objects::CBlock *getUnclaimedBlock(GLubyte owner);
 			void getUnclaimedBlock(GLubyte owner, std::vector<game_objects::CBlock*> *blocks);
+			game_objects::CBlock *getMarkedBlock(GLubyte owner);
 			
 			std::map<game_objects::CBlock*,game_objects::CBlock*> *getUnclaimedBlocksList();
 			GLvoid addUnclaimedBlock(game_objects::CBlock *block);
 			GLvoid removeUnclaimedBlock(game_objects::CBlock *block);
+
+			GLvoid addMarkedBlock(game_objects::CBlock *block);
+			GLvoid removeMarkedBlock(game_objects::CBlock *block);
 
 			// returns true if this block is full type, 
 			bool isFullBlock(game_objects::CBlock *block);
@@ -101,6 +105,7 @@ namespace game_utils
 				The block lists used for imps
 			*/
 			std::map<game_objects::CBlock*,game_objects::CBlock*> unclaimedBlocksList;
+			std::map<game_objects::CBlock*,game_objects::CBlock*> markedBlocksList;
 
 			/*
 				A currently playing level;

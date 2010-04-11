@@ -772,6 +772,11 @@ namespace game_objects
 	GLvoid CBlock::setMarked(bool marked)
 	{
 		this->marked = marked;
+	
+		if (marked)
+			CV_GAME_MANAGER->getLevelManager()->addMarkedBlock(this);
+		else
+			CV_GAME_MANAGER->getLevelManager()->removeMarkedBlock(this);		
 	}
 
 	GLvoid CBlock::addModel(string modelName, vector3f position, bool marked, GLfloat rotateY)
