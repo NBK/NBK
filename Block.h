@@ -189,6 +189,7 @@ namespace game_objects
 		// removes a block object from the block object list. Usefull when selling traps, or picking gold...
 		GLvoid removeBlockObject(block_objects::CBlockObject *blockObject);
 
+		GLvoid CBlock::digBlock();
 		GLvoid CBlock::claimBlock(GLubyte owner);
 
 		GLvoid addLife(GLfloat life);

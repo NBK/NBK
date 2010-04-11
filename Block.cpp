@@ -636,6 +636,33 @@ namespace game_objects
 		visible[faceSelector] = visibility;
 	}
 
+	GLvoid CBlock::digBlock()
+	{
+		if(!CV_GAME_MANAGER->getLevelManager()->isFullBlock(this))
+			return;
+
+		setType(CV_BLOCK_TYPE_UNCLAIMED_LAND_ID);
+		this->marked = false;
+		
+		//init and finalize surrounding blocks aswell as this one
+		CV_GAME_MANAGER->getLevelManager()->getBlock(logicalPosition[0],logicalPosition[1]-1)->init();
+		CV_GAME_MANAGER->getLevelManager()->getBlock(logicalPosition[0]-1,logicalPosition[1])->init();
+		CV_GAME_MANAGER->getLevelManager()->getBlock(logicalPosition[0]+1,logicalPosition[1])->init();
+		CV_GAME_MANAGER->getLevelManager()->getBlock(logicalPosition[0],logicalPosition[1]+1)->init();
+		init();
+		
+		CV_GAME_MANAGER->getLevelManager()->getBlock(logicalPosition[0],logicalPosition[1]-1)->finalize();
+		CV_GAME_MANAGER->getLevelManager()->getBlock(logicalPosition[0]-1,logicalPosition[1])->finalize();
+		CV_GAME_MANAGER->getLevelManager()->getBlock(logicalPosition[0]+1,logicalPosition[1])->finalize();
+		CV_GAME_MANAGER->getLevelManager()->getBlock(logicalPosition[0],logicalPosition[1]+1)->finalize();
+		finalize();
+
+		if(CV_GAME_MANAGER->getControlManager()->getViewFrustum()->containsBBOX(getBoundingBox()))
+		{
+			//since the block is visible, create the digg effect (TODO)
+		}
+	}
+
 	GLvoid CBlock::claimBlock(GLubyte owner)
 	{
 		this->owner = owner;

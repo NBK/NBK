@@ -16,6 +16,38 @@ namespace game_objects
 	{
 	}
 
+	GLvoid CImp::checkNearestForDigging()
+	{
+		if(impState != IS_IDLE) return;
+
+		std::vector<CBlock*> markedBlocks,possBlocks;
+		std::vector<CBlock*>::iterator markedBlocksIter;
+		CBlock *block;
+
+		if(CV_GAME_MANAGER->getLevelManager()->isBlockTypeNear(CV_BLOCK_TYPE_EARTH_ID,cml::vector2i((int)floor(position[0]/CV_BLOCK_WIDTH),(int)floor(position[2]/CV_BLOCK_DEPTH)),true,CV_PLAYER_UNDEFINED,&markedBlocks))
+		{
+			int oldSearchLimit = CV_GAME_MANAGER->getPathManager()->getSearchLimit();
+			CV_GAME_MANAGER->getPathManager()->setSearchLimit(2);
+			for(markedBlocksIter=markedBlocks.begin(); markedBlocksIter!=markedBlocks.end(); markedBlocksIter++)
+			{
+				block = *markedBlocksIter;
+				markedBlocks.clear();
+				path.clear();
+					if(CV_GAME_MANAGER->getPathManager()->findPath(cml::vector2i((int)floor(position[0]/CV_BLOCK_WIDTH),(int)floor(position[2]/CV_BLOCK_DEPTH)),block->getLogicalPosition(),&path))
+						possBlocks.push_back(block);
+			}
+			CV_GAME_MANAGER->getPathManager()->setSearchLimit(oldSearchLimit);
+			if(possBlocks.size()>0)
+			{
+				GLint blockNum = rand()%possBlocks.size();
+				path.clear();
+				path.push_back(possBlocks[blockNum]->getLogicalPosition());
+				impState = IS_GOING_TO_DIGGING_DESTINATION;
+				return;
+			}
+		}
+	}
+
 	GLvoid CImp::checkNearestForClaiming()
 	{
 		if(impState != IS_IDLE) return;
@@ -54,6 +86,19 @@ namespace game_objects
 		}
 	}
 
+	GLvoid CImp::checkForDigging()
+	{
+		if(impState != IS_IDLE) return;
+		path.clear();
+		CBlock *block = CV_GAME_MANAGER->getLevelManager()->getMarkedBlock(CV_CURRENT_PLAYER_ID);
+		if (block)
+		{
+			cml::vector2i currPos = cml::vector2i((int)floor(position[0]/CV_BLOCK_WIDTH),(int)floor(position[2]/CV_BLOCK_DEPTH));
+			if(CV_GAME_MANAGER->getPathManager()->findPath(currPos,block->getLogicalPosition(),&path))
+				impState = IS_GOING_TO_DIGGING_DESTINATION;
+		}
+	}
+
 	GLvoid CImp::checkForClaiming()
 	{
 		if(impState != IS_IDLE) return;
@@ -73,7 +118,10 @@ namespace game_objects
 	{
 		if(path.size() == 0)
 		{
-			impState = IS_AT_CLAIMING_BLOCK;
+			if(impState == IS_GOING_TO_CLAIMING_DESTINATION)
+				impState = IS_AT_CLAIMING_BLOCK;
+			else if (impState == IS_GOING_TO_DIGGING_DESTINATION)
+				impState = IS_AT_DIGGING_BLOCK;
 			return;
 		}
 		cml::vector2i point = path.back();
@@ -129,16 +177,33 @@ namespace game_objects
 			checkNearestForClaiming();
 			//checkNearestForWalling();
 
-			//checkForDigging();
+			checkForDigging();
 			checkForClaiming();
 			//checkForWalling();
+		} else if (impState == IS_GOING_TO_DIGGING_DESTINATION)
+		{
+			walkPath(deltaTime);
 		} else if (impState == IS_GOING_TO_CLAIMING_DESTINATION)
 		{
 			walkPath(deltaTime);
+		} else if (impState == IS_AT_DIGGING_BLOCK)
+		{
+			impState = IS_DIGGING;
+			useAction(AA_CLAIM);
 		} else if (impState == IS_AT_CLAIMING_BLOCK)
 		{
 			impState = IS_CLAIMING;
 			useAction(AA_CLAIM);
+		} else if (impState == IS_DIGGING)
+		{
+		CV_GAME_MANAGER->getLevelManager()->getBlock(cml::vector2i((int)floor(position[0]/CV_BLOCK_WIDTH),(int)floor(position[2]/CV_BLOCK_DEPTH)))->decLife(deltaTime*moveSpeed);
+		if (CV_GAME_MANAGER->getLevelManager()->getBlock(cml::vector2i((int)floor(position[0]/CV_BLOCK_WIDTH),(int)floor(position[2]/CV_BLOCK_DEPTH)))->getLife()<=0.0f)
+		{
+			CV_GAME_MANAGER->getLevelManager()->getBlock(cml::vector2i((int)floor(position[0]/CV_BLOCK_WIDTH),(int)floor(position[2]/CV_BLOCK_DEPTH)))->digBlock();
+
+			impState = IS_IDLE;
+			useAction(AA_WALK);
+		}
 		} else if (impState == IS_CLAIMING)
 		{
 			CV_GAME_MANAGER->getLevelManager()->getBlock(cml::vector2i((int)floor(position[0]/CV_BLOCK_WIDTH),(int)floor(position[2]/CV_BLOCK_DEPTH)))->decLife(deltaTime*moveSpeed);

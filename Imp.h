@@ -33,7 +33,9 @@ namespace game_objects
 			IS_ROTATING
 		};
 	private:
+		GLvoid checkNearestForDigging();
 		GLvoid checkNearestForClaiming();
+		GLvoid checkForDigging();
 		GLvoid checkForClaiming();
 		GLvoid walkPath(GLfloat deltaTime);
 		IMP_STATE impState;
