@@ -95,7 +95,12 @@ namespace game_utils
 				GLint group = ae->message_group;
 				GLint msg = ae->message;
 
-				if (group==AEMG_BUILD_ROOMS || group==AEMG_BUILD_DOORS || group==AEMG_BUILD_TRAPS)
+				// If you have clicked on a rock, mark it for mining.
+				if (CV_GAME_MANAGER->getLevelManager()->isFullBlock(pickedBlock))
+ 				{
+					pickedBlock->setMarked(!pickedBlock->isMarked());
+				}
+				else if (group==AEMG_BUILD_ROOMS || group==AEMG_BUILD_DOORS || group==AEMG_BUILD_TRAPS)
 				{
 					// selling comes with the message group AEMG_BUILD_ROOMS
 					if (msg==AEM_SELL)
