@@ -43,7 +43,9 @@ namespace game_objects
 		GLvoid checkForClaiming();
 		GLvoid checkForWalling();
 		GLvoid walkPath(GLfloat deltaTime);
+		GLvoid faceBlock(CBlock *block);
 		IMP_STATE impState;
+		CBlock *currBlock;
 	};
 };
 

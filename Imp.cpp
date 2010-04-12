@@ -28,21 +28,25 @@ namespace game_objects
 		{
 			int oldSearchLimit = CV_GAME_MANAGER->getPathManager()->getSearchLimit();
 			CV_GAME_MANAGER->getPathManager()->setSearchLimit(2);
+			bool oldDiagonalMoves = CV_GAME_MANAGER->getPathManager()->getDiagonalMoves();
+			CV_GAME_MANAGER->getPathManager()->setDiagonalMoves(false);
 			for(markedBlocksIter=markedBlocks.begin(); markedBlocksIter!=markedBlocks.end(); markedBlocksIter++)
 			{
 				block = *markedBlocksIter;
-				markedBlocks.clear();
+				if(!block->isMarked())
+					continue;
 				path.clear();
 					if(CV_GAME_MANAGER->getPathManager()->findPath(cml::vector2i((int)floor(position[0]/CV_BLOCK_WIDTH),(int)floor(position[2]/CV_BLOCK_DEPTH)),block->getLogicalPosition(),&path))
 						possBlocks.push_back(block);
 			}
 			CV_GAME_MANAGER->getPathManager()->setSearchLimit(oldSearchLimit);
+			CV_GAME_MANAGER->getPathManager()->setDiagonalMoves(oldDiagonalMoves);
 			if(possBlocks.size()>0)
 			{
 				GLint blockNum = rand()%possBlocks.size();
+				currBlock = possBlocks[blockNum];
 				path.clear();
-				path.push_back(possBlocks[blockNum]->getLogicalPosition());
-				impState = IS_GOING_TO_DIGGING_DESTINATION;
+				impState = IS_AT_DIGGING_BLOCK;
 				return;
 			}
 		}
@@ -78,8 +82,9 @@ namespace game_objects
 			{
 				GLint blockNum = rand()%possBlocks.size();
 				path.clear();
-				path.push_back(possBlocks[blockNum]->getLogicalPosition());
-				possBlocks[blockNum]->setTaken(true);
+				currBlock = possBlocks[blockNum];
+				path.push_back(currBlock->getLogicalPosition());
+				currBlock->setTaken(true);
 				impState = IS_GOING_TO_CLAIMING_DESTINATION;
 				return;
 			}
@@ -95,33 +100,41 @@ namespace game_objects
 	{
 		if(impState != IS_IDLE) return;
 		path.clear();
-		CBlock *block = CV_GAME_MANAGER->getLevelManager()->getMarkedBlock(CV_CURRENT_PLAYER_ID);
-		if (block)
+		currBlock = CV_GAME_MANAGER->getLevelManager()->getMarkedBlock(CV_CURRENT_PLAYER_ID);
+		bool oldEndOnDiagonal = CV_GAME_MANAGER->getPathManager()->getAllowEndDiagonal();
+		CV_GAME_MANAGER->getPathManager()->setAllowEndDiagonal(false);
+		if (currBlock)
 		{
 			cml::vector2i currPos = cml::vector2i((int)floor(position[0]/CV_BLOCK_WIDTH),(int)floor(position[2]/CV_BLOCK_DEPTH));
-			if(CV_GAME_MANAGER->getPathManager()->findPath(currPos,block->getLogicalPosition(),&path))
+			if(CV_GAME_MANAGER->getPathManager()->findPath(currPos,currBlock->getLogicalPosition(),&path) && !currBlock->isLow())
 				impState = IS_GOING_TO_DIGGING_DESTINATION;
 		}
+		CV_GAME_MANAGER->getPathManager()->setAllowEndDiagonal(true);
 	}
 
 	GLvoid CImp::checkForClaiming()
 	{
 		if(impState != IS_IDLE) return;
 		path.clear();
-		CBlock *block = CV_GAME_MANAGER->getLevelManager()->getUnclaimedBlock(CV_CURRENT_PLAYER_ID);
-		if (block)
+		currBlock = CV_GAME_MANAGER->getLevelManager()->getUnclaimedBlock(CV_CURRENT_PLAYER_ID);
+		if (currBlock)
 		{
 			cml::vector2i currPos = cml::vector2i((int)floor(position[0]/CV_BLOCK_WIDTH),(int)floor(position[2]/CV_BLOCK_DEPTH));
-			if(CV_GAME_MANAGER->getPathManager()->findPath(currPos,block->getLogicalPosition(),&path))
+			if(CV_GAME_MANAGER->getPathManager()->findPath(currPos,currBlock->getLogicalPosition(),&path))
 				impState = IS_GOING_TO_CLAIMING_DESTINATION;
 			else
-				block->setTaken(false);
+				currBlock->setTaken(false);
 		}
 	}
 
 	GLvoid CImp::checkForWalling()
 	{
 		if(impState != IS_IDLE) return;
+	}
+
+	GLvoid CImp::faceBlock(CBlock *block)
+	{
+		rotation[1] = 90.0f-(float)(atan2(block->getLogicalPosition()[1]-floor(position[2]/CV_BLOCK_WIDTH),block->getLogicalPosition()[0]-floor(position[0]/CV_BLOCK_WIDTH))*180.0f/M_PI);
 	}
 
 	GLvoid CImp::walkPath(GLfloat deltaTime)
@@ -203,6 +216,7 @@ namespace game_objects
 			walkPath(deltaTime);
 		} else if (impState == IS_AT_DIGGING_BLOCK)
 		{
+			faceBlock(currBlock);
 			impState = IS_DIGGING;
 			useAction(AA_CLAIM);
 		} else if (impState == IS_AT_CLAIMING_BLOCK)
@@ -211,18 +225,25 @@ namespace game_objects
 			useAction(AA_CLAIM);
 		} else if (impState == IS_AT_WALLING_BLOCK)
 		{
+			faceBlock(currBlock);
 			impState = IS_WALLING;
 			useAction(AA_CLAIM);
 		} else if (impState == IS_DIGGING)
 		{
-		CV_GAME_MANAGER->getLevelManager()->getBlock(cml::vector2i((int)floor(position[0]/CV_BLOCK_WIDTH),(int)floor(position[2]/CV_BLOCK_DEPTH)))->decLife(deltaTime*moveSpeed);
-		if (CV_GAME_MANAGER->getLevelManager()->getBlock(cml::vector2i((int)floor(position[0]/CV_BLOCK_WIDTH),(int)floor(position[2]/CV_BLOCK_DEPTH)))->getLife()<=0.0f)
-		{
-			CV_GAME_MANAGER->getLevelManager()->getBlock(cml::vector2i((int)floor(position[0]/CV_BLOCK_WIDTH),(int)floor(position[2]/CV_BLOCK_DEPTH)))->digBlock();
+			if(currBlock->isLow())
+			{
+				impState = IS_IDLE;
+				useAction(AA_WALK);
+				return;
+			}
+			currBlock->decLife(deltaTime*moveSpeed);
+			if (currBlock->getLife()<=0.0f)
+			{
+				currBlock->digBlock();
 
-			impState = IS_IDLE;
-			useAction(AA_WALK);
-		}
+				impState = IS_IDLE;
+				useAction(AA_WALK);
+			}
 		} else if (impState == IS_CLAIMING)
 		{
 			CV_GAME_MANAGER->getLevelManager()->getBlock(cml::vector2i((int)floor(position[0]/CV_BLOCK_WIDTH),(int)floor(position[2]/CV_BLOCK_DEPTH)))->decLife(deltaTime*moveSpeed);

@@ -312,7 +312,7 @@ namespace game_objects
 
 	bool CBlock::isWalkable(bool walkOnLava)
 	{
-		return low && walkOnLava?true:!lava;
+		return low && (walkOnLava?true:!lava);
 	}
 
 	bool CBlock::isWater()
@@ -642,7 +642,7 @@ namespace game_objects
 			return;
 
 		setType(CV_BLOCK_TYPE_UNCLAIMED_LAND_ID);
-		this->marked = false;
+		setMarked(false);
 		
 		//init and finalize surrounding blocks aswell as this one
 		CV_GAME_MANAGER->getLevelManager()->getBlock(logicalPosition[0],logicalPosition[1]-1)->init();
@@ -667,7 +667,7 @@ namespace game_objects
 	{
 		this->owner = owner;
 		setType(CV_BLOCK_TYPE_CLAIMED_LAND_ID);
-		this->taken = false;
+		setTaken(false);
 		
 		//init and finalize surrounding blocks aswell as this one
 		CV_GAME_MANAGER->getLevelManager()->getBlock(logicalPosition[0],logicalPosition[1]-1)->init();

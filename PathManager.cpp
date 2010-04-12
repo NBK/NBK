@@ -35,7 +35,8 @@ namespace game_utils
 										heuristicEstimate(2),
 										tieBreaker(true),
 										tieBreakerValue(0.001f),
-										allowWalkOnLava(false)
+										allowWalkOnLava(false),
+										allowEndDiagonal(true)
 		{
 		}
 
@@ -204,6 +205,11 @@ namespace game_utils
 			this->allowWalkOnLava = allowWalkOnLava;
 		}
 
+		void CPathManager::setAllowEndDiagonal(bool allowEndDiagonal)
+		{
+			this->allowEndDiagonal = allowEndDiagonal;
+		}
+
 		CPathManager::HeuristicFormula CPathManager::getFormula()
 		{
 			return formula;
@@ -257,6 +263,11 @@ namespace game_utils
 		bool CPathManager::getAllowWalkOnLava()
 		{
 			return allowWalkOnLava;
+		}
+
+		bool CPathManager::getAllowEndDiagonal()
+		{
+			return allowEndDiagonal;
 		}
 
 		bool CPathManager::findPath(int startX, int startY, int endX, int endY, std::vector<cml::vector2i> *path)
@@ -352,6 +363,10 @@ namespace game_utils
 
 						//If block is not walkable and isn't the end, skip
 						if(!lvlMan->getBlock(newPos[0], newPos[1])->isWalkable(allowWalkOnLava) && newPos != end)
+							continue;
+
+						//If the path is a diagonal and is the end, check if allowed
+						if(i > 3 && !allowEndDiagonal && newPos == end)
 							continue;
 
 						//If this is a diagonal, check that we're not cutting a wall

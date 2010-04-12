@@ -55,7 +55,7 @@ namespace game_utils
 			void setTieBreakerValue(float tieBreakerValue);
 			void setSearchLimit(int searchLimit);
 			void setAllowWalkOnLava(bool allowWalkOnLava);
-
+			void setAllowEndDiagonal(bool allowEndDiagonal);
 
 			HeuristicFormula getFormula();
 			int getHeuristicEstimate();
@@ -68,6 +68,7 @@ namespace game_utils
 			float getTieBreakerValue();
 			int getSearchLimit();
 			bool getAllowWalkOnLava();
+			bool getAllowEndDiagonal();
 
 		private:
 			BinaryHeap heap;
@@ -82,6 +83,7 @@ namespace game_utils
 			float tieBreakerValue;
 			int searchLimit;
 			bool allowWalkOnLava;
+			bool allowEndDiagonal;
 
 			static const int directions[8][2];
 
