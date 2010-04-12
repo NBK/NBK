@@ -768,6 +768,11 @@ namespace game_utils
 			unclaimedBlocksList.erase(block);
 		}
 
+		GLvoid CLevelManager::removeUnfortifiedBlock(CBlock *block)
+		{
+			unfortifiedBlocksList.erase(block);
+		}
+
 		GLvoid CLevelManager::addMarkedBlock(CBlock *block)
 		{
 			markedBlocksList[block] = block;
@@ -776,6 +781,11 @@ namespace game_utils
 		GLvoid CLevelManager::addUnclaimedBlock(CBlock *block)
 		{
 			unclaimedBlocksList[block] = block;
+		}
+
+		GLvoid CLevelManager::addUnfortifiedBlock(CBlock *block)
+		{
+			unfortifiedBlocksList[block] = block;
 		}
 
 		CBlock *CLevelManager::getMarkedBlock(GLubyte owner)
@@ -790,6 +800,22 @@ namespace game_utils
 		CBlock *CLevelManager::getUnclaimedBlock(GLubyte owner)
 		{
 			for (map<CBlock*,CBlock*>::iterator iter=unclaimedBlocksList.begin(); iter!=unclaimedBlocksList.end(); iter++)
+			{
+				if(!((CBlock*)iter->second)->isTaken())
+				{
+					if(isBlockTypeNear(CV_BLOCK_TYPE_CLAIMED_LAND_ID,((CBlock*)iter->second)->getLogicalPosition(),false,owner))
+					{
+						((CBlock*)iter->second)->setTaken(true);
+						return iter->second;
+					}
+				}
+			}
+			return NULL;
+		}
+
+		CBlock *CLevelManager::getUnfortifiedBlock(GLubyte owner)
+		{
+			for (map<CBlock*,CBlock*>::iterator iter=unfortifiedBlocksList.begin(); iter!=unfortifiedBlocksList.end(); iter++)
 			{
 				if(!((CBlock*)iter->second)->isTaken())
 				{

@@ -264,6 +264,9 @@ namespace game_objects
 		if(this->type == CV_BLOCK_TYPE_UNCLAIMED_LAND_ID)
 			CV_GAME_MANAGER->getLevelManager()->addUnclaimedBlock(this);
 
+		if(this->type == CV_BLOCK_TYPE_WALL_ID)
+			CV_GAME_MANAGER->getLevelManager()->removeUnfortifiedBlock(this);
+
 		resetLife();
 	}
 
@@ -681,6 +684,19 @@ namespace game_objects
 		CV_GAME_MANAGER->getLevelManager()->getBlock(logicalPosition[0]+1,logicalPosition[1])->finalize();
 		CV_GAME_MANAGER->getLevelManager()->getBlock(logicalPosition[0],logicalPosition[1]+1)->finalize();
 		finalize();
+
+		// Add to unfortified list.
+		if(CV_GAME_MANAGER->getLevelManager()->getBlock(logicalPosition[0],logicalPosition[1]-1)->type == CV_BLOCK_TYPE_EARTH_ID)
+			CV_GAME_MANAGER->getLevelManager()->addUnfortifiedBlock(CV_GAME_MANAGER->getLevelManager()->getBlock(logicalPosition[0],logicalPosition[1]-1));
+
+		if(CV_GAME_MANAGER->getLevelManager()->getBlock(logicalPosition[0]-1,logicalPosition[1])->type == CV_BLOCK_TYPE_EARTH_ID)
+			CV_GAME_MANAGER->getLevelManager()->addUnfortifiedBlock(CV_GAME_MANAGER->getLevelManager()->getBlock(logicalPosition[0]-1,logicalPosition[1]));
+
+		if(CV_GAME_MANAGER->getLevelManager()->getBlock(logicalPosition[0]+1,logicalPosition[1])->type == CV_BLOCK_TYPE_EARTH_ID)
+			CV_GAME_MANAGER->getLevelManager()->addUnfortifiedBlock(CV_GAME_MANAGER->getLevelManager()->getBlock(logicalPosition[0]+1,logicalPosition[1]));
+
+		if(CV_GAME_MANAGER->getLevelManager()->getBlock(logicalPosition[0],logicalPosition[1]+1)->type == CV_BLOCK_TYPE_EARTH_ID)
+			CV_GAME_MANAGER->getLevelManager()->addUnfortifiedBlock(CV_GAME_MANAGER->getLevelManager()->getBlock(logicalPosition[0],logicalPosition[1]+1));
 
 		if(CV_GAME_MANAGER->getControlManager()->getViewFrustum()->containsBBOX(getBoundingBox()))
 		{

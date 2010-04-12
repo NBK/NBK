@@ -94,6 +94,35 @@ namespace game_objects
 	GLvoid CImp::checkNearestForWalling()
 	{
 		if(impState != IS_IDLE) return;
+
+		std::vector<CBlock*> unfortifiedBlocks,possBlocks;
+		std::vector<CBlock*>::iterator unfortifiedBlocksIter;
+		CBlock *block;
+
+		if(CV_GAME_MANAGER->getLevelManager()->isBlockTypeNear(CV_BLOCK_TYPE_EARTH_ID,cml::vector2i((int)floor(position[0]/CV_BLOCK_WIDTH),(int)floor(position[2]/CV_BLOCK_DEPTH)),true,CV_PLAYER_UNDEFINED,&unfortifiedBlocks))
+		{
+			int oldSearchLimit = CV_GAME_MANAGER->getPathManager()->getSearchLimit();
+			CV_GAME_MANAGER->getPathManager()->setSearchLimit(2);
+			bool oldDiagonalMoves = CV_GAME_MANAGER->getPathManager()->getDiagonalMoves();
+			CV_GAME_MANAGER->getPathManager()->setDiagonalMoves(false);
+			for(unfortifiedBlocksIter=unfortifiedBlocks.begin(); unfortifiedBlocksIter!=unfortifiedBlocks.end(); unfortifiedBlocksIter++)
+			{
+				block = *unfortifiedBlocksIter;
+				path.clear();
+					if(CV_GAME_MANAGER->getPathManager()->findPath(cml::vector2i((int)floor(position[0]/CV_BLOCK_WIDTH),(int)floor(position[2]/CV_BLOCK_DEPTH)),block->getLogicalPosition(),&path))
+						possBlocks.push_back(block);
+			}
+			CV_GAME_MANAGER->getPathManager()->setSearchLimit(oldSearchLimit);
+			CV_GAME_MANAGER->getPathManager()->setDiagonalMoves(oldDiagonalMoves);
+			if(possBlocks.size()>0)
+			{
+				GLint blockNum = rand()%possBlocks.size();
+				currBlock = possBlocks[blockNum];
+				path.clear();
+				impState = IS_AT_WALLING_BLOCK;
+				return;
+			}
+		}
 	}
 
 	GLvoid CImp::checkForDigging()
@@ -130,6 +159,17 @@ namespace game_objects
 	GLvoid CImp::checkForWalling()
 	{
 		if(impState != IS_IDLE) return;
+		path.clear();
+		currBlock = CV_GAME_MANAGER->getLevelManager()->getUnfortifiedBlock(CV_CURRENT_PLAYER_ID);
+		bool oldEndOnDiagonal = CV_GAME_MANAGER->getPathManager()->getAllowEndDiagonal();
+		CV_GAME_MANAGER->getPathManager()->setAllowEndDiagonal(false);
+		if (currBlock)
+		{
+			cml::vector2i currPos = cml::vector2i((int)floor(position[0]/CV_BLOCK_WIDTH),(int)floor(position[2]/CV_BLOCK_DEPTH));
+			if(CV_GAME_MANAGER->getPathManager()->findPath(currPos,currBlock->getLogicalPosition(),&path) && !currBlock->isLow())
+				impState = IS_GOING_TO_WALLING_DESTINATION;
+		}
+		CV_GAME_MANAGER->getPathManager()->setAllowEndDiagonal(true);
 	}
 
 	GLvoid CImp::faceBlock(CBlock *block)
@@ -255,10 +295,17 @@ namespace game_objects
 			}
 		} else if (impState == IS_WALLING)
 		{
-			CV_GAME_MANAGER->getLevelManager()->getBlock(cml::vector2i((int)floor(position[0]/CV_BLOCK_WIDTH),(int)floor(position[2]/CV_BLOCK_DEPTH)))->decLife(deltaTime*moveSpeed);
-			if (CV_GAME_MANAGER->getLevelManager()->getBlock(cml::vector2i((int)floor(position[0]/CV_BLOCK_WIDTH),(int)floor(position[2]/CV_BLOCK_DEPTH)))->getLife()<=0.0f)
+			if(currBlock->isLow())
 			{
-				CV_GAME_MANAGER->getLevelManager()->getBlock(cml::vector2i((int)floor(position[0]/CV_BLOCK_WIDTH),(int)floor(position[2]/CV_BLOCK_DEPTH)))->fortifyBlock(CV_CURRENT_PLAYER_ID);
+				impState = IS_IDLE;
+				useAction(AA_WALK);
+				return;
+			}
+			currBlock->decLife(deltaTime*moveSpeed);
+			if (currBlock->getLife()<=0.0f)
+			{
+				currBlock->fortifyBlock(CV_CURRENT_PLAYER_ID);
+
 				impState = IS_IDLE;
 				useAction(AA_WALK);
 			}

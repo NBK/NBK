@@ -50,6 +50,7 @@ namespace game_utils
 			game_objects::CBlock *getUnclaimedBlock(GLubyte owner);
 			void getUnclaimedBlock(GLubyte owner, std::vector<game_objects::CBlock*> *blocks);
 			game_objects::CBlock *getMarkedBlock(GLubyte owner);
+			game_objects::CBlock *getUnfortifiedBlock(GLubyte owner);
 			
 			std::map<game_objects::CBlock*,game_objects::CBlock*> *getUnclaimedBlocksList();
 			GLvoid addUnclaimedBlock(game_objects::CBlock *block);
@@ -57,6 +58,9 @@ namespace game_utils
 
 			GLvoid addMarkedBlock(game_objects::CBlock *block);
 			GLvoid removeMarkedBlock(game_objects::CBlock *block);
+
+			GLvoid addUnfortifiedBlock(game_objects::CBlock *block);
+			GLvoid removeUnfortifiedBlock(game_objects::CBlock *block);
 
 			// returns true if this block is full type, 
 			bool isFullBlock(game_objects::CBlock *block);
@@ -106,6 +110,7 @@ namespace game_utils
 			*/
 			std::map<game_objects::CBlock*,game_objects::CBlock*> unclaimedBlocksList;
 			std::map<game_objects::CBlock*,game_objects::CBlock*> markedBlocksList;
+			std::map<game_objects::CBlock*,game_objects::CBlock*> unfortifiedBlocksList;
 
 			/*
 				A currently playing level;
