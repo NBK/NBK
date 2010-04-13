@@ -95,7 +95,7 @@ namespace game_objects
 	{
 		if(impState != IS_IDLE) return;
 
-		std::vector<CBlock*> unfortifiedBlocks,possBlocks;
+		std::vector<CBlock*> unfortifiedBlocks,claimedBlocks,possBlocks;
 		std::vector<CBlock*>::iterator unfortifiedBlocksIter;
 		CBlock *block;
 
@@ -108,9 +108,13 @@ namespace game_objects
 			for(unfortifiedBlocksIter=unfortifiedBlocks.begin(); unfortifiedBlocksIter!=unfortifiedBlocks.end(); unfortifiedBlocksIter++)
 			{
 				block = *unfortifiedBlocksIter;
-				path.clear();
+				claimedBlocks.clear();
+				if(CV_GAME_MANAGER->getLevelManager()->isBlockTypeNear(CV_BLOCK_TYPE_CLAIMED_LAND_ID,block->getLogicalPosition(),false,CV_CURRENT_PLAYER_ID,&claimedBlocks))
+				{
+					path.clear();
 					if(CV_GAME_MANAGER->getPathManager()->findPath(cml::vector2i((int)floor(position[0]/CV_BLOCK_WIDTH),(int)floor(position[2]/CV_BLOCK_DEPTH)),block->getLogicalPosition(),&path))
 						possBlocks.push_back(block);
+				}
 			}
 			CV_GAME_MANAGER->getPathManager()->setSearchLimit(oldSearchLimit);
 			CV_GAME_MANAGER->getPathManager()->setDiagonalMoves(oldDiagonalMoves);
@@ -247,12 +251,15 @@ namespace game_objects
 			checkForWalling();
 		} else if (impState == IS_GOING_TO_DIGGING_DESTINATION)
 		{
+			useAction(AA_WALK);
 			walkPath(deltaTime);
 		} else if (impState == IS_GOING_TO_CLAIMING_DESTINATION)
 		{
+			useAction(AA_WALK);
 			walkPath(deltaTime);
 		} else if (impState == IS_GOING_TO_WALLING_DESTINATION)
 		{
+			useAction(AA_WALK);
 			walkPath(deltaTime);
 		} else if (impState == IS_AT_DIGGING_BLOCK)
 		{
@@ -301,8 +308,8 @@ namespace game_objects
 				useAction(AA_IDLE);
 				return;
 			}
-			currBlock->decLife(deltaTime*moveSpeed);
-			if (currBlock->getLife()<=0.0f)
+			currBlock->addLife(deltaTime*moveSpeed);
+			if (currBlock->getLife()>=9.0f)
 			{
 				currBlock->fortifyBlock(CV_CURRENT_PLAYER_ID);
 

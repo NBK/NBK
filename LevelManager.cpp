@@ -309,6 +309,7 @@ namespace game_utils
 			fclose(inSLB);			
 
 			unclaimedBlocksList.clear();
+			unfortifiedBlocksList.clear();
 
 			// process the data
 			for (GLint y=0; y<CV_LEVEL_MAP_SIZE; y++)
@@ -321,6 +322,15 @@ namespace game_utils
 				}
 			}
 
+			std::vector<CBlock*> Blocks;
+			for (GLint y=0; y<CV_LEVEL_MAP_SIZE; y++)
+			{
+				for (GLint x=0; x<CV_LEVEL_MAP_SIZE; x++)
+				{	// If earth block is next to a peice of claimed land, add it to the unfortified list (todo: check land is yours)
+					if((slb[y][x].typeID == CV_BLOCK_TYPE_EARTH_ID || CV_BLOCK_TYPE_EARTH_WITH_TORCH_PLATE_ID) && (slb[y+1][x].typeID == CV_BLOCK_TYPE_CLAIMED_LAND_ID || slb[y-1][x].typeID == CV_BLOCK_TYPE_CLAIMED_LAND_ID || slb[y][x+1].typeID == CV_BLOCK_TYPE_CLAIMED_LAND_ID || slb[y][x-1].typeID == CV_BLOCK_TYPE_CLAIMED_LAND_ID))
+						unfortifiedBlocksList[getBlock(x,y)] = getBlock(x,y);
+				}
+			}
 			return true;
 		}
 
