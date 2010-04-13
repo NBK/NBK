@@ -56,8 +56,11 @@ namespace game_utils
 				imp->setPosition(position);
 				imp->setName(creatureName);
 				imp->setModel(CV_GAME_MANAGER->getResourceManager()->getModel("MODEL_IMP"));
+				imp->setAction(CCreature::AA_IDLE,10,14);
 				imp->setAction(CCreature::AA_WALK,5,9);
+				imp->setAction(CCreature::AA_DIG,15,19);
 				imp->setAction(CCreature::AA_CLAIM,0,4);
+				imp->setAction(CCreature::AA_DRAG,25,29);
 				imp->useAction(CCreature::AA_WALK);
 				allCreatures.push_back(imp);
 			}

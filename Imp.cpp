@@ -258,7 +258,7 @@ namespace game_objects
 		{
 			faceBlock(currBlock);
 			impState = IS_DIGGING;
-			useAction(AA_CLAIM);
+			useAction(AA_DIG);
 		} else if (impState == IS_AT_CLAIMING_BLOCK)
 		{
 			impState = IS_CLAIMING;
@@ -273,7 +273,7 @@ namespace game_objects
 			if(currBlock->isLow())
 			{
 				impState = IS_IDLE;
-				useAction(AA_WALK);
+				useAction(AA_IDLE);
 				return;
 			}
 			currBlock->decLife(deltaTime*moveSpeed);
@@ -282,7 +282,7 @@ namespace game_objects
 				currBlock->digBlock();
 
 				impState = IS_IDLE;
-				useAction(AA_WALK);
+				useAction(AA_IDLE);
 			}
 		} else if (impState == IS_CLAIMING)
 		{
@@ -291,14 +291,14 @@ namespace game_objects
 			{
 				CV_GAME_MANAGER->getLevelManager()->getBlock(cml::vector2i((int)floor(position[0]/CV_BLOCK_WIDTH),(int)floor(position[2]/CV_BLOCK_DEPTH)))->claimBlock(CV_CURRENT_PLAYER_ID);
 				impState = IS_IDLE;
-				useAction(AA_WALK);
+				useAction(AA_IDLE);
 			}
 		} else if (impState == IS_WALLING)
 		{
 			if(currBlock->isLow())
 			{
 				impState = IS_IDLE;
-				useAction(AA_WALK);
+				useAction(AA_IDLE);
 				return;
 			}
 			currBlock->decLife(deltaTime*moveSpeed);
@@ -307,7 +307,7 @@ namespace game_objects
 				currBlock->fortifyBlock(CV_CURRENT_PLAYER_ID);
 
 				impState = IS_IDLE;
-				useAction(AA_WALK);
+				useAction(AA_IDLE);
 			}
 		}
 	}
