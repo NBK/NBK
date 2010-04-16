@@ -277,7 +277,7 @@ namespace game_objects
 			useAction(AA_CLAIM);
 		} else if (impState == IS_DIGGING)
 		{
-			if(currBlock->isLow())
+			if(currBlock->isLow() || !currBlock->isMarked())
 			{
 				impState = IS_IDLE;
 				useAction(AA_IDLE);
@@ -302,7 +302,7 @@ namespace game_objects
 			}
 		} else if (impState == IS_WALLING)
 		{
-			if(currBlock->isLow())
+			if(currBlock->isLow() || currBlock->isMarked())
 			{
 				impState = IS_IDLE;
 				useAction(AA_IDLE);
