@@ -13,12 +13,18 @@ namespace control
 		~CInput();	
 
 		GLvoid update(UINT message, WPARAM wParam, LPARAM lParam);
+		bool update();
 	
 		cml::vector2i getMousePos();
+		cml::vector2i getMouseMove();
 
 		bool isKeyDown(char key);		
 		bool isLeftMouseDown();
 		bool isRightMouseDown();
+		bool isMiddleMouseDown();
+		int checkScroll();
+		int getMouseMoveX();
+		int getMouseMoveY();
 
 		GLvoid setMousePos(GLint xpos, GLint ypos);
 
@@ -26,7 +32,10 @@ namespace control
 
 	private:
 		bool keys[256];
-		bool lmbd,rmbd;
+		bool lmbd,rmbd,mmbd;
+		short mscroll;
+		int xPos, yPos;
+		int xMove, yMove;
 		
 		std::vector<control::CInputListener*>			registeredListeners;
 		std::vector<control::CInputListener*>::iterator rlIter;

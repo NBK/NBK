@@ -10,7 +10,8 @@ namespace control
 	CInput::CInput()
 	{
 		ZeroMemory(keys,sizeof(bool)*256);
-		lmbd=rmbd=false;
+		lmbd=rmbd=mmbd=false;
+		mscroll=0;
 	}
 
 	CInput::~CInput()
@@ -19,9 +20,36 @@ namespace control
 
 	vector2i CInput::getMousePos()
 	{
+		return vector2i(xPos,yPos);
+	}
+
+	vector2i CInput::getMouseMove()
+	{
+		return vector2i(xMove,yMove);
+	}
+
+	int CInput::getMouseMoveX()
+	{
+		return xMove;
+	}
+
+	int CInput::getMouseMoveY()
+	{
+		return yMove;
+	}
+
+	bool CInput::update()
+	{
+		//update mouse positions
 		POINT p;
 		GetCursorPos(&p);
-		return vector2i(p.x,p.y);
+
+		xMove = p.x-xPos;
+		yMove = p.y-yPos;
+
+		xPos = p.x;
+		yPos = p.y;
+		return true;
 	}
 
 	GLvoid CInput::update(UINT message, WPARAM wParam, LPARAM lParam)
@@ -90,6 +118,32 @@ namespace control
 				rmbd=false;
 				break;
 			}
+
+			case WM_MBUTTONDOWN:
+			{
+				mmbd=true;
+
+				// update registered listeners
+				for (rlIter=registeredListeners.begin(); rlIter!=registeredListeners.end(); rlIter++)
+				{
+					(*rlIter)->onMouseClicked(3);
+				}
+
+				break;
+			}
+
+			case WM_MBUTTONUP:
+			{
+				mmbd=false;
+				break;
+			}
+
+			//update distance scrolled
+			case WM_MOUSEWHEEL:
+			{
+				mscroll += GET_WHEEL_DELTA_WPARAM(wParam);
+				break;
+			}
 		}
 	}
 
@@ -111,6 +165,18 @@ namespace control
 	bool CInput::isRightMouseDown()
 	{
 		return rmbd;
+	}
+
+	bool CInput::isMiddleMouseDown()
+	{
+		return mmbd;
+	}
+
+	int CInput::checkScroll()
+	{
+		int scroll = mscroll;
+		mscroll=0;
+		return scroll;
 	}
 
 	GLvoid CInput::registerListener(CInputListener *listener)

@@ -52,109 +52,159 @@ namespace game_utils
 		}
 
 		bool CControlManager::update()
-		{			
+		{	
+			input.update();
+
 			vector3f camPos = camera.getPosition();
 
 			GLfloat delta = CV_GAME_MANAGER->getDeltaTime();
 			
-			if (input.isKeyDown(VK_CONTROL))
+			//zoom with scroll wheel
+			short scroll = -input.checkScroll()/120;
+			camera.move(vector3f(0.0f,camZoomSpeed*delta*scroll,0.0f));					
+
+			//clip camera pos
+			if (camera.getPosition()[1]>=CV_CAMERA_MAX_HEIGHT)
 			{
-				// handle rotation and zoom-in/out
-
-				bool rotate = (input.isKeyDown(VK_LEFT) || input.isKeyDown(VK_RIGHT));
-				bool zoom	= (input.isKeyDown(VK_UP) || input.isKeyDown(VK_DOWN)) && !FPS; // no zoom in FPS
-
-				if (rotate)
-				{
-					camera.moveForward(!FPS?CV_BLOCK_DEPTH*(camPos[1]+2.0f):0.0f);
-					camera.rotateY(camRotYSpeed*delta*(input.isKeyDown(VK_LEFT)?-1.0f:1.0f));
-					camera.moveForward(!FPS?-CV_BLOCK_DEPTH*(camPos[1]+2.0f):0.0f);
-				}
-				else if (zoom)
-				{
-					camera.move(vector3f(0.0f,camZoomSpeed*delta*(input.isKeyDown(VK_UP)?-1.0f:1.0f),0.0f));					
-
-					if (camera.getPosition()[1]>=CV_CAMERA_MAX_HEIGHT)
-					{
-						camPos[1] = CV_CAMERA_MAX_HEIGHT;
-						camera.setPosition(camPos);
-					}
-					else if (camera.getPosition()[1]<CV_CAMERA_MIN_HEIGHT)
-					{
-						camPos[1] = CV_CAMERA_MIN_HEIGHT;
-						camera.setPosition(camPos);
-					}
-				}
+				camPos[1] = CV_CAMERA_MAX_HEIGHT;
+				camera.setPosition(camPos);
 			}
-			else
+			else if (camera.getPosition()[1]<CV_CAMERA_MIN_HEIGHT)
 			{
-				// handle standard movement
+				camPos[1] = CV_CAMERA_MIN_HEIGHT;
+				camera.setPosition(camPos);
+			}
 
-				bool l_r = input.isKeyDown(VK_LEFT) || input.isKeyDown(VK_RIGHT);
-				bool u_d = input.isKeyDown(VK_UP) || input.isKeyDown(VK_DOWN);
+			if (input.isMiddleMouseDown())
+			{
+				//if the middle mouse button is down, we can rotate the view with the mouse
+				camera.moveForward(!FPS?CV_BLOCK_DEPTH*(camPos[1]+2.0f):0.0f);
+				camera.rotateY(camRotYSpeed*delta*input.getMouseMoveX());
+				camera.rotateX(camRotYSpeed*delta*input.getMouseMoveY());
+				camera.moveForward(!FPS?-CV_BLOCK_DEPTH*(camPos[1]+2.0f):0.0f);
+			}else
+			{
+				//move camera when mosue is near edges of screen
+				POINT pt;
+				GetCursorPos(&pt);
+				RECT rect;
+				GetWindowRect(CV_WINDOW_HANDLE,&rect);
+				int border=20;
 
-				if (l_r)
-				{
-					camera.strafeLeft(camMoveSpeed*delta*(input.isKeyDown(VK_SHIFT)?10.0f:1.0f)*(input.isKeyDown(VK_LEFT)?1.0f:-1.0f));
-				}
+				if(pt.x<rect.left+border)
+					camera.strafeLeft(camMoveSpeed*delta);
+				else if(pt.x>rect.right-border)
+					camera.strafeLeft(-camMoveSpeed*delta);
+
+				GLfloat tmpRotX = camera.getRotateX();
+				camera.rotateX(!FPS?-tmpRotX:0.0f);
 				
-				if (u_d)
-				{
-					GLfloat tmpRotX = camera.getRotateX();
-					camera.rotateX(!FPS?-tmpRotX:0.0f);
-					camera.moveForward(camMoveSpeed*delta*(input.isKeyDown(VK_SHIFT)?10.0f:1.0f)*(input.isKeyDown(VK_UP)?1.0f:-1.0f));
-					camera.rotateX(!FPS?tmpRotX:0.0f);
-				}
+				if(pt.y<rect.top+border)
+					camera.moveForward(camMoveSpeed*delta);
+				else if(pt.y>rect.bottom-border)
+					camera.moveForward(-camMoveSpeed*delta);
 
-				// if we are in the FPS mode we have mouse look
-				if (FPS)
-				{
-					POINT pt;
-					GetCursorPos(&pt);
-					camera.rotateY((GLfloat)(pt.x-CV_SETTINGS_WINDOW_WIDTH_HALF)*camMLookSpeed*2.0f);
-					camera.rotateX((GLfloat)(pt.y-CV_SETTINGS_WINDOW_HEIGHT_HALF)*camMLookSpeed*2.0f);
-					SetCursorPos(CV_SETTINGS_WINDOW_WIDTH_HALF,CV_SETTINGS_WINDOW_HEIGHT_HALF);
-				}
+				camera.rotateX(!FPS?tmpRotX:0.0f);
 
-				// insert resets the keyboard
-				if (input.isKeyDown(VK_INSERT))
+				if (input.isKeyDown(VK_CONTROL))
 				{
-					camPos[1] = CV_CAMERA_INITIAL_HEIGHT;
-					camera.setPosition(camPos);
-				}
+					// handle rotation and zoom-in/out
 
-				// TEMP: jump into FPS mode
-				if (input.isKeyDown(VK_F1) && !FPS)
-				{
-					GLint centerX = (GLint)(camera.getPosition()[0]/CV_BLOCK_WIDTH);
-					GLint centerY = (GLint)(camera.getPosition()[2]/CV_BLOCK_DEPTH);
-					if (CV_GAME_MANAGER->getLevelManager()->getBlock(centerX,centerY)->isLow())
+					bool rotate = (input.isKeyDown(VK_LEFT) || input.isKeyDown(VK_RIGHT));
+					bool zoom	= (input.isKeyDown(VK_UP) || input.isKeyDown(VK_DOWN)) && !FPS; // no zoom in FPS
+
+					if (rotate)
 					{
-						FPS=true;
-						camera.rotateX(-camInitXRot*delta);
-						camPos[1]=0.2f;
-						camera.setPosition(camPos);
+						camera.moveForward(!FPS?CV_BLOCK_DEPTH*(camPos[1]+2.0f):0.0f);
+						camera.rotateY(camRotYSpeed*delta*(input.isKeyDown(VK_LEFT)?-1.0f:1.0f));
+						camera.moveForward(!FPS?-CV_BLOCK_DEPTH*(camPos[1]+2.0f):0.0f);
+					}
+					else if (zoom)
+					{
+						camera.move(vector3f(0.0f,camZoomSpeed*delta*(input.isKeyDown(VK_UP)?-1.0f:1.0f),0.0f));					
 
-						// position the mouse to screen center
+						if (camera.getPosition()[1]>=CV_CAMERA_MAX_HEIGHT)
+						{
+							camPos[1] = CV_CAMERA_MAX_HEIGHT;
+							camera.setPosition(camPos);
+						}
+						else if (camera.getPosition()[1]<CV_CAMERA_MIN_HEIGHT)
+						{
+							camPos[1] = CV_CAMERA_MIN_HEIGHT;
+							camera.setPosition(camPos);
+						}
+					}
+				}
+				else
+				{
+					// handle standard movement
+
+					bool l_r = input.isKeyDown(VK_LEFT) || input.isKeyDown(VK_RIGHT);
+					bool u_d = input.isKeyDown(VK_UP) || input.isKeyDown(VK_DOWN);
+
+					if (l_r)
+					{
+						camera.strafeLeft(camMoveSpeed*delta*(input.isKeyDown(VK_SHIFT)?10.0f:1.0f)*(input.isKeyDown(VK_LEFT)?1.0f:-1.0f));
+					}
+				
+					if (u_d)
+					{
+						GLfloat tmpRotX = camera.getRotateX();
+						camera.rotateX(!FPS?-tmpRotX:0.0f);
+						camera.moveForward(camMoveSpeed*delta*(input.isKeyDown(VK_SHIFT)?10.0f:1.0f)*(input.isKeyDown(VK_UP)?1.0f:-1.0f));
+						camera.rotateX(!FPS?tmpRotX:0.0f);
+					}
+
+					// if we are in the FPS mode we have mouse look
+					if (FPS)
+					{
+						POINT pt;
+						GetCursorPos(&pt);
+						camera.rotateY((GLfloat)(pt.x-CV_SETTINGS_WINDOW_WIDTH_HALF)*camMLookSpeed*2.0f);
+						camera.rotateX((GLfloat)(pt.y-CV_SETTINGS_WINDOW_HEIGHT_HALF)*camMLookSpeed*2.0f);
 						SetCursorPos(CV_SETTINGS_WINDOW_WIDTH_HALF,CV_SETTINGS_WINDOW_HEIGHT_HALF);
 					}
-				}
-				else if (input.isKeyDown(VK_F2) && FPS)
-				{
-					FPS=false;
-					camera.rotateX(camInitXRot);
-					camPos[1]=CV_CAMERA_INITIAL_HEIGHT;
-					camera.setPosition(camPos);
-				}
 
-				// temp adjust X angle
-				if (input.isKeyDown(VK_HOME))
-				{
-					camera.rotateX(camRotYSpeed*delta);
-				}
-				else if (input.isKeyDown(VK_END))
-				{
-					camera.rotateX(-camRotYSpeed*delta);
+					// insert resets the keyboard
+					if (input.isKeyDown(VK_INSERT))
+					{
+						camPos[1] = CV_CAMERA_INITIAL_HEIGHT;
+						camera.setPosition(camPos);
+					}
+
+					// TEMP: jump into FPS mode
+					if (input.isKeyDown(VK_F1) && !FPS)
+					{
+						GLint centerX = (GLint)(camera.getPosition()[0]/CV_BLOCK_WIDTH);
+						GLint centerY = (GLint)(camera.getPosition()[2]/CV_BLOCK_DEPTH);
+						if (CV_GAME_MANAGER->getLevelManager()->getBlock(centerX,centerY)->isLow())
+						{
+							FPS=true;
+							camera.rotateX(-camInitXRot*delta);
+							camPos[1]=0.2f;
+							camera.setPosition(camPos);
+
+							// position the mouse to screen center
+							SetCursorPos(CV_SETTINGS_WINDOW_WIDTH_HALF,CV_SETTINGS_WINDOW_HEIGHT_HALF);
+						}
+					}
+					else if (input.isKeyDown(VK_F2) && FPS)
+					{
+						FPS=false;
+						camera.rotateX(camInitXRot);
+						camPos[1]=CV_CAMERA_INITIAL_HEIGHT;
+						camera.setPosition(camPos);
+					}
+
+					// temp adjust X angle
+					if (input.isKeyDown(VK_HOME))
+					{
+						camera.rotateX(camRotYSpeed*delta);
+					}
+					else if (input.isKeyDown(VK_END))
+					{
+						camera.rotateX(-camRotYSpeed*delta);
+					}
 				}
 			}
 

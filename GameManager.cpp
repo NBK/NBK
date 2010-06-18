@@ -172,7 +172,7 @@ namespace game_utils
 			result&=lightingManager->update();
 			result&=roomManager->update();
 			result&=guiManager->update();	
-			result&=economyManager->update();						
+			result&=economyManager->update();
 
 			deltaTime->afterUpdate();
 
