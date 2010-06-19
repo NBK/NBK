@@ -44,7 +44,7 @@ void main()
 	
 		if (NdotL > 0.0) 
 		{
-			att = 1.0/(gl_LightSource[0].constantAttenuation+gl_LightSource[0].linearAttenuation*dist+gl_LightSource[0].quadraticAttenuation*dist*dist);
+			att = 1.0/(gl_LightSource[1].constantAttenuation+gl_LightSource[1].linearAttenuation*dist+gl_LightSource[1].quadraticAttenuation*dist*dist);
 			
 			if (dist>0.3){att*=att*att*att;}
 			color += att * (diffuse * NdotL + ambient);	
@@ -62,11 +62,11 @@ void main()
 	
 		if (NdotL > 0.0) 
 		{
-			att = 1.0/(gl_LightSource[0].constantAttenuation+gl_LightSource[0].linearAttenuation*dist+gl_LightSource[0].quadraticAttenuation*dist*dist);
+			att = 1.0/(gl_LightSource[2].constantAttenuation+gl_LightSource[2].linearAttenuation*dist+gl_LightSource[2].quadraticAttenuation*dist*dist);
 			
 			if (dist>0.3)
 			{
-				att*=att*att;
+				att*=att*att*att;
 			}
 			color += att * (diffuse * NdotL + ambient);	
 		}	
@@ -83,12 +83,14 @@ void main()
 	
 		if (NdotL > 0.0) 
 		{
-			att = 1.0/(gl_LightSource[0].constantAttenuation+gl_LightSource[0].linearAttenuation*dist+gl_LightSource[0].quadraticAttenuation*dist*dist);
+			att = 1.0/(gl_LightSource[3].constantAttenuation+gl_LightSource[3].linearAttenuation*dist+gl_LightSource[3].quadraticAttenuation*dist*dist);
 			
 			if (dist>0.3){att*=att*att*att;}
 			color += att * (diffuse * NdotL + ambient);	
 		}	
-	}	
+	}
+	
+	
 	
 	cf = color.rgb;
 	af = color.a;
@@ -97,6 +99,10 @@ void main()
 	ct = texel.rgb;
 	at = texel.a;
 	
-	gl_FragColor = vec4(ct * cf, at * af);	
+	//gl_FragColor =vec4(ct * cf, at * af);	
+	
+	//distance fog
+	float fog = -ecPos.z/30;
+	gl_FragColor = (1-fog)*vec4(ct * cf, at * af) + vec4(fog/2,fog/2,fog/2,1);	
 }
 

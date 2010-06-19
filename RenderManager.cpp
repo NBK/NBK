@@ -369,8 +369,13 @@ namespace game_utils
 				vector3f b(bbox->B);
 				vector3f c(bbox->C);
 				vector3f d(bbox->D);
+				vector3f e(bbox->E);
+				vector3f f(bbox->F);
+				vector3f g(bbox->G);
+				vector3f h(bbox->H);
 
-				a[1]=b[1]=c[1]=d[1]=CV_BLOCK_HEIGHT+CV_BLOCK_HEIGHT/3.9f;
+				a[1]=b[1]=c[1]=d[1]=CV_BLOCK_HEIGHT+CV_BLOCK_HEIGHT/4.0f+CV_BLOCK_HEIGHT/32.0f;
+				e[1]=f[1]=g[1]=h[1]=CV_BLOCK_HEIGHT/4.0f+CV_BLOCK_HEIGHT/32.0f;
 
 				glLineWidth(4.0f);
 
@@ -382,12 +387,6 @@ namespace game_utils
 					}
 
 					// draw the selection box					
-					vector3f e(bbox->E);
-					vector3f f(bbox->F);
-					vector3f g(bbox->G);
-					vector3f h(bbox->H);
-					
-					e[1]=f[1]=g[1]=h[1]=CV_BLOCK_HEIGHT/4.0f;
 
 					if (pickedBlock->isSellable(CV_CURRENT_PLAYER_ID) && ae->message == AEM_SELL)
 					{
@@ -404,20 +403,20 @@ namespace game_utils
 					
 					glBegin(GL_LINES);
 					{
-						glVertex3fv(&a[0]); glVertex3fv(&b[0]);
+						/*glVertex3fv(&a[0]); glVertex3fv(&b[0]);
 						glVertex3fv(&b[0]); glVertex3fv(&c[0]);
 						glVertex3fv(&c[0]); glVertex3fv(&d[0]);
-						glVertex3fv(&d[0]); glVertex3fv(&a[0]);
+						glVertex3fv(&d[0]); glVertex3fv(&a[0]);*/
 
 						glVertex3fv(&e[0]); glVertex3fv(&f[0]);
 						glVertex3fv(&f[0]); glVertex3fv(&g[0]);
 						glVertex3fv(&g[0]); glVertex3fv(&h[0]);
 						glVertex3fv(&h[0]); glVertex3fv(&e[0]);
 
-						glVertex3fv(&a[0]); glVertex3fv(&e[0]);
+						/*glVertex3fv(&a[0]); glVertex3fv(&e[0]);
 						glVertex3fv(&b[0]); glVertex3fv(&f[0]);
 						glVertex3fv(&c[0]); glVertex3fv(&g[0]);
-						glVertex3fv(&d[0]); glVertex3fv(&h[0]);
+						glVertex3fv(&d[0]); glVertex3fv(&h[0]);*/
 					}
 					glEnd();
 				}
@@ -434,6 +433,16 @@ namespace game_utils
 						glVertex3fv(&b[0]); glVertex3fv(&c[0]);
 						glVertex3fv(&c[0]); glVertex3fv(&d[0]);
 						glVertex3fv(&d[0]); glVertex3fv(&a[0]);
+
+						glVertex3fv(&e[0]); glVertex3fv(&f[0]);
+						glVertex3fv(&f[0]); glVertex3fv(&g[0]);
+						glVertex3fv(&g[0]); glVertex3fv(&h[0]);
+						glVertex3fv(&h[0]); glVertex3fv(&e[0]);
+
+						glVertex3fv(&a[0]); glVertex3fv(&e[0]);
+						glVertex3fv(&b[0]); glVertex3fv(&f[0]);
+						glVertex3fv(&c[0]); glVertex3fv(&g[0]);
+						glVertex3fv(&d[0]); glVertex3fv(&h[0]);
 					}
 					glEnd();
 				}

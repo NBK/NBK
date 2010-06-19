@@ -37,17 +37,17 @@ namespace utils
 		{			
 			b++;
 
-			if(b>255)
+			if(b>=255)
 			{
 				g++;
 				b=0;
 
-				if (g>255)
+				if (g>=255)
 				{
 					r++;
 					g=0;
 
-					if (r>255)
+					if (r>=255)
 					{
 						r=0;
 					}

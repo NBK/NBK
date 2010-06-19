@@ -60,7 +60,7 @@ namespace game_utils
 			GLfloat delta = CV_GAME_MANAGER->getDeltaTime();
 			
 			//zoom with scroll wheel
-			short scroll = -input.checkScroll()/120;
+			float scroll = -(float)input.checkScroll()/120.0f;
 			camera.move(vector3f(0.0f,camZoomSpeed*delta*scroll,0.0f));					
 
 			//clip camera pos

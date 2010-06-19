@@ -251,9 +251,9 @@ namespace game_utils
 
 			renderedBlocks.clear();
 
-			for (GLint y=minY; y<=maxY; y++)
+			for (GLint y=0; y<=CV_LEVEL_MAP_SIZE; y++)
 			{
-				for (GLint x=minX; x<=maxX; x++)
+				for (GLint x=0; x<=CV_LEVEL_MAP_SIZE; x++)
 				{
 					block = lManager->getBlock(x,y);
 
