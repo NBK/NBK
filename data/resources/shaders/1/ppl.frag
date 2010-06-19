@@ -99,10 +99,10 @@ void main()
 	ct = texel.rgb;
 	at = texel.a;
 	
-	//gl_FragColor =vec4(ct * cf, at * af);	
+	gl_FragColor =vec4(ct * cf, at * af);	
 	
 	//distance fog
-	float fog = -ecPos.z/30;
-	gl_FragColor = (1-fog)*vec4(ct * cf, at * af) + vec4(fog/2,fog/2,fog/2,1);	
+	//float fog = -ecPos.z/30;
+	//gl_FragColor = (1-fog)*vec4(ct * cf, at * af) + vec4(fog/2,fog/2,fog/2,1);	
 }
 
