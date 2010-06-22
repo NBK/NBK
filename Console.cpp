@@ -267,6 +267,10 @@ namespace control
 	{
 	}
 
+	void CConsole::onMouseReleased(int button)
+	{
+	}
+
 	void CConsole::registerClass(CConsoleListener *listener, string commandGroupName)
 	{
 		if (groups.find(commandGroupName)==groups.end())

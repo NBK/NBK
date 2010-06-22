@@ -29,8 +29,10 @@ namespace game_utils
 			virtual void onKeyDown(int key);
 			virtual void onKeyUp(int key);
 			virtual void onMouseClicked(int button);
+			virtual void onMouseReleased(int button);
 
 		private:
+			bool mouseDown;
 
 			static GLint	roomTypes[],
 							trapTypes[];
