@@ -132,8 +132,14 @@ bool CPickingManager::update()
 			mousePos[0] -= border+wnd.left;
 			mousePos[1] -= titlebar+wnd.top;
 
+			if(lastPickedBlock)
+				lastPickedBlock->setHighlighted(false);
+
 			vector3ub pickedColor = COGLUtils::getColor(mousePos);
-			lastPickedBlock = colorBlockRef[pickedColor];			
+			lastPickedBlock = colorBlockRef[pickedColor];
+
+			if(lastPickedBlock)
+				lastPickedBlock->setHighlighted(true);
 
 			// 1.3 clear the backbuffer
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

@@ -28,7 +28,8 @@ namespace game_objects
 		taken(false),
 		roomIndex(-1),
 		finalized(false),
-		ceilingHeight(-1)
+		ceilingHeight(-1),
+		highlighted(false)
 	{
 		GLint tPos = 0;
 		for (GLint i=0; i<8; i++)
@@ -336,6 +337,16 @@ namespace game_objects
 	bool CBlock::hasTorch()
 	{		
 		return torch;
+	}
+
+	bool CBlock::isHighlighted()
+	{
+		return highlighted;
+	}
+
+	GLvoid CBlock::setHighlighted(bool highlighted)
+	{
+		this->highlighted = highlighted;
 	}
 
 	sBoundingBox *CBlock::getBoundingBox()

@@ -33,6 +33,7 @@ namespace game_utils
 
 		private:
 			bool mouseDown;
+			int selectedX, selectedY;
 
 			static GLint	roomTypes[],
 							trapTypes[];

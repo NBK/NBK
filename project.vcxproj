@@ -135,7 +135,7 @@
     </ResourceCompile>
     <Link>
       <AdditionalDependencies>winmm.lib;Externals\BugTrap\BugTrap.lib;opengl32.lib;glu32.lib;odbc32.lib;odbccp32.lib;wininet.lib;glew32.lib;LUA/lua5.1.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>.\Release/project.exe</OutputFile>
+      <OutputFile>.\Release\NBKE.exe</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ProgramDatabaseFile>.\Release/project.pdb</ProgramDatabaseFile>

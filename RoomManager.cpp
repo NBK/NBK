@@ -120,6 +120,9 @@ namespace game_utils
 			{				
 				CRoom *room = allRooms[*rIter];
 
+				if(!room){
+					allRooms.erase(allRooms.find(*rIter));
+				}else
 				// the room could be empty. just delete it
 				if (room->getRoomTilesVector()->size()==0)
 				{					

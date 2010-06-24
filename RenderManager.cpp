@@ -351,103 +351,118 @@ namespace game_utils
 			// if we are not selling or buying we don't have to process blocks (just objects TODO)
 			ACTION_EVENT *ae = CV_GAME_MANAGER->getGUIManager()->getLastActionEvent();
 			
-			// get the block we have our cousor on
+			// get the block we have our cursor on
 			CBlock *pickedBlock = CV_GAME_MANAGER->getPickingManager()->getLastPickedBlock();
 
 			if (pickedBlock)
 			{
-				GLint type = pickedBlock->getType();
-
-				/*if (!pickedBlock->isSellable())
+				//go through all the blocks to determine which are highlighted
+				for (GLint y=0; y<=CV_LEVEL_MAP_SIZE; y++)
 				{
-					return;
-				}*/
-
-				sBoundingBox *bbox = pickedBlock->getBoundingBox();
-
-				vector3f a(bbox->A);
-				vector3f b(bbox->B);
-				vector3f c(bbox->C);
-				vector3f d(bbox->D);
-				vector3f e(bbox->E);
-				vector3f f(bbox->F);
-				vector3f g(bbox->G);
-				vector3f h(bbox->H);
-
-				a[1]=b[1]=c[1]=d[1]=CV_BLOCK_HEIGHT+CV_BLOCK_HEIGHT/4.0f+CV_BLOCK_HEIGHT/32.0f;
-				e[1]=f[1]=g[1]=h[1]=CV_BLOCK_HEIGHT/4.0f+CV_BLOCK_HEIGHT/32.0f;
-
-				glLineWidth(4.0f);
-
-				if (pickedBlock->isLow())
-				{
-					if (!(ae->message_group==AEMG_BUILD_ROOMS || ae->message_group==AEMG_BUILD_DOORS || ae->message_group==AEMG_BUILD_TRAPS))
+					for (GLint x=0; x<=CV_LEVEL_MAP_SIZE; x++)
 					{
-						return;
-					}
+						pickedBlock = CV_GAME_MANAGER->getLevelManager()->getBlock(x,y);
+						if(!pickedBlock)
+							continue;
 
-					// draw the selection box					
+						//render only if block is highlighted
+						if(!pickedBlock->isHighlighted())
+							continue;
 
-					if (pickedBlock->isSellable(CV_CURRENT_PLAYER_ID) && ae->message == AEM_SELL)
-					{
-						glColor3f(0.0f,1.0f,0.0f);
-					}
-					else if (pickedBlock->isBuildable(CV_CURRENT_PLAYER_ID) && ae->message != AEM_SELL)
-					{
-						glColor3f(0.0f,1.0f,0.0f);
-					}
-					else
-					{
-						glColor3f(1.0f,0.0f,0.0f);
-					}
+						GLint type = pickedBlock->getType();
+
+						/*if (!pickedBlock->isSellable())
+						{
+							return;
+						}*/
+
+						sBoundingBox *bbox = pickedBlock->getBoundingBox();
+
+						vector3f a(bbox->A);
+						vector3f b(bbox->B);
+						vector3f c(bbox->C);
+						vector3f d(bbox->D);
+						vector3f e(bbox->E);
+						vector3f f(bbox->F);
+						vector3f g(bbox->G);
+						vector3f h(bbox->H);
+
+						a[1]=b[1]=c[1]=d[1]=CV_BLOCK_HEIGHT+CV_BLOCK_HEIGHT/4.0f+CV_BLOCK_HEIGHT/32.0f;
+						e[1]=f[1]=g[1]=h[1]=CV_BLOCK_HEIGHT/4.0f+CV_BLOCK_HEIGHT/32.0f;
+
+						glLineWidth(4.0f);
+
+						if (pickedBlock->isLow())
+						{
+							if (!(ae->message_group==AEMG_BUILD_ROOMS || ae->message_group==AEMG_BUILD_DOORS || ae->message_group==AEMG_BUILD_TRAPS))
+							{
+								return;
+							}
+
+							// draw the selection box					
+
+							if (pickedBlock->isSellable(CV_CURRENT_PLAYER_ID) && ae->message == AEM_SELL)
+							{
+								glColor3f(0.0f,1.0f,0.0f);
+							}
+							else if (pickedBlock->isBuildable(CV_CURRENT_PLAYER_ID) && ae->message != AEM_SELL)
+							{
+								glColor3f(0.0f,1.0f,0.0f);
+							}
+							else
+							{
+								glColor3f(1.0f,0.0f,0.0f);
+							}
 					
-					glBegin(GL_LINES);
-					{
-						/*glVertex3fv(&a[0]); glVertex3fv(&b[0]);
-						glVertex3fv(&b[0]); glVertex3fv(&c[0]);
-						glVertex3fv(&c[0]); glVertex3fv(&d[0]);
-						glVertex3fv(&d[0]); glVertex3fv(&a[0]);*/
+							glBegin(GL_LINES);
+							{
+								/*glVertex3fv(&a[0]); glVertex3fv(&b[0]);
+								glVertex3fv(&b[0]); glVertex3fv(&c[0]);
+								glVertex3fv(&c[0]); glVertex3fv(&d[0]);
+								glVertex3fv(&d[0]); glVertex3fv(&a[0]);*/
 
-						glVertex3fv(&e[0]); glVertex3fv(&f[0]);
-						glVertex3fv(&f[0]); glVertex3fv(&g[0]);
-						glVertex3fv(&g[0]); glVertex3fv(&h[0]);
-						glVertex3fv(&h[0]); glVertex3fv(&e[0]);
+								glVertex3fv(&e[0]); glVertex3fv(&f[0]);
+								glVertex3fv(&f[0]); glVertex3fv(&g[0]);
+								glVertex3fv(&g[0]); glVertex3fv(&h[0]);
+								glVertex3fv(&h[0]); glVertex3fv(&e[0]);
 
-						/*glVertex3fv(&a[0]); glVertex3fv(&e[0]);
-						glVertex3fv(&b[0]); glVertex3fv(&f[0]);
-						glVertex3fv(&c[0]); glVertex3fv(&g[0]);
-						glVertex3fv(&d[0]); glVertex3fv(&h[0]);*/
-					}
-					glEnd();
-				}
-				else
-				{		
-					if (!(ae->message_group==AEMG_BUILD_ROOMS || ae->message_group==AEMG_BUILD_DOORS || ae->message_group==AEMG_BUILD_TRAPS))
-						glColor3f(type==CV_BLOCK_TYPE_ROCK_ID?1.0f:0.0f,type==CV_BLOCK_TYPE_ROCK_ID?0.0f:1.0f,0.0f);
-					else
-						glColor3f(1.0f,0.0f,0.0f);
+								/*glVertex3fv(&a[0]); glVertex3fv(&e[0]);
+								glVertex3fv(&b[0]); glVertex3fv(&f[0]);
+								glVertex3fv(&c[0]); glVertex3fv(&g[0]);
+								glVertex3fv(&d[0]); glVertex3fv(&h[0]);*/
+							}
+							glEnd();
+						}
+						else
+						{		
+							if (!(ae->message_group==AEMG_BUILD_ROOMS || ae->message_group==AEMG_BUILD_DOORS || ae->message_group==AEMG_BUILD_TRAPS))
+								glColor3f(type==CV_BLOCK_TYPE_ROCK_ID?1.0f:0.0f,type==CV_BLOCK_TYPE_ROCK_ID?0.0f:1.0f,0.0f);
+							else
+								glColor3f(1.0f,0.0f,0.0f);
 			
-					glBegin(GL_LINES);
-					{
-						glVertex3fv(&a[0]); glVertex3fv(&b[0]);
-						glVertex3fv(&b[0]); glVertex3fv(&c[0]);
-						glVertex3fv(&c[0]); glVertex3fv(&d[0]);
-						glVertex3fv(&d[0]); glVertex3fv(&a[0]);
+							glBegin(GL_LINES);
+							{
+								glVertex3fv(&a[0]); glVertex3fv(&b[0]);
+								glVertex3fv(&b[0]); glVertex3fv(&c[0]);
+								glVertex3fv(&c[0]); glVertex3fv(&d[0]);
+								glVertex3fv(&d[0]); glVertex3fv(&a[0]);
 
-						glVertex3fv(&e[0]); glVertex3fv(&f[0]);
-						glVertex3fv(&f[0]); glVertex3fv(&g[0]);
-						glVertex3fv(&g[0]); glVertex3fv(&h[0]);
-						glVertex3fv(&h[0]); glVertex3fv(&e[0]);
+								glVertex3fv(&e[0]); glVertex3fv(&f[0]);
+								glVertex3fv(&f[0]); glVertex3fv(&g[0]);
+								glVertex3fv(&g[0]); glVertex3fv(&h[0]);
+								glVertex3fv(&h[0]); glVertex3fv(&e[0]);
 
-						glVertex3fv(&a[0]); glVertex3fv(&e[0]);
-						glVertex3fv(&b[0]); glVertex3fv(&f[0]);
-						glVertex3fv(&c[0]); glVertex3fv(&g[0]);
-						glVertex3fv(&d[0]); glVertex3fv(&h[0]);
+								glVertex3fv(&a[0]); glVertex3fv(&e[0]);
+								glVertex3fv(&b[0]); glVertex3fv(&f[0]);
+								glVertex3fv(&c[0]); glVertex3fv(&g[0]);
+								glVertex3fv(&d[0]); glVertex3fv(&h[0]);
+							}
+							glEnd();
+						}
+
+						glLineWidth(1.0f);
 					}
-					glEnd();
 				}
-
-				glLineWidth(1.0f);
 			}
 		}
 	};
