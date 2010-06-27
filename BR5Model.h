@@ -33,6 +33,11 @@ namespace loaders
 		bool loadFromFile(std::string fileName);
 
 		/*
+			Loads from .md3, temp until we sort out the classes
+		*/
+		bool loadFromMD3(std::string fileName);
+
+		/*
 			Draws the model using VBOs. Using this call
 			all the frames are drawn. If the model if animated,
 			then deltaTime comes to good use. 

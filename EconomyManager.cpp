@@ -319,9 +319,13 @@ namespace game_utils
 			{
 				//save the position for the drag start of the drag box
 				CBlock *pickedBlock = CV_GAME_MANAGER->getPickingManager()->getLastPickedBlock();
-				selectedX = pickedBlock->getLogicalPosition()[0];
-				selectedY = pickedBlock->getLogicalPosition()[1];
-				mouseDown = true;
+
+				if(pickedBlock)
+				{
+					selectedX = pickedBlock->getLogicalPosition()[0];
+					selectedY = pickedBlock->getLogicalPosition()[1];
+					mouseDown = true;
+				}
 			}
 		}
 	};

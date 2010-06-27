@@ -204,6 +204,13 @@ namespace loaders
 		return true;
 	}
 
+	bool CBR5Model::loadFromMD3(std::string fileName)
+	{
+	
+
+		return true;
+	}
+
 	char *CBR5Model::getTextureName()
 	{
 		return textureName;

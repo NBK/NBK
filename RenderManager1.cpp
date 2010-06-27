@@ -257,6 +257,9 @@ namespace game_utils
 				{
 					block = lManager->getBlock(x,y);
 
+					//if block if close to camera, true
+					bool complex = x>minX && x<maxX && y>minY && y<maxY;
+
 					if (block)
 					{
 						//block->getBoundingBox()->draw(); // just for testing
@@ -331,25 +334,71 @@ namespace game_utils
 											Lava and water have only lowers row of wall sections drawn. 
 											If they are drawn at all.
 										*/
-										maxVertInput = CV_FBLR_W_L_FACE_VERT_FLOATS;
-										maxTexInput = CV_FBLR_W_L_FACE_TEX_FLOATS;
+										if(complex)
+										{
+											maxVertInput = CV_FBLR_W_L_FACE_VERT_FLOATS;
+											maxTexInput = CV_FBLR_W_L_FACE_TEX_FLOATS;
+										}else
+										{
+											maxVertInput = 4*3;
+											maxTexInput = 4*2;
+										}
 									}
 									else
 									{
-										maxVertInput = f>=CBlock::BFS_TOP?CV_TBWLC_FACE_VERT_FLOATS:CV_FBLR_FACE_VERT_FLOATS;
-										maxTexInput = f>=CBlock::BFS_TOP?CV_TBWLC_FACE_TEX_FLOATS:CV_FBLR_FACE_TEX_FLOATS;
+										if(complex)
+										{
+											maxVertInput = f>=CBlock::BFS_TOP?CV_TBWLC_FACE_VERT_FLOATS:CV_FBLR_FACE_VERT_FLOATS;
+											maxTexInput = f>=CBlock::BFS_TOP?CV_TBWLC_FACE_TEX_FLOATS:CV_FBLR_FACE_TEX_FLOATS;
+										}
+										else
+										{
+											maxVertInput = 4*3;
+											maxTexInput = 4*2;
+										}
 									}
 
-									memcpy(tmpVboVertexBuffer+tmpVboVertexBufferSize, verts[f], sizeof(GLfloat)*maxVertInput);
-
-									for (GLint n=0; n<maxVertInput; n+=3)
+									if(complex)
 									{
-										memcpy(tmpVboNormalBuffer+tmpVboVertexBufferSize+n, normals[f], sizeof(GLfloat)*3);
+										memcpy(tmpVboVertexBuffer+tmpVboVertexBufferSize, verts[f], sizeof(GLfloat)*maxVertInput);
+
+										for (GLint n=0; n<maxVertInput; n+=3)
+										{
+											memcpy(tmpVboNormalBuffer+tmpVboVertexBufferSize+n, normals[f], sizeof(GLfloat)*3);
+										}
+
+										memcpy(tmpVboTexCoordBuffer+tmpVboTexCoordBufferSize, texCoords, sizeof(GLfloat)*maxTexInput);	
+									}
+									else
+									{
+										// if it's far away, we only need the extreme vertices
+										memcpy(tmpVboNormalBuffer+tmpVboVertexBufferSize, normals[f], sizeof(GLfloat)*3);
+										memcpy(tmpVboNormalBuffer+tmpVboVertexBufferSize+3, normals[f], sizeof(GLfloat)*3);
+										memcpy(tmpVboNormalBuffer+tmpVboVertexBufferSize+6, normals[f], sizeof(GLfloat)*3);
+										memcpy(tmpVboNormalBuffer+tmpVboVertexBufferSize+9, normals[f], sizeof(GLfloat)*3);
+
+										memcpy(tmpVboVertexBuffer+tmpVboVertexBufferSize, verts[f], sizeof(GLfloat)*3);
+										memcpy(tmpVboVertexBuffer+tmpVboVertexBufferSize+3, verts[f]+9*3, sizeof(GLfloat)*3);
+
+										if(f>=CBlock::BFS_TOP)
+										{
+											memcpy(tmpVboVertexBuffer+tmpVboVertexBufferSize+6, verts[f]+34*3, sizeof(GLfloat)*3);
+											memcpy(tmpVboVertexBuffer+tmpVboVertexBufferSize+9, verts[f]+27*3, sizeof(GLfloat)*3);
+										}else
+										{
+											memcpy(tmpVboVertexBuffer+tmpVboVertexBufferSize+6, verts[f]+46*3, sizeof(GLfloat)*3);
+											memcpy(tmpVboVertexBuffer+tmpVboVertexBufferSize+9, verts[f]+39*3, sizeof(GLfloat)*3);
+										}
+
+										//copy texcoords to be rendered
+										memcpy(tmpVboTexCoordBuffer+tmpVboTexCoordBufferSize, texCoords, sizeof(GLfloat)*2*4);
+										memcpy(tmpVboTexCoordBuffer+tmpVboTexCoordBufferSize+2*4, texCoords+9*2, sizeof(GLfloat)*2*4);
+										memcpy(tmpVboTexCoordBuffer+tmpVboTexCoordBufferSize+4*4, texCoords+34*2, sizeof(GLfloat)*2*4);
+										memcpy(tmpVboTexCoordBuffer+tmpVboTexCoordBufferSize+6*4, texCoords+27*2, sizeof(GLfloat)*2*4);
 									}
 
 									tmpVboVertexBufferSize+=maxVertInput;
-
-									memcpy(tmpVboTexCoordBuffer+tmpVboTexCoordBufferSize, texCoords, sizeof(GLfloat)*maxTexInput);						
+					
 									tmpVboTexCoordBufferSize+=maxTexInput;
 																	
 								}
