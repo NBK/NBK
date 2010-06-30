@@ -41,15 +41,63 @@ namespace game_utils
 
 		GLvoid CCreatureManager::addCreature(string creatureName, vector3f position)
 		{
-			/*CCreature *newCreature = new CCreature();			
-			newCreature->setPosition(position);
-			newCreature->setName("MODEL_BEAST");
-			newCreature->setModel(CV_GAME_MANAGER->getResourceManager()->getModel("MODEL_BEAST"));
-			newCreature->setAction(CCreature::AA_WALK,0,5);
-			newCreature->useAction(CCreature::AA_WALK);
-			allCreatures.push_back(newCreature);*/
-
-			if (creatureName == "IMP")
+			if (creatureName == "BARBARIAN")
+ 			{
+				CCreature *barbarian = new CCreature();
+				barbarian->setPosition(position);
+				barbarian->setName(creatureName);
+				barbarian->setModel(CV_GAME_MANAGER->getResourceManager()->getModel("MODEL_BARBARIAN"));
+				allCreatures.push_back(barbarian);
+			}
+			else if (creatureName == "KNIGHT")
+ 			{
+				CCreature *knight = new CCreature();
+				knight->setPosition(position);
+				knight->setName(creatureName);
+				knight->setModel(CV_GAME_MANAGER->getResourceManager()->getModel("MODEL_KNIGHT"));
+				allCreatures.push_back(knight);
+			}
+			else if (creatureName == "HORNED_REAPER")
+			{
+				CCreature *horned_reaper = new CCreature();
+				horned_reaper->setPosition(position);
+				horned_reaper->setName(creatureName);
+				horned_reaper->setModel(CV_GAME_MANAGER->getResourceManager()->getModel("MODEL_HORNED_REAPER"));
+				allCreatures.push_back(horned_reaper);
+			}
+			else if (creatureName == "DRAGON")
+			{
+				CCreature *dragon = new CCreature();
+				dragon->setPosition(position);
+				dragon->setName(creatureName);
+				dragon->setModel(CV_GAME_MANAGER->getResourceManager()->getModel("MODEL_DRAGON"));
+				allCreatures.push_back(dragon);
+			}
+			else if (creatureName == "DEMON_SPAWN")
+			{
+				CCreature *demon_spawn = new CCreature();
+				demon_spawn->setPosition(position);
+				demon_spawn->setName(creatureName);
+				demon_spawn->setModel(CV_GAME_MANAGER->getResourceManager()->getModel("MODEL_DEMON_SPAWN"));
+				allCreatures.push_back(demon_spawn);
+			}
+			else if (creatureName == "FLY")
+			{
+				CCreature *fly = new CCreature();
+				fly->setPosition(position);
+				fly->setName(creatureName);
+				fly->setModel(CV_GAME_MANAGER->getResourceManager()->getModel("MODEL_FLY"));
+				allCreatures.push_back(fly);
+			}
+			else if (creatureName == "BILE_DEMON")
+			{
+				CCreature *bile_demon = new CCreature();
+				bile_demon->setPosition(position);
+				bile_demon->setName(creatureName);
+				bile_demon->setModel(CV_GAME_MANAGER->getResourceManager()->getModel("MODEL_BILE_DEMON"));
+				allCreatures.push_back(bile_demon);
+			}
+			else if (creatureName == "IMP")
 			{
 				CImp *imp = new CImp();
 
@@ -63,6 +111,38 @@ namespace game_utils
 				imp->setAction(CCreature::AA_DRAG,25,29);
 				imp->useAction(CCreature::AA_WALK);
 				allCreatures.push_back(imp);
+			}
+			else if (creatureName == "BEETLE")
+			{
+				CCreature *beetle = new CCreature();
+				beetle->setPosition(position);
+				beetle->setName(creatureName);
+				beetle->setModel(CV_GAME_MANAGER->getResourceManager()->getModel("MODEL_BEETLE"));
+				allCreatures.push_back(beetle);
+			}
+			else if (creatureName == "VAMPIRE")
+			{
+				CCreature *vampire = new CCreature();
+				vampire->setPosition(position);
+				vampire->setName(creatureName);
+				vampire->setModel(CV_GAME_MANAGER->getResourceManager()->getModel("MODEL_VAMPIRE"));
+				allCreatures.push_back(vampire);
+			}
+			else if (creatureName == "SPIDER")
+			{
+				CCreature *spider = new CCreature();
+				spider->setPosition(position);
+				spider->setName(creatureName);
+				spider->setModel(CV_GAME_MANAGER->getResourceManager()->getModel("MODEL_SPIDER"));
+				allCreatures.push_back(spider);
+			}
+			else if (creatureName == "HELL_HOUND")
+			{
+				CCreature *hell_hound = new CCreature();
+				hell_hound->setPosition(position);
+				hell_hound->setName(creatureName);
+				hell_hound->setModel(CV_GAME_MANAGER->getResourceManager()->getModel("MODEL_HELL_HOUND"));
+				allCreatures.push_back(hell_hound);
 			}
 		}
 

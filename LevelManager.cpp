@@ -89,16 +89,18 @@ using namespace control;
 // creatures
 #define TNG_CREATURE				5
 
-#define TNG_CREATURE_SPIDER			26
-#define TNG_CREATURE_SKELETON		15
-#define TNG_CREATURE_HORNY			14
+#define TNG_CREATURE_BARBARIAN		2
+#define TNG_CREATURE_KNIGHT			6
+#define TNG_CREATURE_HORNED_REAPER	14
+#define TNG_CREATURE_DRAGON			17
+#define TNG_CREATURE_DEMON_SPAWN	18
+#define TNG_CREATURE_FLY			19
+#define TNG_CREATURE_BILE_DEMON		22
 #define TNG_CREATURE_IMP			23
 #define TNG_CREATURE_BEETLE			24
-#define TNG_CREATURE_BILE_DEMON		22
-#define TNG_CREATURE_DEMON_SPAWN	18
-#define TNG_CREATURE_HELL_HOUND		27
 #define TNG_CREATURE_VAMPIRE		25
-#define TNG_CREATURE_DRAGON			17
+#define TNG_CREATURE_SPIDER			26
+#define TNG_CREATURE_HELL_HOUND		27
 
 // room effects
 #define TNG_ROOM_EFFECT				7
@@ -580,51 +582,66 @@ namespace game_utils
 					// creature
 					case TNG_CREATURE:
 					{
-						/*
-						CCreature *creature=NULL;
-
-						if (thing_subtype==TNG_CREATURE_HORNY)
-						{
-							creature = new CCreature(thing_x,0.0f,thing_y,map_x,map_y,model_list->get_normal_model(MODEL_CREATURE_HORNY),CREATURE_HORNY,game_textures->get_texture_by_name("LEVELS"));
+						if (thing_subtype==TNG_CREATURE_BARBARIAN)
+						{							
+							CV_GAME_MANAGER->getConsole()->writeLine("CREATED BARBARIAN");
+							CV_GAME_MANAGER->getCreatureManager()->addCreature("BARBARIAN",vector3f(thing_x,y,thing_y));
 						}
-						else*/ if (thing_subtype==TNG_CREATURE_IMP)
+						else if (thing_subtype==TNG_CREATURE_KNIGHT)
+						{							
+							CV_GAME_MANAGER->getConsole()->writeLine("CREATED KNIGHT");
+							CV_GAME_MANAGER->getCreatureManager()->addCreature("KNIGHT",vector3f(thing_x,y,thing_y));
+						}
+						else if (thing_subtype==TNG_CREATURE_HORNED_REAPER)
+						{
+							CV_GAME_MANAGER->getConsole()->writeLine("CREATED HORNED REAPER");
+							CV_GAME_MANAGER->getCreatureManager()->addCreature("HORNED_REAPER",vector3f(thing_x,y,thing_y));
+						}
+						else if (thing_subtype==TNG_CREATURE_DRAGON)
+ 						{							
+							CV_GAME_MANAGER->getConsole()->writeLine("CREATED DRAGON");
+							CV_GAME_MANAGER->getCreatureManager()->addCreature("DRAGON",vector3f(thing_x,y,thing_y));
+						}
+						else if (thing_subtype==TNG_CREATURE_DEMON_SPAWN)
+						{							
+							CV_GAME_MANAGER->getConsole()->writeLine("CREATED DEMON SPAWN");
+							CV_GAME_MANAGER->getCreatureManager()->addCreature("DEMON_SPAWN",vector3f(thing_x,y,thing_y));
+						}
+						else if (thing_subtype==TNG_CREATURE_FLY)
+						{							
+							CV_GAME_MANAGER->getConsole()->writeLine("CREATED FLY");
+							CV_GAME_MANAGER->getCreatureManager()->addCreature("FLY",vector3f(thing_x,y,thing_y));
+						}
+						else if (thing_subtype==TNG_CREATURE_BILE_DEMON)
+						{							
+							CV_GAME_MANAGER->getConsole()->writeLine("CREATED BILE DEMON");
+							CV_GAME_MANAGER->getCreatureManager()->addCreature("BILE_DEMON",vector3f(thing_x,y,thing_y));
+						}
+						else if (thing_subtype==TNG_CREATURE_IMP)
 						{							
 							CV_GAME_MANAGER->getConsole()->writeLine("CREATED IMP");
 							CV_GAME_MANAGER->getCreatureManager()->addCreature("IMP",vector3f(thing_x,y,thing_y));
 						}
-						/*else if (thing_subtype==TNG_CREATURE_BILE_DEMON)
-						{
-							creature = new CCreature(thing_x,0.0f,thing_y,map_x,map_y,model_list->get_normal_model(MODEL_CREATURE_BILE_DEMON),CREATURE_BILE_DEMON,game_textures->get_texture_by_name("LEVELS"));
-						}
 						else if (thing_subtype==TNG_CREATURE_BEETLE)
-						{
-							creature = new CCreature(thing_x,0.0f,thing_y,map_x,map_y,model_list->get_normal_model(MODEL_CREATURE_BEETLE),CREATURE_BEETLE,game_textures->get_texture_by_name("LEVELS"));
-						}
-						else if (thing_subtype==TNG_CREATURE_DEMON_SPAWN)
-						{
-							creature = new CCreature(thing_x,0.0f,thing_y,map_x,map_y,model_list->get_normal_model(MODEL_CREATURE_DEMON_SPAWN),CREATURE_DEMONSPAWN,game_textures->get_texture_by_name("LEVELS"));
-						}
-						else if (thing_subtype==TNG_CREATURE_HELL_HOUND)
-						{
-							creature = new CCreature(thing_x,0.0f,thing_y,map_x,map_y,model_list->get_normal_model(MODEL_CREATURE_HELL_HOUND),CREATURE_HELLHOUND,game_textures->get_texture_by_name("LEVELS"));
-						}
+						{							
+							CV_GAME_MANAGER->getConsole()->writeLine("CREATED BEETLE");
+							CV_GAME_MANAGER->getCreatureManager()->addCreature("BEETLE",vector3f(thing_x,y,thing_y));
+ 						}
 						else if (thing_subtype==TNG_CREATURE_VAMPIRE)
-						{
-							creature = new CCreature(thing_x,0.0f,thing_y,map_x,map_y,model_list->get_normal_model(MODEL_CREATURE_VAMPIRE),CREATURE_VAMPIRE,game_textures->get_texture_by_name("LEVELS"));
+						{							
+							CV_GAME_MANAGER->getConsole()->writeLine("CREATED VAMPIRE");
+							CV_GAME_MANAGER->getCreatureManager()->addCreature("VAMPIRE",vector3f(thing_x,y,thing_y));
 						}
-						else if (thing_subtype==TNG_CREATURE_DRAGON)
-						{
-							creature = new CCreature(thing_x,0.0f,thing_y,map_x,map_y,model_list->get_normal_model(MODEL_CREATURE_DRAGON),CREATURE_DRAGON,game_textures->get_texture_by_name("LEVELS"));
-						}
-
-						if (creature)
-						{
-							creature->set_owner(owner);
-							creature->set_level(thing_data[14]+1);
-							creature->set_path_finder(path_finder);
-							moving_things->add_sprite(creature);
-							update_FUCA(creature->get_unique_color().unique_color,creature);
-						}*/
+						else if (thing_subtype==TNG_CREATURE_SPIDER)
+						{							
+							CV_GAME_MANAGER->getConsole()->writeLine("CREATED SPIDER");
+							CV_GAME_MANAGER->getCreatureManager()->addCreature("SPIDER",vector3f(thing_x,y,thing_y));
+ 						}
+ 						else if (thing_subtype==TNG_CREATURE_HELL_HOUND)
+						{							
+							CV_GAME_MANAGER->getConsole()->writeLine("CREATED HELL HOUND");
+							CV_GAME_MANAGER->getCreatureManager()->addCreature("HELL_HOUND",vector3f(thing_x,y,thing_y));
+ 						}
 
 						break;
 					}
