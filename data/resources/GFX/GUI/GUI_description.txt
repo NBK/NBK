@@ -1,0 +1,16 @@
+GP00-mimap main
+GP01-minimap buttons
+GP10-background 1
+GP11-side bar 1
+GP20-background 2
+GP21-side bar 2
+GP30-underbar
+GP31-corner
+
+TCP0-tab questionmark
+TCP1-tab stool
+TCP2-tab shield
+TCP3-tab hammer
+TCP4-tab ogre
+
+TI00<->TI15-Buttons
