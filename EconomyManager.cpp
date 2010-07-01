@@ -173,7 +173,8 @@ namespace game_utils
 							// If you have clicked on a rock, mark it for mining.
 							if (CV_GAME_MANAGER->getLevelManager()->isFullBlock(block))
  							{
-								block->setMarked(!block->isMarked());
+								if (!block->getType()==CV_BLOCK_TYPE_ROCK_ID)
+									block->setMarked(!block->isMarked());
 							}
 							else if (group==AEMG_BUILD_ROOMS || group==AEMG_BUILD_DOORS || group==AEMG_BUILD_TRAPS)
 							{
