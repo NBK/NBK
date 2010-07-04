@@ -778,7 +778,7 @@ namespace game_objects
 
 			if (dispose)
 			{
-				CV_GAME_MANAGER->getResourceManager()->returnModel(bObject->getName(), bObject->getModel());			
+				CV_GAME_MANAGER->getResourceManager()->returnModel(bObject->getName(), bObject->getModel());	//bug on this line		
 
 				if (bObject->getEffect())
 				{

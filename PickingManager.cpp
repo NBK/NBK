@@ -4,6 +4,9 @@
 #include <cml/cml.h>
 #include "OGLUtils.h"
 
+#define _SECURE_SCL 0
+
+
 using namespace std;
 using namespace utils;
 using namespace game_objects;
@@ -39,7 +42,8 @@ bool CPickingManager::update()
 				return true;
 			}
 
-			map<vector3ub, CBlock*> colorBlockRef;
+			//using a map is very slow
+			std::vector<pair<vector3ub, CBlock*>> colorBlockRef;
 
 			sColor sCol(50,50,50);
 
@@ -66,7 +70,7 @@ bool CPickingManager::update()
 
 				vector3ub col = sCol.getNextColorUB();
 
-				colorBlockRef[col] = block;					
+				colorBlockRef.push_back(pair<vector3ub, CBlock*>(col, block));				
 
 				glColor3ubv(&col[0]);
 
@@ -136,7 +140,9 @@ bool CPickingManager::update()
 				lastPickedBlock->setHighlighted(false);
 
 			vector3ub pickedColor = COGLUtils::getColor(mousePos);
-			lastPickedBlock = colorBlockRef[pickedColor];
+			for(std::vector<pair<vector3ub, CBlock*>>::iterator i = colorBlockRef.begin(); i != colorBlockRef.end(); i++)
+				if(i->first == pickedColor)
+					lastPickedBlock = i->second;
 
 			if(lastPickedBlock)
 				lastPickedBlock->setHighlighted(true);

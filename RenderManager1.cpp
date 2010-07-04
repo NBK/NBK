@@ -203,19 +203,7 @@ namespace game_utils
 			{
 				// fog only in FPS mode
 				glEnable(GL_FOG);
-			}
-
-			/*
-				In FPS mode we can't use height to determine visible offset. 
-				We have to use some extent read from config (CV_CAMERA_FPS_EXTENT).
-			*/
-			GLint diff = (GLint)(isFPS?cameraFPSExtent:camera->getPosition()[1]*10.0f);
-
-			// 2. create a bounding square making its center logical position calculate above.
-			GLint minX = (centerX-diff>=0?centerX-diff:0);
-			GLint minY = (centerY-diff>=0?centerY-diff:0);
-			GLint maxX = (centerX+diff<CV_LEVEL_MAP_SIZE?centerX+diff:CV_LEVEL_MAP_SIZE-1);
-			GLint maxY = (centerY+diff<CV_LEVEL_MAP_SIZE?centerY+diff:CV_LEVEL_MAP_SIZE-1);			
+			}	
 
 			// 3. go through all block that fall into this bounding square and check if they fall
 			//    int out view frustum. If not then just exclude them.
@@ -255,10 +243,16 @@ namespace game_utils
 			{
 				for (GLint x=0; x<=CV_LEVEL_MAP_SIZE; x++)
 				{
-					block = lManager->getBlock(x,y);
+					//if block is far from the camera, cull
+					if((x-centerX)*(x-centerX)+(y-centerY)*(y-centerY)>200)
+						continue;
 
-					//if block if close to camera, true
-					bool complex = x>minX && x<maxX && y>minY && y<maxY;
+					//if it's not too close, it's a simple model
+					bool complex = true;
+					if((x-centerX)*(x-centerX)+(y-centerY)*(y-centerY)>100)
+						complex = false;
+
+					block = lManager->getBlock(x,y);
 
 					if (block)
 					{

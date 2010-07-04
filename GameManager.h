@@ -3,6 +3,7 @@
 
 #include "RenderManager.h"
 #include "RenderManager1.h"
+#include "NewRenderer.h"
 #include "ResourceManager.h"
 #include "BlockManager.h"
 #include "Manager.h"
@@ -45,6 +46,7 @@ namespace game_utils
 			CBlockManager			*getBlockManager();
 			CLevelManager			*getLevelManager();
 			CRenderManager			*getRenderManager();
+			CNewRenderer			*getNewRenderer();
 			CControlManager			*getControlManager();
 			CCollisionManager		*getCollisionManager();
 			CSettingsManager		*getSettingsManager();
@@ -79,6 +81,7 @@ namespace game_utils
 			CCreatureManager		*creatureManager;
 			CGUIManager				*guiManager;
 			CPathManager			*pathManager;
+			CNewRenderer			*newRenderer;
 
 			control::CDeltaTime		*deltaTime;
 			utils::CText			*textPrinter;

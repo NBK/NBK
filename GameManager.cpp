@@ -108,6 +108,10 @@ namespace game_utils
 			result&=renderManager->init();
 			CLogger::setEntryEnd("Render manager creation and init.");
 
+			/*newRenderer = new CNewRenderer();
+			result &= newRenderer->init();
+			CLogger::setEntryEnd("Render manager creation and init.");*/
+
 			CLogger::setEntryStart();
 			animatedTerrainManager = new CAnimatedTerrainManager();
 			result&=animatedTerrainManager->init();
@@ -168,6 +172,7 @@ namespace game_utils
 			result&=pickingManager->update();
 
 			result&=renderManager->update();
+			//result&=newRenderer->update();
 			result&=animatedTerrainManager->update();
 			result&=lightingManager->update();
 			result&=roomManager->update();
@@ -191,6 +196,7 @@ namespace game_utils
 			result&=roomManager->shutdown();
 			result&=blockManager->shutdown();
 			result&=levelManager->shutdown(); // TODO: fix error when shutting down
+			//result&=newRenderer->shutdown();
 			result&=renderManager->shutdown();
 			result&=collisionManager->shutdown();
 			result&=controlManager->shutdown();
@@ -206,7 +212,7 @@ namespace game_utils
 			delete resourceManager;
 			delete blockManager;
 			delete levelManager;
-			delete renderManager;
+			delete newRenderer;
 			delete collisionManager;
 			delete controlManager;
 			delete animatedTerrainManager;
@@ -242,6 +248,11 @@ namespace game_utils
 		CRenderManager *CGameManager::getRenderManager()
 		{
 			return renderManager;
+		}
+
+		CNewRenderer *CGameManager::getNewRenderer()
+		{
+			return newRenderer;
 		}
 
 		CControlManager *CGameManager::getControlManager()
