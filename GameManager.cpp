@@ -212,7 +212,8 @@ namespace game_utils
 			delete resourceManager;
 			delete blockManager;
 			delete levelManager;
-			delete newRenderer;
+			//delete newRenderer;
+			delete renderManager;
 			delete collisionManager;
 			delete controlManager;
 			delete animatedTerrainManager;

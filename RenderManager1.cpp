@@ -222,7 +222,7 @@ namespace game_utils
 						vertC;
 
 			GLfloat **verts,
-					*texCoords;
+					**texCoords;
 
 			CLevelManager			*lManager = CV_GAME_MANAGER->getLevelManager();
 			CAnimatedTerrainManager	*atManager = CV_GAME_MANAGER->getAnimatedTerrainManager();
@@ -246,11 +246,6 @@ namespace game_utils
 					//if block is far from the camera, cull
 					if((x-centerX)*(x-centerX)+(y-centerY)*(y-centerY)>200)
 						continue;
-
-					//if it's not too close, it's a simple model
-					bool complex = true;
-					if((x-centerX)*(x-centerX)+(y-centerY)*(y-centerY)>100)
-						complex = false;
 
 					block = lManager->getBlock(x,y);
 
@@ -317,79 +312,35 @@ namespace game_utils
 									continue;
 								}
 
+								verts = block->getVertices();
+								texCoords = block->getTextureCoordinates();
+
 								if (block->isFaceVisible((CBlock::BLOCK_FACE_SELECTOR)f))
 								{		
-									verts = block->getVertices();
-									texCoords = block->getTextureCoordinates((CBlock::BLOCK_FACE_SELECTOR)f);
-
 									if (lavaWater && f<=CBlock::BFS_RIGHT)
 									{
 										/* 
 											Lava and water have only lowers row of wall sections drawn. 
 											If they are drawn at all.
 										*/
-										if(complex)
-										{
-											maxVertInput = CV_FBLR_W_L_FACE_VERT_FLOATS;
-											maxTexInput = CV_FBLR_W_L_FACE_TEX_FLOATS;
-										}else
-										{
-											maxVertInput = 4*3;
-											maxTexInput = 4*2;
-										}
+										maxVertInput = CV_FBLR_W_L_FACE_VERT_FLOATS;
+										maxTexInput = CV_FBLR_W_L_FACE_TEX_FLOATS;
 									}
 									else
 									{
-										if(complex)
-										{
-											maxVertInput = f>=CBlock::BFS_TOP?CV_TBWLC_FACE_VERT_FLOATS:CV_FBLR_FACE_VERT_FLOATS;
-											maxTexInput = f>=CBlock::BFS_TOP?CV_TBWLC_FACE_TEX_FLOATS:CV_FBLR_FACE_TEX_FLOATS;
-										}
-										else
-										{
-											maxVertInput = 4*3;
-											maxTexInput = 4*2;
-										}
+										maxVertInput = f>=CBlock::BFS_TOP?CV_TBWLC_FACE_VERT_FLOATS:CV_FBLR_FACE_VERT_FLOATS;
+										maxTexInput = f>=CBlock::BFS_TOP?CV_TBWLC_FACE_TEX_FLOATS:CV_FBLR_FACE_TEX_FLOATS;
 									}
 
-									if(complex)
+									memcpy(tmpVboVertexBuffer+tmpVboVertexBufferSize, verts[f], sizeof(GLfloat)*maxVertInput);
+
+									for (GLint n=0; n<maxVertInput; n+=3)
 									{
-										memcpy(tmpVboVertexBuffer+tmpVboVertexBufferSize, verts[f], sizeof(GLfloat)*maxVertInput);
-
-										for (GLint n=0; n<maxVertInput; n+=3)
-										{
-											memcpy(tmpVboNormalBuffer+tmpVboVertexBufferSize+n, normals[f], sizeof(GLfloat)*3);
-										}
-
-										memcpy(tmpVboTexCoordBuffer+tmpVboTexCoordBufferSize, texCoords, sizeof(GLfloat)*maxTexInput);	
+										memcpy(tmpVboNormalBuffer+tmpVboVertexBufferSize+n, normals[f], sizeof(GLfloat)*3);
 									}
-									else
-									{
-										// if it's far away, we only need the extreme vertices
-										memcpy(tmpVboNormalBuffer+tmpVboVertexBufferSize, normals[f], sizeof(GLfloat)*3);
-										memcpy(tmpVboNormalBuffer+tmpVboVertexBufferSize+3, normals[f], sizeof(GLfloat)*3);
-										memcpy(tmpVboNormalBuffer+tmpVboVertexBufferSize+6, normals[f], sizeof(GLfloat)*3);
-										memcpy(tmpVboNormalBuffer+tmpVboVertexBufferSize+9, normals[f], sizeof(GLfloat)*3);
 
-										memcpy(tmpVboVertexBuffer+tmpVboVertexBufferSize, verts[f], sizeof(GLfloat)*3);
-										memcpy(tmpVboVertexBuffer+tmpVboVertexBufferSize+3, verts[f]+9*3, sizeof(GLfloat)*3);
+									memcpy(tmpVboTexCoordBuffer+tmpVboTexCoordBufferSize, texCoords[f], sizeof(GLfloat)*maxTexInput);	
 
-										if(f>=CBlock::BFS_TOP)
-										{
-											memcpy(tmpVboVertexBuffer+tmpVboVertexBufferSize+6, verts[f]+34*3, sizeof(GLfloat)*3);
-											memcpy(tmpVboVertexBuffer+tmpVboVertexBufferSize+9, verts[f]+27*3, sizeof(GLfloat)*3);
-										}else
-										{
-											memcpy(tmpVboVertexBuffer+tmpVboVertexBufferSize+6, verts[f]+46*3, sizeof(GLfloat)*3);
-											memcpy(tmpVboVertexBuffer+tmpVboVertexBufferSize+9, verts[f]+39*3, sizeof(GLfloat)*3);
-										}
-
-										//copy texcoords to be rendered
-										memcpy(tmpVboTexCoordBuffer+tmpVboTexCoordBufferSize, texCoords, sizeof(GLfloat)*2*4);
-										memcpy(tmpVboTexCoordBuffer+tmpVboTexCoordBufferSize+2*4, texCoords+9*2, sizeof(GLfloat)*2*4);
-										memcpy(tmpVboTexCoordBuffer+tmpVboTexCoordBufferSize+4*4, texCoords+34*2, sizeof(GLfloat)*2*4);
-										memcpy(tmpVboTexCoordBuffer+tmpVboTexCoordBufferSize+6*4, texCoords+27*2, sizeof(GLfloat)*2*4);
-									}
 
 									tmpVboVertexBufferSize+=maxVertInput;
 					
@@ -426,6 +377,11 @@ namespace game_utils
 
 					if (creature)
 					{
+						int x = CConversions::realToLogical(creature->getPosition())[0];
+						int y = CConversions::realToLogical(creature->getPosition())[1];
+						if((x-centerX)*(x-centerX)+(y-centerY)*(y-centerY)>200)
+							continue;
+
 						sBoundingBox *cBBOX = creature->getModel()->getBoundingBox();
 						cBBOX->translate(creature->getPosition());
 						if (frustum->containsBBOX(cBBOX))
