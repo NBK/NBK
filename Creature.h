@@ -23,6 +23,8 @@ namespace game_objects
 		};
 
 		GLvoid setName(std::string name);
+		GLvoid setLevel(GLint level);
+		GLvoid addCurrentXP(GLint CurrentXP);
 		GLvoid setModel(loaders::CBR5Model *model);
 		GLvoid setAction(GLint action, GLint startFrame, GLint endFrame);
 		GLvoid useAction(GLint action);
@@ -31,6 +33,8 @@ namespace game_objects
 
 		loaders::CBR5Model	*getModel();
 		std::string			getName();
+		GLint				getLevel();
+		GLint				getCurrentXP();
 
 	protected:
 
@@ -46,6 +50,10 @@ namespace game_objects
 		// creature params, TODO add more
 		GLfloat			moveSpeed;
 		cml::vector3f	moveVector;
+
+		// Creature stats
+		GLint			level;
+		GLint			CurrentXP;
 
 		/* holds the current path */
 		std::vector<cml::vector2i> path;

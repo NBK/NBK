@@ -15,6 +15,7 @@ namespace game_objects
 		name = "";
 		moveSpeed = 1.0f;
 		moveVector = vector3f(0.0f,0.0f,0.0f);
+		level = 1;
 	}
 
 	CCreature::~CCreature()
@@ -28,6 +29,28 @@ namespace game_objects
 	GLvoid CCreature::setName(string name)
 	{
 		this->name = name;
+	}
+
+	GLvoid CCreature::setLevel(GLint level)
+	{
+		if (this->getLevel() < 10) // cant level if already level 10
+		{
+			this->level = level;
+			CV_GAME_MANAGER->getConsole()->writeLine(this->getName()+" has leveled up to "+CConversions::intToStr(this->getLevel()));
+		}
+	}
+
+	GLvoid CCreature::addCurrentXP(GLint CurrentXP)
+	{
+		// add the experiance
+		this->CurrentXP = (this->getCurrentXP() + CurrentXP);
+
+		// if the creature has enough experiance to level
+		if (this->getCurrentXP() >= this->getLevel()*100) //some forumla
+		{
+			this->CurrentXP = this->getCurrentXP() - (this->getLevel()*100); // reset xp and add remaining xp from level
+			this->setLevel(this->getLevel() + 1);// level up
+		}
 	}
 
 	GLvoid CCreature::setModel(loaders::CBR5Model *model)
@@ -72,6 +95,16 @@ namespace game_objects
 	string CCreature::getName()
 	{
 		return name;
+	}
+
+	GLint CCreature::getLevel()
+	{
+		return level;
+	}
+
+	GLint CCreature::getCurrentXP()
+	{
+		return CurrentXP;
 	}
 
 	GLvoid CCreature::update(GLfloat deltaTime)
