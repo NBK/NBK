@@ -244,7 +244,7 @@ namespace game_utils
 				for (GLint x=0; x<=CV_LEVEL_MAP_SIZE; x++)
 				{
 					//if block is far from the camera, cull
-					if((x-centerX)*(x-centerX)+(y-centerY)*(y-centerY)>200)
+					if((x-centerX)*(x-centerX)+(y-centerY)*(y-centerY)>300)
 						continue;
 
 					block = lManager->getBlock(x,y);
@@ -379,7 +379,7 @@ namespace game_utils
 					{
 						int x = CConversions::realToLogical(creature->getPosition())[0];
 						int y = CConversions::realToLogical(creature->getPosition())[1];
-						if((x-centerX)*(x-centerX)+(y-centerY)*(y-centerY)>200)
+						if((x-centerX)*(x-centerX)+(y-centerY)*(y-centerY)>300)
 							continue;
 
 						sBoundingBox *cBBOX = creature->getModel()->getBoundingBox();
