@@ -171,6 +171,7 @@ namespace game_utils
 					glLightfv(GL_LIGHT0+i, GL_POSITION, pos);
 					glLightfv(GL_LIGHT0+i, GL_AMBIENT, lgt->getAmbientColor());
 					glLightfv(GL_LIGHT0+i, GL_DIFFUSE, lgt->getDiffuseColor());
+					glLightfv(GL_LIGHT0+i, GL_SPECULAR, lgt->getSpecularColor());
 					glLightf(GL_LIGHT0+i, GL_QUADRATIC_ATTENUATION, lgt->getQuadraticAttenuation());
 					glLightf(GL_LIGHT0+i, GL_LINEAR_ATTENUATION, lgt->getLinearAttenuation());
 					glLightf(GL_LIGHT0+i, GL_CONSTANT_ATTENUATION, lgt->getInitialAttenuation());

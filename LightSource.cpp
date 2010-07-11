@@ -18,6 +18,7 @@ namespace game_objects
 			// read light settings
 			setAmbientColor(CV_GAME_MANAGER->getSettingsManager()->getSetting_vector3f("ST_"+name+"_COLOR_AMBIENT"));
 			setDiffuseColor(CV_GAME_MANAGER->getSettingsManager()->getSetting_vector3f("ST_"+name+"_COLOR_DIFFUSE"));
+			setSpecularColor(CV_GAME_MANAGER->getSettingsManager()->getSetting_vector3f("ST_"+name+"_COLOR_SPECULAR"));
 			setQuadraticAttenuation(CV_GAME_MANAGER->getSettingsManager()->getSetting_Float("ST_"+name+"_Q_ATTENUATION"));
 			setLinearAttenuation(CV_GAME_MANAGER->getSettingsManager()->getSetting_Float("ST_"+name+"_L_ATTENUATION"));
 			setInitialAttenuation(CV_GAME_MANAGER->getSettingsManager()->getSetting_Float("ST_"+name+"_I_ATTENUATION"));
@@ -28,6 +29,7 @@ namespace game_objects
 		{
 			memcpy(this->ambientColor,lightSource.ambientColor,sizeof(GLfloat)*4);
 			memcpy(this->diffuseColor,lightSource.diffuseColor,sizeof(GLfloat)*4);
+			memcpy(this->specularColor,lightSource.specularColor,sizeof(GLfloat)*4);
 			this->quadraticAttenuation=lightSource.quadraticAttenuation;
 			this->linearAttenuation=lightSource.linearAttenuation;
 			this->initialAttenuation=lightSource.initialAttenuation;
@@ -98,6 +100,12 @@ namespace game_objects
 			diffuseColor[3]=1.0f;
 		}
 
+		GLvoid CLightSource::setSpecularColor(vector3f &color)
+		{
+			memcpy(specularColor,&color[0],sizeof(GLfloat)*3);
+			specularColor[3]=1.0f;
+		}
+
 		GLfloat *CLightSource::getAmbientColor()
 		{
 			return ambientColor;
@@ -106,6 +114,11 @@ namespace game_objects
 		GLfloat *CLightSource::getDiffuseColor()
 		{
 			return diffuseColor;
+		}
+
+		GLfloat *CLightSource::getSpecularColor()
+		{
+			return specularColor;
 		}
 
 		GLfloat	CLightSource::getAttenuation(GLint attIndex)

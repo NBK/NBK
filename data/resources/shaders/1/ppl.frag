@@ -1,18 +1,28 @@
 varying vec4 ambientGlobal,vertex;
-varying vec3 normal;
-uniform sampler2D tex;
+varying vec3 normal,tangent,binormal;
+uniform sampler2D tex,nrm;
 uniform int numberOfLights;
 
 void main()
 {
-	vec3 ct,cf,n,aux;
+	vec3 ct,cf,n,aux,spec;
+	vec3 R;
 	float NdotL,at,af,att,dist;
-	vec4 texel,diffuse,ambient,ecPos;
-	vec4 color = ambientGlobal;	
+	vec4 texel,diffuse,ambient,ecPos,speccomp;
+	vec4 color = ambientGlobal;
+	float shininess = 10.0;
+	vec3 viewvec;
+	
+	speccomp = vec4(0.5,0.5,0.5,0);
 	
 	n = normalize(normal);
+	vec3 bump = normalize(texture2D(nrm, gl_TexCoord[0].st).xyz * 2.0 - 1.0);
+	n += bump.x*tangent + bump.y*binormal;
 	
 	ecPos = vertex;
+	
+	spec = vec3(0,0,0);
+	viewvec = -normalize(ecPos.xyz);
 	
 	if (numberOfLights>=1)
 	{
@@ -30,7 +40,10 @@ void main()
 			if (dist>0.3){att*=att*att*att;}
 			
 			color += att * (diffuse * NdotL + ambient);	
-		}	
+		}
+		
+		R = reflect(-aux,n);
+		spec += gl_LightSource[0].specular.rgb * speccomp.rgb * pow(max(dot(R,viewvec), 0.0), shininess);
 	}		
 	
 	if (numberOfLights>=2)
@@ -48,7 +61,10 @@ void main()
 			
 			if (dist>0.3){att*=att*att*att;}
 			color += att * (diffuse * NdotL + ambient);	
-		}	
+		}
+		
+		R = reflect(-aux,n);
+		spec += gl_LightSource[1].specular.rgb * speccomp.rgb * pow(max(dot(R,viewvec), 0.0), shininess);
 	}	
 	
 	if (numberOfLights>=3)
@@ -69,7 +85,10 @@ void main()
 				att*=att*att*att;
 			}
 			color += att * (diffuse * NdotL + ambient);	
-		}	
+		}
+		
+		R = reflect(-aux,n);
+		spec += gl_LightSource[2].specular.rgb * speccomp.rgb * pow(max(dot(R,viewvec), 0.0), shininess);
 	}	
 	
 	if (numberOfLights>=4)
@@ -87,7 +106,10 @@ void main()
 			
 			if (dist>0.3){att*=att*att*att;}
 			color += att * (diffuse * NdotL + ambient);	
-		}	
+		}
+
+		R = reflect(-aux,n);
+		spec += gl_LightSource[3].specular.rgb * speccomp.rgb * pow(max(dot(R,viewvec), 0.0), shininess);		
 	}
 	
 	
@@ -103,6 +125,6 @@ void main()
 	
 	//distance fog
 	float fog = (ecPos.z*ecPos.z)/9;
-	gl_FragColor = (1-fog)*vec4(ct * cf, at * af);	
+	gl_FragColor = (1-fog)*vec4(ct * cf + spec, at * af);	
 }
 

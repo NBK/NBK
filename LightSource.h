@@ -30,6 +30,7 @@ namespace game_objects
 			GLvoid setPosition(cml::vector3f position);		
 			GLvoid setAmbientColor(cml::vector3f &color);
 			GLvoid setDiffuseColor(cml::vector3f &color);
+			GLvoid setSpecularColor(cml::vector3f &color);
 			GLvoid setQuadraticAttenuation(GLfloat attenuation);
 			GLvoid setLinearAttenuation(GLfloat attenuation);
 			GLvoid setInitialAttenuation(GLfloat attenuation);
@@ -38,6 +39,7 @@ namespace game_objects
 
 			GLfloat						*getAmbientColor();
 			GLfloat						*getDiffuseColor();
+			GLfloat						*getSpecularColor();
 			GLfloat						getQuadraticAttenuation();
 			GLfloat						getAttenuation(GLint attIndex);
 			GLfloat						getLinearAttenuation();
@@ -49,6 +51,7 @@ namespace game_objects
 
 			GLfloat ambientColor[4],
 					diffuseColor[4],
+					specularColor[4],
 					radius,
 					quadraticAttenuation,
 					linearAttenuation,
