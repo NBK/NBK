@@ -16,7 +16,7 @@ void main()
 	speccomp = vec4(0.5,0.5,0.5,0);
 	
 	n = normalize(normal);
-	vec3 bump = normalize(texture2D(nrm, gl_TexCoord[0].st).xyz * 2.0 - 1.0);
+	vec3 bump = normalize(texture2D(nrm, gl_TexCoord[0].st).xyz * 4.0 - 1.0);
 	n += bump.x*tangent + bump.y*binormal;
 	
 	ecPos = vertex;
@@ -125,6 +125,6 @@ void main()
 	
 	//distance fog
 	float fog = (ecPos.z*ecPos.z)/9;
-	gl_FragColor = (1-fog)*vec4(ct * cf + spec, at * af);	
+	gl_FragColor = (1-fog)*vec4(ct * cf /*+spec*/, at * af);	
 }
 

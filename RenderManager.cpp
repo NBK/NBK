@@ -52,6 +52,7 @@ namespace game_utils
 			GLint textureIndex = CV_GAME_MANAGER->getSettingsManager()->getSetting_Int(string(CV_SETTINGS_TEXTURE_ATLAS_INDEX)+"_"+textureQuality);
 
 			CV_GAME_MANAGER->getResourceManager()->loadSelectedTexture(textureIndex);
+			CV_GAME_MANAGER->getResourceManager()->loadSelectedTexture(textureIndex+CV_NORMAL_MAP_START_INDEX);
 
 			textureAtlasColor = CV_TEXTURE_LIST->getTexture(textureIndex);
 			textureAtlasNormal = CV_TEXTURE_LIST->getTexture(textureIndex+CV_NORMAL_MAP_START_INDEX);
