@@ -367,7 +367,8 @@ namespace game_utils
 							continue;
 
 						//render only if block is highlighted
-						if(!pickedBlock->isHighlighted())
+						//or if block has been selected for digging
+						if(!pickedBlock->isHighlighted() && !pickedBlock->isMarked())
 							continue;
 
 						GLint type = pickedBlock->getType();
