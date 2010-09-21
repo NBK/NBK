@@ -316,6 +316,9 @@ namespace game_utils
 				handlePickedObjects();
 			}
 
+			handleMineMarker();
+			
+
 			CV_GAME_MANAGER->getTextPrinter()->print((GLfloat)0,(GLfloat)(CV_SETTINGS_WINDOW_HEIGHT-15*3),"Visible blocks: %d",blockVisible);
 			CV_GAME_MANAGER->getTextPrinter()->print((GLfloat)0,(GLfloat)(CV_SETTINGS_WINDOW_HEIGHT-15*2),"Visible creatures: %d",creaturesVisible);
 			CV_GAME_MANAGER->getTextPrinter()->print((GLfloat)0,(GLfloat)(CV_SETTINGS_WINDOW_HEIGHT-15),"Triangles drawn: %d",(allVerticesCount/4)*2);
@@ -368,7 +371,7 @@ namespace game_utils
 
 						//render only if block is highlighted
 						//or if block has been selected for digging
-						if(!pickedBlock->isHighlighted() && !pickedBlock->isMarked())
+						if(!pickedBlock->isHighlighted())
 							continue;
 
 						GLint type = pickedBlock->getType();
@@ -466,6 +469,68 @@ namespace game_utils
 					}
 				}
 			}
+		}
+
+		GLvoid CRenderManager::handleMineMarker()
+		{
+			CBlock *pickedBlock;
+
+			//go through all the blocks to determine which are marked for mining
+			for (GLint y=0; y<=CV_LEVEL_MAP_SIZE; y++)
+			{
+				for (GLint x=0; x<=CV_LEVEL_MAP_SIZE; x++)
+				{
+					pickedBlock = CV_GAME_MANAGER->getLevelManager()->getBlock(x,y);
+					if(!pickedBlock)
+						continue;
+					
+					if (!pickedBlock->isMarked())
+						continue;
+
+					// gold color
+					glColor3f(1.0f,0.80f,0.0f);			
+
+					sBoundingBox *bbox = pickedBlock->getBoundingBox();
+
+					vector3f a(bbox->A);
+					vector3f b(bbox->B);
+					vector3f c(bbox->C);
+					vector3f d(bbox->D);
+					vector3f e(bbox->E);
+					vector3f f(bbox->F);
+					vector3f g(bbox->G);
+					vector3f h(bbox->H);
+					
+					a[1]=b[1]=c[1]=d[1]=CV_BLOCK_HEIGHT+CV_BLOCK_HEIGHT/4.0f+CV_BLOCK_HEIGHT/32.0f;
+					e[1]=f[1]=g[1]=h[1]=CV_BLOCK_HEIGHT/4.0f+CV_BLOCK_HEIGHT/32.0f;
+
+					glLineWidth(4.0f);
+
+					glBegin(GL_LINES);
+					{
+						glVertex3fv(&a[0]); glVertex3fv(&b[0]);
+						glVertex3fv(&b[0]); glVertex3fv(&c[0]);
+						glVertex3fv(&c[0]); glVertex3fv(&d[0]);
+						glVertex3fv(&d[0]); glVertex3fv(&a[0]);
+
+						glVertex3fv(&e[0]); glVertex3fv(&f[0]);
+						glVertex3fv(&f[0]); glVertex3fv(&g[0]);
+						glVertex3fv(&g[0]); glVertex3fv(&h[0]);
+						glVertex3fv(&h[0]); glVertex3fv(&e[0]);
+
+						glVertex3fv(&a[0]); glVertex3fv(&e[0]);
+						glVertex3fv(&b[0]); glVertex3fv(&f[0]);
+						glVertex3fv(&c[0]); glVertex3fv(&g[0]);
+						glVertex3fv(&d[0]); glVertex3fv(&h[0]);
+					}
+					glEnd();
+
+					glLineWidth(1.0f);
+				}
+			}
+
+
+			
 		}
 	};
 };

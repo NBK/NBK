@@ -48,6 +48,7 @@ namespace game_utils
 			std::vector<game_objects::CBlock*> renderedBlocks;
 
 			GLvoid handlePickedObjects();
+			GLvoid handleMineMarker();
 		};
 	};
 };

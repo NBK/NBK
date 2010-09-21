@@ -424,6 +424,8 @@ namespace game_utils
 				handlePickedObjects();
 			}
 
+			handleMineMarker();
+
 			CV_GAME_MANAGER->getTextPrinter()->print((GLfloat)0,(GLfloat)(CV_SETTINGS_WINDOW_HEIGHT-15*3),"Visible blocks: %d",blockVisible);
 			CV_GAME_MANAGER->getTextPrinter()->print((GLfloat)0,(GLfloat)(CV_SETTINGS_WINDOW_HEIGHT-15*2),"Visible creatures: %d",creaturesVisible);
 			CV_GAME_MANAGER->getTextPrinter()->print((GLfloat)0,(GLfloat)(CV_SETTINGS_WINDOW_HEIGHT-15),"Triangles drawn: %d",(allVerticesCount/4)*2);
