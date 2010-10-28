@@ -10,6 +10,7 @@ namespace game_objects
 {
 	CCreature::CCreature(): CEntity()
 	{
+		owner = CV_PLAYER_UNDEFINED;
 		currentAction = AA_WALK;
 		model = NULL;
 		name = "";
@@ -29,6 +30,11 @@ namespace game_objects
 	GLvoid CCreature::setName(string name)
 	{
 		this->name = name;
+	}
+
+	GLvoid CCreature::setOwner(GLubyte owner)
+	{
+		this->owner=owner;
 	}
 
 	GLvoid CCreature::setLevel(GLint level)
@@ -95,6 +101,11 @@ namespace game_objects
 	string CCreature::getName()
 	{
 		return name;
+	}
+
+	GLubyte CCreature::getOwner()
+	{
+		return owner;
 	}
 
 	GLint CCreature::getLevel()

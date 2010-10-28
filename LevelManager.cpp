@@ -585,62 +585,62 @@ namespace game_utils
 						if (thing_subtype==TNG_CREATURE_BARBARIAN)
 						{							
 							CV_GAME_MANAGER->getConsole()->writeLine("CREATED BARBARIAN");
-							CV_GAME_MANAGER->getCreatureManager()->addCreature("BARBARIAN",vector3f(thing_x,y,thing_y));
+							CV_GAME_MANAGER->getCreatureManager()->addCreature("BARBARIAN",vector3f(thing_x,y,thing_y),owner);
 						}
 						else if (thing_subtype==TNG_CREATURE_KNIGHT)
 						{							
 							CV_GAME_MANAGER->getConsole()->writeLine("CREATED KNIGHT");
-							CV_GAME_MANAGER->getCreatureManager()->addCreature("KNIGHT",vector3f(thing_x,y,thing_y));
+							CV_GAME_MANAGER->getCreatureManager()->addCreature("KNIGHT",vector3f(thing_x,y,thing_y),owner);
 						}
 						else if (thing_subtype==TNG_CREATURE_HORNED_REAPER)
 						{
 							CV_GAME_MANAGER->getConsole()->writeLine("CREATED HORNED REAPER");
-							CV_GAME_MANAGER->getCreatureManager()->addCreature("HORNED_REAPER",vector3f(thing_x,y,thing_y));
+							CV_GAME_MANAGER->getCreatureManager()->addCreature("HORNED_REAPER",vector3f(thing_x,y,thing_y),owner);
 						}
 						else if (thing_subtype==TNG_CREATURE_DRAGON)
  						{							
 							CV_GAME_MANAGER->getConsole()->writeLine("CREATED DRAGON");
-							CV_GAME_MANAGER->getCreatureManager()->addCreature("DRAGON",vector3f(thing_x,y,thing_y));
+							CV_GAME_MANAGER->getCreatureManager()->addCreature("DRAGON",vector3f(thing_x,y,thing_y),owner);
 						}
 						else if (thing_subtype==TNG_CREATURE_DEMON_SPAWN)
 						{							
 							CV_GAME_MANAGER->getConsole()->writeLine("CREATED DEMON SPAWN");
-							CV_GAME_MANAGER->getCreatureManager()->addCreature("DEMON_SPAWN",vector3f(thing_x,y,thing_y));
+							CV_GAME_MANAGER->getCreatureManager()->addCreature("DEMON_SPAWN",vector3f(thing_x,y,thing_y),owner);
 						}
 						else if (thing_subtype==TNG_CREATURE_FLY)
 						{							
 							CV_GAME_MANAGER->getConsole()->writeLine("CREATED FLY");
-							CV_GAME_MANAGER->getCreatureManager()->addCreature("FLY",vector3f(thing_x,y,thing_y));
+							CV_GAME_MANAGER->getCreatureManager()->addCreature("FLY",vector3f(thing_x,y,thing_y),owner);
 						}
 						else if (thing_subtype==TNG_CREATURE_BILE_DEMON)
 						{							
 							CV_GAME_MANAGER->getConsole()->writeLine("CREATED BILE DEMON");
-							CV_GAME_MANAGER->getCreatureManager()->addCreature("BILE_DEMON",vector3f(thing_x,y,thing_y));
+							CV_GAME_MANAGER->getCreatureManager()->addCreature("BILE_DEMON",vector3f(thing_x,y,thing_y),owner);
 						}
 						else if (thing_subtype==TNG_CREATURE_IMP)
 						{							
 							CV_GAME_MANAGER->getConsole()->writeLine("CREATED IMP");
-							CV_GAME_MANAGER->getCreatureManager()->addCreature("IMP",vector3f(thing_x,y,thing_y));
+							CV_GAME_MANAGER->getCreatureManager()->addCreature("IMP",vector3f(thing_x,y,thing_y),owner);
 						}
 						else if (thing_subtype==TNG_CREATURE_BEETLE)
 						{							
 							CV_GAME_MANAGER->getConsole()->writeLine("CREATED BEETLE");
-							CV_GAME_MANAGER->getCreatureManager()->addCreature("BEETLE",vector3f(thing_x,y,thing_y));
+							CV_GAME_MANAGER->getCreatureManager()->addCreature("BEETLE",vector3f(thing_x,y,thing_y),owner);
  						}
 						else if (thing_subtype==TNG_CREATURE_VAMPIRE)
 						{							
 							CV_GAME_MANAGER->getConsole()->writeLine("CREATED VAMPIRE");
-							CV_GAME_MANAGER->getCreatureManager()->addCreature("VAMPIRE",vector3f(thing_x,y,thing_y));
+							CV_GAME_MANAGER->getCreatureManager()->addCreature("VAMPIRE",vector3f(thing_x,y,thing_y),owner);
 						}
 						else if (thing_subtype==TNG_CREATURE_SPIDER)
 						{							
 							CV_GAME_MANAGER->getConsole()->writeLine("CREATED SPIDER");
-							CV_GAME_MANAGER->getCreatureManager()->addCreature("SPIDER",vector3f(thing_x,y,thing_y));
+							CV_GAME_MANAGER->getCreatureManager()->addCreature("SPIDER",vector3f(thing_x,y,thing_y),owner);
  						}
  						else if (thing_subtype==TNG_CREATURE_HELL_HOUND)
 						{							
 							CV_GAME_MANAGER->getConsole()->writeLine("CREATED HELL HOUND");
-							CV_GAME_MANAGER->getCreatureManager()->addCreature("HELL_HOUND",vector3f(thing_x,y,thing_y));
+							CV_GAME_MANAGER->getCreatureManager()->addCreature("HELL_HOUND",vector3f(thing_x,y,thing_y),owner);
  						}
 
 						break;

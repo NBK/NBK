@@ -39,13 +39,14 @@ namespace game_utils
 			return true;
 		}
 
-		GLvoid CCreatureManager::addCreature(string creatureName, vector3f position)
+		GLvoid CCreatureManager::addCreature(string creatureName, vector3f position, GLubyte owner)
 		{
 			if (creatureName == "BARBARIAN")
  			{
 				CCreature *barbarian = new CCreature();
 				barbarian->setPosition(position);
 				barbarian->setName(creatureName);
+				barbarian->setOwner(owner);
 				barbarian->setModel(CV_GAME_MANAGER->getResourceManager()->getModel("MODEL_BARBARIAN"));
 				allCreatures.push_back(barbarian);
 			}
@@ -54,6 +55,7 @@ namespace game_utils
 				CCreature *knight = new CCreature();
 				knight->setPosition(position);
 				knight->setName(creatureName);
+				knight->setOwner(owner);
 				knight->setModel(CV_GAME_MANAGER->getResourceManager()->getModel("MODEL_KNIGHT"));
 				allCreatures.push_back(knight);
 			}
@@ -62,6 +64,7 @@ namespace game_utils
 				CCreature *horned_reaper = new CCreature();
 				horned_reaper->setPosition(position);
 				horned_reaper->setName(creatureName);
+				horned_reaper->setOwner(owner);
 				horned_reaper->setModel(CV_GAME_MANAGER->getResourceManager()->getModel("MODEL_HORNED_REAPER"));
 				allCreatures.push_back(horned_reaper);
 			}
@@ -70,6 +73,7 @@ namespace game_utils
 				CCreature *dragon = new CCreature();
 				dragon->setPosition(position);
 				dragon->setName(creatureName);
+				dragon->setOwner(owner);
 				dragon->setModel(CV_GAME_MANAGER->getResourceManager()->getModel("MODEL_DRAGON"));
 				allCreatures.push_back(dragon);
 			}
@@ -78,6 +82,7 @@ namespace game_utils
 				CCreature *demon_spawn = new CCreature();
 				demon_spawn->setPosition(position);
 				demon_spawn->setName(creatureName);
+				demon_spawn->setOwner(owner);
 				demon_spawn->setModel(CV_GAME_MANAGER->getResourceManager()->getModel("MODEL_DEMON_SPAWN"));
 				allCreatures.push_back(demon_spawn);
 			}
@@ -86,6 +91,7 @@ namespace game_utils
 				CCreature *fly = new CCreature();
 				fly->setPosition(position);
 				fly->setName(creatureName);
+				fly->setOwner(owner);
 				fly->setModel(CV_GAME_MANAGER->getResourceManager()->getModel("MODEL_FLY"));
 				allCreatures.push_back(fly);
 			}
@@ -94,6 +100,7 @@ namespace game_utils
 				CCreature *bile_demon = new CCreature();
 				bile_demon->setPosition(position);
 				bile_demon->setName(creatureName);
+				bile_demon->setOwner(owner);
 				bile_demon->setModel(CV_GAME_MANAGER->getResourceManager()->getModel("MODEL_BILE_DEMON"));
 				allCreatures.push_back(bile_demon);
 			}
@@ -103,6 +110,7 @@ namespace game_utils
 
 				imp->setPosition(position);
 				imp->setName(creatureName);
+				imp->setOwner(owner);
 				imp->setModel(CV_GAME_MANAGER->getResourceManager()->getModel("MODEL_IMP"));
 				imp->setAction(CCreature::AA_IDLE,10,14);
 				imp->setAction(CCreature::AA_WALK,5,9);
@@ -117,6 +125,7 @@ namespace game_utils
 				CCreature *beetle = new CCreature();
 				beetle->setPosition(position);
 				beetle->setName(creatureName);
+				beetle->setOwner(owner);
 				beetle->setModel(CV_GAME_MANAGER->getResourceManager()->getModel("MODEL_BEETLE"));
 				allCreatures.push_back(beetle);
 			}
@@ -125,6 +134,7 @@ namespace game_utils
 				CCreature *vampire = new CCreature();
 				vampire->setPosition(position);
 				vampire->setName(creatureName);
+				vampire->setOwner(owner);
 				vampire->setModel(CV_GAME_MANAGER->getResourceManager()->getModel("MODEL_VAMPIRE"));
 				allCreatures.push_back(vampire);
 			}
@@ -133,6 +143,7 @@ namespace game_utils
 				CCreature *spider = new CCreature();
 				spider->setPosition(position);
 				spider->setName(creatureName);
+				spider->setOwner(owner);
 				spider->setModel(CV_GAME_MANAGER->getResourceManager()->getModel("MODEL_SPIDER"));
 				allCreatures.push_back(spider);
 			}
@@ -141,9 +152,25 @@ namespace game_utils
 				CCreature *hell_hound = new CCreature();
 				hell_hound->setPosition(position);
 				hell_hound->setName(creatureName);
+				hell_hound->setOwner(owner);
 				hell_hound->setModel(CV_GAME_MANAGER->getResourceManager()->getModel("MODEL_HELL_HOUND"));
 				allCreatures.push_back(hell_hound);
 			}
+		}
+
+		GLint CCreatureManager::getCreatureCount(GLint owner)
+		{
+			GLint count = 0;
+
+			for (cIter=allCreatures.begin(); cIter!=allCreatures.end(); cIter++)
+			{
+				CCreature *creature = (*cIter);
+
+				// ignore imps
+				count+=(creature->getOwner() == owner && !(creature->getName() == "IMP"))?1:0;
+			}
+
+			return count;
 		}
 
 		std::vector<CCreature*> *CCreatureManager::getCreatureVector()

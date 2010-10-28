@@ -131,16 +131,13 @@ namespace game_utils
 			GLOBAL_TEXTURE_LIST->add_texture("DOOR3","data/resources/GFX/GUI/doors/pic149.bmp",true,GL_NEAREST);
 
 			GLOBAL_TEXTURE_LIST->add_texture("GP00","data/resources/GFX/GUI/pic235.bmp",true,GL_NEAREST,false);
-			//GLOBAL_TEXTURE_LIST->add_texture("GP01","data/resources/GFX/GUI/pic1.bmp",true,GL_NEAREST,false);
+			GLOBAL_TEXTURE_LIST->add_texture("GP01","data/resources/GFX/GUI/pic1.bmp",true,GL_NEAREST,false);
 			GLOBAL_TEXTURE_LIST->add_texture("GP10","data/resources/GFX/GUI/pic2.bmp",true,GL_NEAREST,false);
-			//GLOBAL_TEXTURE_LIST->add_texture("GP11","data/resources/GFX/GUI/pic3.bmp",true,GL_NEAREST,false);
+			GLOBAL_TEXTURE_LIST->add_texture("GP11","data/resources/GFX/GUI/pic3.bmp",true,GL_NEAREST,false);
 			GLOBAL_TEXTURE_LIST->add_texture("GP20","data/resources/GFX/GUI/pic4.bmp",true,GL_NEAREST,false);
-			//GLOBAL_TEXTURE_LIST->add_texture("GP21","data/resources/GFX/GUI/pic5.bmp",true,GL_NEAREST,false);
-			GLOBAL_TEXTURE_LIST->add_texture("GP30","data/resources/GFX/GUI/pic4.bmp",true,GL_NEAREST,false);
-			//GLOBAL_TEXTURE_LIST->add_texture("GP30","data/resources/GFX/GUI/pic20.bmp",true,GL_NEAREST,false);
-			//GLOBAL_TEXTURE_LIST->add_texture("GP31","data/resources/GFX/GUI/pic21.bmp",true,GL_NEAREST,false);
-			GLOBAL_TEXTURE_LIST->add_texture("GP40","data/resources/GFX/GUI/pic4.bmp",true,GL_NEAREST,false);//NOTE: Little hack in order to not stretch the GUI textures, change this to the proper texture later
-			//GLOBAL_TEXTURE_LIST->add_texture("GP41","data/resources/GFX/GUI/pic4.bmp",true,GL_NEAREST,false);//NOTE: Little hack in order to not stretch the GUI textures, change this to the proper texture later
+			GLOBAL_TEXTURE_LIST->add_texture("GP21","data/resources/GFX/GUI/pic5.bmp",true,GL_NEAREST,false);
+			GLOBAL_TEXTURE_LIST->add_texture("GP30","data/resources/GFX/GUI/pic20.bmp",true,GL_NEAREST,false);
+			GLOBAL_TEXTURE_LIST->add_texture("GP31","data/resources/GFX/GUI/pic21.bmp",true,GL_NEAREST,false);
 			GLOBAL_TEXTURE_LIST->add_texture("TCP0E","data/resources/GFX/GUI/pic6.bmp",true,GL_NEAREST,false);
 			GLOBAL_TEXTURE_LIST->add_texture("TCP0D","data/resources/GFX/GUI/pic7.bmp",true,GL_NEAREST,false);
 			GLOBAL_TEXTURE_LIST->add_texture("TCP1E","data/resources/GFX/GUI/pic8.bmp",true,GL_NEAREST,false);

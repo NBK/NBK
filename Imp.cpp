@@ -296,7 +296,7 @@ namespace game_objects
 			CV_GAME_MANAGER->getLevelManager()->getBlock(cml::vector2i((int)floor(position[0]/CV_BLOCK_WIDTH),(int)floor(position[2]/CV_BLOCK_DEPTH)))->decLife(deltaTime*moveSpeed);
 			if (CV_GAME_MANAGER->getLevelManager()->getBlock(cml::vector2i((int)floor(position[0]/CV_BLOCK_WIDTH),(int)floor(position[2]/CV_BLOCK_DEPTH)))->getLife()<=0.0f)
 			{
-				CV_GAME_MANAGER->getLevelManager()->getBlock(cml::vector2i((int)floor(position[0]/CV_BLOCK_WIDTH),(int)floor(position[2]/CV_BLOCK_DEPTH)))->claimBlock(CV_CURRENT_PLAYER_ID);
+				CV_GAME_MANAGER->getLevelManager()->getBlock(cml::vector2i((int)floor(position[0]/CV_BLOCK_WIDTH),(int)floor(position[2]/CV_BLOCK_DEPTH)))->claimBlock(this->getOwner());
 				impState = IS_IDLE;
 				useAction(AA_IDLE);
 			}
@@ -311,7 +311,7 @@ namespace game_objects
 			currBlock->addLife(deltaTime*moveSpeed);
 			if (currBlock->getLife()>=9.0f)
 			{
-				currBlock->fortifyBlock(CV_CURRENT_PLAYER_ID);
+				currBlock->fortifyBlock(this->getOwner());
 
 				impState = IS_IDLE;
 				useAction(AA_IDLE);

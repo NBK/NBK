@@ -64,7 +64,7 @@ namespace DK_GUI
 
 		CGUI *play_gui;
 
-		enum GUI_PART{GP00=0, GP10, GP20, GP30, GP40};
+		enum GUI_PART{GP00=0, GP01, GP10, GP11, GP20, GP21, GP30, GP31};
 		enum TAB_CONTROL_PART{TCP_QUERY=0, TCP_BUILD, TCP_RESEARCH, TCP_WORKSHOP, TCP_CREATURE};
 
 		/* play gui construction parts */

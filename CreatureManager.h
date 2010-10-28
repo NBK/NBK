@@ -19,7 +19,9 @@ namespace game_utils
 			virtual bool update();	
 			virtual bool shutdown();
 
-			GLvoid addCreature(std::string creatureName, cml::vector3f position);
+			GLvoid addCreature(std::string creatureName, cml::vector3f position, GLubyte owner);
+
+			GLint getCreatureCount(GLint owner);
 
 			std::vector<game_objects::CCreature*> *getCreatureVector();
 

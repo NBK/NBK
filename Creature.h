@@ -23,6 +23,7 @@ namespace game_objects
 		};
 
 		GLvoid setName(std::string name);
+		GLvoid setOwner(GLubyte owner);
 		GLvoid setLevel(GLint level);
 		GLvoid addCurrentXP(GLint CurrentXP);
 		GLvoid setModel(loaders::CBR5Model *model);
@@ -33,6 +34,7 @@ namespace game_objects
 
 		loaders::CBR5Model	*getModel();
 		std::string			getName();
+		GLubyte				getOwner();
 		GLint				getLevel();
 		GLint				getCurrentXP();
 
@@ -52,6 +54,7 @@ namespace game_objects
 		cml::vector3f	moveVector;
 
 		// Creature stats
+		GLubyte			owner;
 		GLint			level;
 		GLint			CurrentXP;
 
