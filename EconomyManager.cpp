@@ -296,6 +296,9 @@ namespace game_utils
 
 									bObject->setPosition(bPos);
 								}
+							}else if(group==AEMG_EXECUTE_SPELL)
+							{
+								CV_GAME_MANAGER->getSpellManager()->castSpell(ae->message,block->getRealPosition(),CV_CURRENT_PLAYER_ID);
 							}
 						}
 					}

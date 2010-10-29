@@ -58,6 +58,8 @@ namespace DK_GUI
 		// updates the room info labels, should be called when eg; selling a room, creating a room, reloading level....
 		GLvoid updateRoomInfo();
 
+		GLvoid updateCreatureInfo();
+
 	private:
 		CGUI *temp_doors;
 		ACTION_EVENT action_event;	

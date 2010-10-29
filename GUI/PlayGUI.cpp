@@ -791,4 +791,12 @@ namespace DK_GUI
 			room_count_label[i]->int_set(CV_GAME_MANAGER->getRoomManager()->getRoomCount(i));
 		}
 	}
+
+	GLvoid CPlayGUI::updateCreatureInfo()
+	{
+		for (GLint i=0; i<4; i++)
+		{
+			creature_count_label[i]->int_set(CV_GAME_MANAGER->getCreatureManager()->getCreatureCount(i));
+		}
+	}
 }

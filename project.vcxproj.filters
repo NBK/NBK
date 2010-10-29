@@ -273,6 +273,9 @@
     <ClCompile Include="NewRenderer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="SpellManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="project.rc">
@@ -554,6 +557,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="NewRenderer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SpellManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -22,6 +22,7 @@
 #include "CreatureManager.h"
 #include "GUIManager.h"
 #include "PathManager.h"
+#include "SpellManager.h"
 
 /*
 	Game manager controls every module of the game. From
@@ -58,6 +59,7 @@ namespace game_utils
 			CCreatureManager		*getCreatureManager();
 			CGUIManager				*getGUIManager();
 			CPathManager			*getPathManager();
+			CSpellManager			*getSpellManager();
 
 			control::CDeltaTime		*getDeltaTimeObject();
 			GLfloat					getDeltaTime();
@@ -81,6 +83,7 @@ namespace game_utils
 			CCreatureManager		*creatureManager;
 			CGUIManager				*guiManager;
 			CPathManager			*pathManager;
+			CSpellManager			*spellManager;
 			CNewRenderer			*newRenderer;
 
 			control::CDeltaTime		*deltaTime;

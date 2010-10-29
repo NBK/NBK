@@ -329,6 +329,10 @@ namespace game_utils
 		CConsole *CGameManager::getConsole()
 		{
 			return console;
-		}		
+		}	
+		CSpellManager *CGameManager::getSpellManager()
+		{
+			return spellManager;
+		}
 	};
 };

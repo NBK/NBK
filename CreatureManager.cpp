@@ -31,6 +31,9 @@ namespace game_utils
 			{
 				(*cIter)->update(deltaTime);
 			}
+
+			CV_GAME_MANAGER->getGUIManager()->getPlayGUI()->updateCreatureInfo();
+
 			return true;
 		}
 

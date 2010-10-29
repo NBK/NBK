@@ -229,6 +229,7 @@
     <ClCompile Include="ShaderManager.cpp" />
     <ClCompile Include="ShaderObject.cpp" />
     <ClCompile Include="Gui\SpeedButton.cpp" />
+    <ClCompile Include="SpellManager.cpp" />
     <ClCompile Include="SubtileData.cpp" />
     <ClCompile Include="Gui\TabButton.cpp" />
     <ClCompile Include="Text.cpp" />
@@ -324,6 +325,7 @@
     <ClInclude Include="ShaderManager.h" />
     <ClInclude Include="ShaderObject.h" />
     <ClInclude Include="Gui\SpeedButton.h" />
+    <ClInclude Include="SpellManager.h" />
     <ClInclude Include="SubtileData.h" />
     <ClInclude Include="Gui\TabButton.h" />
     <ClInclude Include="Text.h" />
