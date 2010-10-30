@@ -36,7 +36,7 @@ namespace game_utils
 		GLvoid CSpellManager::castSpell(GLint spell, cml::vector3f position, GLubyte owner)
 		{
 			if(spell == SPELL_BUTTON_SUMMON_IMP)
-				CV_GAME_MANAGER->getCreatureManager()->addCreature("IMP",position,owner);
+				CV_GAME_MANAGER->getCreatureManager()->addCreature("IMP",cml::vector3f(position[0],CV_BLOCK_HEIGHT/4.0f,position[2]),owner);
 		}
 	};
 };

@@ -70,7 +70,7 @@ namespace game_objects
 				if(block->isTaken())
 					continue;
 				claimedBlocks.clear();
-				if(CV_GAME_MANAGER->getLevelManager()->isBlockTypeNear(CV_BLOCK_TYPE_CLAIMED_LAND_ID,block->getLogicalPosition(),false,CV_CURRENT_PLAYER_ID,&claimedBlocks))
+				if(CV_GAME_MANAGER->getLevelManager()->isBlockTypeNear(CV_BLOCK_TYPE_CLAIMED_LAND_ID,block->getLogicalPosition(),false,this->getOwner(),&claimedBlocks))
 				{
 					path.clear();
 					if(CV_GAME_MANAGER->getPathManager()->findPath(cml::vector2i((int)floor(position[0]/CV_BLOCK_WIDTH),(int)floor(position[2]/CV_BLOCK_DEPTH)),block->getLogicalPosition(),&path))
@@ -109,7 +109,7 @@ namespace game_objects
 			{
 				block = *unfortifiedBlocksIter;
 				claimedBlocks.clear();
-				if(CV_GAME_MANAGER->getLevelManager()->isBlockTypeNear(CV_BLOCK_TYPE_CLAIMED_LAND_ID,block->getLogicalPosition(),false,CV_CURRENT_PLAYER_ID,&claimedBlocks))
+				if(CV_GAME_MANAGER->getLevelManager()->isBlockTypeNear(CV_BLOCK_TYPE_CLAIMED_LAND_ID,block->getLogicalPosition(),false,this->getOwner(),&claimedBlocks))
 				{
 					path.clear();
 					if(CV_GAME_MANAGER->getPathManager()->findPath(cml::vector2i((int)floor(position[0]/CV_BLOCK_WIDTH),(int)floor(position[2]/CV_BLOCK_DEPTH)),block->getLogicalPosition(),&path))
@@ -133,7 +133,7 @@ namespace game_objects
 	{
 		if(impState != IS_IDLE) return;
 		path.clear();
-		currBlock = CV_GAME_MANAGER->getLevelManager()->getMarkedBlock(CV_CURRENT_PLAYER_ID);
+		currBlock = CV_GAME_MANAGER->getLevelManager()->getMarkedBlock(this->getOwner());
 		bool oldEndOnDiagonal = CV_GAME_MANAGER->getPathManager()->getAllowEndDiagonal();
 		CV_GAME_MANAGER->getPathManager()->setAllowEndDiagonal(false);
 		if (currBlock)
@@ -149,7 +149,7 @@ namespace game_objects
 	{
 		if(impState != IS_IDLE) return;
 		path.clear();
-		currBlock = CV_GAME_MANAGER->getLevelManager()->getUnclaimedBlock(CV_CURRENT_PLAYER_ID);
+		currBlock = CV_GAME_MANAGER->getLevelManager()->getUnclaimedBlock(this->getOwner());
 		if (currBlock)
 		{
 			cml::vector2i currPos = cml::vector2i((int)floor(position[0]/CV_BLOCK_WIDTH),(int)floor(position[2]/CV_BLOCK_DEPTH));
@@ -164,7 +164,7 @@ namespace game_objects
 	{
 		if(impState != IS_IDLE) return;
 		path.clear();
-		currBlock = CV_GAME_MANAGER->getLevelManager()->getUnfortifiedBlock(CV_CURRENT_PLAYER_ID);
+		currBlock = CV_GAME_MANAGER->getLevelManager()->getUnfortifiedBlock(this->getOwner());
 		bool oldEndOnDiagonal = CV_GAME_MANAGER->getPathManager()->getAllowEndDiagonal();
 		CV_GAME_MANAGER->getPathManager()->setAllowEndDiagonal(false);
 		if (currBlock)
