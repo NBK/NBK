@@ -343,6 +343,20 @@ namespace game_utils
 			return count;
 		}
 		
+		CBlock *CRoomManager::getRoom(GLint roomType, GLubyte owner)
+		{
+			for (roomIter=allRooms.begin(); roomIter!=allRooms.end(); roomIter++)
+			{
+				CRoom *room = roomIter->second;
+				CBlock *roomTile = (*room->getRoomTilesVector())[0];
+				if (roomTile->getType() == roomType && roomTile->getOwner() == owner)
+				{
+					return roomTile;
+				}
+			}
+			return NULL;
+		}
+
 		string CRoomManager::onAction(string keyword, string params)
 		{
 			if (keyword==RLROOM)

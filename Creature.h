@@ -25,6 +25,7 @@ namespace game_objects
 		GLvoid setName(std::string name);
 		GLvoid setOwner(GLubyte owner);
 		GLvoid setLevel(GLint level);
+		GLvoid setGold(GLint gold);
 		GLvoid addCurrentXP(GLint CurrentXP);
 		GLvoid setModel(loaders::CBR5Model *model);
 		GLvoid setAction(GLint action, GLint startFrame, GLint endFrame);
@@ -37,6 +38,7 @@ namespace game_objects
 		GLubyte				getOwner();
 		GLint				getLevel();
 		GLint				getCurrentXP();
+		GLint				getGold();
 
 	protected:
 
@@ -57,6 +59,7 @@ namespace game_objects
 		GLubyte			owner;
 		GLint			level;
 		GLint			CurrentXP;
+		GLint			gold;
 
 		/* holds the current path */
 		std::vector<cml::vector2i> path;

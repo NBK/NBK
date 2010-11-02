@@ -17,6 +17,7 @@ namespace game_objects
 		moveSpeed = 1.0f;
 		moveVector = vector3f(0.0f,0.0f,0.0f);
 		level = 1;
+		gold = 0;
 	}
 
 	CCreature::~CCreature()
@@ -44,6 +45,11 @@ namespace game_objects
 			this->level = level;
 			CV_GAME_MANAGER->getConsole()->writeLine(this->getName()+" has leveled up to "+CConversions::intToStr(this->getLevel()));
 		}
+	}
+
+	GLvoid CCreature::setGold(GLint gold)
+	{
+		this->gold=gold;
 	}
 
 	GLvoid CCreature::addCurrentXP(GLint CurrentXP)
@@ -116,6 +122,11 @@ namespace game_objects
 	GLint CCreature::getCurrentXP()
 	{
 		return CurrentXP;
+	}
+
+	GLint CCreature::getGold()
+	{
+		return gold;
 	}
 
 	GLvoid CCreature::update(GLfloat deltaTime)

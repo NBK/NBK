@@ -31,11 +31,15 @@ namespace game_objects
 			IS_GOING_TO_WALLING_DESTINATION,
 			IS_AT_WALLING_BLOCK,
 			IS_WALLING,
+			IS_GOING_TO_DEPOSITING_GOLD_DESTINATION,
+			IS_AT_DEPOSITING_GOLD,
+			IS_DEPOSITING_GOLD,			
 
 			// utility enums
 			IS_ROTATING
 		};
 	private:
+		GLvoid checkGoldLevels();
 		GLvoid checkNearestForDigging();
 		GLvoid checkNearestForClaiming();
 		GLvoid checkNearestForWalling();
@@ -46,6 +50,9 @@ namespace game_objects
 		GLvoid faceBlock(CBlock *block);
 		IMP_STATE impState;
 		CBlock *currBlock;
+	protected:
+		//max gold creature can carry
+		GLint maxgold;
 	};
 };
 

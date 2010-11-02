@@ -10,10 +10,32 @@ namespace game_objects
 	{
 		impState = IS_IDLE;
 		moveSpeed = 0.0005f;
+		maxgold = 200;
 	}
 
 	CImp::~CImp()
 	{
+	}
+
+	GLvoid CImp::checkGoldLevels()
+	{
+		if(this->getGold() >= this->maxgold)
+		{
+			path.clear();
+			CBlock *destBlock;
+			destBlock = CV_GAME_MANAGER->getRoomManager()->getRoom(CV_BLOCK_TYPE_TREASURE_ROOM_ID, this->getOwner());
+			if (destBlock)
+			{
+				cml::vector2i currPos = cml::vector2i((int)floor(position[0]/CV_BLOCK_WIDTH),(int)floor(position[2]/CV_BLOCK_DEPTH));
+				if(CV_GAME_MANAGER->getPathManager()->findPath(currPos,destBlock->getLogicalPosition(),&path))
+				{
+					impState = IS_GOING_TO_DEPOSITING_GOLD_DESTINATION;
+					return;
+				}
+				/*else
+					TODO drop gold on floor, otherwise imps could hold unlimited gold...that = bad!*/
+			}
+		}
 	}
 
 	GLvoid CImp::checkNearestForDigging()
@@ -185,7 +207,9 @@ namespace game_objects
 	{
 		if(path.size() == 0)
 		{
-			if(impState == IS_GOING_TO_CLAIMING_DESTINATION)
+			if(impState == IS_GOING_TO_DEPOSITING_GOLD_DESTINATION)
+				impState = IS_AT_DEPOSITING_GOLD;
+			else if(impState == IS_GOING_TO_CLAIMING_DESTINATION)
 				impState = IS_AT_CLAIMING_BLOCK;
 			else if (impState == IS_GOING_TO_DIGGING_DESTINATION)
 				impState = IS_AT_DIGGING_BLOCK;
@@ -249,6 +273,10 @@ namespace game_objects
 			checkForDigging();
 			checkForClaiming();
 			checkForWalling();
+		} else if (impState == IS_GOING_TO_DEPOSITING_GOLD_DESTINATION)
+		{
+			useAction(AA_WALK);
+			walkPath(deltaTime);		
 		} else if (impState == IS_GOING_TO_DIGGING_DESTINATION)
 		{
 			useAction(AA_WALK);
@@ -261,6 +289,9 @@ namespace game_objects
 		{
 			useAction(AA_WALK);
 			walkPath(deltaTime);
+		} else if (impState == IS_AT_DEPOSITING_GOLD)
+		{
+			impState = IS_DEPOSITING_GOLD;
 		} else if (impState == IS_AT_DIGGING_BLOCK)
 		{
 			faceBlock(currBlock);
@@ -275,6 +306,13 @@ namespace game_objects
 			faceBlock(currBlock);
 			impState = IS_WALLING;
 			useAction(AA_CLAIM);
+		} else if (impState == IS_DEPOSITING_GOLD)
+		{
+			// TODO: Do this depending on team.....
+			PLAYER0_MONEY = PLAYER0_MONEY + this->getGold();
+			this->setGold(0);
+			impState = IS_IDLE;
+			useAction(AA_IDLE);
 		} else if (impState == IS_DIGGING)
 		{
 			if(currBlock->isLow() || !currBlock->isMarked())
@@ -283,6 +321,9 @@ namespace game_objects
 				useAction(AA_IDLE);
 				return;
 			}
+			if(currBlock->getType() == CV_BLOCK_TYPE_GOLD_ID)
+				//TODO: use a new formula
+				this->setGold(this->getGold() + 1);
 			currBlock->decLife(deltaTime*moveSpeed);
 			if (currBlock->getLife()<=0.0f)
 			{
@@ -291,6 +332,8 @@ namespace game_objects
 				impState = IS_IDLE;
 				useAction(AA_IDLE);
 			}
+			//Check if you have gold :)
+			checkGoldLevels();
 		} else if (impState == IS_CLAIMING)
 		{
 			CV_GAME_MANAGER->getLevelManager()->getBlock(cml::vector2i((int)floor(position[0]/CV_BLOCK_WIDTH),(int)floor(position[2]/CV_BLOCK_DEPTH)))->decLife(deltaTime*moveSpeed);
