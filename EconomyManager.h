@@ -31,12 +31,11 @@ namespace game_utils
 			virtual void onMouseClicked(int button);
 			virtual void onMouseReleased(int button);
 
+			static GLint	roomTypes[],
+							trapTypes[];
 		private:
 			bool mouseDown;
 			int selectedX, selectedY;
-
-			static GLint	roomTypes[],
-							trapTypes[];
 
 		};
 	};

@@ -10,7 +10,7 @@ namespace game_objects
 	{
 		impState = IS_IDLE;
 		moveSpeed = 0.0005f;
-		maxgold = 200;
+		maxgold = 250;
 	}
 
 	CImp::~CImp()
@@ -32,9 +32,9 @@ namespace game_objects
 					impState = IS_GOING_TO_DEPOSITING_GOLD_DESTINATION;
 					return;
 				}
-				/*else
-					TODO drop gold on floor, otherwise imps could hold unlimited gold...that = bad!*/
 			}
+			currBlock->addModel("MODEL_GOLD250",position);
+			this->setGold(0);
 		}
 	}
 

@@ -50,6 +50,8 @@ namespace game_utils
 			GLint getRoomCount(GLint owner);
 
 			game_objects::CBlock *getRoom(GLint roomType, GLubyte owner);
+
+			GLvoid CRoomManager::locateRoom(GLint roomType, GLubyte owner);
 		private:
 
 			// contains all the rooms in the game

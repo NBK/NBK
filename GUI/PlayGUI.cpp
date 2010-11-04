@@ -700,7 +700,7 @@ namespace DK_GUI
 			else if (message_group==AEMG_LOCATE_ROOM)
 			{
 				/* do the room locating */
-				//GET_MAP->locate_room(message);	
+				CV_GAME_MANAGER->getRoomManager()->locateRoom(CV_GAME_MANAGER->getEconomyManager()->roomTypes[message], CV_CURRENT_PLAYER_ID);
 			}
 			// TODO: trap and door locating, selling boulder.
 		}
