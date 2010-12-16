@@ -47,6 +47,8 @@ namespace game_utils
 
 			bool isBlockTypeNear(GLint blockType, GLint x, GLint y, bool diagonal, GLubyte owner, std::vector<game_objects::CBlock*> *blocks = NULL);
 			bool isBlockTypeNear(GLint blockType, cml::vector2i logicalPos, bool diagonal, GLubyte owner, std::vector<game_objects::CBlock*> *blocks = NULL);
+			bool isBlockClaimable(GLint x, GLint y, GLubyte owner, std::vector<game_objects::CBlock*> *blocks = NULL);
+			bool isBlockClaimable(cml::vector2i logicalPos, GLubyte owner, std::vector<game_objects::CBlock*> *blocks = NULL);
 			game_objects::CBlock *getUnclaimedBlock(GLubyte owner);
 			void getUnclaimedBlock(GLubyte owner, std::vector<game_objects::CBlock*> *blocks);
 			game_objects::CBlock *getMarkedBlock(GLubyte owner);

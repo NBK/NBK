@@ -774,10 +774,32 @@ namespace game_utils
 
 			return (blocks?blocks->size()>0:false);
 		}
+		 
+		bool CLevelManager::isBlockClaimable(GLint x, GLint y, GLubyte owner, std::vector<CBlock*> *blocks)
+		{
+			if (!(getBlock(x-1,y-1) && getBlock(x+1,y+1)))
+				return false;
+			
+			for(GLint x1 = -1; x1<=1; x1++)
+				for(GLint y1 = -1; y1<=1; y1++)
+					if ((x1==0 || y1==0) && !(x1==0 && y1==0) &&
+						((getBlock(x+x1,y+y1)->isRoom()) || (getBlock(x+x1,y+y1)->getType()==CV_BLOCK_TYPE_CLAIMED_LAND_ID)) && (owner==getBlock(x+x1,y+y1)->getOwner()))
+					{
+						if(blocks) blocks->push_back(getBlock(x+x1,y+y1));
+						else return true;
+					}
+
+			return (blocks?blocks->size()>0:false);
+		}
 
 		bool CLevelManager::isBlockTypeNear(GLint blockType, cml::vector2i logicalPos, bool diagonal, GLubyte owner, std::vector<CBlock*> *blocks)
 		{
 			return isBlockTypeNear(blockType,logicalPos[0], logicalPos[1], diagonal,owner,blocks);
+		}
+
+		bool CLevelManager::isBlockClaimable(cml::vector2i logicalPos, GLubyte owner, std::vector<CBlock*> *blocks)
+		{
+			return isBlockClaimable(logicalPos[0], logicalPos[1], owner, blocks);
 		}
 
 		std::map<CBlock*,CBlock*> *CLevelManager::getUnclaimedBlocksList()
@@ -830,7 +852,7 @@ namespace game_utils
 			{
 				if(!((CBlock*)iter->second)->isTaken())
 				{
-					if(isBlockTypeNear(CV_BLOCK_TYPE_CLAIMED_LAND_ID,((CBlock*)iter->second)->getLogicalPosition(),false,owner))
+					if(isBlockClaimable(((CBlock*)iter->second)->getLogicalPosition(),owner))
 					{
 						((CBlock*)iter->second)->setTaken(true);
 						return iter->second;
@@ -846,7 +868,7 @@ namespace game_utils
 			{
 				if(!((CBlock*)iter->second)->isTaken())
 				{
-					if(isBlockTypeNear(CV_BLOCK_TYPE_CLAIMED_LAND_ID,((CBlock*)iter->second)->getLogicalPosition(),false,owner))
+					if(isBlockClaimable(((CBlock*)iter->second)->getLogicalPosition(),owner))
 					{
 						((CBlock*)iter->second)->setTaken(true);
 						return iter->second;
@@ -862,7 +884,7 @@ namespace game_utils
 			{
 				if(!((CBlock*)iter->second)->isTaken())
 				{
-					if(isBlockTypeNear(CV_BLOCK_TYPE_CLAIMED_LAND_ID,((CBlock*)iter->second)->getLogicalPosition(),false,owner))
+					if(isBlockClaimable(((CBlock*)iter->second)->getLogicalPosition(),owner))
 					{
 						blocks->push_back(iter->second);
 					}

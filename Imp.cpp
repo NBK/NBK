@@ -92,7 +92,7 @@ namespace game_objects
 				if(block->isTaken())
 					continue;
 				claimedBlocks.clear();
-				if(CV_GAME_MANAGER->getLevelManager()->isBlockTypeNear(CV_BLOCK_TYPE_CLAIMED_LAND_ID,block->getLogicalPosition(),false,this->getOwner(),&claimedBlocks))
+				if(CV_GAME_MANAGER->getLevelManager()->isBlockClaimable(block->getLogicalPosition(),this->getOwner(),&claimedBlocks))
 				{
 					path.clear();
 					if(CV_GAME_MANAGER->getPathManager()->findPath(cml::vector2i((int)floor(position[0]/CV_BLOCK_WIDTH),(int)floor(position[2]/CV_BLOCK_DEPTH)),block->getLogicalPosition(),&path))
@@ -131,7 +131,7 @@ namespace game_objects
 			{
 				block = *unfortifiedBlocksIter;
 				claimedBlocks.clear();
-				if(CV_GAME_MANAGER->getLevelManager()->isBlockTypeNear(CV_BLOCK_TYPE_CLAIMED_LAND_ID,block->getLogicalPosition(),false,this->getOwner(),&claimedBlocks))
+				if(CV_GAME_MANAGER->getLevelManager()->isBlockClaimable(block->getLogicalPosition(),this->getOwner(),&claimedBlocks))
 				{
 					path.clear();
 					if(CV_GAME_MANAGER->getPathManager()->findPath(cml::vector2i((int)floor(position[0]/CV_BLOCK_WIDTH),(int)floor(position[2]/CV_BLOCK_DEPTH)),block->getLogicalPosition(),&path))

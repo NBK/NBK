@@ -358,15 +358,12 @@ namespace game_utils
 		}
 
 		GLvoid CRoomManager::locateRoom(GLint roomType, GLubyte owner)
-		{			
-			
+		{		
 				CBlock *roomTile = getRoom(roomType, owner);
 				if(roomTile)
-				{
-					
+				{	
 					cml::vector3f currPos = roomTile->getRealPosition();
 					CV_GAME_MANAGER->getControlManager()->getCamera()->setPosition(cml::vector3f(currPos[0], CV_CAMERA_INITIAL_HEIGHT, currPos[2]+1));
-					CV_GAME_MANAGER->getConsole()->writeLine(CConversions::intToStr(currPos[2]));
 				}
 		}
 
