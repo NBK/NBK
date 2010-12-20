@@ -171,7 +171,7 @@ namespace game_objects
 	{
 		if(impState != IS_IDLE) return;
 		path.clear();
-		currBlock = CV_GAME_MANAGER->getLevelManager()->getUnclaimedBlock(this->getOwner());
+		currBlock = CV_GAME_MANAGER->getLevelManager()->getUnclaimedBlock(this->getOwner(),cml::vector2i((int)floor(position[0]/CV_BLOCK_WIDTH),(int)floor(position[2]/CV_BLOCK_DEPTH)));
 		if (currBlock)
 		{
 			cml::vector2i currPos = cml::vector2i((int)floor(position[0]/CV_BLOCK_WIDTH),(int)floor(position[2]/CV_BLOCK_DEPTH));
