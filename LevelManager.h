@@ -52,7 +52,7 @@ namespace game_utils
 			game_objects::CBlock *getUnclaimedBlock(GLubyte owner, cml::vector2i position);
 			void getUnclaimedBlock(GLubyte owner, std::vector<game_objects::CBlock*> *blocks);
 			game_objects::CBlock *getMarkedBlock(GLubyte owner, cml::vector2i position);
-			game_objects::CBlock *getUnfortifiedBlock(GLubyte owner);
+			game_objects::CBlock *getUnfortifiedBlock(GLubyte owner, cml::vector2i position);
 			
 			std::map<game_objects::CBlock*,game_objects::CBlock*> *getUnclaimedBlocksList();
 			GLvoid addUnclaimedBlock(game_objects::CBlock *block);
