@@ -837,12 +837,27 @@ namespace game_utils
 			unfortifiedBlocksList[block] = block;
 		}
 
-		CBlock *CLevelManager::getMarkedBlock(GLubyte owner)
+		CBlock *CLevelManager::getMarkedBlock(GLubyte owner, cml::vector2i position)
 		{
+			CBlock *tempblock = NULL;
+			std::vector<cml::vector2i> path;
+			std::vector<cml::vector2i> currpath;
+			currpath.clear();
 			for (map<CBlock*,CBlock*>::iterator iter=markedBlocksList.begin(); iter!=markedBlocksList.end(); iter++)
 			{
-				return iter->second;
+				path.clear();
+				if(CV_GAME_MANAGER->getPathManager()->findPath(position,((CBlock*)iter->second)->getLogicalPosition(),&path))
+				{
+					if((path.size() < currpath.size()) || (currpath.size() == 0))
+					{
+						tempblock = (CBlock*)iter->second;
+						currpath = path;
+					}
+				}
 			}
+			if(tempblock)
+				return tempblock;
+			
 			return NULL;
 		}
 
@@ -850,7 +865,7 @@ namespace game_utils
 		{
 			CBlock *tempblock = NULL;
 			std::vector<cml::vector2i> path;
-			std::vector<cml::vector2i> currpath.clear;
+			std::vector<cml::vector2i> currpath;
 			currpath.clear();
 			for (map<CBlock*,CBlock*>::iterator iter=unclaimedBlocksList.begin(); iter!=unclaimedBlocksList.end(); iter++)
 			{

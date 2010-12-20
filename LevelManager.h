@@ -51,7 +51,7 @@ namespace game_utils
 			bool isBlockClaimable(cml::vector2i logicalPos, GLubyte owner, std::vector<game_objects::CBlock*> *blocks = NULL);
 			game_objects::CBlock *getUnclaimedBlock(GLubyte owner, cml::vector2i position);
 			void getUnclaimedBlock(GLubyte owner, std::vector<game_objects::CBlock*> *blocks);
-			game_objects::CBlock *getMarkedBlock(GLubyte owner);
+			game_objects::CBlock *getMarkedBlock(GLubyte owner, cml::vector2i position);
 			game_objects::CBlock *getUnfortifiedBlock(GLubyte owner);
 			
 			std::map<game_objects::CBlock*,game_objects::CBlock*> *getUnclaimedBlocksList();
