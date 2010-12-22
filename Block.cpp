@@ -738,6 +738,43 @@ namespace game_objects
 		CV_GAME_MANAGER->getLevelManager()->getBlock(logicalPosition[0],logicalPosition[1]+1)->finalize();
 		finalize();
 
+		//Calim corners
+		if(((CV_GAME_MANAGER->getLevelManager()->getBlock(logicalPosition[0]-1,logicalPosition[1]+1)->type == CV_BLOCK_TYPE_WALL_ID &&
+			CV_GAME_MANAGER->getLevelManager()->getBlock(logicalPosition[0],logicalPosition[1]+1)->getOwner() == owner &&
+			CV_GAME_MANAGER->getLevelManager()->getBlock(logicalPosition[0],logicalPosition[1]+1)->isLow()) || (
+			CV_GAME_MANAGER->getLevelManager()->getBlock(logicalPosition[0]-1,logicalPosition[1]-1)->type == CV_BLOCK_TYPE_WALL_ID &&
+			CV_GAME_MANAGER->getLevelManager()->getBlock(logicalPosition[0],logicalPosition[1]-1)->getOwner() == owner &&
+			CV_GAME_MANAGER->getLevelManager()->getBlock(logicalPosition[0],logicalPosition[1]-1)->isLow())) &&
+			CV_GAME_MANAGER->getLevelManager()->getBlock(logicalPosition[0]-1,logicalPosition[1])->type == CV_BLOCK_TYPE_EARTH_ID)
+			CV_GAME_MANAGER->getLevelManager()->getBlock(logicalPosition[0]-1,logicalPosition[1])->fortifyBlock(owner);
+
+		if(((CV_GAME_MANAGER->getLevelManager()->getBlock(logicalPosition[0]+1,logicalPosition[1]-1)->type == CV_BLOCK_TYPE_WALL_ID &&
+			CV_GAME_MANAGER->getLevelManager()->getBlock(logicalPosition[0]+1,logicalPosition[1])->getOwner() == owner &&
+			CV_GAME_MANAGER->getLevelManager()->getBlock(logicalPosition[0]+1,logicalPosition[1])->isLow()) || (
+			CV_GAME_MANAGER->getLevelManager()->getBlock(logicalPosition[0]-1,logicalPosition[1]-1)->type == CV_BLOCK_TYPE_WALL_ID &&
+			CV_GAME_MANAGER->getLevelManager()->getBlock(logicalPosition[0]-1,logicalPosition[1])->getOwner()== owner &&
+			CV_GAME_MANAGER->getLevelManager()->getBlock(logicalPosition[0]-1,logicalPosition[1])->isLow())) &&
+			CV_GAME_MANAGER->getLevelManager()->getBlock(logicalPosition[0],logicalPosition[1]-1)->type == CV_BLOCK_TYPE_EARTH_ID)
+			CV_GAME_MANAGER->getLevelManager()->getBlock(logicalPosition[0],logicalPosition[1]-1)->fortifyBlock(owner);
+
+		if(((CV_GAME_MANAGER->getLevelManager()->getBlock(logicalPosition[0]+1,logicalPosition[1]+1)->type == CV_BLOCK_TYPE_WALL_ID &&
+			CV_GAME_MANAGER->getLevelManager()->getBlock(logicalPosition[0],logicalPosition[1]+1)->getOwner() == owner &&
+			CV_GAME_MANAGER->getLevelManager()->getBlock(logicalPosition[0],logicalPosition[1]+1)->isLow()) || (
+			CV_GAME_MANAGER->getLevelManager()->getBlock(logicalPosition[0]+1,logicalPosition[1]-1)->type == CV_BLOCK_TYPE_WALL_ID &&
+			CV_GAME_MANAGER->getLevelManager()->getBlock(logicalPosition[0],logicalPosition[1]-1)->getOwner() == owner &&
+			CV_GAME_MANAGER->getLevelManager()->getBlock(logicalPosition[0],logicalPosition[1]-1)->isLow())) &&
+			CV_GAME_MANAGER->getLevelManager()->getBlock(logicalPosition[0]+1,logicalPosition[1])->type == CV_BLOCK_TYPE_EARTH_ID)
+			CV_GAME_MANAGER->getLevelManager()->getBlock(logicalPosition[0]+1,logicalPosition[1])->fortifyBlock(owner);
+
+		if(((CV_GAME_MANAGER->getLevelManager()->getBlock(logicalPosition[0]-1,logicalPosition[1]+1)->type == CV_BLOCK_TYPE_WALL_ID &&
+			CV_GAME_MANAGER->getLevelManager()->getBlock(logicalPosition[0]-1,logicalPosition[1])->getOwner() == owner &&
+			CV_GAME_MANAGER->getLevelManager()->getBlock(logicalPosition[0]-1,logicalPosition[1])->isLow()) || (
+			CV_GAME_MANAGER->getLevelManager()->getBlock(logicalPosition[0]+1,logicalPosition[1]+1)->type == CV_BLOCK_TYPE_WALL_ID &&
+			CV_GAME_MANAGER->getLevelManager()->getBlock(logicalPosition[0]+1,logicalPosition[1])->getOwner() == owner &&
+			CV_GAME_MANAGER->getLevelManager()->getBlock(logicalPosition[0]+1,logicalPosition[1])->isLow())) &&
+			CV_GAME_MANAGER->getLevelManager()->getBlock(logicalPosition[0],logicalPosition[1]+1)->type == CV_BLOCK_TYPE_EARTH_ID)
+			CV_GAME_MANAGER->getLevelManager()->getBlock(logicalPosition[0],logicalPosition[1]+1)->fortifyBlock(owner);
+
 		if(CV_GAME_MANAGER->getControlManager()->getViewFrustum()->containsBBOX(getBoundingBox()))
 		{
 			//since the block is visible, create the fortify effect (TODO)
