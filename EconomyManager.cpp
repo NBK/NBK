@@ -298,7 +298,8 @@ namespace game_utils
 								}
 							}else if(group==AEMG_EXECUTE_SPELL)
 							{
-								CV_GAME_MANAGER->getSpellManager()->castSpell(ae->message,block->getRealPosition(),CV_CURRENT_PLAYER_ID);
+								if(block->getOwner() == CV_CURRENT_PLAYER_ID)
+									CV_GAME_MANAGER->getSpellManager()->castSpell(ae->message,block->getRealPosition(),CV_CURRENT_PLAYER_ID);
 							}
 						}
 					}
