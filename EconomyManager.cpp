@@ -199,7 +199,7 @@ namespace game_utils
 												if (bObject->getClassName() == "TRAP")
 												{
 													block->removeBlockObject(bObject);
-													continue;
+													break;
 												}
 											}
 										}
