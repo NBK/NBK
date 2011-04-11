@@ -30,6 +30,7 @@ namespace game_objects
 		GLvoid setModel(loaders::CBR5Model *model);
 		GLvoid setAction(GLint action, GLint startFrame, GLint endFrame);
 		GLvoid useAction(GLint action);
+		GLvoid Idle(GLfloat deltaTime);
 		GLvoid draw(GLfloat deltaTime);
 		virtual GLvoid update(GLfloat deltaTime);
 
@@ -53,6 +54,7 @@ namespace game_objects
 
 		// creature params, TODO add more
 		GLfloat			moveSpeed;
+		GLfloat			count, change;
 		cml::vector3f	moveVector;
 
 		// Creature stats

@@ -258,6 +258,7 @@ namespace game_objects
 	{
 		if (impState == IS_IDLE)
 		{
+			Idle(deltaTime);
 			//check for next space digging
 			//check for next space claiming
 			//check for next space walling

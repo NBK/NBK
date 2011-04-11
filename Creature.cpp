@@ -18,6 +18,8 @@ namespace game_objects
 		moveVector = vector3f(0.0f,0.0f,0.0f);
 		level = 1;
 		gold = 0;
+		count = 0.0f;
+		change = 100.0f;
 	}
 
 	CCreature::~CCreature()
@@ -85,6 +87,35 @@ namespace game_objects
 		{
 			model->doAction(actions[action]);
 		}
+	}
+
+	GLvoid CCreature::Idle(GLfloat deltaTime)
+	{
+		if (count>=change)
+		{
+			GLfloat tX = (GLfloat)(rand()%100-50);
+			GLfloat tZ = (GLfloat)(rand()%100-50);
+			moveVector[0] = tX-position[0];
+			moveVector[2] = tZ-position[2];
+			moveVector.normalize();
+			rotation[1] = 90.0f-(float)(atan2(moveVector[2],moveVector[0])*180.0f/M_PI);
+			change=(GLfloat)((rand()%100))+300.0f;
+			count = 0.0f;
+		}
+
+		GLint X = (GLint)(position[0]/CV_BLOCK_WIDTH);
+		GLint Y = (GLint)(position[2]/CV_BLOCK_DEPTH);
+		if(CV_GAME_MANAGER->getLevelManager()->getBlock(X,Y)->isWalkable(false))
+		{
+			position += moveVector*moveSpeed*deltaTime;
+			count+=0.5f;
+		}
+		else
+		{
+			position -= moveVector*moveSpeed*deltaTime;
+			count=change;
+		}
+
 	}
 
 	GLvoid CCreature::draw(GLfloat deltaTime)
