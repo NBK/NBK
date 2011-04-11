@@ -44,6 +44,11 @@ namespace game_utils
 					CBlock *block = lManager->getBlock(x,y);
 					if (block->isRoom() && !block->isInRoom())
 					{
+						if(block->getType() == CV_BLOCK_TYPE_HEART_ID && block->getOwner() == CV_PLAYER_0)
+						{
+							cml::vector3f position = block->getRealPosition();
+							CV_GAME_MANAGER->getControlManager()->getCamera()->setPosition(cml::vector3f(position[0]+0.3, CV_CAMERA_INITIAL_HEIGHT, position[2]+1));
+						}
 						// we found a room tile that isn't in a room yet. we create a new room.
 						CRoom *newRoom = new CRoom();
 						newRoom->init(block);
