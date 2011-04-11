@@ -336,10 +336,10 @@ namespace game_objects
 			checkGoldLevels();
 		} else if (impState == IS_CLAIMING)
 		{
-			CV_GAME_MANAGER->getLevelManager()->getBlock(cml::vector2i((int)floor(position[0]/CV_BLOCK_WIDTH),(int)floor(position[2]/CV_BLOCK_DEPTH)))->decLife(deltaTime*moveSpeed);
-			if (CV_GAME_MANAGER->getLevelManager()->getBlock(cml::vector2i((int)floor(position[0]/CV_BLOCK_WIDTH),(int)floor(position[2]/CV_BLOCK_DEPTH)))->getLife()<=0.0f)
+			currBlock->decLife(deltaTime*moveSpeed);
+			if (currBlock->getLife()<=0.0f)
 			{
-				CV_GAME_MANAGER->getLevelManager()->getBlock(cml::vector2i((int)floor(position[0]/CV_BLOCK_WIDTH),(int)floor(position[2]/CV_BLOCK_DEPTH)))->claimBlock(this->getOwner());
+				currBlock->claimBlock(this->getOwner());
 				impState = IS_IDLE;
 				useAction(AA_IDLE);
 			}
