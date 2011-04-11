@@ -265,6 +265,9 @@ namespace game_objects
 		if(this->type == CV_BLOCK_TYPE_UNCLAIMED_LAND_ID)
 			CV_GAME_MANAGER->getLevelManager()->addUnclaimedBlock(this);
 
+		if(this->type == CV_BLOCK_TYPE_EARTH_ID)
+			CV_GAME_MANAGER->getLevelManager()->addUnfortifiedBlock(this);
+
 		if(this->type == CV_BLOCK_TYPE_WALL_ID)
 			CV_GAME_MANAGER->getLevelManager()->removeUnfortifiedBlock(this);
 

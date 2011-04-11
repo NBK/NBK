@@ -170,6 +170,11 @@ namespace game_utils
 						{
 							CBlock *block = CV_GAME_MANAGER->getLevelManager()->getBlock(x,y);
 
+							if(group==AEMG_EXECUTE_SPELL)
+							{
+								CV_GAME_MANAGER->getSpellManager()->castSpell(ae->message,block->getLogicalPosition(),CV_CURRENT_PLAYER_ID);
+								return;
+							}
 							// If you have clicked on a rock, mark it for mining.
 							if (CV_GAME_MANAGER->getLevelManager()->isFullBlock(block))
  							{
@@ -296,10 +301,6 @@ namespace game_utils
 
 									bObject->setPosition(bPos);
 								}
-							}else if(group==AEMG_EXECUTE_SPELL)
-							{
-								if(block->getOwner() == CV_CURRENT_PLAYER_ID)
-									CV_GAME_MANAGER->getSpellManager()->castSpell(ae->message,block->getRealPosition(),CV_CURRENT_PLAYER_ID);
 							}
 						}
 					}
