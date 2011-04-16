@@ -2791,153 +2791,192 @@ namespace game_utils
 			GLint	owner = block->getOwner();
 
 			CLevelManager *lManager = CV_GAME_MANAGER->getLevelManager();
-
-			if (terrainType==CV_BLOCK_TYPE_WALL_ID)
-			{
-				GLint subtiles[8]; // max 8 subtiles can be edge ones
-				byte set[]={0,0,0,0,1,0,0,0,0};
-
-				// get the edge subtiles and correct if necesary
-				GLint count = block->getEdgeSubtiles(subtiles);
 			
-				for (GLint i=0; i<count; i++)
+			// If block is marked
+			if(block->isMarked())
+			{
+				if (terrainType==CV_BLOCK_TYPE_GOLD_ID || terrainType==CV_BLOCK_TYPE_GEM_ID)
 				{
-					// the corner ones
-					if (subtiles[i]==0 || subtiles[i]==2 || subtiles[i]==6 || subtiles[i]==8)
+					GLint selection[]=
 					{
-						if (subtiles[i]==0)
+						getTexturePosInTextureAtlas(MARKED_GOLD_GEM0,0),
+						getTexturePosInTextureAtlas(MARKED_GOLD_GEM0,0),
+						getTexturePosInTextureAtlas(MARKED_GOLD_GEM0,0),
+						getTexturePosInTextureAtlas(MARKED_GOLD_GEM0,0)
+					};
+
+					for (GLint i=0; i<9; i++)
+					{
+						TOP_S[i].create(selection,4);
+						TOP_S[i].setAnimSpeed(GEM_ANIM_SPEED);
+					}
+				}
+				else
+				{
+					GLint selection[]=
+					{
+						getTexturePosInTextureAtlas(MARKED_EARTH0,0),
+						getTexturePosInTextureAtlas(MARKED_EARTH1,0),
+						getTexturePosInTextureAtlas(MARKED_EARTH2,0),
+						getTexturePosInTextureAtlas(MARKED_EARTH3,0)
+					};
+
+					for (GLint i=0; i<9; i++)
+					{
+						TOP_S[i].create(selection,4);
+						TOP_S[i].setAnimSpeed(GEM_ANIM_SPEED);
+					}
+				}
+			}
+			else
+			{
+				if (terrainType==CV_BLOCK_TYPE_WALL_ID)
+				{
+					GLint subtiles[8]; // max 8 subtiles can be edge ones
+					byte set[]={0,0,0,0,1,0,0,0,0};
+
+					// get the edge subtiles and correct if necesary
+					GLint count = block->getEdgeSubtiles(subtiles);
+			
+					for (GLint i=0; i<count; i++)
+					{
+						// the corner ones
+						if (subtiles[i]==0 || subtiles[i]==2 || subtiles[i]==6 || subtiles[i]==8)
 						{
-							if (lManager->isSameTypeAndOwner(mapX,mapY-1,block) || lManager->isSameTypeAndOwner(mapX-1,mapY,block))
+							if (subtiles[i]==0)
 							{
-								TOP_S[subtiles[i]].create(getTexturePosInTextureAtlas(WALL_EDGE,0));
+								if (lManager->isSameTypeAndOwner(mapX,mapY-1,block) || lManager->isSameTypeAndOwner(mapX-1,mapY,block))
+								{
+									TOP_S[subtiles[i]].create(getTexturePosInTextureAtlas(WALL_EDGE,0));
+								}
+								else
+								{
+									setTopWallCorner(TOP_S,subtiles[i]);
+								}
+							}
+							else if (subtiles[i]==2)
+							{
+								if (lManager->isSameTypeAndOwner(mapX,mapY-1,block) || lManager->isSameTypeAndOwner(mapX+1,mapY,block))
+								{
+									TOP_S[subtiles[i]].create(getTexturePosInTextureAtlas(WALL_EDGE,0));
+								}
+								else
+								{
+									setTopWallCorner(TOP_S,subtiles[i]);
+								}
+							}
+							else if (subtiles[i]==6)
+							{
+								if (lManager->isSameTypeAndOwner(mapX,mapY+1,block) || lManager->isSameTypeAndOwner(mapX-1,mapY,block))
+								{
+									TOP_S[subtiles[i]].create(getTexturePosInTextureAtlas(WALL_EDGE,0));
+								}
+								else
+								{
+									setTopWallCorner(TOP_S,subtiles[i]);
+								}
+							}
+							else if (subtiles[i]==8)
+							{
+								if (lManager->isSameTypeAndOwner(mapX,mapY+1,block) || lManager->isSameTypeAndOwner(mapX+1,mapY,block))
+								{
+									TOP_S[subtiles[i]].create(getTexturePosInTextureAtlas(WALL_EDGE,0));
+								}
+								else
+								{
+									setTopWallCorner(TOP_S,subtiles[i]);
+								}
 							}
 							else
 							{
 								setTopWallCorner(TOP_S,subtiles[i]);
 							}
+							set[subtiles[i]]=1;
 						}
-						else if (subtiles[i]==2)
+						else if (subtiles[i]==1 || subtiles[i]==3 || subtiles[i]==5 || subtiles[i]==7)
 						{
-							if (lManager->isSameTypeAndOwner(mapX,mapY-1,block) || lManager->isSameTypeAndOwner(mapX+1,mapY,block))
-							{
-								TOP_S[subtiles[i]].create(getTexturePosInTextureAtlas(WALL_EDGE,0));
-							}
-							else
-							{
-								setTopWallCorner(TOP_S,subtiles[i]);
-							}
+							TOP_S[subtiles[i]].create(getTexturePosInTextureAtlas(WALL_EDGE,0));
+							//set_top_wall_corner(TOP_S,subtiles[i]);
+							set[subtiles[i]]=1;
+						}			
+					}
+					// the center one goes manualy
+					TOP_S[4].create(getTexturePosInTextureAtlas(WALL_CENTER,owner));
+
+					for (GLint i=0; i<9; i++)
+					{
+						if (set[i]==0)
+						{
+							// if the wall is not "alone" we show hidden areas as earth
+							TOP_S[i].create(getTexturePosInTextureAtlas(WALL_CENTER,5));
 						}
-						else if (subtiles[i]==6)
+					}
+				}
+				else if (terrainType==CV_BLOCK_TYPE_EARTH_ID || terrainType==CV_BLOCK_TYPE_ROCK_ID)
+				{
+					for (GLint i=0; i<9; i++)
+					{
+						TOP_S[i].create(getTexturePosInTextureAtlas(terrainType==CV_BLOCK_TYPE_EARTH_ID?EARTH_M:ROCK_M,0));
+					}
+				}
+				else if (terrainType==CV_BLOCK_TYPE_GEM_ID)
+				{
+					GLint gem_animation[]=
+					{
+						getTexturePosInTextureAtlas(GEM0,0),
+						getTexturePosInTextureAtlas(GEM1,0)
+					};
+					for (GLint i=0; i<9; i++)
+					{
+						TOP_S[i].create(gem_animation,GEM_ANIM_COUNT);
+						TOP_S[i].setAnimSpeed(GEM_ANIM_SPEED);
+					}
+				}
+				else if (terrainType==CV_BLOCK_TYPE_GOLD_ID)
+				{
+					GLint gold_animation1[]=
+					{
+						getTexturePosInTextureAtlas(GOLD0,0),
+						getTexturePosInTextureAtlas(GOLD1,0),
+						getTexturePosInTextureAtlas(GOLD2,0),
+						getTexturePosInTextureAtlas(GOLD3,0)
+					};
+
+					GLint gold_animation2[]=
+					{
+						getTexturePosInTextureAtlas(GOLD_0,0),
+						getTexturePosInTextureAtlas(GOLD_1,0),
+						getTexturePosInTextureAtlas(GOLD_2,0),
+						getTexturePosInTextureAtlas(GOLD_3,0),
+					};
+
+					GLint gold_animation3[]=
+					{
+						getTexturePosInTextureAtlas(GOLD__0,0),
+						getTexturePosInTextureAtlas(GOLD__1,0),
+						getTexturePosInTextureAtlas(GOLD__2,0),
+						getTexturePosInTextureAtlas(GOLD__3,0),
+					};
+
+					for (GLint i=0; i<9; i++)
+					{
+						if (rand()%5==0)
 						{
-							if (lManager->isSameTypeAndOwner(mapX,mapY+1,block) || lManager->isSameTypeAndOwner(mapX-1,mapY,block))
-							{
-								TOP_S[subtiles[i]].create(getTexturePosInTextureAtlas(WALL_EDGE,0));
-							}
-							else
-							{
-								setTopWallCorner(TOP_S,subtiles[i]);
-							}
-						}
-						else if (subtiles[i]==8)
-						{
-							if (lManager->isSameTypeAndOwner(mapX,mapY+1,block) || lManager->isSameTypeAndOwner(mapX+1,mapY,block))
-							{
-								TOP_S[subtiles[i]].create(getTexturePosInTextureAtlas(WALL_EDGE,0));
-							}
-							else
-							{
-								setTopWallCorner(TOP_S,subtiles[i]);
-							}
+							TOP_S[i].create(gold_animation1,GOLD_ANIM1_COUNT);
 						}
 						else
 						{
-							setTopWallCorner(TOP_S,subtiles[i]);
+							if (rand()%2==0)
+							{
+								TOP_S[i].create(gold_animation2,GOLD_ANIM2_COUNT);
+							}
+							else
+							{
+								TOP_S[i].create(gold_animation3,GOLD_ANIM3_COUNT);
+							}
 						}
-						set[subtiles[i]]=1;
+						TOP_S[i].setAnimSpeed(GOLD_ANIM_SPEED);
 					}
-					else if (subtiles[i]==1 || subtiles[i]==3 || subtiles[i]==5 || subtiles[i]==7)
-					{
-						TOP_S[subtiles[i]].create(getTexturePosInTextureAtlas(WALL_EDGE,0));
-						//set_top_wall_corner(TOP_S,subtiles[i]);
-						set[subtiles[i]]=1;
-					}			
-				}
-				// the center one goes manualy
-				TOP_S[4].create(getTexturePosInTextureAtlas(WALL_CENTER,owner));
-
-				for (GLint i=0; i<9; i++)
-				{
-					if (set[i]==0)
-					{
-						// if the wall is not "alone" we show hidden areas as earth
-						TOP_S[i].create(getTexturePosInTextureAtlas(WALL_CENTER,5));
-					}
-				}
-			}
-			else if (terrainType==CV_BLOCK_TYPE_EARTH_ID || terrainType==CV_BLOCK_TYPE_ROCK_ID)
-			{
-				for (GLint i=0; i<9; i++)
-				{
-					TOP_S[i].create(getTexturePosInTextureAtlas(terrainType==CV_BLOCK_TYPE_EARTH_ID?EARTH_M:ROCK_M,0));
-				}
-			}
-			else if (terrainType==CV_BLOCK_TYPE_GEM_ID)
-			{
-				GLint gem_animation[]=
-				{
-					getTexturePosInTextureAtlas(GEM0,0),
-					getTexturePosInTextureAtlas(GEM1,0)
-				};
-				for (GLint i=0; i<9; i++)
-				{
-					TOP_S[i].create(gem_animation,GEM_ANIM_COUNT);
-					TOP_S[i].setAnimSpeed(GEM_ANIM_SPEED);
-				}
-			}
-			else if (terrainType==CV_BLOCK_TYPE_GOLD_ID)
-			{
-				GLint gold_animation1[]=
-				{
-					getTexturePosInTextureAtlas(GOLD0,0),
-					getTexturePosInTextureAtlas(GOLD1,0),
-					getTexturePosInTextureAtlas(GOLD2,0),
-					getTexturePosInTextureAtlas(GOLD3,0)
-				};
-
-				GLint gold_animation2[]=
-				{
-					getTexturePosInTextureAtlas(GOLD_0,0),
-					getTexturePosInTextureAtlas(GOLD_1,0),
-					getTexturePosInTextureAtlas(GOLD_2,0),
-					getTexturePosInTextureAtlas(GOLD_3,0),
-				};
-
-				GLint gold_animation3[]=
-				{
-					getTexturePosInTextureAtlas(GOLD__0,0),
-					getTexturePosInTextureAtlas(GOLD__1,0),
-					getTexturePosInTextureAtlas(GOLD__2,0),
-					getTexturePosInTextureAtlas(GOLD__3,0),
-				};
-
-				for (GLint i=0; i<9; i++)
-				{
-					if (rand()%5==0)
-					{
-						TOP_S[i].create(gold_animation1,GOLD_ANIM1_COUNT);
-					}
-					else
-					{
-						if (rand()%2==0)
-						{
-							TOP_S[i].create(gold_animation2,GOLD_ANIM2_COUNT);
-						}
-						else
-						{
-							TOP_S[i].create(gold_animation3,GOLD_ANIM3_COUNT);
-						}
-					}
-					TOP_S[i].setAnimSpeed(GOLD_ANIM_SPEED);
 				}
 			}
 		}

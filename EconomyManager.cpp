@@ -179,9 +179,7 @@ namespace game_utils
 							if (CV_GAME_MANAGER->getLevelManager()->isFullBlock(block))
  							{
 								if (!block->getType()==CV_BLOCK_TYPE_ROCK_ID)
-								{
 									block->setMarked(!block->isMarked());
-								}
 							}
 							else if (group==AEMG_BUILD_ROOMS || group==AEMG_BUILD_DOORS || group==AEMG_BUILD_TRAPS)
 							{
