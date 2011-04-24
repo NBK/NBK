@@ -674,11 +674,11 @@ namespace DK_GUI
 				room_data_progress_bar->set_ready(true);
 				room_info_panel->set_ready(true);
 
-				//build_room_count_label->set_caption("x%d",GET_MAP->get_room_manager()->get_room_count(PLAYER0,message));
+				build_room_count_label->set_caption("x%d",CV_GAME_MANAGER->getRoomManager()->getRoomCount(CV_CURRENT_PLAYER_ID, CV_GAME_MANAGER->getEconomyManager()->roomTypes[message]));
 				build_room_count_label->set_ready(true);
 
 				char *room_class_name = room_class_names[message-AEM_BUILD_ROOM_TREASURE];
-				//build_room_cost_label->set_caption("%d",GLOBAL_CREATURE_TXT_READER->get_room_propery(room_class_name,PROPERTY_ROOM_COST));
+				build_room_cost_label->set_caption("%d",GLOBAL_CREATURE_TXT_READER->get_room_propery(room_class_names[message-AEM_BUILD_ROOM_TREASURE],PROPERTY_ROOM_COST));
 				build_room_cost_label->set_ready(true);
 
 				action=GA_ROOMS;
@@ -788,11 +788,11 @@ namespace DK_GUI
 
 	GLvoid CPlayGUI::on_lmb_down()
 	{
-		/*if (action==GA_ROOMS)
+		if (action==GA_ROOMS)
 		{
-			build_room_count_label->set_caption("x%d",GET_MAP->get_room_manager()->get_room_count(PLAYER0,last_built));
+			build_room_count_label->set_caption("x%d",CV_GAME_MANAGER->getRoomManager()->getRoomCount(CV_CURRENT_PLAYER_ID, CV_GAME_MANAGER->getEconomyManager()->roomTypes[last_built]));
 		}
-		else if (action==GA_TRAPS)
+		/*else if (action==GA_TRAPS)
 		{
 			build_trap_door_count_label->set_caption("x%d",CThingControler::get_item_count((CThingControler::ITEM_TYPE)last_built));
 		}

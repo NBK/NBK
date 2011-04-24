@@ -347,6 +347,22 @@ namespace game_utils
 
 			return count;
 		}
+
+		GLint CRoomManager::getRoomCount(GLint owner, GLint type)
+		{
+			GLint count = 0;
+
+			for (roomIter=allRooms.begin(); roomIter!=allRooms.end(); roomIter++)
+			{
+				CRoom *room = roomIter->second;
+
+				// extract owner info the first tile. this is safe since no room can have 0 tiles.
+				CBlock *roomTile = (*room->getRoomTilesVector())[0];
+				count+=(roomTile->getOwner() == owner && roomTile->getType() == type && !(roomTile->getType() == CV_BLOCK_TYPE_HEART_ID || roomTile->getType() == CV_BLOCK_TYPE_PORTAL_ID))?1:0;
+			}
+
+			return count;
+		}
 		
 		CBlock *CRoomManager::getRoom(GLint roomType, GLubyte owner)
 		{

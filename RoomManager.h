@@ -48,6 +48,7 @@ namespace game_utils
 				Returns the room number for selected player;
 			*/
 			GLint getRoomCount(GLint owner);
+			GLint getRoomCount(GLint owner, GLint type);
 
 			game_objects::CBlock *getRoom(GLint roomType, GLubyte owner);
 
