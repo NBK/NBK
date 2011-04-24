@@ -2,6 +2,7 @@
 #include "GameManager.h"
 #include "Logger.h"
 #include "GUI/DKTextureList.h"
+#include "CreatureTxtReader.h"
 
 using namespace std;
 using namespace control;
@@ -11,6 +12,7 @@ lists::CTextureList	*game_utils::CV_TEXTURE_LIST;
 cml::vector3f		game_utils::CV_CAMERA_OLD_POSITION;
 GLint				game_utils::CV_CURRENT_PLAYER_ID;
 CDKTextureList		*GLOBAL_TEXTURE_LIST;
+game_utils::CCreatureTxtReader	*GLOBAL_CREATURE_TXT_READER;
 
 namespace game_utils
 {

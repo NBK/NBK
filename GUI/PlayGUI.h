@@ -18,6 +18,7 @@ using namespace GUI;
 #include "AnimatedSpeedButton.h"
 #include "DKProgressBar.h"
 #include "MoneyLabel.h"
+#include "JumpLabel.h"
 using namespace DK_GUI;
 
 #include "DKTextureList.h"
@@ -58,7 +59,11 @@ namespace DK_GUI
 		// updates the room info labels, should be called when eg; selling a room, creating a room, reloading level....
 		GLvoid updateRoomInfo();
 
+		// updates the creature info, eg the count on the GUI
 		GLvoid updateCreatureInfo();
+
+		// spawns a jumping label, used for selling/buying
+		GLvoid spawnJumpingLabel(GLfloat x, GLfloat y, GLint value);
 
 	private:
 		CGUI *temp_doors;
@@ -170,6 +175,10 @@ namespace DK_GUI
 
 		/* the (in)famous money label */
 		CMoneyLabel *money_label;
+
+		/* when selling, buying or training, this labels get spawned */
+		std::vector<CJumpLabel*>::iterator jl_iter;
+		std::vector<CJumpLabel*> jumping_labels;
 
 		/* form minimap zoom (in/out) */
 		CSpeedButton	*minimap_zoom_in,

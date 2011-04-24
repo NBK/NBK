@@ -4,6 +4,7 @@
 #include <windows.h>
 #include <gl/gl.h>
 #include "DKTextureList.h"
+#include "../CreatureTxtReader.h"
 
 #define	AEM_BUILD_DOORS_WOODEN	0
 #define	AEM_BUILD_DOORS_BRACED	1
@@ -206,6 +207,11 @@ struct ACTION_EVENT
 #define MINIMAP_ZOOM_OUT_TEXTURE_NORMAL "MINIMAP_ZOOM_OUT_TEXTURE_NORMAL"
 #define MINIMAP_ZOOM_OUT_TEXTURE_PRESSED "MINIMAP_ZOOM_OUT_TEXTURE_PRESSED"
 
+/* properities */
+#define PROPERTY_ROOM_NUMBER	0
+#define PROPERTY_ROOM_COST		1
+#define PROPERTY_ROOM_HEALTH	2
+
 /* some class names */
 #define	CLASS_NAME_ROOM_TREASURE	"ROOM_TREASURE_ROOM"
 #define	CLASS_NAME_ROOM_LAIR		"ROOM_LAIR"
@@ -407,5 +413,6 @@ inline char *IntToStrDK(GLint x)
 extern GLint PLAYER0_MONEY;
 
 extern CDKTextureList			*GLOBAL_TEXTURE_LIST;
+extern game_utils::CCreatureTxtReader *GLOBAL_CREATURE_TXT_READER;
 
 #endif // DKCOMMONS_H

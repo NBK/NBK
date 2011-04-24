@@ -9,7 +9,7 @@ public:
 	CJumpLabel(GLfloat x, GLfloat y, GLint value);
 	~CJumpLabel();
 
-	GLvoid draw();
+	GLvoid draw(GLfloat deltaTime);
 
 	/* when the label has "traveled" enough this becomes true so we can kill it */
 	bool is_dead();

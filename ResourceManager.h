@@ -13,6 +13,7 @@
 #include "TextureList.h"
 #include "Manager.h"
 #include "ConsoleListener.h"
+#include "CreatureTxtReader.h"
 
 namespace game_utils
 {
@@ -39,6 +40,8 @@ namespace game_utils
 
 			LUA_effects::CLUAEffect	*getEffect(std::string effectName);
 			GLvoid					returnEffect(std::string effectName, LUA_effects::CLUAEffect *effect);
+
+			CCreatureTxtReader *creature_txt_reader;
 
 		private:
 

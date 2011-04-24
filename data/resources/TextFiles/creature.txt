@@ -1,0 +1,408 @@
+																																																																																																																																																																																																																																															
+Creature Information																																																																																																																																																																																																																																															
+Description	Number	Primary Job	Secondary  Job	Not Do Jobs	Anger Jobs	Health	Heal Requirment	Heal Threshold	Strength	Armour	Dexterity	Fear	Defence	Luck	Recovery	Hunger Rate	Hunger Fill	 Annoy Level	Lair Size	Hurt By Lava	Sleep Experince Slab	Sleep Experince	Scavenge Value	Scavenge Requirement	Base Speed	Experience For Hitting	Training Value	Training Cost	Gold Hold	Visual Range	Scavenger Cost	To Level (2)	To Level (3)	To Level (4)	To Level (5)	To Level (6)	To Level (7)	To Level (8)	To Level (9)	To Level (10)	To Level (Grow Up) 	Grow Up	Grow Up Level	Max Angle Change	Eye Height	Size XY	Size YZ	Flying	Walking Anim Speed	Immune to Gas	Attack Preference	Field Of View	Power 1	Power 2	Power 3	Power 4	Power 5	Power 6	Power 7	Power 8	Power 9	Power 10	Power Level Required 1	Power Level Required 2	Power Level Required 3	Power Level Required 4	Power Level Required 5	Power Level Required 6	Power Level Required 7	Power Level Required 8	Power Level Required 9	Power Level Required 10	Research Value	Humanoid Creature	Piss On Dead	Pay	Hero Vs Keeper Cost	Manufacture Value	Hearing	Entrance Room 1 (Primary)	Entrance Room 2	Entrance Room 3	Room 1 Slabs Required	Room 2 Slabs Required	Room 3 Slabs Required	Annoyance No Lair  	Annoyance No Hatchery	Annoyance Woken Up	Annoyance Standing On Dead Enemy 	Annoyance Sulking	Annoyance No Salary	Annoyance Slapped	Annoyance Standing On Dead Friend 	Annoyance In Torture	Annoyance In Temple	Annoyance Sleeping	Annoyance Got Wage	Annoyance Win Battle	Annoyance Untrained Time	Annoyance Untrained	Job Stress	Annoyance Job Stress	Annoyance Queue	Real Training	Torture Time	Annoyance Will Not Do Job	Slaps To Kill	Creature Loyalty	Loyalty Level	Lair Enemy	Eye Effect	Entrance Force	Rebirth	Can See Invisible	Can Go Through Locked Doors	Annoyance Others Leaving	Damage To Boulder	Thing Size XY	Thing Size YZ	Annoyance Eat Food	Bleeds	Annoyance In Hand	Affected By Wind																																																																																																																				
+CREATURE_WIZARD	1	4	0	16	4	350	150	255	20	15	100	30	30	5	4	5000	2	4000	1	2	0	0	4	22000	32	14	2	30	500	18	25	1000	3500	5000	6500	8500	10500	13000	16000	20000	0	0	0	10	512	200	512	0	64	1	2	1024	2	19	5	10	11	7	27	17	16	6	1	1	3	5	5	6	7	8	9	10	5	1	0	125	0	1	10	0	0	0	0	0	0	4	1	250	-12	2	2000	300	60	4	-50	-1	-750	-330	0	0	64	100	4	0	1000	200	17	0	0	0	0	0	0	0	0	10	20	256	512	-1000	1	0	1																																																																																																																				
+CREATURE_BARBARIAN	2	8	0	0	6	700	150	200	60	50	70	30	60	10	5	8000	3	4000	1	2	0	0	1	22000	48	6	3	40	1500	18	18	1000	3500	5000	6500	8500	10500	13000	16000	20000	0	0	0	15	512	200	512	0	128	0	1	1024	1	0	0	0	0	8	0	0	0	0	1	0	0	0	0	6	0	0	0	0	0	1	0	95	0	2	10	0	0	0	0	0	0	2	2	100	-14	2	2000	200	20	4	-50	-3	-750	-400	0	0	0	0	4	0	1000	0	40	0	4	0	0	0	0	0	0	10	20	256	512	-1000	1	0	1																																																																																																																				
+CREATURE_ARCHER	3	16	0	0	4	300	150	200	20	20	100	30	60	15	2	5000	1	4000	1	2	0	0	2	22000	48	13	1	8	250	18	8	1000	3500	5000	6500	8500	10500	13000	16000	20000	0	0	0	20	512	200	512	0	128	0	2	1024	2	4	0	20	0	15	0	16	0	0	1	1	0	4	0	6	0	8	0	0	2	1	0	60	0	2	10	0	0	0	0	0	0	2	2	200	-12	2	2000	200	25	4	-50	-1	-750	-350	0	0	0	0	4	0	1000	0	30	0	7	0	0	0	0	0	0	10	20	256	512	-1000	1	0	1																																																																																																																				
+CREATURE_MONK	4	4	0	0	4	325	150	200	40	20	80	30	80	30	8	5000	2	4000	1	2	0	0	3	22000	32	14	1	12	750	18	15	1000	3500	5000	6500	8500	10500	13000	16000	20000	0	0	0	12	512	200	512	0	64	0	1	1024	2	11	8	16	19	0	17	0	27	28	1	2	3	4	5	0	7	0	9	10	3	1	0	75	0	2	10	0	0	0	0	0	0	2	3	200	0	2	2000	250	50	4	-100	-4	-750	-330	0	0	0	0	4	0	1000	0	25	0	8	0	0	0	0	0	0	10	20	256	512	-1000	1	0	1																																																																																																																				
+CREATURE_DWARF	5	16	0	0	6	500	150	200	50	40	55	30	30	2	4	5000	2	4000	1	2	0	0	1	22000	80	7	1	5	500	18	6	1000	3500	5000	6500	8500	10500	13000	16000	20000	0	0	0	30	256	200	256	0	80	0	1	1024	1	0	0	8	0	0	10	0	0	0	1	0	0	4	0	0	7	0	0	0	1	1	0	35	0	3	10	0	0	0	0	0	0	1	1	200	-6	2	2000	200	25	4	-50	-3	-850	-330	0	0	0	0	4	0	1000	0	30	0	6	0	0	0	0	0	0	10	20	256	512	-1000	1	0	1																																																																																																																				
+CREATURE_KNIGHT	6	0	0	0	4	950	150	150	80	100	150	0	30	15	6	9000	3	4000	1	2	0	0	0	22000	40	25	3	40	600	18	30	1000	3500	5000	6500	8500	10500	13000	16000	20000	0	0	0	25	512	200	512	0	120	0	1	1024	1	0	0	10	0	0	11	0	0	0	1	0	0	4	0	0	7	0	0	0	1	1	0	540	0	1	10	0	0	0	0	0	0	4	4	250	-16	4	3500	350	65	12	-75	-1	-1000	-500	0	0	0	0	12	0	2000	400	40	0	0	0	0	0	0	0	0	10	20	256	512	-1000	1	0	1																																																																																																																				
+CREATURE_AVATAR	7	0	0	0	4	3000	150	200	150	120	180	0	110	20	9	10000	4	4000	1	2	0	0	0	22000	48	75	4	100	1000	18	50	1000	3500	5000	6500	8500	10500	13000	16000	20000	0	0	0	25	512	200	512	0	56	0	1	1024	1	8	0	11	0	7	17	20	13	28	1	2	0	4	0	6	7	8	9	10	3	1	0	1200	0	1	10	0	0	0	0	0	0	4	4	2000	-50	10	4000	2250	120	120	-75	-1	-750	-1000	0	0	0	0	24	0	2000	450	60	0	0	0	0	0	0	0	0	10	20	256	512	-1000	1	0	1																																																																																																																				
+CREATURE_TUNNELLER	8	0	0	0	20	350	150	200	40	30	40	30	40	0	4	5000	2	4000	1	2	0	0	1	22000	48	2	1	10	500	18	10	1000	3500	5000	6500	8500	10500	13000	16000	20000	0	0	0	10	256	200	256	0	96	0	1	1024	2	0	0	0	0	0	0	0	0	14	1	0	0	0	0	0	0	0	0	10	0	1	0	50	0	1	10	0	0	0	0	0	0	1	1	200	-6	1	1000	100	20	4	-50	-3	-750	-330	0	0	0	0	4	0	1000	0	30	0	7	0	0	0	0	0	0	10	20	256	512	-1000	1	0	1																																																																																																																				
+CREATURE_WITCH	9	4	0	0	4	300	150	200	20	20	80	30	30	6	3	5000	2	4000	1	2	0	0	3	22000	48	15	2	16	400	18	20	1000	3500	5000	6500	8500	10500	13000	16000	20000	0	0	0	15	512	200	512	0	96	0	2	1024	2	24	12	10	22	0	9	11	20	27	1	2	3	4	5	0	7	8	9	10	3	1	0	75	0	1	10	0	0	0	0	0	0	3	2	200	-12	3	2000	350	40	4	-50	-1	-750	-330	0	0	0	0	4	0	1000	0	20	0	0	0	0	0	0	0	0	10	20	256	512	-1000	1	0	1																																																																																																																				
+CREATURE_GIANT	10	8	0	4	20	650	150	180	100	60	60	30	30	20	5	5000	3	4000	2	2	0	0	2	22000	32	15	2	35	1000	18	25	1000	3500	5000	6500	8500	10500	13000	16000	20000	0	0	0	10	700	200	700	0	96	0	1	1024	2	0	0	0	0	0	0	0	0	15	1	0	0	0	0	0	0	0	0	10	0	1	0	43	0	2	10	0	0	0	0	0	0	1	3	100	-12	2	2000	200	20	4	-50	-6	-750	-400	0	0	0	0	4	0	1000	0	40	0	4	0	0	0	0	0	0	10	20	256	512	-1000	1	0	1																																																																																																																				
+CREATURE_FAIRY	11	4	0	0	4	150	150	255	10	10	70	30	30	40	2	5000	1	4000	1	2	0	0	1	22000	64	10	1	4	250	18	4	1000	3500	5000	6500	8500	10500	13000	16000	20000	0	0	0	35	512	200	512	1	64	1	2	1024	2	0	17	9	11	13	20	10	6	7	1	0	3	4	5	6	7	8	9	10	4	1	0	59	0	1	10	0	0	0	0	0	0	2	1	210	-6	3	1000	500	100	8	-60	-1	-800	-100	0	0	0	0	4	0	1000	0	8	0	0	0	0	0	0	0	0	10	20	256	512	-1000	1	0	1																																																																																																																				
+CREATURE_THIEF	12	0	0	0	12	250	150	255	30	20	120	30	80	14	4	5000	2	4000	1	2	0	0	2	22000	48	9	1	12	1750	18	8	1000	3500	5000	6500	8500	10500	13000	16000	20000	20000	6	3	25	512	200	512	0	128	0	1	1024	1	0	0	15	0	0	13	0	0	10	1	0	0	4	0	0	7	0	0	10	1	1	0	57	0	1	10	0	0	0	0	0	0	0	2	200	-12	2	3000	200	15	4	-50	-1	-1000	-330	0	0	0	0	5	0	100	0	30	0	8	0	0	0	0	0	0	10	20	256	512	-1000	1	0	1																																																																																																																				
+CREATURE_SAMURAI	13	128	8	0	133	700	100	100	80	60	90	30	70	20	9	8000	3	4000	1	2	0	0	3	22000	64	20	4	50	750	18	30	1000	3500	5000	6500	8500	10500	13000	16000	20000	0	0	0	25	550	200	550	0	136	0	1	1024	1	0	0	0	25	9	15	0	7	0	1	0	0	0	5	6	7	0	9	0	2	1	0	195	0	2	10	0	0	0	0	0	0	4	0	250	-14	5	3000	750	65	2	-50	-1	-750	-500	25000	100	0	0	6	1	2000	400	50	0	4	20	0	0	0	1	0	10	20	256	512	-1000	1	0	1																																																																																																																				
+CREATURE_HORNY	14	128	0	2048	32	2000	150	150	150	70	160	0	70	30	8	3505	4	4000	1	0	0	0	4	22000	96	35	1	150	2500	18	30	1000	3500	5000	6500	8500	10500	13000	16000	20000	0	0	0	35	512	200	512	0	192	0	1	2047	1	0	0	0	15	0	0	0	0	16	1	0	0	0	5	0	0	0	0	10	1	1	0	950	0	0	10	0	10	0	0	9	0	5	4	3000	-50	15	8000	3750	-25	300	-25	2	-100	-300	0	0	0	0	48	0	3000	2000	80	0	1	0	0	0	0	0	0	10	20	256	512	100	1	10	1																																																																																																																														
+CREATURE_SKELETON	15	8	1024	0	4	500	150	200	55	20	70	0	50	2	5	0	0	4000	1	2	0	0	1	22000	64	10	4	20	500	18	15	1000	3500	5000	6500	8500	10500	13000	16000	20000	0	0	0	17	512	200	512	0	128	1	1	1024	1	0	0	0	8	0	0	0	0	9	1	0	0	0	5	0	0	0	0	10	1	1	0	70	0	1	10	0	4	6	0	1	9	0	0	150	-12	2	1000	100	20	2	-50	-1	-750	-330	0	0	0	0	4	0	1000	0	20	0	0	22	0	0	0	0	0	10	20	256	512	-1000	0	0	1																																																																																																																														
+CREATURE_TROLL	16	16	0	4	6	450	150	200	40	35	50	30	50	10	6	6000	3	4000	1	2	0	0	2	22000	48	7	1	12	500	18	18	1000	3500	5000	6500	8500	10500	13000	16000	20000	0	0	0	15	350	200	350	0	96	0	1	1024	1	0	0	15	0	0	5	0	0	26	1	0	0	4	0	0	7	0	0	10	1	1	0	50	0	4	10	8	0	0	1	0	0	1	3	200	-12	2	2000	200	30	4	-50	-3	-750	-330	0	0	0	0	4	0	1000	0	25	0	6	0	0	0	0	0	0	10	20	256	512	-1000	1	0	1																																																																																																																														
+CREATURE_DRAGON	17	4	8	0	12	900	150	200	90	90	60	30	50	18	3	8000	4	4000	4	0	12	3	5	22000	32	17	3	40	5000	18	35	1000	3500	5000	6500	8500	10500	13000	16000	20000	0	0	0	8	900	200	740	0	96	0	1	1024	21	11	26	0	0	0	6	0	0	28	1	2	3	0	0	0	7	0	0	10	4	0	0	350	0	1	10	2	14	0	25	15	0	4	3	400	-14	4	3000	600	10	10	-25	-10	-1000	-500	0	0	0	0	10	0	1000	100	40	0	0	0	12	0	0	0	0	10	20	256	512	-1000	1	0	1																																																																																																																														
+CREATURE_DEMONSPAWN	18	8	2048	0	16	325	150	200	50	40	70	30	50	8	5	6000	2	4000	1	0	0	0	2	22000	48	6	2	15	250	18	16	1000	3500	5000	6500	8500	10500	13000	16000	20000	20000	17	5	21	200	200	200	0	80	0	1	1024	2	0	0	19	0	0	11	0	0	0	1	0	0	4	0	0	7	0	0	0	2	0	0	70	0	2	10	0	2	6	0	1	1	2	2	200	-12	2	2000	200	30	4	-40	-1	-750	-330	0	0	0	0	4	0	1000	0	30	0	0	27	2	0	0	0	0	10	20	256	512	-1000	1	0	1																																																																																																																														
+CREATURE_FLY	19	16384	0	0	4	150	150	255	10	10	50	30	30	15	5	9000	1	8000	1	2	0	0	1	22000	128	3	1	5	50	18	4	1000	3500	5000	6500	8500	10500	13000	16000	20000	0	0	0	30	50	200	50	1	128	0	1	1024	2	0	0	0	25	0	0	15	0	0	1	0	0	0	5	0	0	8	0	0	1	0	0	5	0	1	10	0	0	0	0	0	0	0	0	50	0	1	0	0	0	0	-50	-1	-500	-20	0	0	0	0	0	0	750	0	8	0	0	26	3	0	0	0	0	10	20	256	512	-1000	1	0	1																																																																																																																														
+CREATURE_DARK_MISTRESS	20	128	72	0	5	700	100	100	60	50	70	30	70	20	9	8000	3	4000	1	2	0	0	3	22000	64	15	2	24	750	18	25	1000	3500	5000	6500	8500	10500	13000	16000	20000	0	0	0	25	550	200	550	0	128	0	2	1024	1	0	0	0	0	9	15	0	17	14	1	0	0	0	0	6	7	0	9	10	2	1	0	175	0	2	10	5	0	0	9	0	0	3	1	-200	-14	2	2000	-400	40	-6	-10	-1	-150	-400	0	0	0	0	4	1	3000	0	50	0	4	13	0	0	0	0	0	10	20	256	512	-1000	1	0	1																																																																																																																														
+CREATURE_SORCEROR	21	4	0	16	64	350	150	255	20	15	100	30	30	6	6	8000	3	4000	1	2	1	1	5	22000	32	12	2	30	400	18	25	1000	3500	5000	6500	8500	10500	13000	16000	20000	0	0	0	16	512	200	512	0	32	0	2	1024	2	5	11	6	13	20	25	22	28	0	1	2	3	4	5	6	7	8	9	0	4	1	0	120	0	1	10	3	0	0	9	0	0	4	1	250	-12	3	2500	750	75	8	-70	-4	-750	-450	25000	50	64	100	4	0	750	200	17	0	0	25	0	0	0	0	0	10	20	256	512	-1000	1	0	1																																																																																																																														
+CREATURE_BILE_DEMON	22	16	0	0	4	1200	150	200	80	60	40	30	30	5	4	4500	6	4000	2	2	0	0	1	22000	48	9	2	38	3000	18	30	1000	3500	5000	6500	8500	10500	13000	16000	20000	0	0	0	8	400	200	400	0	144	1	1	1024	1	12	0	29	0	0	26	0	0	0	1	2	0	4	0	0	7	0	0	0	1	0	0	98	0	3	10	13	14	0	25	25	0	3	6	300	-14	2	1000	400	20	4	-40	-6	-650	-330	0	0	0	0	4	0	1000	0	0	0	0	15	0	0	0	0	0	10	20	256	512	-1000	1	0	0																																																																																																																														
+CREATURE_IMP	23	2	0	0	4	75	0	0	5	5	60	255	5	0	0	0	0	0	0	2	0	0	0	0	96	1	1	10	500	5	0	2500	3500	5000	6500	8500	10500	13000	16000	20000	0	0	0	25	256	200	256	0	96	0	1	1024	39	1	15	0	0	0	0	0	0	14	1	1	3	0	0	0	0	0	0	10	0	1	0	0	0	0	5	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	50	0	20	0	0	0	0	0	0	0	0	10	20	256	512	-1000	1	0	1																																																																																																																														
+CREATURE_BEETLE	24	0	0	0	4	250	150	200	25	25	55	30	40	3	5	5000	1	4000	1	2	0	0	1	22000	48	2	1	8	300	18	8	1000	3500	5000	6500	8500	10500	13000	16000	20000	0	0	0	16	100	200	100	0	48	0	1	1024	2	0	0	0	0	0	7	0	0	0	1	0	0	0	0	0	7	0	0	0	1	0	0	18	0	1	10	0	14	0	0	1	0	1	1	50	-6	2	1500	100	25	2	-50	-1	-750	-330	0	0	0	0	4	0	1000	0	22	0	0	0	2	0	0	0	0	10	20	256	512	-1000	1	0	1																																																																																																																														
+CREATURE_VAMPIRE	25	32	4	16	65	800	150	200	70	30	80	0	80	25	9	6000	2	4000	1	2	0	0	8	22000	56	20	4	50	2500	18	25	1000	3500	6500	12000	17000	25000	40000	50000	60000	0	0	0	27	512	200	512	0	80	1	2	1024	2	24	16	14	11	17	8	22	0	28	1	2	3	4	5	6	7	8	0	10	3	1	0	750	0	1	10	11	14	0	30	9	0	5	1	1750	-25	4	2500	1000	-5	90	20	-7	-250	-500	0	0	0	0	12	0	2000	750	60	0	6	21	14	1	3	1	0	10	20	256	512	-1000	1	1	1																																																																																																																														
+CREATURE_SPIDER	26	8192	8	0	4	400	150	200	40	30	60	30	50	3	2	7000	2	4000	1	2	0	0	2	22000	48	3	1	18	250	18	12	1000	3500	5000	6500	8500	10500	13000	16000	20000	0	0	0	18	128	200	128	0	64	0	1	1024	2	16	0	7	0	0	0	27	0	0	1	2	0	4	0	0	0	8	0	0	1	0	0	25	0	2	10	0	13	14	0	9	9	1	2	100	-6	2	2000	200	25	4	-50	-1	-750	-330	0	0	0	0	4	0	1000	0	24	0	0	19	0	0	0	0	0	10	20	256	512	-1000	1	0	1																																																																																																																														
+CREATURE_HELLHOUND	27	256	0	0	4	600	150	200	55	35	70	30	50	8	8	6000	3	4000	1	0	0	0	3	22000	96	13	2	14	500	18	16	1000	3500	5000	6500	8500	10500	13000	16000	20000	0	0	0	14	256	200	256	0	128	0	1	1024	2	0	15	0	21	0	0	0	0	0	1	0	3	0	5	0	0	0	0	0	1	0	1	67	0	1	15	9	0	0	9	0	0	2	3	250	-12	2	2000	250	100	4	-40	-2	-400	-330	0	0	0	0	4	0	1000	0	40	50	0	18	13	0	0	0	0	10	20	256	512	-1000	1	0	1																																																																																																																														
+CREATURE_GHOST	28	4096	4	0	4	200	150	200	20	20	90	30	60	10	4	0	0	4000	1	2	0	0	3	22000	64	14	1	20	1000	18	10	1000	3500	5000	6500	8500	10500	13000	16000	20000	0	0	0	25	512	200	512	1	128	1	1	1024	2	0	13	10	0	22	0	17	0	0	1	0	3	1	0	6	0	8	0	0	2	0	0	20	0	1	10	5	0	0	1	0	0	0	0	0	-6	1	2000	500	40	8	-60	-1	-350	-330	0	0	0	0	4	0	1000	0	0	0	0	0	9	0	0	1	1	10	20	256	512	-1000	0	0	1																																																																																																																														
+CREATURE_TENTACLE	29	0	0	0	132	700	150	200	50	50	65	30	50	3	1	8000	1	4000	1	2	13	2	2	22000	32	12	1	14	500	18	8	1000	3500	5000	6500	8500	10500	13000	16000	20000	0	0	0	13	300	200	300	0	32	0	1	1024	2	0	0	0	7	0	0	0	0	0	1	0	0	0	5	0	0	0	0	0	1	0	0	45	0	1	10	0	10	14	0	9	9	2	2	200	-12	2	2000	200	25	4	-50	-1	-750	-330	0	0	0	0	4	0	1000	0	40	0	0	0	1	0	0	0	0	10	20	256	512	-1000	1	0	1																																																																																																																														
+CREATURE_ORC	30	8	512	0	6	700	150	200	65	60	60	10	65	12	7	7000	2	4000	1	2	0	0	2	22000	48	15	2	15	600	18	20	1000	3500	5000	6500	8500	10500	13000	16000	20000	0	0	0	15	350	200	350	0	96	0	1	1024	1	0	0	0	15	0	8	0	26	0	1	0	0	0	5	0	7	0	9	0	0	1	0	95	0	3	10	6	12	0	9	1	0	2	2	150	-14	2	2000	200	20	4	-50	-4	-750	-400	0	0	0	0	4	0	1000	0	40	0	5	0	0	0	0	0	0	10	20	256	512	-1000	1	0	1
+CREATURE_FLOATING_SPIRIT	31	0	0	0	0	1	0	0	1	1	1	1	1	1	1	0	0	0	0	0	0	0	0	0	128	0	0	0	0	18	0	0	0	0	0	0	0	0	0	0	0	0	0	20	128	200	128	1	80	1	1	1024	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	10	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	20	0	0	0	0	0	0
+																																																																																																																											
+																																																																																																																											
+Data for Dungeon Keeper Room																																																																																																																											
+Description	Number	Cost	Health																																																																																																																								
+ROOM_ENTRANCE	1	0	4000																																																																																																																								
+ROOM_TREASURE_ROOM	2	50	100																																																																																																																								
+ROOM_RESEARCH_ROOM	3	200	320																																																																																																																								
+ROOM_PRISON_ROOM	4	225	600																																																																																																																								
+ROOM_TORTURE_ROOM	5	350	1000																																																																																																																								
+ROOM_TRAINING_AREA	6	150	1250																																																																																																																								
+ROOM_DUNGEON_HEART	7	0	1300																																																																																																																								
+ROOM_WORKSHOP_ROOM	8	200	900																																																																																																																								
+ROOM_SCAVENGER	9	750	1000																																																																																																																								
+ROOM_TEMPLE	10	350	1000																																																																																																																								
+ROOM_GRAVEYARD	11	300	350																																																																																																																																																																																																																																																		
+ROOM_BARRACK_ROOM	12	125	350																																																																																																																																																																																																																																																		
+ROOM_HATCHERY	13	125	350																																																																																																																																																																																																																																																		
+ROOM_LAIR	14	100	200																																																																																																																																																																																																																																																		
+ROOM_BRIDGE	15	30	100																																																																																																																																																																																																																																																		
+ROOM_GUARD_POST	16	50	5000																																																																																																																																																																																																																																																		
+																																																																																																																																																																																																																																																					
+Data for Dungeon Keeper MAGIC																																																																																																																																																																																																																																																					
+Description	Number	Cost 0	Cost 1	Cost 2	Cost 3	Cost 4	Cost 5	Cost 6	Cost 7	Cost 8	Time	Power 0	Power 1	Power 2	Power 3	Power 4	Power 5	Power 6	Power 7	Power 8																																																																																																																																																																																																																																	
+MAGIC_HAND	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0																																																																																																																																																																																																																																	
+MAGIC_CREATE_IMP	2	300	300	300	300	300	300	300	300	300	0	0	0	0	0	0	0	0	0	0																																																																																																																																																																																																																																	
+MAGIC_MUST_OBEY	3	25	0	0	0	0	0	0	0	0	18	0	0	0	0	0	0	0	0	0																																																																																																																																																																																																																																	
+MAGIC_SLAP	4	0	0	0	0	0	0	0	0	0	500	0	0	0	0	0	0	0	0	0																																																																																																																																																																																																																																	
+MAGIC_SIGHT	5	50	60	70	80	90	100	110	120	130	0	576	640	704	768	832	896	960	1024	1088																																																																																																																																																																																																																																	
+MAGIC_CALL_TO_ARMS	6	1	2	3	4	5	6	7	8	9	1	10	15	20	25	30	35	40	45	50																																																																																																																																																																																																																																	
+MAGIC_CAVE_IN	7	1000	1200	1400	1600	1800	2000	2200	2400	2600	100	0	5	6	7	8	9	10	11	12																																																																																																																																																																																																																																	
+MAGIC_HEAL_CREATURE	8	300	400	500	600	700	800	900	1000	1100	16	80	120	160	190	220	270	290	340	500																																																																																																																																																																																																																																	
+MAGIC_HOLD_AUDIENCE	9	1000	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0																																																																																																																																																																																																																																	
+MAGIC_LIGHTNING	10	600	1200	1300	1700	1800	2000	2200	2400	3000	0	3	4	5	7	9	12	14	16	30																																																																																																																																																																																																																																	
+MAGIC_SPEED	11	100	200	300	400	500	600	700	800	900	0	300	400	500	600	700	800	900	1000	1100																																																																																																																																																																																																																																	
+MAGIC_PROTECT	12	100	200	300	400	500	600	700	800	900	0	300	400	500	600	700	800	900	1000	1100																																																																																																																																																																																																																																	
+MAGIC_CONCEAL	13	100	200	300	400	500	600	700	800	900	0	300	400	500	600	700	800	900	1000	1100																																																																																																																																																																																																																																	
+MAGIC_DISEASE	14	7000	7200	7400	7600	7800	8000	8200	8400	9000	0	300	400	500	600	700	800	900	1000	1100																																																																																																																																																																																																																																	
+MAGIC_CHICKEN	15	1200	1300	1400	1500	1600	1700	1800	1900	3000	0	300	350	400	450	500	550	600	650	1000																																																																																																																																																																																																																																	
+MAGIC_DESTROY_WALLS	16	10000	12000	14000	16000	18000	20000	22000	24000	26000	0	0	1	2	3	4	5	6	7	8																																																																																																																																																																																																																																	
+MAGIC_TIME_BOMB	17	2000	2100	2200	2300	2400	2500	2600	2700	2800	0	300	400	500	600	700	800	900	1000	1100																																																																																																																																																																																																																																	
+MAGIC_POSSESS	18	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0																																																																																																																																																																																																																																	
+MAGIC_ARMAGEDON	19	60000	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0																																																																																																																																																																																																																																	
+																																																																																																																																																																																																																																																					
+																																																																																																																																																																																																																																																					
+General Game Values																																																																																																																																																																																																																																																					
+Description	Number	Value																																																																																																																																																																																																																																																			
+GAME_GOLD_PER_GOLD_BLOCK	0	1024																																								
+GAME_POT_OF_GOLD_HOLDS	1	250																																								
+GAME_GOLD_PILE_VALUE	2	200																																								
+GAME_GOLD_PILE_MAXIMUM	3	1024																																								
+GAME_RECOVERY_FREQUENCY	4	10																																								
+GAME_FIGHT_MAX_HATE	5	200		 																																						
+GAME_FIGHT_BORDERLINE	6	0																																								
+GAME_FIGHT_MAX_LOVE	7	-200																																								
+GAME_FOOD_LIFE_OUT_OF_HATCHERY	8	500																																								
+GAME_FIGHT_HATE_KILL_VALUE	9	-2																																								
+GAME_DEATH_MATCH_STATUE_REAPPER_TIME	10	200																																								
+GAME_DEATH_MATCH_OBJECT_REAPPER_TIME	11	500																																								
+GAME_HITS_PER_SLAB	12	2																																								
+GAME_COLLAPSE_DUNGEON_DAMAGE	13	10																																								
+GAME_TURNS_PER_COLLAPSE_DUNGEON_DAMAGE	14	4																																								
+GAME_IMP_JOB_NOT_SO_CLOSE(UNUSED)	15	4																																								
+GAME_IMP_JOB_FAR_AWAY(UNUSED)	16	10																																																																																																																																																																																																																																																			
+GAME_TIME_SPENT_IN_PRISON(UNUSED)	17	10000																																																																																																																																																																																																																																																			
+GAME_AUTO_DIG_LIMIT(UNUSED)	18	10																																																																																																																																																																																																																																																			
+GAME_DOUBLE_CLICK_SPEED(UNUSED)	19	6																																																																																																																																																																																																																																																			
+GAME_IMP_GENERATE_TIME(UNUSED)	20	50																																																																																																																																																																																																																																																			
+GAME_GHOST_CONVERT_CHANCE	21	0																																																																																																																																																																																																																																																			
+GAME_ARMORY_TIME	22	2000																																																																																																																																																																																																																																																			
+GAME_WORKSHOP_TIME	23	2500																																																																																																																																																																																																																																																			
+GAME_OBSERVATORY_TIME	24	250																																																																																																																																																																																																																																																			
+GAME_OBSERVATORY_GENERATE	25	3																																																																																																																																																																																																																																																			
+GAME_IMPROVE_AREA	26	31																																																																																																																																																																																																																																																			
+GAME_DOOR_OPEN_FOR	27	50																																																																																																																																																																																																																																																			
+GAME_BOULDER_REDUCE_HEALTH_SLAP	28	18																																																																																																																																																																																																																																																			
+GAME_BOULDER_REDUCE_HEALTH_WALL	29	6																																																																																																																																																																																																																																																			
+GAME_BOULDER_REDUCE_HEALTH_ROOM	30	6																																																																																																																																																																																																																																																			
+GAME_TILE_STRENGTH	31	60																																																																																																																																																																																																																																																			
+GAME_GOLD_TILE_STRENGTH	32	120										
+GAME_ARMEGEDDON_COUNT_DOWN	33	500										
+GAME_ARMEGEDDON_DURATION	34	4000										
+GAME_MINIMUM_GOLD	35	1000										
+GAME_MAX_GOLD_LOOKUP	36	6										
+GAME_MIN_GOLD_TO_RECORD	37	20										
+GAME_WAIT_FOR_ROOM_TIME	38	800										
+GAME_CHECK_EXPAND_TIME	39	1000										
+GAME_MAX_DISTANCE_TO_DIG	40	96										
+GAME_WAIT_AFTER_ROOM_AREA	41	200										
+GAME_PER_IMP_GOLD_DIG_SIZE	42	30										
+GAME_DEFAULT_GENERATE_SPEED	43	350										
+GAME_BARRACK_TIME	44	100										
+GAME_FOOD_GENERATION_SPEED	45	2000										
+GAME_DEFAULT_NEUTRAL_ENTRANCE_LEVEL	46	9										
+GAME_DEFAULT_MAX_CREATURES_GENERATE_ENTRANCE	47	200										
+GAME_DEFAULT_IMP_DIG_DAMAGE	48	1
+GAME_DEFAULT_IMP_DIG_OWN_DAMAGE	49	2
+GAME_PRISON_SKELETON_CHANCE	50	1
+GAME_DEFAULT_SACRIFICE_SCORE_FOR_HORNY	51	30000
+GAME_GAME_TURNS_IN_FLEE	52	200
+GAME_TRAIN_COST_FREQUENCY	53	64
+GAME_TORTURE_CONVERT_CHANCE	54	10
+GAME_PAY_DAY_GAP	55	10000
+GAME_CHEST_GOLD_HOLD	56	500
+GAME_SLAB_COLLAPSE_TIME	57	100
+GAME_DUNGEON_HEART_HEALTH	58	30000
+GAME_POWER_HAND_GOLD_GRAB_AMOUNT	59	100
+GAME_DUNGEON_HEART_HEAL_TIME	60	8
+GAME_DUNGEON_HEART_HEAL_HEALTH	61	1
+GAME_HERO_DOOR_WAIT_TIME	62	200
+GAME_DISEASE_TRANSFER_PERCENTAGE	63	25
+GAME_DISEASE_LOSE_PERCENTAGE_HEALTH	64	10				
+GAME_DISEASE_LOSE_HEALTH_TIME	65	400				
+GAME_HOLD_AUDIENCE_TIME	66	500				
+GAME_ARMAGEDON_TELEPORT_YOUR_TIME_GAP	67	5				
+GAME_ARMAGEDON_TELEPORT_ENEMY_TIME_GAP	68	10				
+GAME_SCAVENGE_COST_FREQUENCY	69	64				
+GAME_TEMPLE_SCAVENGE_PROTECTION_TIME	70	1000				
+GAME_BODIES_FOR_VAMPIRE	71	10				
+GAME_BODY_REMAINS_FOR	72	2000				
+GAME_GRAVEYARD_CONVERT_TIME	73	300				
+GAME_MIN_DISTANCE_FOR_TELEPORT	74	20				
+						
+						
+JOB NAMES do not change						
+JOB_NULL	0					
+JOB_TUNNEL	1					
+JOB_DIG	2	
+JOB_RESEARCH	4	
+JOB_TRAIN	8	
+JOB_MANUFACTURE	16	
+JOB_SCAVENGE	32	
+JOB_KINKY_TORTURE	64	
+JOB_FIGHT	128	
+JOB_SEEK_THE_ENEMY	256	
+JOB_GUARD	512	
+JOB_GROUP	1024	
+JOB_BARRACK	2048	
+JOB_TEMPLE	4096	
+JOB_FREEZE_PRISONERS	8192	
+JOB_EXPLORE	16384	
+		
+		
+ANGER JOB NAMES do not change		
+ANGER_JOB_NULL	0	
+ANGER_JOB_KILL_CREATURES	1	
+ANGER_JOB_DESTROY_ROOMS	2	
+ANGER_JOB_LEAVE_DUNGEON	4	
+ANGER_JOB_STEAL_GOLD	8	
+ANGER_JOB_DAMAGE_WALLS	16	
+ANGER_JOB_MAD_PSYCHO	32	
+ANGER_JOB_PERSUADE	64	
+ANGER_JOB_JOIN_ENEMY	128	
+		
+		
+		
+Data for SPELL stats		
+Description	Number	Duration
+SPELL_NULL	0	0
+SPELL_FIREBALL	1	0
+SPELL_FIRE_BOMB	2	0
+SPELL_FREEZE	3	125
+SPELL_ARMOUR	4	250
+SPELL_LIGHTNING	5	0
+SPELL_REBOUND	6	250
+SPELL_HEAL	7	50
+SPELL_POISON_CLOUD	8	0
+SPELL_INVISIBILITY	9	500
+SPELL_TELEPORT	10	20
+SPELL_SPEED	11	500
+SPELL_SLOW	12	500
+SPELL_DRAIN	13	0
+SPELL_FEAR	14	0
+SPELL_MISSILE	15	0
+SPELL_NAVIGATING_MISSILE	16	0
+SPELL_FLAME_BREATH	17	0		
+SPELL_WIND	18	0		
+SPELL_LIGHT	19	1000		
+SPELL_FLY	20	750		
+SPELL_SIGHT	21	500		
+SPELL_GRENADE	22	0		
+SPELL_HAILSTORM	23	0		
+SPELL_WORD_OF_POWER	24	0		
+SPELL_CRAZY_GAS	25	300		
+SPELL_DISEASE	26	500		
+SPELL_CHICKEN	27	200		
+SPELL_TIME_BOMB	28	200		
+
+Data for Keeper SHOT				
+Description	Number	Health	Damage	Speed
+SHOT_NULL	0	0	0	0
+SHOT_FIREBALL	1	30	30	190											
+SHOT_FIREBOMB	2	40	100	256											
+SHOT_FREEZE	3	40	0	200											
+SHOT_LIGHTNING	4	10	20	256											
+SHOT_POISON_CLOUD	5	40	0	180											
+SHOT_NAVIGATING_MISSILE	6	40	40	200											
+SHOT_FLAME_BREATHE	7	10	3	128											
+SHOT_WIND	8	40	0	200											
+SHOT_MISSILE	9	40	20	200											
+SHOT_SLOW	10	40	0	256											
+SHOT_GRENADE	11	40	0	128											
+SHOT_DRAIN	12	2	20	256											
+SHOT_HAIL_STORM	13	40	5	220											
+SHOT_ARROW	14	40	30	256											
+SHOT_BOULDER	15	210	5000	64											
+SHOT_GOD_LIGHTNING	16	6	15	0											
+SHOT_SPIKE	17	20	5000	256
+SHOT_VORTEX	18	400	0	200
+SHOT_ALARM	19	200	0	0
+SHOT_SOLID_BOULDER	20	5000	5000	64
+SHOT_SWING_WEAPON_SWORD	21	3	0	256
+SHOT_SWING_WEAPON_FIST	22	3	0	256
+SHOT_DIG	23	3	1	256
+SHOT_GOD_LIGHTNING_BALL	24	40	150	0
+SHOT_GROUP	25	0	0	0
+SHOT_DISEASE	26	0	0	0
+SHOT_CHICKEN	27	0	0	0
+SHOT_TIME_BOMB	28	0	0	0
+SHOT_TRAP_LIGHTNING	29	64	16	0
+				
+				
+Table for Traps				
+Description	Number	Manufacture Level	Manufacture Required	Shots	Time Between Shots	Selling Value
+TRAP_NULL	0	0	0	0	0	0
+TRAP_BOULDER	1	3	25000	1	0	1000
+TRAP_ALARM	2	0	18000	12	2000	250
+TRAP_POISON_GAS	3	1	20000	5	200	350
+TRAP_LIGHTNING	4	2	20000	8	140	500
+TRAP_WORD_OF_POWER	5	4	20000	3	84	750
+TRAP_LAVA	6	3	20000	1	0	750
+						
+Table for Doors						
+Description	Number	Manufacture Level	Manufacture Required	Selling Value	Health	
+DOOR_WOODEN	1	0	18000	250	400	
+DOOR_BRACE	2	2	24000	500	750	
+DOOR_STEEL	3	3	26000	750	1500	
+DOOR_MAGIC	4	4	50000	1500	3000	
+						
+Table for Health															
+Description	Number	Value													
+HEALTH_HUNGER_HEALTH_LOSS	0	50													
+HEALTH_GAME_TURNS_PER_HUNGER_HEALTH_LOSS	1	400													
+HEALTH_FOOD_HEALTH_GAIN	2	50													
+HEALTH_(UNUSED)PRISON_HEALTH_GAIN	3	50													
+HEALTH_(UNUSED)GAME_TURNS_PER_PRISON_HEALTH_GAIN	4	400													
+HEALTH_TORTURE_HEALTH_LOSS	5	50													
+HEALTH_GAME_TURNS_PER_TORTURE_HEALTH_LOSS	6	400													
+															
+Table for blocks															
+Description	Number	Value													
+BLOCK_HEALTH_ROCK	0	2													
+BLOCK_HEALTH_GOLD	1	20													
+BLOCK_HEALTH_PRETTY	2	20													
+BLOCK_HEALTH_FLOOR	3	5													
+BLOCK_HEALTH_ROOM	4	20						
+BLOCK_HEALTH_DOOR1	5	20						
+BLOCK_HEALTH_DOOR2	6	80						
+BLOCK_HEALTH_DOOR3	7	255						
+BLOCK_HEALTH_DOOR4	8	255						
+								
+Data For Instances 	Number	Time	ActionTime	ResetTime	FPTime	FP Action Time	FP Reset Time	Force Visibility
+INSTANCE_NULL	0	0	0	0	0	0	0	0
+INSTANCE_SWING_WEAPON_SWORD	1	8	4	8	5	2	4	100
+INSTANCE_SWING_WEAPON_FIST	2	8	4	8	5	2	4	100
+INSTANCE_ESCAPE	3	0	0	0	0	0	0	0
+INSTANCE_FIRE_ARROW	4	10	5	16	5	2	8	100
+INSTANCE_FIREBALL	5	10	6	32	4	2	4	150
+INSTANCE_FIRE_BOMB	6	10	6	100	5	3	16	150
+INSTANCE_FREEZE	7	10	6	375	5	3	300	150
+INSTANCE_ARMOUR	8	10	6	400	5	3	250	10
+INSTANCE_LIGHTNING	9	10	6	16	5	3	8	150
+INSTANCE_REBOUND	10	10	6	400	5	3	250	10
+INSTANCE_HEAL	11	10	6	400	5	3	250	1
+INSTANCE_POISON_CLOUD	12	10	6	80	5	3	20	1
+INSTANCE_INVISIBILITY	13	10	6	500	5	3	200	1
+INSTANCE_TELEPORT	14	10	6	6	5	3	3	10
+INSTANCE_SPEED	15	10	6	550	5	3	500	1
+INSTANCE_SLOW	16	10	6	550	5	3	500	1
+INSTANCE_DRAIN	17	10	6	5	5	3	3	1
+INSTANCE_FEAR	18	10	6	10	5	3	10	1
+INSTANCE_MISSILE	19	10	6	25	5	3	2	1
+INSTANCE_NAVIGATING_MISSILE	20	10	6	50	5	3	2	1
+INSTANCE_FLAME_BREATH	21	10	10	8	5	5	4	1
+INSTANCE_WIND	22	10	6	1200	5	3	800	1
+INSTANCE_LIGHT	23	10	6	8	5	3	3	1
+INSTANCE_FLY	24	10	6	400	5	3	250	1
+INSTANCE_SIGHT	25	10	6	200	5	3	150	0
+INSTANCE_GRENADE	26	10	6	60	5	3	20	1
+INSTANCE_HAILSTORM	27	10	6	32	5	3	20	1
+INSTANCE_WORD_OF_POWER	28	10	6	400	5	3	250	1
+INSTANCE_FART	29	8	4	150	4	2	100	1
+INSTANCE_DIG	30	8	4	1	4	2	1	0
+INSTANCE_PRETTY_PATH	31	8	4	1	4	2	1	0
+INSTANCE_DESTROY_AREA	32	8	4	1	4	2	1	0
+INSTANCE_TUNNEL	33	8	4	1	4	2	1	0
+INSTANCE_WAVE	34	8	1	1	4	1	1	0
+INSTANCE_REINFORCE	35	8	4	1	4	2	1	0
+INSTANCE_EAT	36	16	8	1	8	4	1	0
+INSTANCE_ATTACK_ROOM_SLAB	37	8	4	1	4	2	1	1
+INSTANCE_DAMAGE_WALL	38	8	4	1	4	2	1	1
+INSTANCE_FIRST_PERSON_DIG	39	8	4	1	4	2	1	1
+INSTANCE_CAST_SPELL_GROUP	40	10	6	6	5	3	3	1
+INSTANCE_CAST_SPELL_DISEASE	41	10	6	6	5	3	3	1
+INSTANCE_CAST_SPELL_CHICKEN	42	10	6	6	5	3	3	1
+INSTANCE_CAST_SPELL_TIME_BOMB	43	10	6	6	5	3	3	0
+INSTANCE_MOAN	44	8	1	1	4	1	1	0
+INSTANCE_TORTURED	45	16	8	1	8	4	1	0
+
+Table for Slab Type Values								
+Description	Number							
+SLAB_TYPE_HARD	0							
+SLAB_TYPE_GOLD	1							
+SLAB_TYPE_ROCK	2							
+SLAB_TYPE_PRETTY_PATH	11							
+SLAB_TYPE_LAVA	12							
+SLAB_TYPE_WATER	13							
+
+Table for Attack Preferences								
+Description	Number	
+ATTACK_PREFERENCE_MELEE	1	
+ATTACK_PREFERENCE_RANGED	2	
+
+Table for Eye Lenses		
+Description	Number	
+EYE_NULL	0	
+EYE_WIBBLE	1	
+EYE_FISH_EYE	2	
+EYE_COMPOUND	3	
+EYE_MIST_WATER	4	
+EYE_MIST_TWO_LAYERED_WATER	5	
+EYE_MIST_DARK_WATER	6	
+EYE_MIST_BLOB	7	
+EYE_MIST_TWO_LAYERED_SMOKE	8	
+EYE_MIST_TWO_LAYED_SMOKE_EDGE	9	
+EYE_MIST_TWO_LAYER_SHIT	10		
+EYE_MIST_QUAKE_SHIT	11		
+EYE_MIST_SMOKE	12		
+EYE_LENS_DOG	13		
+EYE_LENS_VAMPIRE	14		
+			
+Tables For Default Research Order			
+Description	Model	Amount	
+RESEARCH_MAGIC_HAND	1	1	
+RESEARCH_MAGIC_POSSESS	18	1	
+RESEARCH_MAGIC_SLAP	4	1	
+RESEARCH_MAGIC_CREATE_IMP	2	1000	
+RESEARCH_ROOM_TREASURE	2	1000	
+RESEARCH_ROOM_HATCHERY	13	1000	
+RESEARCH_ROOM_LAIR	14	1000	
+RESEARCH_ROOM_RESEARCH	3	1000	
+RESEARCH_ROOM_TRAINING	6	1000
+RESEARCH_MAGIC_POWER_SIGHT	5	3800
+RESEARCH_ROOM_BRIDGE	15	4600
+RESEARCH_MAGIC_POWER_SPEED	11	5700
+RESEARCH_MAGIC_POWER_OBEY	3	6000
+RESEARCH_ROOM_GUARD_POST	16	6700
+RESEARCH_MAGIC_POWER_CALL_TO_ARMS	6	7400
+RESEARCH_ROOM_WORKSHOP	8	9000
+RESEARCH_MAGIC_POWER_CONCEAL	13	9400
+RESEARCH_ROOM_BARRACKS	12	12000
+RESEARCH_MAGIC_POWER_HOLD_AUDIENCE	9	11000
+RESEARCH_ROOM_PRISON	4	20000
+RESEARCH_MAGIC_POWER_CAVE_IN	7	25000
+RESEARCH_ROOM_TORTURE	5	20000
+RESEARCH_MAGIC_POWER_HEAL_CREATURE	8	14000
+RESEARCH_ROOM_TEMPLE	10	25000
+RESEARCH_MAGIC_POWER_LIGHTNING	10	15000
+RESEARCH_ROOM_GRAVEYARD	11	25000
+RESEARCH_MAGIC_POWER_PROTECT	12	15000
+RESEARCH_ROOM_SCAVENGER	9	27500
+RESEARCH_MAGIC_POWER_CHICKEN	15	20000
+RESEARCH_MAGIC_POWER_DISEASE	14	20000
+RESEARCH_MAGIC_POWER_ARMAGEDDON	19	100000
+RESEARCH_MAGIC_POWER_DESTROY_WALLS	16	750000

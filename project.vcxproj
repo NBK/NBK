@@ -148,6 +148,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="CreatureTxtReader.cpp" />
     <ClCompile Include="Gui\AbstractGUIItem.cpp" />
     <ClCompile Include="Gui\AnimatedSpeedButton.cpp" />
     <ClCompile Include="AnimatedTerrainManager.cpp" />
@@ -243,6 +244,7 @@
     <ResourceCompile Include="project.rc" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CreatureTxtReader.h" />
     <ClInclude Include="Gui\AbstractGUIItem.h" />
     <ClInclude Include="Gui\AnimatedSpeedButton.h" />
     <ClInclude Include="AnimatedTerrainManager.h" />

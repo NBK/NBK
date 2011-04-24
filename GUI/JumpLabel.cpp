@@ -27,7 +27,7 @@ CJumpLabel::~CJumpLabel()
 {
 }
 
-GLvoid CJumpLabel::draw()
+GLvoid CJumpLabel::draw(GLfloat deltaTime)
 {
 	if (dead)
 	{
@@ -40,7 +40,7 @@ GLvoid CJumpLabel::draw()
 
 	if (move_up)
 	{
-		yp-=move_speed;
+		yp-=move_speed*deltaTime;
 
 		if (fabs(yp-sy)>0.2f)
 		{
@@ -49,7 +49,7 @@ GLvoid CJumpLabel::draw()
 	}
 	else
 	{
-		yp+=move_speed;
+		yp+=move_speed*deltaTime;
 
 		if (fabs(yp-sy)<=0.01f)
 		{

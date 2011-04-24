@@ -460,6 +460,9 @@ namespace game_utils
 
 			bool result = loadTexturesFromList();
 
+			creature_txt_reader = new CCreatureTxtReader();
+			GLOBAL_CREATURE_TXT_READER=creature_txt_reader;
+
 			CSettingsManager sm;
 
 			// read models for model pool from models.conf

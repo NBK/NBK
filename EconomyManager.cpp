@@ -164,6 +164,8 @@ namespace game_utils
 					GLint group = ae->message_group;
 					GLint msg = ae->message;
 
+					vector2i mousePos = CV_GAME_MANAGER->getControlManager()->getInput()->getMousePos();
+
 					for(int x = left; x<=right; x++)
 					{
 						for(int y = top; y<=bottom; y++)
@@ -208,6 +210,30 @@ namespace game_utils
 										}
 										else
 										{
+											// generate the room cost (divide by 2 because were selling)
+											int k, position;
+											bool found = false;
+
+											// find target's position if present
+											k = 0;
+											while (k < sizeof(roomTypes) && !found)
+											{
+												if (roomTypes[k] == block->getType())
+												{
+													position = k;
+													found = true;
+												}
+												else
+													k++;
+											}
+											GLint room_cost = GLOBAL_CREATURE_TXT_READER->get_room_propery(room_class_names[position],PROPERTY_ROOM_COST)/2;
+											
+											// we built somethig so we have to lower the money
+											PLAYER0_MONEY+=room_cost;
+
+											// spawn the jumping label
+											CV_GAME_MANAGER->getGUIManager()->getPlayGUI()->spawnJumpingLabel(mousePos[0],mousePos[1],room_cost);
+
 											// selling rooms
 											block->setType(CV_BLOCK_TYPE_CLAIMED_LAND_ID);
 											block->init();
@@ -228,39 +254,51 @@ namespace game_utils
 								}
 								else if (group==AEMG_BUILD_ROOMS)
 								{
-									// the flag tells us that we have to build some stuff (traps, doors, rooms)
-									if (!block->isBuildable(CV_CURRENT_PLAYER_ID))
+									GLint room_cost = GLOBAL_CREATURE_TXT_READER->get_room_propery(room_class_names[msg],PROPERTY_ROOM_COST);
+
+									if(PLAYER0_MONEY-room_cost>=0)
 									{
-										continue;
-									}
-
-									// sanity check: we cant build bridge on dry land ans we cant build rooms on water or lava
-									if (roomTypes[msg] != CV_BLOCK_TYPE_BRIDGE_ID && (block->isLava() || block->isWater()))
-									{
-										// tryint to build room on water or lava
-										continue;
-									}
-
-									if (roomTypes[msg] == CV_BLOCK_TYPE_BRIDGE_ID && !(block->isLava() || block->isWater()))
-									{
-										// tryint to build bridge on dry land
-										continue;
-									}
-
-									block->setType(roomTypes[msg]);
-									block->init();
-
-									// fix the neighbours
-									GLint sx = block->getLogicalPosition()[0];
-									GLint sy = block->getLogicalPosition()[1];
-
-									for (GLint y=sy-1; y<=sy+1; y++)
-									{
-										for (GLint x=sx-1; x<=sx+1; x++)
+										// the flag tells us that we have to build some stuff (traps, doors, rooms)
+										if (!block->isBuildable(CV_CURRENT_PLAYER_ID))
 										{
-											CV_GAME_MANAGER->getLevelManager()->getBlock(x,y)->finalize();
+											continue;
 										}
-									}							
+
+										// sanity check: we cant build bridge on dry land ans we cant build rooms on water or lava
+										if (roomTypes[msg] != CV_BLOCK_TYPE_BRIDGE_ID && (block->isLava() || block->isWater()))
+										{
+											// tryint to build room on water or lava
+											continue;
+										}
+
+										if (roomTypes[msg] == CV_BLOCK_TYPE_BRIDGE_ID && !(block->isLava() || block->isWater()))
+										{
+											// tryint to build bridge on dry land
+											continue;
+										}
+
+										// we built somethig so we have to lower the money
+										PLAYER0_MONEY-=room_cost;
+
+										// spawn the jumping label
+										CV_GAME_MANAGER->getGUIManager()->getPlayGUI()->spawnJumpingLabel(mousePos[0],mousePos[1],room_cost);
+
+										// change block type
+										block->setType(roomTypes[msg]);
+										block->init();
+
+										// fix the neighbours
+										GLint sx = block->getLogicalPosition()[0];
+										GLint sy = block->getLogicalPosition()[1];
+
+										for (GLint y=sy-1; y<=sy+1; y++)
+										{
+											for (GLint x=sx-1; x<=sx+1; x++)
+											{
+												CV_GAME_MANAGER->getLevelManager()->getBlock(x,y)->finalize();
+											}
+										}	
+									}
 								}
 								else if (group==AEMG_BUILD_TRAPS)
 								{

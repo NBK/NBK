@@ -613,6 +613,29 @@ namespace DK_GUI
 		play_gui->draw();
 		play_gui->do_actions();
 
+		// draw the jumping labels 
+		if (jumping_labels.size()>0)
+		{
+			CJumpLabel *jumpl=NULL;;
+			for (jl_iter=jumping_labels.begin(); jl_iter!=jumping_labels.end(); )
+			{
+				jumpl=*jl_iter;
+
+				jumpl->draw(CV_GAME_MANAGER->getDeltaTime());
+
+				if (jumpl->is_dead())
+				{
+					delete jumpl;
+					jumpl=NULL;
+					jl_iter = jumping_labels.erase(jl_iter);
+				}
+				else
+				{
+					jl_iter++;
+				}
+			}	
+		}
+
 		/* check the tab buttons */
 		if (action_event.event)
 		{
@@ -798,5 +821,10 @@ namespace DK_GUI
 		{
 			creature_count_label[i]->int_set(CV_GAME_MANAGER->getCreatureManager()->getCreatureCount(i));
 		}
+	}
+
+	GLvoid CPlayGUI::spawnJumpingLabel(GLfloat x, GLfloat y, GLint value)
+	{
+		jumping_labels.push_back(new CJumpLabel(x,y,value));
 	}
 }
