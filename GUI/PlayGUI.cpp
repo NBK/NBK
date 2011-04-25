@@ -17,10 +17,13 @@ namespace DK_GUI
 		"TI12","TI13","TI14","TI15"
 	};
 
-	CPlayGUI::CPlayGUI(GLint screen_width, GLint screen_height, CDKTextureList *game_textures)
+	CPlayGUI::CPlayGUI(GLint screen_width, GLint screen_height, CDKTextureList *game_textures): CInputListener()
 	{	
 		// TODO: read this from script
 		PLAYER0_MONEY=1000;
+
+		// register to handle input
+		CV_GAME_MANAGER->getControlManager()->getInput()->registerListener(this);
 
 		this->game_textures=game_textures;
 
@@ -778,19 +781,22 @@ namespace DK_GUI
 		}
 	}
 
-	GLvoid CPlayGUI::on_rmb_down()
+	void CPlayGUI::onKeyDown(int key)
 	{
-		room_info_texture->set_blink(false);
-		trap_door_info_texture->set_blink(false);
-		spell_info_texture->set_blink(false);
-		action=GA_NONE;
 	}
 
-	GLvoid CPlayGUI::on_lmb_down()
+	void CPlayGUI::onKeyUp(int key)
 	{
-		if (action==GA_ROOMS)
+	}
+		
+	void CPlayGUI::onMouseClicked(int button)
+	{
+		if(button==0)
 		{
-			build_room_count_label->set_caption("x%d",CV_GAME_MANAGER->getRoomManager()->getRoomCount(CV_CURRENT_PLAYER_ID, CV_GAME_MANAGER->getEconomyManager()->roomTypes[last_built]));
+			if (action==GA_ROOMS)
+			{
+				build_room_count_label->set_caption("x%d",CV_GAME_MANAGER->getRoomManager()->getRoomCount(CV_CURRENT_PLAYER_ID, CV_GAME_MANAGER->getEconomyManager()->roomTypes[last_built]));
+			}
 		}
 		/*else if (action==GA_TRAPS)
 		{

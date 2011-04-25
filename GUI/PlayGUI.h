@@ -19,6 +19,7 @@ using namespace GUI;
 #include "DKProgressBar.h"
 #include "MoneyLabel.h"
 #include "JumpLabel.h"
+#include "../InputListener.h"
 using namespace DK_GUI;
 
 #include "DKTextureList.h"
@@ -28,7 +29,7 @@ using namespace std;
 
 namespace DK_GUI
 {
-	class CPlayGUI
+	class CPlayGUI: public control::CInputListener
 	{
 	public:
 		CPlayGUI(GLint screen_width, GLint screen_height, CDKTextureList *game_textures);
@@ -48,11 +49,10 @@ namespace DK_GUI
 		CDKGUILabel *get_room_count_label(GLint player);
 		CDKGUILabel *get_creature_count_label(GLint player);
 
-		/* some things are connected with right mouse button */
-		GLvoid on_rmb_down();
-
-		/* and some things are connected with left mouse button */
-		GLvoid on_lmb_down();
+		// from CInputListener
+		virtual void onKeyDown(int key);
+		virtual void onKeyUp(int key);
+		virtual void onMouseClicked(int button);
 
 		GLvoid set_parent(GLvoid *parent);
 
