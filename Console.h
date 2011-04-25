@@ -36,7 +36,6 @@ namespace control
 		virtual void onKeyDown(int key);
 		virtual void onKeyUp(int key);
 		virtual void onMouseClicked(int button);
-		virtual void onMouseReleased(int button);
 
 		void	registerClass(control::CConsoleListener *listener, std::string commandGroupName);
 		void	addParam(std::string keyword, std::string description);

@@ -97,12 +97,6 @@ namespace control
 			case WM_LBUTTONUP:
 			{
 				lmbd=false;
-
-				// update registered listeners
-				for (rlIter=registeredListeners.begin(); rlIter!=registeredListeners.end(); rlIter++)
-				{
-					(*rlIter)->onMouseReleased(0);
-				}
 				break;
 			}
 
@@ -122,12 +116,6 @@ namespace control
 			case WM_RBUTTONUP:
 			{
 				rmbd=false;
-
-				// update registered listeners
-				for (rlIter=registeredListeners.begin(); rlIter!=registeredListeners.end(); rlIter++)
-				{
-					(*rlIter)->onMouseReleased(1);
-				}
 				break;
 			}
 
@@ -147,12 +135,6 @@ namespace control
 			case WM_MBUTTONUP:
 			{
 				mmbd=false;
-
-				// update registered listeners
-				for (rlIter=registeredListeners.begin(); rlIter!=registeredListeners.end(); rlIter++)
-				{
-					(*rlIter)->onMouseReleased(3);
-				}
 				break;
 			}
 

@@ -56,12 +56,6 @@ namespace game_objects
 		cml::vector3f	getCenterPosition();
 
 		/*
-			Sets or returns whether the block should be rendered highlighted, fort example after picking
-		*/
-		GLvoid setHighlighted(bool highlighted);
-		bool isHighlighted();
-
-		/*
 			Sets or returns owner.
 		*/
 		GLvoid	setOwner(GLubyte owner);
@@ -262,8 +256,6 @@ namespace game_objects
 				skip[4][4],
 				// true, whe n the block has finished loading for the first time
 				finalized;
-
-		bool	highlighted; //true if block is highlighted when rendering
 
 		GLint	roomIndex;
 				

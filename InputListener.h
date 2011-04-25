@@ -16,7 +16,6 @@ namespace control
 		virtual void onKeyDown(int key)=0;
 		virtual void onKeyUp(int key)=0;
 		virtual void onMouseClicked(int button)=0;
-		virtual void onMouseReleased(int button)=0;
 	};
 };
 
