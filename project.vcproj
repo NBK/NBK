@@ -285,6 +285,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\CreatureTxtReader.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\DeltaTime.cpp"
 				>
 			</File>
@@ -545,6 +549,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\SpellManager.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\SubtileData.cpp"
 				>
 			</File>
@@ -659,6 +667,10 @@
 			</File>
 			<File
 				RelativePath=".\CreatureManager.h"
+				>
+			</File>
+			<File
+				RelativePath=".\CreatureTxtReader.h"
 				>
 			</File>
 			<File
@@ -842,11 +854,11 @@
 				>
 			</File>
 			<File
-				RelativePath=".\Primitives.h"
+				RelativePath=".\Gui\Primitives.h"
 				>
 			</File>
 			<File
-				RelativePath=".\Gui\Primitives.h"
+				RelativePath=".\Primitives.h"
 				>
 			</File>
 			<File
@@ -903,6 +915,10 @@
 			</File>
 			<File
 				RelativePath=".\Gui\SpeedButton.h"
+				>
+			</File>
+			<File
+				RelativePath=".\SpellManager.h"
 				>
 			</File>
 			<File
