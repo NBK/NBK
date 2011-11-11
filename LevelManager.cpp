@@ -22,6 +22,7 @@ using namespace control;
 #define LDLVL	"LDLVL"
 #define TDEF	"TDEF"
 #define PLOG	"PLOG"
+#define SAVE	"SAVE"
 
 // things
 #define HERO_GATE		52
@@ -260,6 +261,7 @@ namespace game_utils
 			CV_GAME_MANAGER->getConsole()->addParam(LDLVL,"(xxxx) Loads specified level. Level must exist in data/resources/levels.");
 			CV_GAME_MANAGER->getConsole()->addParam(TDEF,"() Toggles the terrain deformations."); // TODO
 			CV_GAME_MANAGER->getConsole()->addParam(PLOG,"() Prints the contents of the log file.");
+			CV_GAME_MANAGER->getConsole()->addParam(SAVE,"(xxxx) Saves the game. Level will be saved in data/resources/saves.");
 
 			return result;
 		}
@@ -336,6 +338,45 @@ namespace game_utils
 			return true;
 		}
 
+		bool CLevelManager::saveSLB(string fileName)
+		{
+			struct sSLB
+			{
+				GLbyte typeID;	// ID of the block
+				GLbyte empty;	// empty not used reserved value
+			};
+
+			// open file and read data
+			FILE *inSLB;
+
+			if (!(inSLB=fopen(fileName.c_str(),"wb")))
+			{
+				return false;
+			}
+
+			sSLB slb[CV_LEVEL_MAP_SIZE][CV_LEVEL_MAP_SIZE];
+
+			// process the data
+			for (GLint y=0; y<CV_LEVEL_MAP_SIZE; y++)
+			{
+				for (GLint x=0; x<CV_LEVEL_MAP_SIZE; x++)
+				{
+					slb[y][x].typeID = levelMap[y][x]->getType();			
+				}
+			}
+
+			for (GLuint i=0; i<CV_LEVEL_MAP_SIZE; i++)
+			{
+				if (fwrite(slb[i],CV_LEVEL_MAP_SIZE,sizeof(sSLB),inSLB)==0)
+				{
+					fclose(inSLB);
+					return FALSE;
+				}
+			}
+			fclose(inSLB);	
+			return true;
+		}
+
 		bool CLevelManager::loadOWN(string fileName)
 		{
 			FILE *inOWN = NULL;
@@ -360,6 +401,34 @@ namespace game_utils
 					levelMap[y][x]->setOwner(line[y*3][x*3]);
 				}
 			}
+			return true;
+		}
+
+		bool CLevelManager::saveOWN(string fileName)
+		{
+			FILE *inOWN = NULL;
+			if (!(inOWN=fopen(fileName.c_str(),"wb")))
+			{
+				return false;
+			}
+
+			GLubyte line[256][256];
+
+
+			for (GLint y=0; y<CV_LEVEL_MAP_SIZE; y++)
+			{
+				for (GLint x=0; x<CV_LEVEL_MAP_SIZE; x++)
+				{
+					line[y*3][x*3]=levelMap[y][x]->getOwner();
+				}
+			}
+
+			for (int i=0; i<256; i++)
+			{
+				fwrite(line[i],1,256,inOWN);
+			}
+			
+			fclose(inOWN);
 			return true;
 		}
 
@@ -693,6 +762,12 @@ namespace game_utils
 
 			fclose(f_tng);
 
+			return true;
+		}
+
+		bool CLevelManager::saveTNG(string fileName)
+		{
+			// TODO this
 			return true;
 		}
 
@@ -1165,6 +1240,30 @@ namespace game_utils
 				for (std::vector<string>::iterator sIter = log.begin(); sIter != log.end(); sIter++)
 				{
 					CV_GAME_MANAGER->getConsole()->writeLine(*sIter);
+				}
+			}
+			else if (keyword==SAVE)
+			{
+				CConsole *console = CV_GAME_MANAGER->getConsole();
+
+				if (!CConsoleListener::checkParams(params,1,checkResult,tParams))
+				{
+					return checkResult;
+				}
+
+				levelFileName = CV_RESOURCES_DIRECTORY+"saves\\"+tParams[0];
+
+				console->writeLine("Checking if save exists...");
+				if (levelExists(levelFileName))
+				{
+					return "Save "+tParams[0]+" already exists!";
+				}
+				else
+				{
+					saveOWN(levelFileName + ".OWN");
+					saveSLB(levelFileName + ".SLB");
+					saveTNG(levelFileName + ".TNG");
+					return "Saved "+tParams[0]+" sucessfully.";
 				}
 			}
 

@@ -102,6 +102,9 @@ namespace game_utils
 			bool loadOWN(std::string fileName);		
 			bool loadTNG(std::string fileName);
 
+			bool saveSLB(std::string fileName);
+			bool saveOWN(std::string fileName);		
+			bool saveTNG(std::string fileName);
 			/*
 				A list of playable levels stored in data\resources\levels.conf.
 			*/
