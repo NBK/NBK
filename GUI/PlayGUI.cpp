@@ -791,21 +791,28 @@ namespace DK_GUI
 		
 	void CPlayGUI::onMouseClicked(int button)
 	{
+		// Get the last action
+		ACTION_EVENT *ae = CV_GAME_MANAGER->getGUIManager()->getLastActionEvent();
+
 		if(button==0)
 		{
-			if (action==GA_ROOMS)
+			// if your not selling (room count label wont be displayed)
+			if(ae->message != AEM_SELL)
 			{
-				build_room_count_label->set_caption("x%d",CV_GAME_MANAGER->getRoomManager()->getRoomCount(CV_CURRENT_PLAYER_ID, CV_GAME_MANAGER->getEconomyManager()->roomTypes[last_built]));
+				if (action==GA_ROOMS)
+				{
+					build_room_count_label->set_caption("x%d",CV_GAME_MANAGER->getRoomManager()->getRoomCount(CV_CURRENT_PLAYER_ID, CV_GAME_MANAGER->getEconomyManager()->roomTypes[last_built]));
+				}
+				/*else if (action==GA_TRAPS)
+				{
+					build_trap_door_count_label->set_caption("x%d",CThingControler::get_item_count((CThingControler::ITEM_TYPE)last_built));
+				}
+				else if (action==GA_DOORS)
+				{
+					build_trap_door_count_label->set_caption("x%d",CThingControler::get_item_count((CThingControler::ITEM_TYPE)(last_built+CThingControler::IT_WORD_OF_POWER)));
+				}*/
 			}
 		}
-		/*else if (action==GA_TRAPS)
-		{
-			build_trap_door_count_label->set_caption("x%d",CThingControler::get_item_count((CThingControler::ITEM_TYPE)last_built));
-		}
-		else if (action==GA_DOORS)
-		{
-			build_trap_door_count_label->set_caption("x%d",CThingControler::get_item_count((CThingControler::ITEM_TYPE)(last_built+CThingControler::IT_WORD_OF_POWER)));
-		}*/
 	}
 
 	GLvoid CPlayGUI::set_parent(GLvoid *parent)
