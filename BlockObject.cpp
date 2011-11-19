@@ -87,6 +87,11 @@ namespace game_objects
 			return effectName;
 		}
 
+		GLvoid CBlockObject::setEffectName(string effectName)
+		{
+			this->effectName = effectName;
+		}
+
 		bool CBlockObject::isMarked()
 		{
 			return marked;

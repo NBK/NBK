@@ -35,6 +35,7 @@ namespace game_objects
 			virtual GLvoid				setRotateY(GLfloat rotateY);
 			virtual GLvoid				setModel(loaders::CBR5Model	*model);
 			virtual GLvoid				setEffect(LUA_effects::CLUAEffect *effect);
+			virtual GLvoid				setEffectName(std::string effectName);
 			virtual GLvoid				setClassName(std::string className);
 			GLvoid						setMarked(bool marked);
 

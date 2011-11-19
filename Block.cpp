@@ -704,7 +704,8 @@ namespace game_objects
 		if(CV_GAME_MANAGER->getControlManager()->getViewFrustum()->containsBBOX(getBoundingBox()))
 		{
 			//since the block is visible, create the claim effect
-			CBlockObject *obj = new CBlockObject("CLAIM_EFFECT",this->getRealPosition()+vector3f(CV_BLOCK_WIDTH/2.0f,CV_BLOCK_HEIGHT/4.0f,CV_BLOCK_DEPTH/2.0f), NULL);
+			CBlockObject *obj = new CBlockObject("MODEL_KEY",this->getRealPosition()+vector3f(CV_BLOCK_WIDTH/2.0f,CV_BLOCK_HEIGHT/4.0f,CV_BLOCK_DEPTH/2.0f), NULL);
+			obj->setEffectName("EFFECTS_CLAIM");
 			obj->setEffect(CV_GAME_MANAGER->getResourceManager()->getEffect("EFFECTS_CLAIM"));
 			if(obj->getEffect())
 				obj->getEffect()->getEmittter(0)->setColor(vector3f(1.0f,0.2f,0.6f));
@@ -807,7 +808,7 @@ namespace game_objects
 
 			if (dispose)
 			{
-				CV_GAME_MANAGER->getResourceManager()->returnModel(bObject->getName(), bObject->getModel());	//bug on this line		
+				CV_GAME_MANAGER->getResourceManager()->returnModel(bObject->getName(), bObject->getModel());
 
 				if (bObject->getEffect())
 				{
