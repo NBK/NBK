@@ -38,7 +38,7 @@ using namespace game_utils;
 using namespace utils;
 using namespace control;
 
-#define WINDOW_TITLE "War for the Overworld"
+#define WINDOW_TITLE "Natural Born Keeper"
 
 managers::CGameManager *game_utils::CV_GAME_MANAGER = NULL;
 bool allInited = false;
@@ -427,8 +427,8 @@ int WINAPI WinMain(	HINSTANCE	hInstance,
 					int			nCmdShow)			
 {
 	// Setup exception handler
-	BT_SetAppName("wfto");
-	BT_SetSupportEMail("wfto-bugs@keeperklan.com");
+	BT_SetAppName("nbk");
+	BT_SetSupportEMail("nbk@maxhayman.co.uk");
 	BT_SetFlags(BTF_DETAILEDMODE | BTF_DESCRIBEERROR | BTF_INTERCEPTSUEF | BTF_EDITMAIL | BTF_ATTACHREPORT | BTF_SCREENCAPTURE);
 	BT_SetSupportURL("http://forum.keeperklan.com");
     BT_SetSupportServer("bugs.keeperklan.com", 9999);

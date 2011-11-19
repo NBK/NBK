@@ -20,7 +20,7 @@ namespace DK_GUI
 	CPlayGUI::CPlayGUI(GLint screen_width, GLint screen_height, CDKTextureList *game_textures): CInputListener()
 	{	
 		// TODO: read this from script
-		PLAYER0_MONEY=1000;
+		PLAYER0_MONEY=100000;
 
 		// register to handle input
 		CV_GAME_MANAGER->getControlManager()->getInput()->registerListener(this);
