@@ -46,6 +46,10 @@ namespace game_utils
 			}
 			else if(spell = SPELL_BUTTON_DESTROY_WALL)
 			{
+				// dont do this on the edge of the map. TODO: fix this for rock which is not on the edge of the map.
+				if(block->getType() == CV_BLOCK_TYPE_ROCK_ID)
+					return;
+
 				// Make all fortified walls in a 1 block radius of where you clicked, unfortified.
 				for (GLint y=position[1]-1; y<=position[1]+1; y++)
 				{
