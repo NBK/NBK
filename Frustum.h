@@ -1,8 +1,8 @@
 #ifndef FRUSTUM_H
 #define FRUSTUM_H
 
-#include <windows.h>
-#include <gl/gl.h>
+#include "system.h"
+#include <GL/gl.h>
 #include "boundingBox.h"
 #include "Camera.h"
 
@@ -20,7 +20,7 @@ namespace geometry
 		GLvoid	update(control::CCamera *camera);
 		GLvoid	draw();
 
-		bool	containsPoint(cml::vector3f &point);
+		bool	containsPoint(cml::vector3f point);
 		bool	containsBBOX(sBoundingBox &bbox);
 		bool	containsBBOX(sBoundingBox *bbox);
 

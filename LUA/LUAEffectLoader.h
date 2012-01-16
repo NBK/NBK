@@ -1,8 +1,8 @@
 #ifndef LUA_EFFECT_LOADER_H
 #define LUA_EFFECT_LOADER_H
 
-#include <windows.h>
-#include <gl/gl.h>
+#include "../system.h"
+#include <GL/gl.h>
 #include <string>
 #include "LUAEffect.h"
 

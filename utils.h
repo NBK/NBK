@@ -538,7 +538,6 @@ namespace utils
 		float D[3];
 		float isect1[2], isect2[2];
 		float du0du1,du0du2,dv0dv1,dv0dv2;
-		short index;
 		float vp0,vp1,vp2;
 		float up0,up1,up2;
 		float b,c,max;
@@ -596,11 +595,10 @@ namespace utils
 
 		/* compute and index to the largest component of D */
 		max=fabs(D[0]);
-		index=0;
 		b=fabs(D[1]);
 		c=fabs(D[2]);
-		if(b>max) max=b,index=1;
-		if(c>max) max=c,index=2;
+		if(b>max) max=b;
+		if(c>max) max=c;
 
 		/* this is the simplified projection onto L*/
 		vp0=*V0;

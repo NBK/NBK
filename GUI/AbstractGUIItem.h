@@ -1,8 +1,8 @@
 #ifndef ABSTRACT_GUI_ITEM
 #define ABSTRACT_GUI_ITEM
 
-#include <windows.h>
-#include <gl\gl.h>
+#include "../system.h"
+#include <GL/gl.h>
 
 #include "Primitives.h"
 
@@ -125,7 +125,7 @@ namespace GUI
 		GLvoid *get_parent();
 		GLvoid set_parent(GLvoid *parent);
 
-		GLvoid set_class_name(char *class_name);
+		GLvoid set_class_name(const char *class_name);
 		char *get_class_name();
 
 		GLvoid set_visible(bool visible);

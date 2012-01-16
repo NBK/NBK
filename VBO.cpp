@@ -8,7 +8,7 @@ namespace rendering
 {
 	CVBO::CVBO(BUFFER_TYPE bufferType, bool clean)
 	{
-		this->bufferType=bufferType;	
+		this->bufferType=bufferType;
 		this->clean=clean;
 
 		for (GLint i=0; i<MAX_ID; i++)
@@ -32,7 +32,8 @@ namespace rendering
 
 				if (clean && VBOs[i].data)
 				{
-					SAFE_DELETE(VBOs[i].data);
+					char *data = (char *)VBOs[i].data;
+					SAFE_DELETE(data);
 				}
 			}
 		}
@@ -49,9 +50,9 @@ namespace rendering
 	}
 
 	GLvoid CVBO::setTextureData(TEXTURE_UNIT textureUnit, GLuint texture, GLint elementsCount, GLint elementLength, GLint elementSizeInBytes, GLvoid *data, DATA_TYPE dataType)
-	{	
+	{
 		textures[textureUnit]=texture;
-		setData(elementsCount,elementLength,elementSizeInBytes,data,dataType,(ID_TYPE)((GLint)IDT_texture0+(GLint)textureUnit));	
+		setData(elementsCount,elementLength,elementSizeInBytes,data,dataType,(ID_TYPE)((GLint)IDT_texture0+(GLint)textureUnit));
 	}
 
 	GLvoid CVBO::setNormalData(GLint elementsCount, GLint elementLength, GLint elementSizeInBytes, GLvoid *data, DATA_TYPE dataType)
@@ -75,8 +76,8 @@ namespace rendering
 		VBOs[ID_type].elementsCount=elementsCount;
 		VBOs[ID_type].elementLength=elementLength;
 		VBOs[ID_type].elementSizeInBytes=elementSizeInBytes;
-		VBOs[ID_type].data=data;	
-		VBOs[ID_type].dataType=dataType;	
+		VBOs[ID_type].data=data;
+		VBOs[ID_type].dataType=dataType;
 		VBOs[ID_type].calcSize();
 
 		//if (bufferType==BT_STATIC_DRAW) needed with dynamic where only sub data gets replaced!
@@ -95,7 +96,7 @@ namespace rendering
 			else if (ID_type==IDT_normal)
 			{
 				glBindBufferARB(GL_ARRAY_BUFFER_ARB, VBOs[ID_type].id);
-				glBufferDataARB(GL_ARRAY_BUFFER_ARB, VBOs[ID_type].size, VBOs[ID_type].data, bufferType);		
+				glBufferDataARB(GL_ARRAY_BUFFER_ARB, VBOs[ID_type].size, VBOs[ID_type].data, bufferType);
 			}
 			else if (ID_type>=IDT_texture0 && ID_type<=IDT_texture7)
 			{
@@ -130,7 +131,7 @@ namespace rendering
 			}
 			glColorPointer(vColData->elementLength, vColData->dataType, 0, 0);
 			glEnableClientState(GL_COLOR_ARRAY);
-		}	
+		}
 
 		bool tex=false;
 		for (GLint i=IDT_texture0; i<=IDT_texture7; i++)
@@ -164,12 +165,12 @@ namespace rendering
 			glBindBufferARB(GL_ARRAY_BUFFER_ARB, vNormData->id);
 			if (reupload)
 			{
-				//glBufferDataARB(GL_ARRAY_BUFFER_ARB, vNormData->size, vNormData->data, bufferType);		
+				//glBufferDataARB(GL_ARRAY_BUFFER_ARB, vNormData->size, vNormData->data, bufferType);
 				glBufferSubDataARB(GL_ARRAY_BUFFER_ARB, 0, vNormData->size, vNormData->data);
 			}
 			glNormalPointer(vNormData->dataType, 0, 0);
 			glEnableClientState(GL_NORMAL_ARRAY);
-		}	
+		}
 
 		bool vert = vVertData->id>0;
 

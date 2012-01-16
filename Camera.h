@@ -1,9 +1,9 @@
 #ifndef SIMPLE_CAMERA_H
 #define SIMPLE_CAMERA_H
 
-#include <windows.h>
-#include <gl/gl.h>
-#include <gl/glu.h>
+#include "system.h"
+#include <GL/gl.h>
+#include <GL/glu.h>
 #include <cml/cml.h>
 #include "DeltaTime.h"
 #include <string>

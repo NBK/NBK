@@ -6,7 +6,7 @@ using namespace game_utils;
 namespace DK_GUI
 {
 	CDKRoomInfoTexture::CDKRoomInfoTexture(CDKTextureList *texture_list)
-	:CGUIBackground(0.0f,0.0f,0.0f,0.0f,0.0f,0)	
+	:CGUIBackground(0.0f,0.0f,0.0f,0.0f,0.0f,0)
 	{
 		this->texture_list=texture_list;
 		blink=true;
@@ -19,7 +19,7 @@ namespace DK_GUI
 	{
 	}
 
-	GLvoid CDKRoomInfoTexture::set_selected(char *class_name, char leading)
+	GLvoid CDKRoomInfoTexture::set_selected(const char *class_name, char leading)
 	{
 		char *info_texture_class_name=strdup(class_name);
 		info_texture_class_name[0]=leading;
@@ -31,8 +31,8 @@ namespace DK_GUI
 		set_ready(true);
 
 		blink=true;
-		set_texture(textures[0]);		
-	}	
+		set_texture(textures[0]);
+	}
 
 	GLvoid CDKRoomInfoTexture::draw()
 	{

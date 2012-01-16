@@ -7,7 +7,6 @@ using namespace std;
 namespace loaders
 {
 	CBR5Model::CBR5Model(): 
-		vbo(NULL),
 		fileName(""), 
 		vertexCount(0), 
 		framesCount(0), 
@@ -15,17 +14,18 @@ namespace loaders
 		startFrame(0),
 		endFrame(0),
 		texture(0),
-		actionsCount(0),
 		textureCoordinates(NULL),
 		vertexCoordinates(NULL),
 		vertexCoordinatesAnim(NULL),
-		animNextFrame(0.0f),
 		animSpeed(1.0f),
+		animNextFrame(0.0f),
+		//normalCoordinates(NULL),
 		interpolate(false),
 		update(true),
+		copy(false),
 		connected(false),
-		copy(false)
-		//normalCoordinates(NULL)
+		actionsCount(0),
+		vbo(NULL)
 	{
 	}
 
@@ -102,7 +102,7 @@ namespace loaders
 			return false;
 		}
 
-		long fileSize = getFileSize(br5);
+		size_t fileSize = getFileSize(br5);
 
 		byte *data = new byte[fileSize];
 		byte *tmp = data;
@@ -112,6 +112,7 @@ namespace loaders
 
 		if (read!=fileSize)
 		{
+			fprintf(stderr, "Can't read %s BR5 model\n", fileName.c_str());
 			return false;
 		}
 

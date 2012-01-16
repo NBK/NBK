@@ -2,8 +2,8 @@
 #define PRIMITIVES_H
 
 #include <cml/cml.h>
-#include <windows.h>
-#include <gl/gl.h>
+#include "system.h"
+#include <GL/gl.h>
 
 namespace utils
 {

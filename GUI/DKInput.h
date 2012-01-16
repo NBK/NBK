@@ -2,6 +2,7 @@
 #define DKINPUT_H
 
 #include "DKcommons.h"
+#include "../SDLUtils.h"
 
 class CDKInput  
 {
@@ -10,7 +11,11 @@ public:
 	~CDKInput();
 	GLint get_screen_x();
 	GLint get_screen_y();
+#ifdef WIN32
 	GLvoid update(UINT message, WPARAM wParam, LPARAM lParam);
+#else
+	GLvoid update(SDL_Event event);
+#endif
 
 	bool is_left_down();
 	bool is_right_down();
@@ -37,7 +42,7 @@ public:
 	bool is_F11_down();
 	bool is_F12_down();
 
-	bool is_key_down(char key);
+	bool is_key_down(int key);
 	GLvoid set_z_depth(GLfloat z_depth);
 
 	/*
@@ -61,7 +66,11 @@ public:
 	bool is_rmouse_down();
 
 private:
+#ifdef WIN32
 	bool keys[256];
+#else
+	bool keys[SDLK_LAST];
+#endif
 	bool lmouse_down,rmouse_down;
 	GLfloat z_depth,wsw,wsh,w_2,h_2, cos_45;
 };

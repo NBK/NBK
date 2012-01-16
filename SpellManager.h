@@ -18,7 +18,7 @@ namespace game_utils
 			virtual bool update();	
 			virtual bool shutdown();
 
-			GLvoid CSpellManager::castSpell(GLint spell, cml::vector2f position, GLubyte owner);
+			GLvoid castSpell(GLint spell, cml::vector2f position, GLubyte owner);
 
 		private:
 

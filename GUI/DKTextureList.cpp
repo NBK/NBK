@@ -1,5 +1,5 @@
-#include <windows.h>
-#include <gl\gl.h>
+#include "../system.h"
+#include <GL/gl.h>
 #include <stdio.h>
 
 #include "DKTextureLoader.h"
@@ -7,22 +7,30 @@
 
 using namespace std;
 
+#ifdef WIN32
 CDKTextureList::CDKTextureList(HWND hwnd)
+#else
+CDKTextureList::CDKTextureList()
+#endif
 {
 	error=false;
+#ifdef WIN32
 	this->hwnd=hwnd;
+#endif
 }
 
 CDKTextureList::~CDKTextureList()
 {
-	for (map<char*,TEX_DATA*,cmp_str>::iterator iter = textures.begin(); iter != textures.end(); iter++)
+	for (map<const char*,TEX_DATA*,cmp_str>::iterator iter = textures.begin(); iter != textures.end(); iter++)
 	{
 		TEX_DATA *tmp = (*iter).second;
+		const char *dup_str = tmp->file_name;
+		if (dup_str) free((void *)dup_str);
 		delete tmp;
 	}
 }
 
-GLvoid CDKTextureList::add_texture(char *name, char *file, bool trans, GLint texture_filter, bool auto_transparent, GLubyte R, GLubyte G, GLubyte B)
+GLvoid CDKTextureList::add_texture(const char *name, const char *file, bool trans, GLint texture_filter, bool auto_transparent, GLubyte R, GLubyte G, GLubyte B)
 {
 	TEX_DATA *new_texture_info = new TEX_DATA();
 
@@ -42,7 +50,7 @@ GLvoid CDKTextureList::build_textures()
 {
 	CDKTextureLoader tl;
 
-	for (map<char*,TEX_DATA*,cmp_str>::iterator iter = textures.begin(); iter != textures.end(); iter++)
+	for (map<const char*,TEX_DATA*,cmp_str>::iterator iter = textures.begin(); iter != textures.end(); iter++)
 	{
 		TEX_DATA *tex_data = (*iter).second;
 
@@ -57,7 +65,11 @@ GLvoid CDKTextureList::build_textures()
 		{
 			char err[512];
 			sprintf(err,"Texture error: %s",tex_data->file_name);
+#ifdef WIN32
 			MessageBox( hwnd, err, "Error", MB_OK | MB_ICONERROR | MB_SETFOREGROUND);
+#else
+			printf("[ERROR|TEXTURE] %s\n", err);
+#endif
 		}
 		else
 		{
@@ -67,17 +79,25 @@ GLvoid CDKTextureList::build_textures()
 	}
 }
 
-GLuint CDKTextureList::get_texture_by_name(char *name)
+GLuint CDKTextureList::get_texture_by_name(const char *name)
 {
 	if (!name)
 	{
+#ifdef WIN32
 		MessageBox(hwnd,"The texture by this name does not exist!","ERROR",MB_OK|MB_ICONERROR | MB_SETFOREGROUND);
+#else
+		printf("[ERROR|TEXTURE] The texture by this name does not exist!\n");
+#endif
 		return 0;
 	}
 
 	if (!textures[name])
 	{
-		MessageBox(hwnd,"The textureby this name does not exist!","ERROR",MB_OK|MB_ICONERROR | MB_SETFOREGROUND);
+#ifdef WIN32
+		MessageBox(hwnd,"The texture by this name does not exist!","ERROR",MB_OK|MB_ICONERROR | MB_SETFOREGROUND);
+#else
+		printf("[ERROR|TEXTURE] The texture by this name does not exist!\n");
+#endif
 		return 0;
 	}
 	else
@@ -86,17 +106,25 @@ GLuint CDKTextureList::get_texture_by_name(char *name)
 	}
 }
 
-CDKTextureList::TEX_DATA CDKTextureList::get_texture_data_by_name(char *name)
+CDKTextureList::TEX_DATA CDKTextureList::get_texture_data_by_name(const char *name)
 {
 	if (!name)
 	{
-		MessageBox(hwnd,"The textureby this name does not exist!","ERROR",MB_OK|MB_ICONERROR | MB_SETFOREGROUND);
+#ifdef WIN32
+		MessageBox(hwnd,"The texture by this name does not exist!","ERROR",MB_OK|MB_ICONERROR | MB_SETFOREGROUND);
+#else
+		printf("[ERROR|TEXTURE] The texture by this name does not exist!\n");
+#endif
 		return TEX_DATA();
 	}
 
 	if (!textures[name])
 	{
-		MessageBox(hwnd,"The textureby this name does not exist!","ERROR",MB_OK|MB_ICONERROR | MB_SETFOREGROUND);
+#ifdef WIN32
+		MessageBox(hwnd,"The texture by this name does not exist!","ERROR",MB_OK|MB_ICONERROR | MB_SETFOREGROUND);
+#else
+		printf("[ERROR|TEXTURE] The texture by this name does not exist!\n");
+#endif
 		return TEX_DATA();
 	}	
 	else

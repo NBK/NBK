@@ -1,7 +1,7 @@
 #ifndef NEW_RENDERER_H
 #define NEW_RENDERER_H
 
-#include "manager.h"
+#include "Manager.h"
 #include "Block.h"
 
 namespace game_utils

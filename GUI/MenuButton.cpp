@@ -2,7 +2,7 @@
 
 namespace DK_GUI
 {
-	CMenuButton::CMenuButton(GLfloat x_pos, GLfloat y_pos, GLfloat z_pos, GLfloat width, GLfloat height, char *caption, GLuint normal_texture, GLuint effect_texture)
+	CMenuButton::CMenuButton(GLfloat x_pos, GLfloat y_pos, GLfloat z_pos, GLfloat width, GLfloat height, const char *caption, GLuint normal_texture, GLuint effect_texture)
 	: CTexturedGUIButton(x_pos,y_pos,z_pos,width,height,caption,normal_texture)
 	{
 		set_caption_color(0.9f,0.4f,0.1f);

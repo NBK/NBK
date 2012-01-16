@@ -25,16 +25,16 @@ namespace game_utils
 		const int CPathManager::directions[8][2] = {{0,-1} , {1,0}, {0,1}, {-1,0}, {1,-1}, {1,1}, {-1,1}, {-1,-1}};
 
 		CPathManager::CPathManager():	CManager(), CConsoleListener(),
+										formula(None),
+										heuristicEstimate(2),
 										punishDirectionChange(false),
 										directionChangePenalty(100),
 										diagonalMoves(true),
 										heavyDiagonals(false),
 										diagonalPenalty(100),
-										searchLimit(85*85),
-										formula(None),
-										heuristicEstimate(2),
 										tieBreaker(true),
 										tieBreakerValue(0.001f),
+										searchLimit(85*85),
 										allowWalkOnLava(false),
 										allowEndDiagonal(true)
 		{
@@ -297,7 +297,7 @@ namespace game_utils
 			cellData PathMap[85][85];
 
 			int closedNodeCount = 0;
-			cml::vector2i currDirection;
+			cml::vector2i currDirection = cml::vector2i(0,0);
 			int heuristic;
 
 			bool PathFound = false;
@@ -358,7 +358,7 @@ namespace game_utils
 						cml::vector2i newPos = cml::vector2i(currPos[0]+directions[i][0],currPos[1]+directions[i][1]);
 						
 						//Is new position outside the bounds, skip
-						if(newPos[0] < 0 || newPos[0] >= CV_LEVEL_MAP_SIZE || newPos[1] < 0 || newPos[1] >= CV_LEVEL_MAP_SIZE)
+						if(newPos[0] < 0 || newPos[0] >= (int)CV_LEVEL_MAP_SIZE || newPos[1] < 0 || newPos[1] >= (int)CV_LEVEL_MAP_SIZE)
 							continue;
 
 						//If block is not walkable and isn't the end, skip

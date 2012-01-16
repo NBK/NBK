@@ -1,8 +1,24 @@
+
 #include "OGLUtils.h"
-#include <gl/glu.h>
+#ifndef WIN32
+#include <GL/gl.h>
+#include <GL/glx.h>
+#include <GL/glxext.h>
+#endif
+#include <GL/glu.h>
 
 using namespace std;
 using namespace cml;
+
+#ifndef WIN32
+#ifdef USE_LOCAL_HEADERS
+#	include "SDL.h"
+#	include "SDL_cpuinfo.h"
+#else
+#	include <SDL.h>
+#	include <SDL_cpuinfo.h>
+#endif
+#endif
 
 namespace utils
 {
@@ -80,8 +96,8 @@ namespace utils
 
 	GLvoid COGLUtils::setVSync(bool val)
 	{
+#ifdef WIN32
 		char *extensions = (char*)glGetString(GL_EXTENSIONS);
-
 		if (strstr(extensions,"WGL_EXT_swap_control")==0)
 		{
 			return;
@@ -95,6 +111,17 @@ namespace utils
 				wglSwapIntervalEXT(val?1:0);
 			}
 		}
+#elifdef USE_SDL
+	#if SDL_VERSION_ATLEAST(1,3,0)
+	SDL_GL_SetSwapInterval(val);
+	#else /* SDL_VERSION_ATLEAST(1,3,0) */
+	#ifdef SDL_GL_SWAP_CONTROL
+	SDL_GL_SetAttribute(SDL_GL_SWAP_CONTROL, val);
+	#else /* SDL_GL_SWAP_CONTROL */
+	printf("VSync unsupported on old SDL versions (before 1.2.10).\n");
+	#endif /* SDL_GL_SWAP_CONTROL */
+	#endif /* SDL_VERSION_ATLEAST(1,3,0) */
+#endif
 	}
 
 	GLvoid COGLUtils::clear()
@@ -102,8 +129,15 @@ namespace utils
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	}
 
+#ifdef WIN32
 	GLvoid COGLUtils::swapDC(HDC dc)
 	{
 		SwapBuffers(dc);
 	}
+#else
+	GLvoid COGLUtils::swapDC()
+	{
+		SDL_GL_SwapBuffers();
+	}
+#endif
 };

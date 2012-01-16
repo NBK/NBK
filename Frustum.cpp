@@ -133,7 +133,7 @@ namespace geometry
 		glEnable(GL_DEPTH_TEST);
 	}
 
-	bool CFrustum::containsPoint(cml::vector3f &point)
+	bool CFrustum::containsPoint(cml::vector3f point)
 	{
 		for (GLint i=0; i<6; i++)
 		{

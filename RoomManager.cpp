@@ -1,7 +1,7 @@
 #include "commons.h"
 #include "RoomManager.h"
 #include "Block.h"
-#include "BoundingBox.h"
+#include "boundingBox.h"
 
 using namespace std;
 using namespace cml;
@@ -37,9 +37,9 @@ namespace game_utils
 
 			// construct new rooms
 			CLevelManager *lManager = CV_GAME_MANAGER->getLevelManager();
-			for (GLint y=0; y<CV_LEVEL_MAP_SIZE; y++)
+			for (GLuint y=0; y<CV_LEVEL_MAP_SIZE; y++)
 			{
-				for (GLint x=0; x<CV_LEVEL_MAP_SIZE; x++)
+				for (GLuint x=0; x<CV_LEVEL_MAP_SIZE; x++)
 				{
 					CBlock *block = lManager->getBlock(x,y);
 					if (block->isRoom() && !block->isInRoom())
@@ -65,13 +65,13 @@ namespace game_utils
 		{
 			std::vector<CBlock*> *roomTiles = room->getRoomTilesVector();
 
-			GLint currentRoomTileCount = roomTiles->size();
+			GLuint currentRoomTileCount = roomTiles->size();
 
 			room->releaseTiles(false);
 
-			// test tiles 
+			// test tiles
 			CRoom testRoom;
-			testRoom.init((*roomTiles)[0]);			
+			testRoom.init((*roomTiles)[0]);
 
 			if (testRoom.getRoomTilesVector()->size()!=currentRoomTileCount)
 			{
@@ -81,7 +81,7 @@ namespace game_utils
 				// 1. new room is the "testRoom"
 				splits->push_back(std::vector<CBlock*>(testRoom.getRoomTilesVector()->begin(),testRoom.getRoomTilesVector()->end()));
 
-				// 2.	the remaining ones create a second room. 
+				// 2.	the remaining ones create a second room.
 				//		but since we can get more that 1 room from selling a tile we must recurse
 
 				for (GLuint i=0; i<testRoom.getRoomTilesVector()->size(); i++)
@@ -96,7 +96,7 @@ namespace game_utils
 			}
 			else
 			{
-				// no change				
+				// no change
 				CV_GAME_MANAGER->getConsole()->writeLine("No room change!");
 
 				if (reuseTiles)
@@ -122,7 +122,7 @@ namespace game_utils
 
 			// the reevaluate part
 			for (std::vector<GLint>::iterator rIter = roomsToReevaluate.begin(); rIter != roomsToReevaluate.end(); rIter++)
-			{				
+			{
 				CRoom *room = allRooms[*rIter];
 
 				if(!room){
@@ -130,7 +130,7 @@ namespace game_utils
 				}else
 				// the room could be empty. just delete it
 				if (room->getRoomTilesVector()->size()==0)
-				{					
+				{
 					allRooms.erase(allRooms.find(*rIter));
 				}
 				else
@@ -258,7 +258,7 @@ namespace game_utils
 				CBlock *testBlock = NULL;
 
 				for (int i=0; i<4; i++)
-				{					
+				{
 					if (nbrs[i])
 					{
 						testBlock = lManager->getBlock(pos+posses[i]);
@@ -292,7 +292,7 @@ namespace game_utils
 
 					// we must make some merging
 					for (int i=0; i<4; i++)
-					{					
+					{
 						if (nbrs[i])
 						{
 							testBlock = lManager->getBlock(pos+posses[i]);
@@ -309,7 +309,7 @@ namespace game_utils
 					CRoom *targetRoom = allRooms[irIter->first];
 
 					irIter++;
-				
+
 					for (irIter; irIter!=blockPerRoom.end(); irIter++)
 					{
 						CRoom *room = allRooms[irIter->first];
@@ -363,7 +363,7 @@ namespace game_utils
 
 			return count;
 		}
-		
+
 		CBlock *CRoomManager::getRoom(GLint roomType, GLubyte owner)
 		{
 			for (roomIter=allRooms.begin(); roomIter!=allRooms.end(); roomIter++)
@@ -379,10 +379,10 @@ namespace game_utils
 		}
 
 		GLvoid CRoomManager::locateRoom(GLint roomType, GLubyte owner)
-		{		
+		{
 				CBlock *roomTile = getRoom(roomType, owner);
 				if(roomTile)
-				{	
+				{
 					cml::vector3f currPos = roomTile->getRealPosition();
 					CV_GAME_MANAGER->getControlManager()->getCamera()->setPosition(cml::vector3f(currPos[0], CV_CAMERA_INITIAL_HEIGHT, currPos[2]+1));
 				}

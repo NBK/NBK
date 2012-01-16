@@ -1,8 +1,8 @@
 #ifndef ROOM_CONSTRUCTOR_H
 #define ROOM_CONSTRUCTOR_H
 
-#include <windows.h>
-#include <gl/gl.h>
+#include "system.h"
+#include <GL/gl.h>
 #include "SubtileData.h"
 #include "Block.h"
 

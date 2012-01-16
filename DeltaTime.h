@@ -1,7 +1,7 @@
 #ifndef DELTA_TIME_H
 #define DELTA_TIME_H
 
-#include <windows.h>
+#include "system.h"
 
 namespace control
 {

@@ -2,8 +2,8 @@
 #define VBO_H
 
 #include "glew.h"
-#include <windows.h>
-#include <gl/gl.h>
+#include "system.h"
+#include <GL/gl.h>
 
 #define MAX_ID	11
 

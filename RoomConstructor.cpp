@@ -244,8 +244,8 @@ namespace game_utils
 
 		GLint owner = targetBlock->getOwner();
 
-		GLfloat cw3=CV_BLOCK_WIDTH/3.0f;
-		GLfloat cd3=CV_BLOCK_DEPTH/3.0f;
+		//GLfloat cw3=CV_BLOCK_WIDTH/3.0f;
+		//GLfloat cd3=CV_BLOCK_DEPTH/3.0f;
 		GLfloat ch4=CV_BLOCK_HEIGHT/4.0f;
 
 		column=isColumnTile();
@@ -748,8 +748,8 @@ namespace game_utils
 		}
 		else if (terrain_type==CV_BLOCK_TYPE_HEART_ID)
 		{
-			GLfloat hpx=cw3/2.0f+cw3;
-			GLfloat hpz=cd3/2.0f+cd3;
+			//GLfloat hpx=cw3/2.0f+cw3;
+			//GLfloat hpz=cd3/2.0f+cd3;
 			column_height=5;
 			CLM_S[0].create(bManager->getTexturePosInTextureAtlas(HEART_COLUMN_0,0));
 			CLM_S[1].create(bManager->getTexturePosInTextureAtlas(HEART_COLUMN_1,0));
@@ -2802,9 +2802,9 @@ namespace game_utils
 	{
 		GLint terrain_type = targetBlock->getType();
 
-		GLfloat cw3=CV_BLOCK_WIDTH/3.0f;
+		//GLfloat cw3=CV_BLOCK_WIDTH/3.0f;
 		GLfloat ch4=CV_BLOCK_HEIGHT/4.0f;
-		GLfloat cd3=CV_BLOCK_DEPTH/3.0f;
+		//GLfloat cd3=CV_BLOCK_DEPTH/3.0f;
 
 		GLfloat cw2=CV_BLOCK_WIDTH/2.0f;
 		GLfloat cd2=CV_BLOCK_DEPTH/2.0f;

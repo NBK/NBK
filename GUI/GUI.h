@@ -7,8 +7,8 @@
 
 #include "AbstractGUIItem.h"
 #include "DKInput.h"
-#include <windows.h>
-#include <gl/gl.h>
+#include "../system.h"
+#include <GL/gl.h>
 
 #include <vector>
 
@@ -33,7 +33,7 @@ namespace GUI
 
 		GLvoid force_vertical_alignment();
 		GLvoid force_horizontal_alignment();
-		bool force_file_alignment(char *file);
+		bool force_file_alignment(const char *file);
 
 		bool is_mouse_over_gui();
 
@@ -133,7 +133,7 @@ namespace GUI
 				}
 			}
 
-			bool add_config_name(char *config_name)
+			bool add_config_name(const char *config_name)
 			{
 				if (config_files_count<MAX_CONFIG_FILES-1)
 				{
@@ -147,7 +147,7 @@ namespace GUI
 				return true;
 			}
 
-			bool config_exists(char *config_name)
+			bool config_exists(const char *config_name)
 			{
 				for (GLint i=0; i<config_files_count; i++)
 				{

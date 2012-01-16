@@ -1,8 +1,8 @@
 #ifndef CONSOLE_LISTENER_H
 #define CONSOLE_LISTENER_H
 
-#include <windows.h>
-#include <gl/gl.h>
+#include "system.h"
+#include <GL/gl.h>
 #include <string>
 #include <vector>
 #include "Conversions.h"

@@ -2,8 +2,8 @@
 #define CONVERSIONS_H
 
 #include <string>
-#include <windows.h>
-#include <gl/gl.h>
+#include "system.h"
+#include <GL/gl.h>
 #include <cml/cml.h>
 
 namespace game_utils
@@ -26,9 +26,9 @@ namespace game_utils
 		static cml::vector3f	strToVec3f(std::string val);
 		static cml::vector2f	strToVec2f(std::string val);
 
-		static cml::vector2i	realToLogical(cml::vector3f &val);
-		static GLvoid			vec3fToFloat_p(cml::vector3f &val, GLfloat *arr);
-		static GLvoid			vec2fToFloat_p(cml::vector2f &val, GLfloat *arr);
+		static cml::vector2i	realToLogical(cml::vector3f val);
+		static GLvoid			vec3fToFloat_p(cml::vector3f val, GLfloat *arr);
+		static GLvoid			vec2fToFloat_p(cml::vector2f val, GLfloat *arr);
 		//static GLvoid			swap(cml::vector3f &vec, GLint a, GLint b);
 		static cml::vector3f	swap(cml::vector3f vec, GLint a, GLint b);
 	};

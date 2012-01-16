@@ -1,6 +1,6 @@
 #include "commons.h"
-#include <windows.h>
-#include <gl\gl.h>
+#include "system.h"
+#include <GL/gl.h>
 #include <stdio.h>
 
 #include "TextureLoader.h"
@@ -44,7 +44,11 @@ namespace lists
 		
 		if (!lr.done)
 		{
+#ifdef WIN32
 			MessageBox(CV_WINDOW_HANDLE, (string("Texture error: ")+texData->fileName).c_str(), "Error", MB_OK | MB_ICONERROR | MB_SETFOREGROUND);
+#else
+			printf("[ERROR|TEXTURE] filename %s\n", string(texData->fileName).c_str());
+#endif
 		}
 		else
 		{
@@ -68,7 +72,11 @@ namespace lists
 			
 			if (!lr.done)
 			{
+#ifdef WIN32
 				MessageBox(CV_WINDOW_HANDLE, (string("Texture error: ")+texData->fileName).c_str(), "Error", MB_OK | MB_ICONERROR | MB_SETFOREGROUND);
+#else
+				printf("[ERROR|TEXTURE] filename %s\n", string(texData->fileName).c_str());
+#endif
 			}
 			else
 			{

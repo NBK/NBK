@@ -4,7 +4,7 @@ namespace shaders
 {
 	CShaderObject::CShaderObject()
 	{
-		handle=NULL;
+		handle=0;
 	}
 
 	CShaderObject::CShaderObject(GLhandleARB handle)
@@ -16,7 +16,7 @@ namespace shaders
 	{
 	}
 
-	GLint CShaderObject::getUniformLocation(char *variableName)
+	GLint CShaderObject::getUniformLocation(const char *variableName)
 	{
 		return glGetUniformLocationARB(handle,variableName);
 	}
@@ -26,7 +26,7 @@ namespace shaders
 		glUniform1iARB(variablePos,val);
 	}
 
-	GLvoid CShaderObject::setUniform1i(char *variableName, GLint val)
+	GLvoid CShaderObject::setUniform1i(const char *variableName, GLint val)
 	{
 		glUniform1iARB(getUniformLocation(variableName),val);
 	}
@@ -36,7 +36,7 @@ namespace shaders
 		glUniform1fARB(variablePos,val);
 	}
 
-	GLvoid CShaderObject::setUniform1f(char *variableName, GLfloat val)
+	GLvoid CShaderObject::setUniform1f(const char *variableName, GLfloat val)
 	{
 		glUniform1fARB(getUniformLocation(variableName),val);
 	}

@@ -1,6 +1,6 @@
 #include "commons.h"
 #include "Block.h"
-#include "Perlin.c"
+#include "perlin.c"
 #include "Trap.h"
 
 using namespace cml;
@@ -14,21 +14,21 @@ using namespace game_objects::block_objects;
 namespace game_objects
 {
 
-	CBlock::CBlock():	
-		type(-1), 
-		owner(CV_PLAYER_UNDEFINED), 
-		logicalPosition(vector2i(-1,-1)), 
+	CBlock::CBlock():
+		owner(CV_PLAYER_UNDEFINED),
+		type(-1),
+		ceilingHeight(-1),
+		logicalPosition(vector2i(-1,-1)),
 		realPosition(vector3f(0.0f,0.0f,0.0f)),
-		low(false), 
-		water(false), 
+		low(false),
+		water(false),
 		lava(false),
 		room(false),
 		torch(false),
-		marked(false),
 		taken(false),
-		roomIndex(-1),
+		marked(false),
 		finalized(false),
-		ceilingHeight(-1)
+		roomIndex(-1)
 	{
 		GLint tPos = 0;
 		for (GLint i=0; i<8; i++)
@@ -70,7 +70,7 @@ namespace game_objects
 	{
 		CV_GAME_MANAGER->getBlockManager()->generateBlockGeometry(this);
 
-		// now that we have the geometry we can calculate bounding box	
+		// now that we have the geometry we can calculate bounding box
 		// TODO: in release an exact bbox should be calculated??
 		boundingBox.reset();
 
@@ -82,7 +82,7 @@ namespace game_objects
 		boundingBox.update(vertices[BFS_WATER_LAVA]);
 
 		boundingBox.update(vector3f(vertices[BFS_TOP][0],CV_BLOCK_HEIGHT*4.0f,vertices[BFS_TOP][2])); // ceiling can be pretty high
-		
+
 		boundingBox.calculateExtents();
 		boundingBox.calculateVertices();
 
@@ -135,10 +135,10 @@ namespace game_objects
 
 	GLvoid CBlock::init()
 	{
-		// 1. setup visible surfaces		
+		// 1. setup visible surfaces
 		if (isLow())
 		{
-			visible[BFS_TOP]		= false;			
+			visible[BFS_TOP]		= false;
 			visible[BFS_WATER_LAVA]	= isWater() || isLava();
 			visible[BFS_BOTTOM]		= !visible[BFS_WATER_LAVA];
 			visible[BFS_CEILING]	= true;
@@ -159,24 +159,24 @@ namespace game_objects
 			vector2i(0,-1), // BFS_BACK
 			vector2i(-1,0), // BFS_LEFT
 			vector2i(1,0),	// BFS_RIGHT
-		};  
+		};
 
 		CBlock *testBlock = NULL;
 		for (GLint i=BFS_FRONT; i<=BFS_RIGHT; i++)
 		{
 			testBlock = CV_GAME_MANAGER->getLevelManager()->getBlock(logicalPosition+tests[i]);
-			visible[i] = isLow()?false:(testBlock && testBlock->isLow() || !testBlock);
+			visible[i] = isLow()?false:((testBlock && testBlock->isLow()) || !testBlock);
 
 			if (water || lava)
 			{
-				// since water and lava are submerged by 1 level we nned to handle them differently
-				visible[i] = testBlock && (!testBlock->low || 
+				// since water and lava are submerged by 1 level we need to handle them differently
+				visible[i] = testBlock && (!testBlock->low ||
 											testBlock->type==CV_BLOCK_TYPE_CLAIMED_LAND_ID ||
-											testBlock->type==CV_BLOCK_TYPE_UNCLAIMED_LAND_ID);	
+											testBlock->type==CV_BLOCK_TYPE_UNCLAIMED_LAND_ID);
 			}
 		}
 
-		// tmp 
+		// tmp
 		/*for (GLint v=BFS_FRONT+1; v<=BFS_WATER_LAVA; v++)
 		{
 			//if (v!=BFS_BOTTOM)
@@ -193,7 +193,7 @@ namespace game_objects
 		*/
 	}
 
-	GLvoid CBlock::setType(GLint type)	
+	GLvoid CBlock::setType(GLint type)
 	{
 		if(this->type == CV_BLOCK_TYPE_UNCLAIMED_LAND_ID)
 			CV_GAME_MANAGER->getLevelManager()->removeUnclaimedBlock(this);
@@ -238,7 +238,7 @@ namespace game_objects
 
 		low		= !(this->type==CV_BLOCK_TYPE_ROCK_ID ||
 					this->type==CV_BLOCK_TYPE_GOLD_ID ||
-					this->type==CV_BLOCK_TYPE_EARTH_ID ||				 
+					this->type==CV_BLOCK_TYPE_EARTH_ID ||
 					this->type==CV_BLOCK_TYPE_WALL_ID ||
 					this->type==CV_BLOCK_TYPE_GEM_ID ||
 					this->type==CV_BLOCK_TYPE_EARTH_WITH_TORCH_PLATE_ID ||
@@ -247,9 +247,9 @@ namespace game_objects
 		water	= (this->type==CV_BLOCK_TYPE_WATER_ID);
 		lava	= (this->type==CV_BLOCK_TYPE_LAVA_ID);
 
-		room	= low && !water && !lava && this->type!=CV_BLOCK_TYPE_CLAIMED_LAND_ID && this->type!=CV_BLOCK_TYPE_UNCLAIMED_LAND_ID;	
+		room	= low && !water && !lava && this->type!=CV_BLOCK_TYPE_CLAIMED_LAND_ID && this->type!=CV_BLOCK_TYPE_UNCLAIMED_LAND_ID;
 		marked  = false;
-		
+
 		if (roomIndex!=-1)
 		{
 			// if we were are a part of a room, we need to inform this room that we are being modified
@@ -278,22 +278,22 @@ namespace game_objects
 		return type;
 	}
 
-	GLvoid CBlock::setLogicalPosition(vector2i &position)
+	GLvoid CBlock::setLogicalPosition(vector2i position)
 	{
 		this->logicalPosition=position;
 
 		// calculate real position
 		realPosition = vector3f((GLfloat)position[0]*CV_BLOCK_WIDTH,0.0f,(GLfloat)position[1]*CV_BLOCK_DEPTH);
 	}
-	
+
 	vector2i CBlock::getLogicalPosition()
 	{
 		return logicalPosition;
 	}
-	
+
 	vector3f CBlock::getRealPosition()
 	{
-		return realPosition;	
+		return realPosition;
 	}
 
 	vector3f CBlock::getCenterPosition()
@@ -322,22 +322,22 @@ namespace game_objects
 	}
 
 	bool CBlock::isWater()
-	{		
+	{
 		return water;
 	}
 
 	bool CBlock::isLava()
-	{		
+	{
 		return lava;
 	}
 
 	bool CBlock::isRoom()
-	{		
+	{
 		return room;
 	}
 
 	bool CBlock::hasTorch()
-	{		
+	{
 		return torch;
 	}
 
@@ -400,6 +400,9 @@ namespace game_objects
 				faceApprox.d = boundingBox.D;
 				break;
 			}
+
+			default:
+				break;
 		}
 
 		return true;
@@ -421,7 +424,7 @@ namespace game_objects
 	}
 
 	GLint CBlock::getEdgeSubtiles(GLint subtiles[])
-	{		
+	{
 		/*
 			_____________
 			|0	|1	|2	| ly2
@@ -491,7 +494,7 @@ namespace game_objects
 		return arrayPos;
 	}
 
-	
+
 	GLvoid CBlock::setCeilingHeight(GLint ceilingHeight)
 	{
 		this->ceilingHeight=ceilingHeight;
@@ -508,7 +511,7 @@ namespace game_objects
 
 		if ((type==CV_BLOCK_TYPE_LAVA_ID || type==CV_BLOCK_TYPE_WATER_ID)&& faceIndex>=BFS_FRONT && faceIndex<=BFS_RIGHT)
 		{
-			// hack: there was a bug in previous version of texture animation. 
+			// hack: there was a bug in previous version of texture animation.
 			// some blocks near lava were flashing. this fixes the problem.
 			numberOfFrames=0;
 		}
@@ -649,14 +652,14 @@ namespace game_objects
 
 		setType(CV_BLOCK_TYPE_UNCLAIMED_LAND_ID);
 		setMarked(false);
-		
+
 		//init and finalize surrounding blocks aswell as this one
 		CV_GAME_MANAGER->getLevelManager()->getBlock(logicalPosition[0],logicalPosition[1]-1)->init();
 		CV_GAME_MANAGER->getLevelManager()->getBlock(logicalPosition[0]-1,logicalPosition[1])->init();
 		CV_GAME_MANAGER->getLevelManager()->getBlock(logicalPosition[0]+1,logicalPosition[1])->init();
 		CV_GAME_MANAGER->getLevelManager()->getBlock(logicalPosition[0],logicalPosition[1]+1)->init();
 		init();
-		
+
 		CV_GAME_MANAGER->getLevelManager()->getBlock(logicalPosition[0],logicalPosition[1]-1)->finalize();
 		CV_GAME_MANAGER->getLevelManager()->getBlock(logicalPosition[0]-1,logicalPosition[1])->finalize();
 		CV_GAME_MANAGER->getLevelManager()->getBlock(logicalPosition[0]+1,logicalPosition[1])->finalize();
@@ -674,14 +677,14 @@ namespace game_objects
 		this->owner = owner;
 		setType(CV_BLOCK_TYPE_CLAIMED_LAND_ID);
 		setTaken(false);
-		
+
 		//init and finalize surrounding blocks aswell as this one
 		CV_GAME_MANAGER->getLevelManager()->getBlock(logicalPosition[0],logicalPosition[1]-1)->init();
 		CV_GAME_MANAGER->getLevelManager()->getBlock(logicalPosition[0]-1,logicalPosition[1])->init();
 		CV_GAME_MANAGER->getLevelManager()->getBlock(logicalPosition[0]+1,logicalPosition[1])->init();
 		CV_GAME_MANAGER->getLevelManager()->getBlock(logicalPosition[0],logicalPosition[1]+1)->init();
 		init();
-		
+
 		CV_GAME_MANAGER->getLevelManager()->getBlock(logicalPosition[0],logicalPosition[1]-1)->finalize();
 		CV_GAME_MANAGER->getLevelManager()->getBlock(logicalPosition[0]-1,logicalPosition[1])->finalize();
 		CV_GAME_MANAGER->getLevelManager()->getBlock(logicalPosition[0]+1,logicalPosition[1])->finalize();
@@ -717,14 +720,14 @@ namespace game_objects
 	{
 		this->owner = owner;
 		setType(CV_BLOCK_TYPE_WALL_ID);
-		
+
 		//init and finalize surrounding blocks aswell as this one
 		CV_GAME_MANAGER->getLevelManager()->getBlock(logicalPosition[0],logicalPosition[1]-1)->init();
 		CV_GAME_MANAGER->getLevelManager()->getBlock(logicalPosition[0]-1,logicalPosition[1])->init();
 		CV_GAME_MANAGER->getLevelManager()->getBlock(logicalPosition[0]+1,logicalPosition[1])->init();
 		CV_GAME_MANAGER->getLevelManager()->getBlock(logicalPosition[0],logicalPosition[1]+1)->init();
 		init();
-		
+
 		CV_GAME_MANAGER->getLevelManager()->getBlock(logicalPosition[0],logicalPosition[1]-1)->finalize();
 		CV_GAME_MANAGER->getLevelManager()->getBlock(logicalPosition[0]-1,logicalPosition[1])->finalize();
 		CV_GAME_MANAGER->getLevelManager()->getBlock(logicalPosition[0]+1,logicalPosition[1])->finalize();
@@ -823,7 +826,7 @@ namespace game_objects
 			{
 				rmIter++;
 			}
-			
+
 		}
 
 		if (odt == ODT_REMOVE_ALL)
@@ -885,11 +888,11 @@ namespace game_objects
 	GLvoid CBlock::setMarked(bool marked)
 	{
 		this->marked = marked;
-	
+
 		if (marked)
 			CV_GAME_MANAGER->getLevelManager()->addMarkedBlock(this);
 		else
-			CV_GAME_MANAGER->getLevelManager()->removeMarkedBlock(this);	
+			CV_GAME_MANAGER->getLevelManager()->removeMarkedBlock(this);
 
 		this->finalize();
 	}
@@ -923,14 +926,14 @@ namespace game_objects
 
 			if (bObject == blockObject)
 			{
-				CV_GAME_MANAGER->getResourceManager()->returnModel(bObject->getName(), bObject->getModel());			
+				CV_GAME_MANAGER->getResourceManager()->returnModel(bObject->getName(), bObject->getModel());
 
 				if (bObject->getEffect())
 				{
 					CV_GAME_MANAGER->getResourceManager()->returnEffect(bObject->getEffectName(), bObject->getEffect());
 				}
 
-				blockObjects.erase(rmIter);	
+				blockObjects.erase(rmIter);
 
 				break; // only 1 istance of the same object per block
 			}

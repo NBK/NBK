@@ -38,7 +38,7 @@ namespace game_utils
 {
 	namespace managers
 	{
-		GLfloat CRenderManager1::normals[8][3] = 
+		GLfloat CRenderManager1::normals[8][3] =
 		{
 			{0.0f,0.0f,1.0f},	// front
 			{0.0f,0.0f,-1.0f},	// back
@@ -52,7 +52,7 @@ namespace game_utils
 
 		CRenderManager1::CRenderManager1(): CRenderManager(), CConsoleListener()
 		{
-			shaderManager = NULL;			
+			shaderManager = NULL;
 			drawBlockLightSources = false;
 
 			usePPL = CV_GAME_MANAGER->getSettingsManager()->getSetting_Int(CV_SETTINGS_USE_PPL)==1;
@@ -66,19 +66,24 @@ namespace game_utils
 
 		GLvoid CRenderManager1::loadShaders()
 		{
-			if (!shaderManager->addShader(SHADERS__SIMPLE_TEXTURE,CV_RESOURCES_DIRECTORY+"shaders\\0\\texture0.vert",CV_RESOURCES_DIRECTORY+"shaders\\0\\texture0.frag"))
+			std::string basename;
+
+			basename = CV_RESOURCES_DIRECTORY+"shaders"+PATH_SEP+"0"+PATH_SEP+"texture0";
+			if (!shaderManager->addShader(SHADERS__SIMPLE_TEXTURE,basename+".vert",basename+".frag"))
 			{
 				CLogger::addEntry("ERROR: %s\n",shaderManager->getLastError().c_str());
 				CV_GAME_MANAGER->getConsole()->writeLine("Shader problem! (check logs)");
-			}	
+			}
 
-			if (!shaderManager->addShader(SHADERS__PPL_TEXTURE,CV_RESOURCES_DIRECTORY+"shaders\\1\\ppl.vert",CV_RESOURCES_DIRECTORY+"shaders\\1\\ppl.frag"))
+			basename = CV_RESOURCES_DIRECTORY+"shaders"+PATH_SEP+"1"+PATH_SEP+"ppl";
+			if (!shaderManager->addShader(SHADERS__PPL_TEXTURE,basename+".vert",basename+".frag"))
 			{
-				CLogger::addEntry("ERROR:: %s\n",shaderManager->getLastError().c_str());
+				//CLogger::addEntry("ERROR:: %s\n",shaderManager->getLastError().c_str());
 				CV_GAME_MANAGER->getConsole()->writeLine("Shader problem! (check logs)");
-			}	
+			}
 
-			if (!shaderManager->addShader(SHADERS__PPL_NMAP,CV_RESOURCES_DIRECTORY+"shaders\\3\\nmap.vert",CV_RESOURCES_DIRECTORY+"shaders\\3\\nmap.frag"))
+			basename = CV_RESOURCES_DIRECTORY+"shaders"+PATH_SEP+"3"+PATH_SEP+"nmap";
+			if (!shaderManager->addShader(SHADERS__PPL_NMAP,basename+".vert",basename+".frag"))
 			{
 				CLogger::addEntry("ERROR: %s\n",shaderManager->getLastError().c_str());
 				CV_GAME_MANAGER->getConsole()->writeLine("Shader problem! (check logs)");
@@ -92,11 +97,17 @@ namespace game_utils
 
 			glEnable(GL_COLOR_MATERIAL);
 			static float color[] = { 1.0f, 1.0f, 1.0f, 1.0f };
-			glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, color);	
+			glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, color);
 
 			//Set global ambient colour
 			GLfloat globalAmbientColor[] = { 0.2f, 0.2f, 0.2f, 1.0f };
+#ifdef WIN32
 			memcpy(&globalAmbientColor[0],&CV_GAME_MANAGER->getSettingsManager()->getSetting_vector3f(CV_SETTINGS_GLOBAL_AMBIENCE),sizeof(GLfloat)*3);
+#else
+			CSettingsManager *sManager = CV_GAME_MANAGER->getSettingsManager();
+			cml::vector3f globalambience = sManager->getSetting_vector3f(CV_SETTINGS_GLOBAL_AMBIENCE);
+			memcpy(&globalAmbientColor[0],&globalambience,sizeof(GLfloat)*3);
+#endif
 			glLightModelfv(GL_LIGHT_MODEL_AMBIENT, globalAmbientColor);
 
 			// register to console
@@ -121,7 +132,7 @@ namespace game_utils
 
 			GLint lightsCount = blockLightData->getLightsCount();
 
-			CCamera *camera = CV_GAME_MANAGER->getControlManager()->getCamera();								
+			//CCamera *camera = CV_GAME_MANAGER->getControlManager()->getCamera();
 
 			//if (lightsCount>0 && usePPL)
 			if (usePPL)
@@ -136,12 +147,12 @@ namespace game_utils
 			else
 			{
 				shaderManager->useFFPipeline();
-			}			
+			}
 
 			if (drawBlockLightSources)
-			{			
+			{
 				for (GLint i=0; i<lightsCount; i++)
-				{	
+				{
 					glColor3f(1.0f,1.0f,1.0f);
 					vector3f start = block->getRealPosition()+vector3f(CV_BLOCK_WIDTH/2.0f,block->getVertices()[CBlock::BFS_BOTTOM][1],CV_BLOCK_DEPTH/2.0f);
 					glBegin(GL_LINES);
@@ -155,16 +166,16 @@ namespace game_utils
 
 			glDisable(GL_LIGHTING);
 			for (GLint i=0; i<8; i++)
-			{				
+			{
 				glDisable(GL_LIGHT0+i);
 			}
 
 			if (usePPL)
-			{					
+			{
 				GLfloat pos[4] = {0.0f,0.0f,0.0f,1.0f};
 				for (GLint i=lightsCount-1; i>=0; i--)
-				{	
-					CLightSource *lgt = blockLightData->getLightSource(i);					
+				{
+					CLightSource *lgt = blockLightData->getLightSource(i);
 
 					memcpy(pos,&lgt->getPosition()[0],sizeof(GLfloat)*3);
 
@@ -177,20 +188,20 @@ namespace game_utils
 					glLightf(GL_LIGHT0+i, GL_CONSTANT_ATTENUATION, lgt->getInitialAttenuation());
 					glEnable(GL_LIGHT0+i);
 
-				}		
+				}
 				glEnable(GL_LIGHTING);
 			}
 		}
 
 		bool CRenderManager1::update()
-		{			
-			// Draw the map and items that fall into view frustum. 	
+		{
+			// Draw the map and items that fall into view frustum.
 
 			glColor3f(1.0f,1.0f,1.0f);
 
 			// get camera
-			CCamera *camera = CV_GAME_MANAGER->getControlManager()->getCamera();		
-			
+			CCamera *camera = CV_GAME_MANAGER->getControlManager()->getCamera();
+
 
 			// 1. extract approximate logical location of camera in the level map.
 			vector2i center = CConversions::realToLogical(camera->getPosition());
@@ -204,7 +215,7 @@ namespace game_utils
 			{
 				// fog only in FPS mode
 				glEnable(GL_FOG);
-			}	
+			}
 
 			// 3. go through all block that fall into this bounding square and check if they fall
 			//    int out view frustum. If not then just exclude them.
@@ -233,16 +244,16 @@ namespace game_utils
 
 			blockVisible=allVerticesCount=0;
 
-			GLfloat delta = CV_GAME_MANAGER->getDeltaTime();	
+			GLfloat delta = CV_GAME_MANAGER->getDeltaTime();
 
 			// transform view
 			camera->transformView();
 
 			renderedBlocks.clear();
 
-			for (GLint y=0; y<=CV_LEVEL_MAP_SIZE; y++)
+			for (GLuint y=0; y<=CV_LEVEL_MAP_SIZE; y++)
 			{
-				for (GLint x=0; x<=CV_LEVEL_MAP_SIZE; x++)
+				for (GLuint x=0; x<=CV_LEVEL_MAP_SIZE; x++)
 				{
 					//if block is far from the camera, cull
 					if((x-centerX)*(x-centerX)+(y-centerY)*(y-centerY)>300)
@@ -291,20 +302,20 @@ namespace game_utils
 							{
 								std::vector<GLuint> *dls = block->getDisplayLists();
 								if (dls->size()!=0)
-								{			
+								{
 									glEnable(GL_TEXTURE_2D);
 									glBindTexture(GL_TEXTURE_2D,textureAtlasColor);
 									glBegin(GL_QUADS);
 									{
 										for (std::vector<GLuint>::iterator dlIter = dls->begin(); dlIter != dls->end(); dlIter++)
 										{
-											glCallList(*dlIter);									
+											glCallList(*dlIter);
 										}
 									}
 									glEnd();
-									glDisable(GL_TEXTURE_2D);									
+									glDisable(GL_TEXTURE_2D);
 								}
-							}		
+							}
 
 							for (GLint f=CBlock::BFS_FRONT; f<=CBlock::BFS_CEILING; f++)
 							{
@@ -317,11 +328,11 @@ namespace game_utils
 								texCoords = block->getTextureCoordinates();
 
 								if (block->isFaceVisible((CBlock::BLOCK_FACE_SELECTOR)f))
-								{		
+								{
 									if (lavaWater && f<=CBlock::BFS_RIGHT)
 									{
-										/* 
-											Lava and water have only lowers row of wall sections drawn. 
+										/*
+											Lava and water have only lowers row of wall sections drawn.
 											If they are drawn at all.
 										*/
 										maxVertInput = CV_FBLR_W_L_FACE_VERT_FLOATS;
@@ -340,13 +351,13 @@ namespace game_utils
 										memcpy(tmpVboNormalBuffer+tmpVboVertexBufferSize+n, normals[f], sizeof(GLfloat)*3);
 									}
 
-									memcpy(tmpVboTexCoordBuffer+tmpVboTexCoordBufferSize, texCoords[f], sizeof(GLfloat)*maxTexInput);	
+									memcpy(tmpVboTexCoordBuffer+tmpVboTexCoordBufferSize, texCoords[f], sizeof(GLfloat)*maxTexInput);
 
 
 									tmpVboVertexBufferSize+=maxVertInput;
-					
+
 									tmpVboTexCoordBufferSize+=maxTexInput;
-																	
+
 								}
 							}
 
@@ -359,7 +370,7 @@ namespace game_utils
 								vbo->draw();
 								allVerticesCount+=tmpVboVertexBufferSize;
 								tmpVboVertexBufferSize=0;
-								tmpVboTexCoordBufferSize=0;						
+								tmpVboTexCoordBufferSize=0;
 							}
 						}
 					}
@@ -370,7 +381,7 @@ namespace game_utils
 			CCreatureManager *cManager = CV_GAME_MANAGER->getCreatureManager();
 			GLint cCount = cManager->getCreatureVector()->size();
 			if (cCount>0)
-			{		
+			{
 				CCreature *creature = NULL;
 				for (std::vector<CCreature*>::iterator cIter = cManager->getCreatureVector()->begin(); cIter != cManager->getCreatureVector()->end(); cIter++)
 				{
@@ -418,7 +429,7 @@ namespace game_utils
 			}
 
 			glDisable(GL_FOG);
-			
+
 			if (!isFPS)
 			{
 				handlePickedObjects();
@@ -430,7 +441,7 @@ namespace game_utils
 
 			// render the lights representations. usefull for debugging
 			CV_GAME_MANAGER->getLightingManager()->drawLightSources(frustum);
-            
+
 			return true;
 		}
 
@@ -442,7 +453,7 @@ namespace game_utils
 		}
 
 		string CRenderManager1::onAction(string keyword, string params)
-		{	
+		{
 			string checkResult = "";
 			std::vector<string> tParams;
 
@@ -463,18 +474,18 @@ namespace game_utils
 				string lightName;
 
 				if (!CConsoleListener::checkParams(params,2,checkResult,tParams))
-				{					
+				{
 					if (CConsoleListener::checkParams(params,1,checkResult,tParams))
-					{						
+					{
 						lightType = CConversions::strToInt(tParams[0]);
 						lightName = liManager->lightSourceTypeIndexToName(lightType);
 						return "Light "+lightName+" quadratic attenuation: "+CConversions::floatToStr(liManager->getLightParam(lightType,ATTENUATION_TYPE_QUADRATIC));
-					}					
+					}
 					else
 					{
 						return checkResult;
 					}
-				}									
+				}
 				lightType = CConversions::strToInt(tParams[0]);
 				lightName = liManager->lightSourceTypeIndexToName(lightType);
 				liManager->setLightParam(lightType,ATTENUATION_TYPE_QUADRATIC,CConversions::strToFloat(tParams[1]));
@@ -487,18 +498,18 @@ namespace game_utils
 				string lightName;
 
 				if (!CConsoleListener::checkParams(params,2,checkResult,tParams))
-				{					
+				{
 					if (CConsoleListener::checkParams(params,1,checkResult,tParams))
-					{						
+					{
 						lightType = CConversions::strToInt(tParams[0]);
 						lightName = liManager->lightSourceTypeIndexToName(lightType);
 						return "Light "+lightName+" linear attenuation: "+CConversions::floatToStr(liManager->getLightParam(lightType,ATTENUATION_TYPE_LINEAR));
-					}					
+					}
 					else
 					{
 						return checkResult;
 					}
-				}									
+				}
 				lightType = CConversions::strToInt(tParams[0]);
 				lightName = liManager->lightSourceTypeIndexToName(lightType);
 				liManager->setLightParam(lightType,ATTENUATION_TYPE_LINEAR,CConversions::strToFloat(tParams[1]));
@@ -511,37 +522,37 @@ namespace game_utils
 				string lightName;
 
 				if (!CConsoleListener::checkParams(params,2,checkResult,tParams))
-				{					
+				{
 					if (CConsoleListener::checkParams(params,1,checkResult,tParams))
-					{						
+					{
 						lightType = CConversions::strToInt(tParams[0]);
 						lightName = liManager->lightSourceTypeIndexToName(lightType);
 						return "Light "+lightName+" initial attenuation: "+CConversions::floatToStr(liManager->getLightParam(lightType,ATTENUATION_TYPE_INITIAL));
-					}					
+					}
 					else
 					{
 						return checkResult;
 					}
-				}									
+				}
 				lightType = CConversions::strToInt(tParams[0]);
 				lightName = liManager->lightSourceTypeIndexToName(lightType);
 				liManager->setLightParam(lightType,ATTENUATION_TYPE_INITIAL,CConversions::strToFloat(tParams[1]));
 				return "Quadratic initial for "+lightName+" light types set.";
 			}
 			else if (keyword==VB)
-			{				
+			{
 				return "Visible blocks: "+CConversions::intToStr(blockVisible);
 			}
 			else if (keyword==TC)
-			{				
+			{
 				return "Drawn triangles: "+CConversions::intToStr((allVerticesCount/4)*2);
-			}			
+			}
 			else if (keyword==PLT)
-			{				
+			{
 				return CV_GAME_MANAGER->getLightingManager()->getLightTypes();
-			}	
+			}
 			else if (keyword==RS)
-			{				
+			{
 				loadShaders();
 				return "Shaders reloaded!";
 			}

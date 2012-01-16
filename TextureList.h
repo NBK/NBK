@@ -1,8 +1,8 @@
 #ifndef TEXTURE_LIST_H
 #define TEXTURE_LIST_H
 
-#include <windows.h>
-#include <gl/gl.h>
+#include "system.h"
+#include <GL/gl.h>
 #include <map>
 #include <string>
 

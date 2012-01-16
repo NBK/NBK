@@ -31,7 +31,7 @@ namespace game_utils
 			//camera.setPosition(vector3f(CV_BLOCK_WIDTH*42.0f,CV_CAMERA_INITIAL_HEIGHT,CV_BLOCK_DEPTH*42.0f));
 			camera.setPosition(vector3f(CV_BLOCK_WIDTH*4.0f,CV_CAMERA_INITIAL_HEIGHT,CV_BLOCK_DEPTH*4.0f));
 
-			CSettingsManager *sManager = CV_GAME_MANAGER->getSettingsManager();			
+			CSettingsManager *sManager = CV_GAME_MANAGER->getSettingsManager();
 
 			camRotYSpeed = sManager->getSetting_Float(CV_SETTINGS_CAMERA_ROTATE_Y_SPEED);
 			camZoomSpeed = sManager->getSetting_Float(CV_SETTINGS_CAMERA_ZOOM_SPEED);
@@ -84,11 +84,22 @@ namespace game_utils
 				camera.moveForward(!FPS?-CV_BLOCK_DEPTH*(camPos[1]+2.0f):0.0f);
 			}else
 			{
-				//move camera when mosue is near edges of screen
+				//move camera when mouse is near edges of screen
+#ifdef WIN32
 				POINT pt;
 				GetCursorPos(&pt);
 				RECT rect;
 				GetWindowRect(CV_WINDOW_HANDLE,&rect);
+#else
+				// TODO Tequila: This is only correct in fullscreen and input grab mode
+				MOUSEPOINT pt;
+				RECT rect;
+				SDL_GetMouseState(&pt.x, &pt.y);
+				rect.left = 0;
+				rect.right = CV_SETTINGS_WINDOW_WIDTH;
+				rect.top = 0;
+				rect.bottom = CV_SETTINGS_WINDOW_HEIGHT;
+#endif
 				int border=20;
 
 				if(pt.x<rect.left+border)
@@ -158,11 +169,20 @@ namespace game_utils
 					// if we are in the FPS mode we have mouse look
 					if (FPS)
 					{
+#ifdef WIN32
 						POINT pt;
 						GetCursorPos(&pt);
+#else
+						MOUSEPOINT pt;
+						SDL_GetMouseState(&pt.x, &pt.y);
+#endif
 						camera.rotateY((GLfloat)(pt.x-CV_SETTINGS_WINDOW_WIDTH_HALF)*camMLookSpeed*2.0f);
 						camera.rotateX((GLfloat)(pt.y-CV_SETTINGS_WINDOW_HEIGHT_HALF)*camMLookSpeed*2.0f);
+#ifdef WIN32
 						SetCursorPos(CV_SETTINGS_WINDOW_WIDTH_HALF,CV_SETTINGS_WINDOW_HEIGHT_HALF);
+#else
+						SDL_WarpMouse(CV_SETTINGS_WINDOW_WIDTH_HALF, CV_SETTINGS_WINDOW_HEIGHT_HALF);
+#endif
 					}
 
 					// insert resets the keyboard
@@ -185,7 +205,11 @@ namespace game_utils
 							camera.setPosition(camPos);
 
 							// position the mouse to screen center
+#ifdef WIN32
 							SetCursorPos(CV_SETTINGS_WINDOW_WIDTH_HALF,CV_SETTINGS_WINDOW_HEIGHT_HALF);
+#else
+							SDL_WarpMouse(CV_SETTINGS_WINDOW_WIDTH_HALF, CV_SETTINGS_WINDOW_HEIGHT_HALF);
+#endif
 						}
 					}
 					else if (input.isKeyDown(VK_F2) && FPS)
@@ -257,7 +281,7 @@ namespace game_utils
 				GLint x = CConversions::strToInt(tParams[0]);
 				GLint y = CConversions::strToInt(tParams[1]);
 
-				if (x<0 || y<0 || x>=CV_LEVEL_MAP_SIZE || y>=CV_LEVEL_MAP_SIZE)
+				if (x<0 || y<0 || x>=(GLint)CV_LEVEL_MAP_SIZE || y>=(GLint)CV_LEVEL_MAP_SIZE)
 				{
 					return "Error: Coordinates out of this level!";
 				}

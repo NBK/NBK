@@ -4,6 +4,24 @@
 #include "BlockObject.h"
 #include "Trap.h"
 
+const char *room_class_names[]=
+{
+	CLASS_NAME_ROOM_TREASURE,
+	CLASS_NAME_ROOM_LAIR,
+	CLASS_NAME_ROOM_HATCHERY,
+	CLASS_NAME_ROOM_TRAIN,
+	CLASS_NAME_ROOM_LIBRARY,
+	CLASS_NAME_ROOM_BRIDGE,
+	CLASS_NAME_ROOM_GUARD,
+	CLASS_NAME_ROOM_WORKSHOP,
+	CLASS_NAME_ROOM_PRISON,
+	CLASS_NAME_ROOM_TORTURE,
+	CLASS_NAME_ROOM_BARRACKS,
+	CLASS_NAME_ROOM_TEMPLE,
+	CLASS_NAME_ROOM_GRAVEYARD,
+	CLASS_NAME_ROOM_SCAVENGER
+};
+
 using namespace control;
 using namespace cml;
 using namespace game_objects;
@@ -30,7 +48,7 @@ namespace game_utils
 			CV_BLOCK_TYPE_GRAVEYARD_ID
 		};
 
-		GLint CEconomyManager::trapTypes[]= 
+		GLint CEconomyManager::trapTypes[]=
 		{
 			CTrap::TT_BOULDER,
 			CTrap::TT_ALARM,
@@ -41,7 +59,7 @@ namespace game_utils
 		};
 
 		CEconomyManager::CEconomyManager(): CManager(), CInputListener()
-		{			
+		{
 			// register to handle input
 			CV_GAME_MANAGER->getControlManager()->getInput()->registerListener(this);
 		}
@@ -72,7 +90,7 @@ namespace game_utils
 		void CEconomyManager::onKeyUp(int key)
 		{
 		}
-		
+
 		void CEconomyManager::onMouseClicked(int button)
 		{
 			CBlock *pickedBlock = CV_GAME_MANAGER->getPickingManager()->getLastPickedBlock();
@@ -93,7 +111,7 @@ namespace game_utils
 			if (button==0)
 			{
 				if (pickedBlock)
-				{				
+				{
 					GLint group = ae->message_group;
 					GLint msg = ae->message;
 
@@ -114,10 +132,10 @@ namespace game_utils
 					{
 						// selling comes with the message group AEMG_BUILD_ROOMS
 						if (msg==AEM_SELL)
-						{						
-							// the flag tells us that we have to sell stuff 
+						{
+							// the flag tells us that we have to sell stuff
 							if (pickedBlock->isSellable(CV_CURRENT_PLAYER_ID))
-							{	
+							{
 								// actual selling procedure
 								if (pickedBlock->getType() == CV_BLOCK_TYPE_CLAIMED_LAND_ID)
 								{
@@ -138,11 +156,11 @@ namespace game_utils
 								else
 								{
 									// generate the room cost (divide by 2 because were selling)
-									int k, position;
+									GLuint k, position;
 									bool found = false;
 
 									// find target's position if present
-									k = 0;
+									position = k = 0;
 									while (k < sizeof(roomTypes) && !found)
 									{
 										if (roomTypes[k] == pickedBlock->getType())
@@ -154,7 +172,7 @@ namespace game_utils
 											k++;
 									}
 									GLint room_cost = GLOBAL_CREATURE_TXT_READER->get_room_propery(room_class_names[position],PROPERTY_ROOM_COST)/2;
-											
+
 									// we built somethig so we have to lower the money
 									PLAYER0_MONEY+=room_cost;
 
@@ -182,7 +200,7 @@ namespace game_utils
 						else if (group==AEMG_BUILD_ROOMS)
 						{
 							GLint room_cost = GLOBAL_CREATURE_TXT_READER->get_room_propery(room_class_names[msg],PROPERTY_ROOM_COST);
-						
+
 							if(PLAYER0_MONEY-room_cost>=0)
 							{
 								// the flag tells us that we have to build some stuff (traps, doors, rooms)
@@ -223,7 +241,7 @@ namespace game_utils
 									{
 										CV_GAME_MANAGER->getLevelManager()->getBlock(x,y)->finalize();
 									}
-								}	
+								}
 							}
 						}
 						else if (group==AEMG_BUILD_TRAPS)
@@ -233,7 +251,7 @@ namespace game_utils
 							{
 								return;
 							}
-						
+
 							GLint tt = ae->message - AEM_BUILD_TRAP_BOULDER;
 
 							pickedBlock->addModel(new CTrap(tt==0?"MODEL_BOULDER":"MODEL_TRAP",pickedBlock->getRealPosition()+vector3f(CV_BLOCK_WIDTH/2.0f,0.0f,CV_BLOCK_DEPTH/2.0f),(CTrap::TRAP_TYPE)trapTypes[tt]));

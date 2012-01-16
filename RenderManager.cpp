@@ -112,8 +112,8 @@ namespace game_utils
 			// 2. create a bounding square making its center logical position calculate above.
 			GLint minX = (centerX-diff>=0?centerX-diff:0);
 			GLint minY = (centerY-diff>=0?centerY-diff:0);
-			GLint maxX = (centerX+diff<CV_LEVEL_MAP_SIZE?centerX+diff:CV_LEVEL_MAP_SIZE-1);
-			GLint maxY = (centerY+diff<CV_LEVEL_MAP_SIZE?centerY+diff:CV_LEVEL_MAP_SIZE-1);			
+			GLint maxX = (centerX+diff<(GLint)CV_LEVEL_MAP_SIZE?centerX+diff:CV_LEVEL_MAP_SIZE-1);
+			GLint maxY = (centerY+diff<(GLint)CV_LEVEL_MAP_SIZE?centerY+diff:CV_LEVEL_MAP_SIZE-1);			
 
 			// 3. go through all block that fall into this bounding square and check if they fall
 			//    int out view frustum. If not then just exclude them.

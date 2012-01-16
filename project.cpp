@@ -6,8 +6,8 @@
 #include "commons.h"
 #include <windows.h>
 #include <windowsx.h>
-#include <gl\gl.h>
-#include <gl\glu.h>
+#include <GL/gl.h>
+#include <GL/glu.h>
 #include <crtdbg.h>
 #include <stdio.h>
 #include <time.h>

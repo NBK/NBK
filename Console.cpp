@@ -5,6 +5,8 @@
 #include "OGLUtils.h"
 #include <cml/cml.h>
 
+#include "SDLUtils.h"
+
 using namespace std;
 using namespace utils;
 using namespace game_utils;
@@ -117,7 +119,7 @@ namespace control
 			lines.push_front(">>> CONSOLE MANAGER");
 			lines.push_front(">>>     CLS_______() clears the console window.");
 			lines.push_front(">>>     CLH_______() clears the history.");
-			
+
 			/*for (clIter=consoleListeners.begin(); clIter!=consoleListeners.end(); clIter++)
 			{
 				int spaces = 10-clIter->first.length();
@@ -169,14 +171,14 @@ namespace control
 	}
 
 	void CConsole::parseString(std::string &line)
-	{			
+	{
 		if (line.length()>3)
 		{
 			commandHistoryPos=0;
 			line = line.substr(3,line.length()-3);
 			commandHistroy.push_back(line);
 			lines.push_front("> "+line);
-			doAction(line);			
+			doAction(line);
 			line = ">> ";
 		}
 	}
@@ -195,17 +197,23 @@ namespace control
 	// keyboard handling from CInputListener
 
 	void CConsole::onKeyDown(int key)
-	{		
+	{
+
+//printf("Key code: %d\n",key);
+#ifdef WIN32
 		if (key==192/*tilda*/)
+#else
+		if (key==SDLK_WORLD_18)
+#endif
 		{
 			active=!active;
 		}
 
 		NOACTIVE;
 
-		bool validKey = (key>=(int)'0' && key<=(int)'9') || 
-						(key>=(int)'a' && key<=(int)'z') || 
-						(key>=(int)'A' && key<=(int)'Z') || 
+		bool validKey = (key>=(int)'0' && key<=(int)'9') ||
+						(key>=(int)'a' && key<=(int)'z') ||
+						(key>=(int)'A' && key<=(int)'Z') ||
 						key==(int)' ';
 
 		char pressedChar = (char)key;
@@ -227,7 +235,7 @@ namespace control
 			// handle the written string
 			cutChar('|');
 			parseString(currentLine);
-		}		
+		}
 		else if (key==VK_BACK)
 		{
 			cutChar('|');
@@ -257,7 +265,7 @@ namespace control
 			currentLine+=pressedChar;
 		}
 	}
-	
+
 	void CConsole::onKeyUp(int key)
 	{
 		NOACTIVE;

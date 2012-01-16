@@ -1,7 +1,7 @@
 #include "commons.h"
 #include "SettingsManager.h"
 #include "Conversions.h"
-#include "Utils.h"
+#include "utils.h"
 #include <fstream>
 #include <iostream>
 
@@ -40,7 +40,8 @@ namespace game_utils
 			{
 				getline (iFile,line);
 
-				if (line.length()!=0 && line.at(0)!='#')
+				// On unix, <CR><LF> terminaison needs to be tested to avoid crash
+				if (line.length()!=0 && line.at(0)!='#' && line.at(0)!=13)
 				{
 					sscanf(line.c_str(),"%s",name);
 

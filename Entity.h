@@ -1,10 +1,10 @@
 #ifndef ENTITY_H
 #define ENTITY_H
 
-#include <windows.h>
-#include <gl/gl.h>
+#include "system.h"
+#include <GL/gl.h>
 #include <cml/cml.h>
-#include "BoundingBox.h"
+#include "boundingBox.h"
 
 namespace game_objects
 {

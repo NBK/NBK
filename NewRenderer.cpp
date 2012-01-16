@@ -33,9 +33,9 @@ namespace game_utils
 			CV_GAME_MANAGER->getControlManager()->getCamera()->transformView();	
 
 			//iterate through all blocks, checking if they are in the frustum
-			for (GLint y=0; y<=CV_LEVEL_MAP_SIZE; y++)
+			for (GLuint y=0; y<=CV_LEVEL_MAP_SIZE; y++)
 			{
-				for (GLint x=0; x<=CV_LEVEL_MAP_SIZE; x++)
+				for (GLuint x=0; x<=CV_LEVEL_MAP_SIZE; x++)
 				{
 					block = lManager->getBlock(x,y);
 

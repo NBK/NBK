@@ -28,9 +28,9 @@ namespace game_objects
 			~CLightSource();
 
 			GLvoid setPosition(cml::vector3f position);		
-			GLvoid setAmbientColor(cml::vector3f &color);
-			GLvoid setDiffuseColor(cml::vector3f &color);
-			GLvoid setSpecularColor(cml::vector3f &color);
+			GLvoid setAmbientColor(cml::vector3f color);
+			GLvoid setDiffuseColor(cml::vector3f color);
+			GLvoid setSpecularColor(cml::vector3f color);
 			GLvoid setQuadraticAttenuation(GLfloat attenuation);
 			GLvoid setLinearAttenuation(GLfloat attenuation);
 			GLvoid setInitialAttenuation(GLfloat attenuation);

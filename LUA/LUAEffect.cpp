@@ -1,5 +1,5 @@
-#include <windows.h>
-#include <gl\gl.h>
+#include "../system.h"
+#include <GL/gl.h>
 #include "../TextureLoader.h"
 #include "LUAEffect.h"
 #include "../utils.h"
@@ -10,12 +10,12 @@ using namespace cml;
 namespace LUA_effects
 {
 	CLUAEffect::CLUAEffect()
-	{	
+	{
 		force_nonactive=false;
 	}
 
 	CLUAEffect::CLUAEffect(const CLUAEffect &luaEffect)
-	{				
+	{
 		for (GLuint i=0; i<luaEffect.emitters.size(); i++)
 		{
 			addEmitter();
@@ -24,11 +24,11 @@ namespace LUA_effects
 			string update = luaEffect.emitters[i]->getUpdateLUAFile();
 			string effDir = luaEffect.emitters[i]->getEffectDirectory();
 
-			GLint mIndex = max(init.find_last_of('/'),init.find_last_of('\\'))+1;
+			GLint mIndex = max((GLint)init.find_last_of('/'),(GLint)init.find_last_of('\\'))+1;
 			getEmittter(i)->setInitLUAFile(effDir,init.substr(mIndex));
 
-			mIndex = max(update.find_last_of('/'),update.find_last_of('\\'))+1;
-			getEmittter(i)->setUpdateLUAFile(effDir,update.substr(mIndex));			
+			mIndex = max((GLint)update.find_last_of('/'),(GLint)update.find_last_of('\\'))+1;
+			getEmittter(i)->setUpdateLUAFile(effDir,update.substr(mIndex));
 		}
 		init();
 	}
@@ -81,7 +81,7 @@ namespace LUA_effects
 			{
 				emitter->update();
 			}
-			emitter->draw();		
+			emitter->draw();
 		}
 
 		glColor3f(1.0f,1.0f,1.0f);

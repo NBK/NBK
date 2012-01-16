@@ -68,7 +68,7 @@ namespace game_utils
 			GLOBAL_TEXTURE_LIST->add_texture("POINTER_BUILD_ROOM_PRISON","data/resources/GFX/pointers/pic28.bmp",true);
 			GLOBAL_TEXTURE_LIST->add_texture("POINTER_BUILD_ROOM_TORTURE","data/resources/GFX/pointers/pic27.bmp",true);
 			GLOBAL_TEXTURE_LIST->add_texture("POINTER_BUILD_ROOM_BARRACKS","data/resources/GFX/pointers/pic30.bmp",true);
-			GLOBAL_TEXTURE_LIST->add_texture("POINTER_BUILD_ROOM_TEMPLE","data/resources/GFX/pointers/pic32.bmp",true);									
+			GLOBAL_TEXTURE_LIST->add_texture("POINTER_BUILD_ROOM_TEMPLE","data/resources/GFX/pointers/pic32.bmp",true);
 
 			GLOBAL_TEXTURE_LIST->add_texture("POINTER_BUILD_ROOM_GRAVEYARD","data/resources/GFX/pointers/pic31.bmp",true);
 
@@ -150,73 +150,73 @@ namespace game_utils
 			GLOBAL_TEXTURE_LIST->add_texture("TCP4D","data/resources/GFX/GUI/pic15.bmp",true,GL_NEAREST,false);
 
 			/* the room textures for room buttons */
-			GLOBAL_TEXTURE_LIST->add_texture("ROOM00_BUTTON_TOP_TEXTURE","data/resources/GFX/GUI/rooms/pic56.bmp",true,GL_NEAREST,false); // treasure 
-			GLOBAL_TEXTURE_LIST->add_texture("ROOM01_BUTTON_TOP_TEXTURE","data/resources/GFX/GUI/rooms/pic78.bmp",true,GL_NEAREST,false); // lair 
-			GLOBAL_TEXTURE_LIST->add_texture("ROOM02_BUTTON_TOP_TEXTURE","data/resources/GFX/GUI/rooms/pic58.bmp",true,GL_NEAREST,false); // hatchery 
-			GLOBAL_TEXTURE_LIST->add_texture("ROOM03_BUTTON_TOP_TEXTURE","data/resources/GFX/GUI/rooms/pic66.bmp",true,GL_NEAREST,false); // train 
+			GLOBAL_TEXTURE_LIST->add_texture("ROOM00_BUTTON_TOP_TEXTURE","data/resources/GFX/GUI/rooms/pic56.bmp",true,GL_NEAREST,false); // treasure
+			GLOBAL_TEXTURE_LIST->add_texture("ROOM01_BUTTON_TOP_TEXTURE","data/resources/GFX/GUI/rooms/pic78.bmp",true,GL_NEAREST,false); // lair
+			GLOBAL_TEXTURE_LIST->add_texture("ROOM02_BUTTON_TOP_TEXTURE","data/resources/GFX/GUI/rooms/pic58.bmp",true,GL_NEAREST,false); // hatchery
+			GLOBAL_TEXTURE_LIST->add_texture("ROOM03_BUTTON_TOP_TEXTURE","data/resources/GFX/GUI/rooms/pic66.bmp",true,GL_NEAREST,false); // train
 
-			GLOBAL_TEXTURE_LIST->add_texture("ROOM04_BUTTON_TOP_TEXTURE","data/resources/GFX/GUI/rooms/pic60.bmp",true,GL_NEAREST,false); // library 
-			GLOBAL_TEXTURE_LIST->add_texture("ROOM05_BUTTON_TOP_TEXTURE","data/resources/GFX/GUI/rooms/pic80.bmp",true,GL_NEAREST,false); // bridge 
-			GLOBAL_TEXTURE_LIST->add_texture("ROOM06_BUTTON_TOP_TEXTURE","data/resources/GFX/GUI/rooms/pic82.bmp",true,GL_NEAREST,false); // guard 
-			GLOBAL_TEXTURE_LIST->add_texture("ROOM07_BUTTON_TOP_TEXTURE","data/resources/GFX/GUI/rooms/pic74.bmp",true,GL_NEAREST,false); // workshop 
+			GLOBAL_TEXTURE_LIST->add_texture("ROOM04_BUTTON_TOP_TEXTURE","data/resources/GFX/GUI/rooms/pic60.bmp",true,GL_NEAREST,false); // library
+			GLOBAL_TEXTURE_LIST->add_texture("ROOM05_BUTTON_TOP_TEXTURE","data/resources/GFX/GUI/rooms/pic80.bmp",true,GL_NEAREST,false); // bridge
+			GLOBAL_TEXTURE_LIST->add_texture("ROOM06_BUTTON_TOP_TEXTURE","data/resources/GFX/GUI/rooms/pic82.bmp",true,GL_NEAREST,false); // guard
+			GLOBAL_TEXTURE_LIST->add_texture("ROOM07_BUTTON_TOP_TEXTURE","data/resources/GFX/GUI/rooms/pic74.bmp",true,GL_NEAREST,false); // workshop
 
-			GLOBAL_TEXTURE_LIST->add_texture("ROOM08_BUTTON_TOP_TEXTURE","data/resources/GFX/GUI/rooms/pic64.bmp",true,GL_NEAREST,false); // prison 
-			GLOBAL_TEXTURE_LIST->add_texture("ROOM09_BUTTON_TOP_TEXTURE","data/resources/GFX/GUI/rooms/pic62.bmp",true,GL_NEAREST,false); // torture 
-			GLOBAL_TEXTURE_LIST->add_texture("ROOM10_BUTTON_TOP_TEXTURE","data/resources/GFX/GUI/rooms/pic68.bmp",true,GL_NEAREST,false); // barracks 
-			GLOBAL_TEXTURE_LIST->add_texture("ROOM11_BUTTON_TOP_TEXTURE","data/resources/GFX/GUI/rooms/pic72.bmp",true,GL_NEAREST,false); // temple 
+			GLOBAL_TEXTURE_LIST->add_texture("ROOM08_BUTTON_TOP_TEXTURE","data/resources/GFX/GUI/rooms/pic64.bmp",true,GL_NEAREST,false); // prison
+			GLOBAL_TEXTURE_LIST->add_texture("ROOM09_BUTTON_TOP_TEXTURE","data/resources/GFX/GUI/rooms/pic62.bmp",true,GL_NEAREST,false); // torture
+			GLOBAL_TEXTURE_LIST->add_texture("ROOM10_BUTTON_TOP_TEXTURE","data/resources/GFX/GUI/rooms/pic68.bmp",true,GL_NEAREST,false); // barracks
+			GLOBAL_TEXTURE_LIST->add_texture("ROOM11_BUTTON_TOP_TEXTURE","data/resources/GFX/GUI/rooms/pic72.bmp",true,GL_NEAREST,false); // temple
 
-			GLOBAL_TEXTURE_LIST->add_texture("ROOM12_BUTTON_TOP_TEXTURE","data/resources/GFX/GUI/rooms/pic70.bmp",true,GL_NEAREST,false); // graveyard 
-			GLOBAL_TEXTURE_LIST->add_texture("ROOM13_BUTTON_TOP_TEXTURE","data/resources/GFX/GUI/pic15.bmp",true,GL_NEAREST,false); // scavenger (not supported!!) 
-			GLOBAL_TEXTURE_LIST->add_texture("ROOM14_BUTTON_TOP_TEXTURE","data/resources/GFX/GUI/pic15.bmp",true,GL_NEAREST,false); // empty 
-			GLOBAL_TEXTURE_LIST->add_texture("ROOM15_BUTTON_TOP_TEXTURE","data/resources/GFX/GUI/pic106.bmp",true,GL_NEAREST,false); // sell 
+			GLOBAL_TEXTURE_LIST->add_texture("ROOM12_BUTTON_TOP_TEXTURE","data/resources/GFX/GUI/rooms/pic70.bmp",true,GL_NEAREST,false); // graveyard
+			GLOBAL_TEXTURE_LIST->add_texture("ROOM13_BUTTON_TOP_TEXTURE","data/resources/GFX/GUI/pic15.bmp",true,GL_NEAREST,false); // scavenger (not supported!!)
+			GLOBAL_TEXTURE_LIST->add_texture("ROOM14_BUTTON_TOP_TEXTURE","data/resources/GFX/GUI/pic15.bmp",true,GL_NEAREST,false); // empty
+			GLOBAL_TEXTURE_LIST->add_texture("ROOM15_BUTTON_TOP_TEXTURE","data/resources/GFX/GUI/pic106.bmp",true,GL_NEAREST,false); // sell
 
 			/* the textures for room info ENABLED*/
-			GLOBAL_TEXTURE_LIST->add_texture("IE00","data/resources/GFX/GUI/rooms/pic28.bmp",true,GL_NEAREST,false); // treasure 
-			GLOBAL_TEXTURE_LIST->add_texture("IE01","data/resources/GFX/GUI/rooms/pic50.bmp",true,GL_NEAREST,false); // lair 
-			GLOBAL_TEXTURE_LIST->add_texture("IE02","data/resources/GFX/GUI/rooms/pic30.bmp",true,GL_NEAREST,false); // hatchery 
-			GLOBAL_TEXTURE_LIST->add_texture("IE03","data/resources/GFX/GUI/rooms/pic38.bmp",true,GL_NEAREST,false); // train 
+			GLOBAL_TEXTURE_LIST->add_texture("IE00","data/resources/GFX/GUI/rooms/pic28.bmp",true,GL_NEAREST,false); // treasure
+			GLOBAL_TEXTURE_LIST->add_texture("IE01","data/resources/GFX/GUI/rooms/pic50.bmp",true,GL_NEAREST,false); // lair
+			GLOBAL_TEXTURE_LIST->add_texture("IE02","data/resources/GFX/GUI/rooms/pic30.bmp",true,GL_NEAREST,false); // hatchery
+			GLOBAL_TEXTURE_LIST->add_texture("IE03","data/resources/GFX/GUI/rooms/pic38.bmp",true,GL_NEAREST,false); // train
 
-			GLOBAL_TEXTURE_LIST->add_texture("IE04","data/resources/GFX/GUI/rooms/pic32.bmp",true,GL_NEAREST,false); // library 
-			GLOBAL_TEXTURE_LIST->add_texture("IE05","data/resources/GFX/GUI/rooms/pic52.bmp",true,GL_NEAREST,false); // bridge 
-			GLOBAL_TEXTURE_LIST->add_texture("IE06","data/resources/GFX/GUI/rooms/pic54.bmp",true,GL_NEAREST,false); // guard 
-			GLOBAL_TEXTURE_LIST->add_texture("IE07","data/resources/GFX/GUI/rooms/pic46.bmp",true,GL_NEAREST,false); // workshop 
+			GLOBAL_TEXTURE_LIST->add_texture("IE04","data/resources/GFX/GUI/rooms/pic32.bmp",true,GL_NEAREST,false); // library
+			GLOBAL_TEXTURE_LIST->add_texture("IE05","data/resources/GFX/GUI/rooms/pic52.bmp",true,GL_NEAREST,false); // bridge
+			GLOBAL_TEXTURE_LIST->add_texture("IE06","data/resources/GFX/GUI/rooms/pic54.bmp",true,GL_NEAREST,false); // guard
+			GLOBAL_TEXTURE_LIST->add_texture("IE07","data/resources/GFX/GUI/rooms/pic46.bmp",true,GL_NEAREST,false); // workshop
 
-			GLOBAL_TEXTURE_LIST->add_texture("IE08","data/resources/GFX/GUI/rooms/pic36.bmp",true,GL_NEAREST,false); // prison 
-			GLOBAL_TEXTURE_LIST->add_texture("IE09","data/resources/GFX/GUI/rooms/pic34.bmp",true,GL_NEAREST,false); // torture 
-			GLOBAL_TEXTURE_LIST->add_texture("IE10","data/resources/GFX/GUI/rooms/pic40.bmp",true,GL_NEAREST,false); // barracks 
-			GLOBAL_TEXTURE_LIST->add_texture("IE11","data/resources/GFX/GUI/rooms/pic44.bmp",true,GL_NEAREST,false); // temple 
+			GLOBAL_TEXTURE_LIST->add_texture("IE08","data/resources/GFX/GUI/rooms/pic36.bmp",true,GL_NEAREST,false); // prison
+			GLOBAL_TEXTURE_LIST->add_texture("IE09","data/resources/GFX/GUI/rooms/pic34.bmp",true,GL_NEAREST,false); // torture
+			GLOBAL_TEXTURE_LIST->add_texture("IE10","data/resources/GFX/GUI/rooms/pic40.bmp",true,GL_NEAREST,false); // barracks
+			GLOBAL_TEXTURE_LIST->add_texture("IE11","data/resources/GFX/GUI/rooms/pic44.bmp",true,GL_NEAREST,false); // temple
 
-			GLOBAL_TEXTURE_LIST->add_texture("IE12","data/resources/GFX/GUI/rooms/pic42.bmp",true,GL_NEAREST,false); // graveyard 
-			GLOBAL_TEXTURE_LIST->add_texture("IE13","data/resources/GFX/GUI/rooms/pic48.bmp",true,GL_NEAREST,false); // scavenger (not supported!!) 
-			GLOBAL_TEXTURE_LIST->add_texture("IE14","data/resources/GFX/GUI/pic15.bmp",true,GL_NEAREST,false); // empty 
-			GLOBAL_TEXTURE_LIST->add_texture("IE15","data/resources/GFX/GUI/pic106.bmp",true,GL_NEAREST,false); // sell 
+			GLOBAL_TEXTURE_LIST->add_texture("IE12","data/resources/GFX/GUI/rooms/pic42.bmp",true,GL_NEAREST,false); // graveyard
+			GLOBAL_TEXTURE_LIST->add_texture("IE13","data/resources/GFX/GUI/rooms/pic48.bmp",true,GL_NEAREST,false); // scavenger (not supported!!)
+			GLOBAL_TEXTURE_LIST->add_texture("IE14","data/resources/GFX/GUI/pic15.bmp",true,GL_NEAREST,false); // empty
+			GLOBAL_TEXTURE_LIST->add_texture("IE15","data/resources/GFX/GUI/pic106.bmp",true,GL_NEAREST,false); // sell
 
 			/* the textures for room info DISABLED */
-			GLOBAL_TEXTURE_LIST->add_texture("ID00","data/resources/GFX/GUI/rooms/pic29.bmp",true,GL_NEAREST,false); // treasure 
-			GLOBAL_TEXTURE_LIST->add_texture("ID01","data/resources/GFX/GUI/rooms/pic51.bmp",true,GL_NEAREST,false); // lair 
-			GLOBAL_TEXTURE_LIST->add_texture("ID02","data/resources/GFX/GUI/rooms/pic31.bmp",true,GL_NEAREST,false); // hatchery 
-			GLOBAL_TEXTURE_LIST->add_texture("ID03","data/resources/GFX/GUI/rooms/pic39.bmp",true,GL_NEAREST,false); // train 
+			GLOBAL_TEXTURE_LIST->add_texture("ID00","data/resources/GFX/GUI/rooms/pic29.bmp",true,GL_NEAREST,false); // treasure
+			GLOBAL_TEXTURE_LIST->add_texture("ID01","data/resources/GFX/GUI/rooms/pic51.bmp",true,GL_NEAREST,false); // lair
+			GLOBAL_TEXTURE_LIST->add_texture("ID02","data/resources/GFX/GUI/rooms/pic31.bmp",true,GL_NEAREST,false); // hatchery
+			GLOBAL_TEXTURE_LIST->add_texture("ID03","data/resources/GFX/GUI/rooms/pic39.bmp",true,GL_NEAREST,false); // train
 
-			GLOBAL_TEXTURE_LIST->add_texture("ID04","data/resources/GFX/GUI/rooms/pic33.bmp",true,GL_NEAREST,false); // library 
-			GLOBAL_TEXTURE_LIST->add_texture("ID05","data/resources/GFX/GUI/rooms/pic53.bmp",true,GL_NEAREST,false); // bridge 
-			GLOBAL_TEXTURE_LIST->add_texture("ID06","data/resources/GFX/GUI/rooms/pic55.bmp",true,GL_NEAREST,false); // guard 
-			GLOBAL_TEXTURE_LIST->add_texture("ID07","data/resources/GFX/GUI/rooms/pic47.bmp",true,GL_NEAREST,false); // workshop 
+			GLOBAL_TEXTURE_LIST->add_texture("ID04","data/resources/GFX/GUI/rooms/pic33.bmp",true,GL_NEAREST,false); // library
+			GLOBAL_TEXTURE_LIST->add_texture("ID05","data/resources/GFX/GUI/rooms/pic53.bmp",true,GL_NEAREST,false); // bridge
+			GLOBAL_TEXTURE_LIST->add_texture("ID06","data/resources/GFX/GUI/rooms/pic55.bmp",true,GL_NEAREST,false); // guard
+			GLOBAL_TEXTURE_LIST->add_texture("ID07","data/resources/GFX/GUI/rooms/pic47.bmp",true,GL_NEAREST,false); // workshop
 
-			GLOBAL_TEXTURE_LIST->add_texture("ID08","data/resources/GFX/GUI/rooms/pic37.bmp",true,GL_NEAREST,false); // prison 
-			GLOBAL_TEXTURE_LIST->add_texture("ID09","data/resources/GFX/GUI/rooms/pic35.bmp",true,GL_NEAREST,false); // torture 
-			GLOBAL_TEXTURE_LIST->add_texture("ID10","data/resources/GFX/GUI/rooms/pic41.bmp",true,GL_NEAREST,false); // barracks 
-			GLOBAL_TEXTURE_LIST->add_texture("ID11","data/resources/GFX/GUI/rooms/pic45.bmp",true,GL_NEAREST,false); // temple 
+			GLOBAL_TEXTURE_LIST->add_texture("ID08","data/resources/GFX/GUI/rooms/pic37.bmp",true,GL_NEAREST,false); // prison
+			GLOBAL_TEXTURE_LIST->add_texture("ID09","data/resources/GFX/GUI/rooms/pic35.bmp",true,GL_NEAREST,false); // torture
+			GLOBAL_TEXTURE_LIST->add_texture("ID10","data/resources/GFX/GUI/rooms/pic41.bmp",true,GL_NEAREST,false); // barracks
+			GLOBAL_TEXTURE_LIST->add_texture("ID11","data/resources/GFX/GUI/rooms/pic45.bmp",true,GL_NEAREST,false); // temple
 
-			GLOBAL_TEXTURE_LIST->add_texture("ID12","data/resources/GFX/GUI/rooms/pic43.bmp",true,GL_NEAREST,false); // graveyard 
-			GLOBAL_TEXTURE_LIST->add_texture("ID13","data/resources/GFX/GUI/rooms/pic49.bmp",true,GL_NEAREST,false); // scavenger (not supported!!) 
-			GLOBAL_TEXTURE_LIST->add_texture("ID14","data/resources/GFX/GUI/pic15.bmp",true,GL_NEAREST,false); // empty 
-			GLOBAL_TEXTURE_LIST->add_texture("ID15","data/resources/GFX/GUI/pic106.bmp",true,GL_NEAREST,false); // sell 
+			GLOBAL_TEXTURE_LIST->add_texture("ID12","data/resources/GFX/GUI/rooms/pic43.bmp",true,GL_NEAREST,false); // graveyard
+			GLOBAL_TEXTURE_LIST->add_texture("ID13","data/resources/GFX/GUI/rooms/pic49.bmp",true,GL_NEAREST,false); // scavenger (not supported!!)
+			GLOBAL_TEXTURE_LIST->add_texture("ID14","data/resources/GFX/GUI/pic15.bmp",true,GL_NEAREST,false); // empty
+			GLOBAL_TEXTURE_LIST->add_texture("ID15","data/resources/GFX/GUI/pic106.bmp",true,GL_NEAREST,false); // sell
 
 			/* the gfx for room data displayer */
 			GLOBAL_TEXTURE_LIST->add_texture("BUILD_TAB_ROOM_DATA_PROGRESS_BAR_TEXTURE","data/resources/GFX/GUI/pic22.bmp",true,GL_NEAREST,false);
 
 			/* the trap textures for trap buttons */
-			GLOBAL_TEXTURE_LIST->add_texture("TRAP0_BUTTON_TOP_TEXTURE","data/resources/GFX/GUI/traps/pic151.bmp",true,GL_NEAREST,false); // boulder 
+			GLOBAL_TEXTURE_LIST->add_texture("TRAP0_BUTTON_TOP_TEXTURE","data/resources/GFX/GUI/traps/pic151.bmp",true,GL_NEAREST,false); // boulder
 			GLOBAL_TEXTURE_LIST->add_texture("TRAP1_BUTTON_TOP_TEXTURE","data/resources/GFX/GUI/traps/pic153.bmp",true,GL_NEAREST,false); // alarm
 			GLOBAL_TEXTURE_LIST->add_texture("TRAP2_BUTTON_TOP_TEXTURE","data/resources/GFX/GUI/traps/pic155.bmp",true,GL_NEAREST,false); // gas
 			GLOBAL_TEXTURE_LIST->add_texture("TRAP3_BUTTON_TOP_TEXTURE","data/resources/GFX/GUI/traps/pic157.bmp",true,GL_NEAREST,false); // lightning
@@ -224,41 +224,41 @@ namespace game_utils
 			GLOBAL_TEXTURE_LIST->add_texture("TRAP5_BUTTON_TOP_TEXTURE","data/resources/GFX/GUI/traps/pic161.bmp",true,GL_NEAREST,false); // lava
 
 			/* the textures for trap info ENABLED*/
-			GLOBAL_TEXTURE_LIST->add_texture("TE00","data/resources/GFX/GUI/traps/pic129.bmp",true,GL_NEAREST,false); // boulder 
+			GLOBAL_TEXTURE_LIST->add_texture("TE00","data/resources/GFX/GUI/traps/pic129.bmp",true,GL_NEAREST,false); // boulder
 			GLOBAL_TEXTURE_LIST->add_texture("TE01","data/resources/GFX/GUI/traps/pic131.bmp",true,GL_NEAREST,false); // alarm
 			GLOBAL_TEXTURE_LIST->add_texture("TE02","data/resources/GFX/GUI/traps/pic133.bmp",true,GL_NEAREST,false); // poison
-			GLOBAL_TEXTURE_LIST->add_texture("TE03","data/resources/GFX/GUI/traps/pic135.bmp",true,GL_NEAREST,false); // lightning 
-			GLOBAL_TEXTURE_LIST->add_texture("TE04","data/resources/GFX/GUI/traps/pic137.bmp",true,GL_NEAREST,false); // word of power 
+			GLOBAL_TEXTURE_LIST->add_texture("TE03","data/resources/GFX/GUI/traps/pic135.bmp",true,GL_NEAREST,false); // lightning
+			GLOBAL_TEXTURE_LIST->add_texture("TE04","data/resources/GFX/GUI/traps/pic137.bmp",true,GL_NEAREST,false); // word of power
 			GLOBAL_TEXTURE_LIST->add_texture("TE05","data/resources/GFX/GUI/traps/pic139.bmp",true,GL_NEAREST,false); // lava
 
 			/* the textures for trap info DISABLED*/
-			GLOBAL_TEXTURE_LIST->add_texture("TD00","data/resources/GFX/GUI/traps/pic130.bmp",true,GL_NEAREST,false); // boulder 
+			GLOBAL_TEXTURE_LIST->add_texture("TD00","data/resources/GFX/GUI/traps/pic130.bmp",true,GL_NEAREST,false); // boulder
 			GLOBAL_TEXTURE_LIST->add_texture("TD01","data/resources/GFX/GUI/traps/pic132.bmp",true,GL_NEAREST,false); // alarm
 			GLOBAL_TEXTURE_LIST->add_texture("TD02","data/resources/GFX/GUI/traps/pic134.bmp",true,GL_NEAREST,false); // poison
-			GLOBAL_TEXTURE_LIST->add_texture("TD03","data/resources/GFX/GUI/traps/pic136.bmp",true,GL_NEAREST,false); // lightning 
-			GLOBAL_TEXTURE_LIST->add_texture("TD04","data/resources/GFX/GUI/traps/pic138.bmp",true,GL_NEAREST,false); // word of power 
+			GLOBAL_TEXTURE_LIST->add_texture("TD03","data/resources/GFX/GUI/traps/pic136.bmp",true,GL_NEAREST,false); // lightning
+			GLOBAL_TEXTURE_LIST->add_texture("TD04","data/resources/GFX/GUI/traps/pic138.bmp",true,GL_NEAREST,false); // word of power
 			GLOBAL_TEXTURE_LIST->add_texture("TD05","data/resources/GFX/GUI/traps/pic140.bmp",true,GL_NEAREST,false); // lava
 
 			/* the door textures for door buttons */
-			GLOBAL_TEXTURE_LIST->add_texture("DOOR0_BUTTON_TOP_TEXTURE","data/resources/GFX/GUI/doors/pic165.bmp",true,GL_NEAREST,false); // wooden 
+			GLOBAL_TEXTURE_LIST->add_texture("DOOR0_BUTTON_TOP_TEXTURE","data/resources/GFX/GUI/doors/pic165.bmp",true,GL_NEAREST,false); // wooden
 			GLOBAL_TEXTURE_LIST->add_texture("DOOR1_BUTTON_TOP_TEXTURE","data/resources/GFX/GUI/doors/pic167.bmp",true,GL_NEAREST,false); // braced
 			GLOBAL_TEXTURE_LIST->add_texture("DOOR2_BUTTON_TOP_TEXTURE","data/resources/GFX/GUI/doors/pic169.bmp",true,GL_NEAREST,false); // iron
 			GLOBAL_TEXTURE_LIST->add_texture("DOOR3_BUTTON_TOP_TEXTURE","data/resources/GFX/GUI/doors/pic171.bmp",true,GL_NEAREST,false); // magic
 
 			/* the textures for door info ENABLED*/
-			GLOBAL_TEXTURE_LIST->add_texture("DE00","data/resources/GFX/GUI/doors/pic143.bmp",true,GL_NEAREST,false); // wooden 
+			GLOBAL_TEXTURE_LIST->add_texture("DE00","data/resources/GFX/GUI/doors/pic143.bmp",true,GL_NEAREST,false); // wooden
 			GLOBAL_TEXTURE_LIST->add_texture("DE01","data/resources/GFX/GUI/doors/pic145.bmp",true,GL_NEAREST,false); // braced
 			GLOBAL_TEXTURE_LIST->add_texture("DE02","data/resources/GFX/GUI/doors/pic147.bmp",true,GL_NEAREST,false); // iron
 			GLOBAL_TEXTURE_LIST->add_texture("DE03","data/resources/GFX/GUI/doors/pic149.bmp",true,GL_NEAREST,false); // magic
 
 			/* the textures for door info DISABLED*/
-			GLOBAL_TEXTURE_LIST->add_texture("DD00","data/resources/GFX/GUI/doors/pic144.bmp",true,GL_NEAREST,false); // wooden 
+			GLOBAL_TEXTURE_LIST->add_texture("DD00","data/resources/GFX/GUI/doors/pic144.bmp",true,GL_NEAREST,false); // wooden
 			GLOBAL_TEXTURE_LIST->add_texture("DD01","data/resources/GFX/GUI/doors/pic146.bmp",true,GL_NEAREST,false); // braced
 			GLOBAL_TEXTURE_LIST->add_texture("DD02","data/resources/GFX/GUI/doors/pic148.bmp",true,GL_NEAREST,false); // iron
 			GLOBAL_TEXTURE_LIST->add_texture("DD03","data/resources/GFX/GUI/doors/pic150.bmp",true,GL_NEAREST,false); // magic
 
 			/* the room textures for spell buttons */
-			GLOBAL_TEXTURE_LIST->add_texture("SPELL00_BUTTON_TOP_TEXTURE","data/resources/GFX/GUI/spells/pic113.bmp",true,GL_NEAREST,false); // possess 
+			GLOBAL_TEXTURE_LIST->add_texture("SPELL00_BUTTON_TOP_TEXTURE","data/resources/GFX/GUI/spells/pic113.bmp",true,GL_NEAREST,false); // possess
 			GLOBAL_TEXTURE_LIST->add_texture("SPELL01_BUTTON_TOP_TEXTURE","data/resources/GFX/GUI/spells/pic117.bmp",true,GL_NEAREST,false); // create imp
 			GLOBAL_TEXTURE_LIST->add_texture("SPELL02_BUTTON_TOP_TEXTURE","data/resources/GFX/GUI/spells/pic107.bmp",true,GL_NEAREST,false); // sight of evil
 			GLOBAL_TEXTURE_LIST->add_texture("SPELL03_BUTTON_TOP_TEXTURE","data/resources/GFX/GUI/spells/pic121.bmp",true,GL_NEAREST,false); // speed monster
@@ -269,7 +269,7 @@ namespace game_utils
 			GLOBAL_TEXTURE_LIST->add_texture("SPELL07_BUTTON_TOP_TEXTURE","data/resources/GFX/GUI/spells/pic111.bmp",true,GL_NEAREST,false); // hold audience
 
 			GLOBAL_TEXTURE_LIST->add_texture("SPELL08_BUTTON_TOP_TEXTURE","data/resources/GFX/GUI/spells/pic119.bmp",true,GL_NEAREST,false); // cave in
-			GLOBAL_TEXTURE_LIST->add_texture("SPELL09_BUTTON_TOP_TEXTURE","data/resources/GFX/GUI/spells/pic109.bmp",true,GL_NEAREST,false); // heal 
+			GLOBAL_TEXTURE_LIST->add_texture("SPELL09_BUTTON_TOP_TEXTURE","data/resources/GFX/GUI/spells/pic109.bmp",true,GL_NEAREST,false); // heal
 			GLOBAL_TEXTURE_LIST->add_texture("SPELL10_BUTTON_TOP_TEXTURE","data/resources/GFX/GUI/spells/pic123.bmp",true,GL_NEAREST,false); // lightning
 			GLOBAL_TEXTURE_LIST->add_texture("SPELL11_BUTTON_TOP_TEXTURE","data/resources/GFX/GUI/spells/pic125.bmp",true,GL_NEAREST,false); // protect creature
 
@@ -279,46 +279,46 @@ namespace game_utils
 			GLOBAL_TEXTURE_LIST->add_texture("SPELL15_BUTTON_TOP_TEXTURE","data/resources/GFX/GUI/spells/pic316.bmp",true,GL_NEAREST,false); // destroy wall
 
 			/* the textures for spell info ENABLED*/
-			GLOBAL_TEXTURE_LIST->add_texture("SE00","data/resources/GFX/GUI/spells/pic90.bmp",true,GL_NEAREST,false); // possess  
-			GLOBAL_TEXTURE_LIST->add_texture("SE01","data/resources/GFX/GUI/spells/pic94.bmp",true,GL_NEAREST,false); // create imp 
-			GLOBAL_TEXTURE_LIST->add_texture("SE02","data/resources/GFX/GUI/spells/pic84.bmp",true,GL_NEAREST,false); // sight of evil 
-			GLOBAL_TEXTURE_LIST->add_texture("SE03","data/resources/GFX/GUI/spells/pic98.bmp",true,GL_NEAREST,false); // speed monster 
+			GLOBAL_TEXTURE_LIST->add_texture("SE00","data/resources/GFX/GUI/spells/pic90.bmp",true,GL_NEAREST,false); // possess
+			GLOBAL_TEXTURE_LIST->add_texture("SE01","data/resources/GFX/GUI/spells/pic94.bmp",true,GL_NEAREST,false); // create imp
+			GLOBAL_TEXTURE_LIST->add_texture("SE02","data/resources/GFX/GUI/spells/pic84.bmp",true,GL_NEAREST,false); // sight of evil
+			GLOBAL_TEXTURE_LIST->add_texture("SE03","data/resources/GFX/GUI/spells/pic98.bmp",true,GL_NEAREST,false); // speed monster
 
-			GLOBAL_TEXTURE_LIST->add_texture("SE04","data/resources/GFX/GUI/spells/pic393.bmp",true,GL_NEAREST,false); // must obey 
-			GLOBAL_TEXTURE_LIST->add_texture("SE05","data/resources/GFX/GUI/spells/pic92.bmp",true,GL_NEAREST,false); // call to arms 
-			GLOBAL_TEXTURE_LIST->add_texture("SE06","data/resources/GFX/GUI/spells/pic104.bmp",true,GL_NEAREST,false); // conceal monster 
+			GLOBAL_TEXTURE_LIST->add_texture("SE04","data/resources/GFX/GUI/spells/pic393.bmp",true,GL_NEAREST,false); // must obey
+			GLOBAL_TEXTURE_LIST->add_texture("SE05","data/resources/GFX/GUI/spells/pic92.bmp",true,GL_NEAREST,false); // call to arms
+			GLOBAL_TEXTURE_LIST->add_texture("SE06","data/resources/GFX/GUI/spells/pic104.bmp",true,GL_NEAREST,false); // conceal monster
 			GLOBAL_TEXTURE_LIST->add_texture("SE07","data/resources/GFX/GUI/spells/pic88.bmp",true,GL_NEAREST,false); // hold audience
 
 			GLOBAL_TEXTURE_LIST->add_texture("SE08","data/resources/GFX/GUI/spells/pic96.bmp",true,GL_NEAREST,false); // cave in
-			GLOBAL_TEXTURE_LIST->add_texture("SE09","data/resources/GFX/GUI/spells/pic86.bmp",true,GL_NEAREST,false); // heal 
-			GLOBAL_TEXTURE_LIST->add_texture("SE10","data/resources/GFX/GUI/spells/pic100.bmp",true,GL_NEAREST,false); // lightning 
-			GLOBAL_TEXTURE_LIST->add_texture("SE11","data/resources/GFX/GUI/spells/pic102.bmp",true,GL_NEAREST,false); // protect creature 
+			GLOBAL_TEXTURE_LIST->add_texture("SE09","data/resources/GFX/GUI/spells/pic86.bmp",true,GL_NEAREST,false); // heal
+			GLOBAL_TEXTURE_LIST->add_texture("SE10","data/resources/GFX/GUI/spells/pic100.bmp",true,GL_NEAREST,false); // lightning
+			GLOBAL_TEXTURE_LIST->add_texture("SE11","data/resources/GFX/GUI/spells/pic102.bmp",true,GL_NEAREST,false); // protect creature
 
-			GLOBAL_TEXTURE_LIST->add_texture("SE12","data/resources/GFX/GUI/spells/pic305.bmp",true,GL_NEAREST,false); // chicken 
-			GLOBAL_TEXTURE_LIST->add_texture("SE13","data/resources/GFX/GUI/spells/pic309.bmp",true,GL_NEAREST,false); // disease 
-			GLOBAL_TEXTURE_LIST->add_texture("SE14","data/resources/GFX/GUI/spells/pic311.bmp",true,GL_NEAREST,false); // armageddon 
-			GLOBAL_TEXTURE_LIST->add_texture("SE15","data/resources/GFX/GUI/spells/pic307.bmp",true,GL_NEAREST,false); // destroy wall 
+			GLOBAL_TEXTURE_LIST->add_texture("SE12","data/resources/GFX/GUI/spells/pic305.bmp",true,GL_NEAREST,false); // chicken
+			GLOBAL_TEXTURE_LIST->add_texture("SE13","data/resources/GFX/GUI/spells/pic309.bmp",true,GL_NEAREST,false); // disease
+			GLOBAL_TEXTURE_LIST->add_texture("SE14","data/resources/GFX/GUI/spells/pic311.bmp",true,GL_NEAREST,false); // armageddon
+			GLOBAL_TEXTURE_LIST->add_texture("SE15","data/resources/GFX/GUI/spells/pic307.bmp",true,GL_NEAREST,false); // destroy wall
 
 			/* the textures for spell info DISABLED */
-			GLOBAL_TEXTURE_LIST->add_texture("SD00","data/resources/GFX/GUI/spells/pic91.bmp",true,GL_NEAREST,false); // possess  
-			GLOBAL_TEXTURE_LIST->add_texture("SD01","data/resources/GFX/GUI/spells/pic95.bmp",true,GL_NEAREST,false); // create imp 
-			GLOBAL_TEXTURE_LIST->add_texture("SD02","data/resources/GFX/GUI/spells/pic85.bmp",true,GL_NEAREST,false); // sight of evil 
-			GLOBAL_TEXTURE_LIST->add_texture("SD03","data/resources/GFX/GUI/spells/pic99.bmp",true,GL_NEAREST,false); // speed monster 
+			GLOBAL_TEXTURE_LIST->add_texture("SD00","data/resources/GFX/GUI/spells/pic91.bmp",true,GL_NEAREST,false); // possess
+			GLOBAL_TEXTURE_LIST->add_texture("SD01","data/resources/GFX/GUI/spells/pic95.bmp",true,GL_NEAREST,false); // create imp
+			GLOBAL_TEXTURE_LIST->add_texture("SD02","data/resources/GFX/GUI/spells/pic85.bmp",true,GL_NEAREST,false); // sight of evil
+			GLOBAL_TEXTURE_LIST->add_texture("SD03","data/resources/GFX/GUI/spells/pic99.bmp",true,GL_NEAREST,false); // speed monster
 
-			GLOBAL_TEXTURE_LIST->add_texture("SD04","data/resources/GFX/GUI/spells/pic394.bmp",true,GL_NEAREST,false); // must obey 
-			GLOBAL_TEXTURE_LIST->add_texture("SD05","data/resources/GFX/GUI/spells/pic93.bmp",true,GL_NEAREST,false); // call to arms 
-			GLOBAL_TEXTURE_LIST->add_texture("SD06","data/resources/GFX/GUI/spells/pic105.bmp",true,GL_NEAREST,false); // conceal monster 
+			GLOBAL_TEXTURE_LIST->add_texture("SD04","data/resources/GFX/GUI/spells/pic394.bmp",true,GL_NEAREST,false); // must obey
+			GLOBAL_TEXTURE_LIST->add_texture("SD05","data/resources/GFX/GUI/spells/pic93.bmp",true,GL_NEAREST,false); // call to arms
+			GLOBAL_TEXTURE_LIST->add_texture("SD06","data/resources/GFX/GUI/spells/pic105.bmp",true,GL_NEAREST,false); // conceal monster
 			GLOBAL_TEXTURE_LIST->add_texture("SD07","data/resources/GFX/GUI/spells/pic89.bmp",true,GL_NEAREST,false); // hold audience
 
 			GLOBAL_TEXTURE_LIST->add_texture("SD08","data/resources/GFX/GUI/spells/pic97.bmp",true,GL_NEAREST,false); // cave in
-			GLOBAL_TEXTURE_LIST->add_texture("SD09","data/resources/GFX/GUI/spells/pic87.bmp",true,GL_NEAREST,false); // heal 
-			GLOBAL_TEXTURE_LIST->add_texture("SD10","data/resources/GFX/GUI/spells/pic101.bmp",true,GL_NEAREST,false); // lightning 
-			GLOBAL_TEXTURE_LIST->add_texture("SD11","data/resources/GFX/GUI/spells/pic103.bmp",true,GL_NEAREST,false); // protect creature 
+			GLOBAL_TEXTURE_LIST->add_texture("SD09","data/resources/GFX/GUI/spells/pic87.bmp",true,GL_NEAREST,false); // heal
+			GLOBAL_TEXTURE_LIST->add_texture("SD10","data/resources/GFX/GUI/spells/pic101.bmp",true,GL_NEAREST,false); // lightning
+			GLOBAL_TEXTURE_LIST->add_texture("SD11","data/resources/GFX/GUI/spells/pic103.bmp",true,GL_NEAREST,false); // protect creature
 
-			GLOBAL_TEXTURE_LIST->add_texture("SD12","data/resources/GFX/GUI/spells/pic306.bmp",true,GL_NEAREST,false); // chicken 
-			GLOBAL_TEXTURE_LIST->add_texture("SD13","data/resources/GFX/GUI/spells/pic310.bmp",true,GL_NEAREST,false); // disease 
-			GLOBAL_TEXTURE_LIST->add_texture("SD14","data/resources/GFX/GUI/spells/pic312.bmp",true,GL_NEAREST,false); // armageddon 
-			GLOBAL_TEXTURE_LIST->add_texture("SD15","data/resources/GFX/GUI/spells/pic308.bmp",true,GL_NEAREST,false); // destroy wall 
+			GLOBAL_TEXTURE_LIST->add_texture("SD12","data/resources/GFX/GUI/spells/pic306.bmp",true,GL_NEAREST,false); // chicken
+			GLOBAL_TEXTURE_LIST->add_texture("SD13","data/resources/GFX/GUI/spells/pic310.bmp",true,GL_NEAREST,false); // disease
+			GLOBAL_TEXTURE_LIST->add_texture("SD14","data/resources/GFX/GUI/spells/pic312.bmp",true,GL_NEAREST,false); // armageddon
+			GLOBAL_TEXTURE_LIST->add_texture("SD15","data/resources/GFX/GUI/spells/pic308.bmp",true,GL_NEAREST,false); // destroy wall
 
 			/* spell cursor animations */
 			GLOBAL_TEXTURE_LIST->add_texture(ANIMATED_CURSOR_TEXTURE_POSSESS_MONSTER0,"data/resources/GFX/pointers/pic95.bmp",true,GL_NEAREST,false);
@@ -466,8 +466,8 @@ namespace game_utils
 			CSettingsManager sm;
 
 			// read models for model pool from models.conf
-			sm.init(CV_CONFIG_MODELS);										
-			
+			sm.init(CV_CONFIG_MODELS);
+
 			map<string, string> *settings = sm.getSettings();
 
 			char name[256];
@@ -485,24 +485,24 @@ namespace game_utils
 				string modelFileName = CV_RESOURCES_DIRECTORY+string(name);
 
 				model->loadFromFile(modelFileName);
-				model->scaleToMaxY(scale);				
+				model->scaleToMaxY(scale);
 				model->setAnimSpeed(animSpeed);
 				model->setInterpolate(true);
 
 				// update the texture name
 				string tNamePath = string(model->getTextureName());
-				string tName = tNamePath.substr(tNamePath.find_last_of("/"));				
+				string tName = tNamePath.substr(tNamePath.find_last_of("/"));
 				string mPath = modelFileName.substr(0,modelFileName.find_last_of("/"));
 				model->setTextureName(mPath+tName);
 
-				modelPool[sIter->first] = new CObjectPool<CBR5Model>(true);				
+				modelPool[sIter->first] = new CObjectPool<CBR5Model>(true);
 				modelPool[sIter->first]->addObjects(model,2);
 			}
 			sm.shutdown();
 
 			// read effects for effect pool from effects.conf
-			sm.init(CV_CONFIG_EFFECTS);										
-			
+			sm.init(CV_CONFIG_EFFECTS);
+
 			settings = sm.getSettings();
 
 			for (map<string, string>::iterator sIter = settings->begin(); sIter != settings->end(); sIter++)
@@ -516,10 +516,10 @@ namespace game_utils
 				CLUAEffect *effect = CLUAEffectLoader::loadFromFile(effectFileName);
 				effect->init();
 
-				effectPool[sIter->first] = new CObjectPool<CLUAEffect>(true);				
+				effectPool[sIter->first] = new CObjectPool<CLUAEffect>(true);
 				effectPool[sIter->first]->addObjects(effect,2);
 			}
-			sm.shutdown();			
+			sm.shutdown();
 
 			return result;
 		}
@@ -527,7 +527,7 @@ namespace game_utils
 		CBR5Model *CResourceManager::getModel(string modelName)
 		{
 			if (modelPool.find(modelName)==modelPool.end())
-			{	
+			{
 				CV_GAME_MANAGER->getConsole()->writeLine("Trying to access non-existing resource: "+modelName);
 				return NULL;
 			}
@@ -542,7 +542,7 @@ namespace game_utils
 		CLUAEffect *CResourceManager::getEffect(string effectName)
 		{
 			if (effectPool.find(effectName)==effectPool.end())
-			{	
+			{
 				CV_GAME_MANAGER->getConsole()->writeLine("Trying to access non-existing resource: "+effectName);
 				return NULL;
 			}
@@ -588,7 +588,7 @@ namespace game_utils
 
 				if (line.length()!=0 && line.at(0)!='#')
 				{
-					pair<GLint, CTextureList::sTextureData> parsedResult = extractTextureInfo(line);				
+					pair<GLint, CTextureList::sTextureData> parsedResult = extractTextureInfo(line);
 
 					// update texture location since we are on relative locations
 					parsedResult.second.fileName=CV_RESOURCES_DIRECTORY+parsedResult.second.fileName;
@@ -596,7 +596,7 @@ namespace game_utils
 					// add textures
 					CV_TEXTURE_LIST->addTexture(parsedResult.first,parsedResult.second);
 				}
-			}	
+			}
 
 			iFile.close();
 
@@ -608,10 +608,10 @@ namespace game_utils
 		}
 
 		pair<GLint, CTextureList::sTextureData> CResourceManager::extractTextureInfo(string line)
-		{		 
+		{
 			GLint index;
 			char name[MAX_PATH];
-			sscanf(line.c_str(),"%d %s",&index,&name);
+			sscanf(line.c_str(),"%d %s",&index,(char *)&name);
 			return pair<GLint, CTextureList::sTextureData>(index, CTextureList::sTextureData(name));
 		}
 
