@@ -169,7 +169,7 @@ fprintf(stderr,"Loaded %s : %dx%dx%dbpp\n",file ,texbuf->w, texbuf->h,texbuf->fo
 #endif
 
 	// Convert From BGR To RGB Format And Add An Alpha Value Of 255
-#ifdef SKIP
+#ifdef WIN32
 	bool first=false;
 	GLuint r,g,b;
 	for(long i = 0; i < lWidthPixels * lHeightPixels; i++)				// Loop Through All Of The Pixels
