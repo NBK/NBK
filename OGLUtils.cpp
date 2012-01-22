@@ -111,7 +111,8 @@ namespace utils
 				wglSwapIntervalEXT(val?1:0);
 			}
 		}
-#elifdef USE_SDL
+#else
+#ifdef USE_SDL
 	#if SDL_VERSION_ATLEAST(1,3,0)
 	SDL_GL_SetSwapInterval(val);
 	#else /* SDL_VERSION_ATLEAST(1,3,0) */
@@ -121,6 +122,7 @@ namespace utils
 	printf("VSync unsupported on old SDL versions (before 1.2.10).\n");
 	#endif /* SDL_GL_SWAP_CONTROL */
 	#endif /* SDL_VERSION_ATLEAST(1,3,0) */
+#endif
 #endif
 	}
 

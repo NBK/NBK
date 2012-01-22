@@ -10,7 +10,7 @@ namespace DK_GUI
 	class CMenuButton: public CTexturedGUIButton
 	{
 	public:
-		CMenuButton(GLfloat x_pos, GLfloat y_pos, GLfloat z_pos, GLfloat width, GLfloat height, const char *caption, GLuint normal_texture, GLuint effect_texture);
+		CMenuButton(GLfloat x_pos, GLfloat y_pos, GLfloat z_pos, GLfloat width, GLfloat height, char *caption, GLuint normal_texture, GLuint effect_texture);
 		~CMenuButton();
 
 		virtual GLvoid on_mouse_over();
