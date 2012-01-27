@@ -130,7 +130,7 @@ ifeq ($(SDL_CFLAGS),)
 endif
 SDL_CFLAGS+=$(shell pkg-config --silence-errors --cflags SDL_image)
 SDL_LIBS+=$(shell pkg-config --silence-errors --libs SDL_image)
-ifeq ($(shell pkg-config --exists lua),"")
+ifeq ($(shell pkg-config --exists lua && echo yes),yes)
     LUA_CFLAGS=$(shell pkg-config --silence-errors --cflags lua)
     LUA_LIBS=$(shell pkg-config --silence-errors --libs lua)
 else
