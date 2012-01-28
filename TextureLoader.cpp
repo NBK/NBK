@@ -59,10 +59,22 @@ namespace loaders
 #ifdef WIN32
 				GetCurrentDirectory(MAX_PATH, szPath);
 				strcat(szPath, PATH_SEP);
+				strcat(szPath, file);
+			}
+			else
+			{
+				strcpy(szPath,file);
+			}
 #else
-				if (file[0]=='/')
+#ifndef NDEBUG
+				//debug("About to load: %s\n", file);
+#endif
+#if 0
+				// Attempt to fix specified texture filenames...
+				// TODO: Just enhance the way textures are loaded under linux
+				if (file[0]==PATH_SEP)
 					;
-				else if (file[0]=='.'&&file[1]=='.'&&file[2]=='/')
+				else if (file[0]=='.' && file[1]=='.' && file[2]==PATH_SEP)
 				{
 					GetCurrentDirectory(MAX_PATH, szPath);
 					strcat(szPath,(PATH_SEP+CV_RESOURCES_DIRECTORY).c_str());
@@ -72,13 +84,21 @@ namespace loaders
 					GetCurrentDirectory(MAX_PATH, szPath);
 					strcat(szPath, PATH_SEP);
 				}
+#else
+				char *path = strstr(file, DATA_PATH);
+				if (path!=NULL)
+				{
+					strcat(szPath,path);
+				}
+#ifndef NDEBUG
+				else
+				{
+					//debug("Can't load: %s\n", file);
+				}
 #endif
-				strcat(szPath, file);
 			}
-			else
-			{
-				strcpy(szPath,file);
-			}
+#endif
+#endif
 		}
 
 #ifdef WIN32
@@ -97,7 +117,9 @@ namespace loaders
 			return lr;
 		}
 #else
-//printf("\"%s\", // l. 100, TextureLoader.cpp\n",szPath);
+#ifndef NDEBUG
+		//debug("Loading \"%s\"\n", szPath);
+#endif
 		image = IMG_Load(szPath);
 		if ( image == NULL ) {
 			fprintf(stderr, "Unable to load %s with %s: %s\n", file, szPath, SDL_GetError());
@@ -157,57 +179,6 @@ namespace loaders
 
 		pPicture->Render(hdcTemp, 0, 0, lWidthPixels, lHeightPixels, 0, lHeight, lWidth, -lHeight, 0);
 
-#else
-		lWidth = image->w;
-		lHeight = image->h;
-		lWidthPixels = powerOfTwo( lWidth );
-		lHeightPixels = powerOfTwo( lHeight );
-
-		SDL_Surface *tmpbuf = SDL_DisplayFormatAlpha(image);
-		if ( tmpbuf == NULL ) {
-			fprintf(stderr, "Failed to prepare texture buffer for %s: %s\n", file, SDL_GetError());
-			return lr;
-		}
-#if 0
-		SDL_Surface *texbuf = SDL_CreateRGBSurfaceFrom(tmpbuf->pixels, lWidth, lHeight,
-			tmpbuf->format->BitsPerPixel,tmpbuf->pitch,
-			tmpbuf->format->Rmask,tmpbuf->format->Gmask,
-			tmpbuf->format->Bmask,tmpbuf->format->Amask);
-#else
-//printf("%ix%i/%ix%i", texrect->x, texrect->y, texrect->w, texrect->h);
-
-SDL_Surface *texbuf = tmpbuf;
-if (lWidthPixels!=lWidth || lHeightPixels!=lHeight || trans)
-{
-	// Convert image buffer for OpenGL or simply use tmpbuf
-		texbuf = SDL_CreateRGBSurface(0, lWidthPixels, lHeightPixels,
-			tmpbuf->format->BitsPerPixel,
-			tmpbuf->format->Rmask,
-			tmpbuf->format->Gmask,
-			tmpbuf->format->Bmask,
-			tmpbuf->format->Amask
-			);
-		SDL_SetAlpha(tmpbuf, 0, 255);
-		//SDL_SetAlpha(texbuf, 0, 255);
-		if ( texbuf == NULL ) {
-			fprintf(stderr, "Failed to get full GL buffer for %s texture: %s\n", file, SDL_GetError());
-			return lr;
-		}
-		if (trans)
-		{
-			SDL_SetColorKey(tmpbuf,SDL_SRCCOLORKEY,((Uint32 *)tmpbuf->pixels)[0]);
-			//SDL_SetColorKey(texbuf,SDL_SRCCOLORKEY,((Uint32 *)tmpbuf->pixels)[0]);
-		}
-		SDL_Rect texrect;
-		SDL_GetClipRect(tmpbuf, &texrect);
-//printf(" %ix%i/%ix%i\n", texrect->x, texrect->y, texrect->w, texrect->h);
-		SDL_BlitSurface(tmpbuf, &texrect, texbuf, &texrect);
-}
-#endif
-		Uint32 *pBits = (Uint32 *)texbuf->pixels;
-#endif
-
-#ifdef WIN32
 		bool first=false;
 		GLuint r,g,b;
 		for(long i = 0; i < lWidthPixels * lHeightPixels; i++)
@@ -256,10 +227,48 @@ if (lWidthPixels!=lWidth || lHeightPixels!=lHeight || trans)
 			}
 		}
 #else
+		lWidth = image->w;
+		lHeight = image->h;
+		lWidthPixels = powerOfTwo( lWidth );
+		lHeightPixels = powerOfTwo( lHeight );
+
+		lr.texture_dimensions.x=lWidthPixels;
+		lr.texture_dimensions.y=lHeightPixels;
+
+		SDL_Surface *tmpbuf = SDL_DisplayFormatAlpha(image);
+		if ( tmpbuf == NULL ) {
+			fprintf(stderr, "Failed to prepare texture buffer for %s: %s\n", file, SDL_GetError());
+			return lr;
+		}
+
+		SDL_Surface *texbuf = tmpbuf;
+		if (lWidthPixels!=lWidth || lHeightPixels!=lHeight || trans)
+		{
+			// Convert image buffer for OpenGL or simply use tmpbuf
+			texbuf = SDL_CreateRGBSurface(0, lWidthPixels, lHeightPixels,
+				tmpbuf->format->BitsPerPixel,
+				tmpbuf->format->Rmask,
+				tmpbuf->format->Gmask,
+				tmpbuf->format->Bmask,
+				tmpbuf->format->Amask
+				);
+			SDL_SetAlpha(tmpbuf, 0, 255);
+			if ( texbuf == NULL ) {
+				fprintf(stderr, "Failed to get full GL buffer for %s texture: %s\n", file, SDL_GetError());
+				return lr;
+			}
+			if (trans)
+			{
+				SDL_SetColorKey(tmpbuf,SDL_SRCCOLORKEY,((Uint32 *)tmpbuf->pixels)[0]);
+			}
+			SDL_Rect texrect;
+			SDL_GetClipRect(tmpbuf, &texrect);
+			SDL_BlitSurface(tmpbuf, &texrect, texbuf, &texrect);
+		}
+		Uint32 *pBits = (Uint32 *)texbuf->pixels;
 #endif
 
 		glGenTextures(1, &texture);
-//printf("Texture %03i: %lix%li -> %lix%li, %s\n", texture, lWidth, lHeight, lWidthPixels, lHeightPixels, szPath);
 
 		glBindTexture(GL_TEXTURE_2D, texture);
 
@@ -268,13 +277,10 @@ if (lWidthPixels!=lWidth || lHeightPixels!=lHeight || trans)
 #ifdef WIN32
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, lWidthPixels, lHeightPixels, 0, GL_RGBA, GL_UNSIGNED_BYTE, pBits);
 #else
-		glMatrixMode( GL_TEXTURE );
-		glLoadIdentity();
-		glScalef( 1, -1, 1 );
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, lWidthPixels, lHeightPixels, 0, GL_BGRA, GL_UNSIGNED_BYTE, pBits); // or GL_BGRA
-		//SDL_FreeSurface(texbuf);
-		SDL_FreeSurface(image);
-		SDL_FreeSurface(tmpbuf);
+		//glMatrixMode( GL_TEXTURE );
+		//glLoadIdentity();
+		//glScalef( 1, -1, 1 );
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, lWidthPixels, lHeightPixels, 0, GL_BGRA, GL_UNSIGNED_BYTE, pBits);
 #endif
 
 		/*glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
@@ -287,6 +293,8 @@ if (lWidthPixels!=lWidth || lHeightPixels!=lHeight || trans)
 
 		pPicture->Release();
 #else
+		SDL_FreeSurface(image);
+		SDL_FreeSurface(tmpbuf);
 #endif
 
 		lr.done=true;

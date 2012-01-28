@@ -52,6 +52,7 @@ typedef struct {
 } RECT;
 
 #define MAX_PATH 260
+#define DATA_PATH "data/resources/"
 
 // APIs replacement
 #define GetCurrentDirectory(x,y) getcwd(y,x)
@@ -74,5 +75,9 @@ static inline int powerOfTwo( int value )
 
 	return result ;
 }
+
+#define debug(...) fprintf(stderr, __FILE__ ", l." XSTRING(__LINE__) ": " __VA_ARGS__)
+#define XSTRING(x) STRING(x)
+#define STRING(x)  #x
 
 #endif // SYSTEM_H
