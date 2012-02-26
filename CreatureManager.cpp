@@ -1,6 +1,7 @@
 #include "commons.h"
 #include "CreatureManager.h"
 #include "Imp.h"
+#include "Chicken.h"
 
 using namespace game_objects;
 using namespace std;
@@ -44,7 +45,16 @@ namespace game_utils
 
 		GLvoid CCreatureManager::addCreature(string creatureName, vector3f position, GLubyte owner)
 		{
-			if (creatureName == "BARBARIAN")
+			if (creatureName == "CHICKEN")
+ 			{
+				CChicken *chicken = new CChicken();
+				chicken->setPosition(position);
+				chicken->setName(creatureName);
+				chicken->setOwner(owner);
+				chicken->setModel(CV_GAME_MANAGER->getResourceManager()->getModel("MODEL_CHICKEN"));
+				allCreatures.push_back(chicken);
+			}
+			else if (creatureName == "BARBARIAN")
  			{
 				CCreature *barbarian = new CCreature();
 				barbarian->setPosition(position);

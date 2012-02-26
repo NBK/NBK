@@ -257,6 +257,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Chicken.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\CollisionManager.cpp"
 				>
 			</File>
@@ -469,6 +473,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Primitives.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Gui\Primitives.cpp"
 				>
 				<FileConfiguration
@@ -487,10 +495,6 @@
 						ObjectFile="$(IntDir)/$(InputName)1.obj"
 					/>
 				</FileConfiguration>
-			</File>
-			<File
-				RelativePath=".\Primitives.cpp"
-				>
 			</File>
 			<File
 				RelativePath=".\Gui\ProgressBar.cpp"
@@ -631,6 +635,10 @@
 			</File>
 			<File
 				RelativePath=".\Camera.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Chicken.h"
 				>
 			</File>
 			<File
@@ -854,11 +862,11 @@
 				>
 			</File>
 			<File
-				RelativePath=".\Gui\Primitives.h"
+				RelativePath=".\Primitives.h"
 				>
 			</File>
 			<File
-				RelativePath=".\Primitives.h"
+				RelativePath=".\Gui\Primitives.h"
 				>
 			</File>
 			<File
