@@ -1,4 +1,4 @@
-#include ".\entitymanager.h"
+#include "EntityManager.h"
 
 CEntityManager::CEntityManager(void)
 {

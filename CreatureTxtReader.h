@@ -1,8 +1,8 @@
 #ifndef CREATURE_TXT_READER_H
 #define CREATURE_TXT_READER_H
 
-#include <windows.h>
-#include <gl/gl.h>
+#include "system.h"
+#include <GL/gl.h>
 #include <map>
 #include <vector>
 #include <string>
@@ -15,7 +15,7 @@ namespace game_utils
 		CCreatureTxtReader();
 		~CCreatureTxtReader();
 
-		GLint get_room_propery(char *room_class_name, GLint property);
+		GLint get_room_propery(const char *room_class_name, GLint property);
 		GLint get_creature_propery(char *creature_class_name, GLint property);
 
 	private:

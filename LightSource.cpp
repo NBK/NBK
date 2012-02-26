@@ -88,19 +88,19 @@ namespace game_objects
 			this->radius=radius;
 		}
 
-		GLvoid CLightSource::setAmbientColor(vector3f &color)
+		GLvoid CLightSource::setAmbientColor(vector3f color)
 		{
 			memcpy(ambientColor,&color[0],sizeof(GLfloat)*3);
 			ambientColor[3]=1.0f;
 		}
 
-		GLvoid CLightSource::setDiffuseColor(vector3f &color)
+		GLvoid CLightSource::setDiffuseColor(vector3f color)
 		{
 			memcpy(diffuseColor,&color[0],sizeof(GLfloat)*3);
 			diffuseColor[3]=1.0f;
 		}
 
-		GLvoid CLightSource::setSpecularColor(vector3f &color)
+		GLvoid CLightSource::setSpecularColor(vector3f color)
 		{
 			memcpy(specularColor,&color[0],sizeof(GLfloat)*3);
 			specularColor[3]=1.0f;

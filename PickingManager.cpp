@@ -43,7 +43,7 @@ bool CPickingManager::update()
 			}
 
 			//using a map is very slow
-			std::vector<pair<vector3ub, CBlock*>> colorBlockRef;
+			std::vector< pair<vector3ub, CBlock*> > colorBlockRef;
 
 			sColor sCol(50,50,50);
 
@@ -126,6 +126,7 @@ bool CPickingManager::update()
 			vector2i mousePos = CV_GAME_MANAGER->getControlManager()->getInput()->getMousePos();
 			
 			//convert mouse pos to relative to this window
+#if WIN32
 			RECT cl,wnd;
 			GetClientRect(CV_WINDOW_HANDLE,&cl);
 			GetWindowRect(CV_WINDOW_HANDLE,&wnd);
@@ -135,9 +136,12 @@ bool CPickingManager::update()
 
 			mousePos[0] -= border+wnd.left;
 			mousePos[1] -= titlebar+wnd.top;
+#else
+			// TODO Tequila: Can we just take it as is with SDL Support ?
+#endif
 
 			vector3ub pickedColor = COGLUtils::getColor(mousePos);
-			for(std::vector<pair<vector3ub, CBlock*>>::iterator i = colorBlockRef.begin(); i != colorBlockRef.end(); i++)
+			for(std::vector< pair<vector3ub, CBlock*> >::iterator i = colorBlockRef.begin(); i != colorBlockRef.end(); i++)
 				if(i->first == pickedColor)
 					lastPickedBlock = i->second;
 

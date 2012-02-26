@@ -1,6 +1,8 @@
 #ifndef GUI_BUTTON_H
 #define GUI_BUTTON_H
 
+#include <stdarg.h>
+#include <string.h>
 #include "AbstractGUIItem.h"
 #include "DKText.h"
 
@@ -17,11 +19,11 @@ namespace GUI
 		virtual GLvoid on_mouse_up();
 		virtual GLvoid on_mouse_out();
 		virtual GLvoid on_mouse_click();
-		virtual GLvoid draw();		
+		virtual GLvoid draw();
 		virtual GLvoid init(GLint screen_width, GLint screen_height);
 
 		GLvoid set_caption_color(GLfloat r, GLfloat g, GLfloat b);
-		GLvoid set_caption_color(GLfloat *rgb);
+		GLvoid set_caption_color(const GLfloat *rgb);
 		GLvoid set_caption_size(GLint size);
 		GLint get_caption_size();
 

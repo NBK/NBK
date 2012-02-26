@@ -2,7 +2,7 @@
 #define COMMONS_H
 
 #include "GameManager.h"
-#include <windows.h>
+#include "system.h"
 #include <string>
 #include "TextureList.h"
 #include "DeltaTime.h"
@@ -11,7 +11,7 @@
 namespace game_utils
 {
 
-	static GLfloat CV_PLAYER_COLOR[5][3] =
+	static const GLfloat CV_PLAYER_COLOR[5][3] =
 	{
 		{1.0f,0.0f,0.0f},
 		{0.0f,0.0f,1.0f},
@@ -25,9 +25,9 @@ namespace game_utils
 	extern GLint	CV_SETTINGS_WINDOW_HEIGHT;
 	extern GLint	CV_SETTINGS_WINDOW_WIDTH_HALF;
 	extern GLint	CV_SETTINGS_WINDOW_HEIGHT_HALF;
-	static GLfloat	CV_SETTINGS_FOV					= 45.0f;
-	static bool		CV_SETTINGS_WINDOW_FULLSCREEN	= false;
-	static GLint	CV_NORMAL_MAP_START_INDEX		= 5000;
+	static const GLfloat	CV_SETTINGS_FOV					= 45.0f;
+	static const bool		CV_SETTINGS_WINDOW_FULLSCREEN	= false;
+	static const GLint		CV_NORMAL_MAP_START_INDEX		= 5000;
 
 	//static const GLint	CV_MAX_VBO_QUADS			= 112;
 	static const GLint	CV_MAX_VBO_QUADS			= 512;
@@ -39,13 +39,13 @@ namespace game_utils
 	static GLfloat		CV_WIDTH_HEIGHT_FACTOR	= 0.7f;
 	static GLfloat		CV_BLOCK_WIDTH			= CV_BLOCK_HEIGHT*CV_WIDTH_HEIGHT_FACTOR;
 	static GLfloat		CV_BLOCK_DEPTH			= CV_BLOCK_HEIGHT*CV_WIDTH_HEIGHT_FACTOR;
-	static const GLint	CV_LEVEL_MAP_SIZE		= 85;	// every DK map measures 85x85 blocks
-	static GLint		CV_BLOCK_RESOLUTION_XZ	= 4;
-	static GLint		CV_BLOCK_RESOLUTION_Y	= 5;
+	static const GLuint	CV_LEVEL_MAP_SIZE		= 85;	// every DK map measures 85x85 blocks
+	static const GLint	CV_BLOCK_RESOLUTION_XZ	= 4;
+	static const GLint	CV_BLOCK_RESOLUTION_Y	= 5;
 
-	static GLint		CV_DEFORMED_CUBE_WIDTH	= 256;
-	static GLint		CV_DEFORMED_CUBE_HEIGHT	= 9+7; // 7 more for the ceiling
-	static GLint		CV_DEFORMED_CUBE_DEPTH	= 256;
+	static const GLint	CV_DEFORMED_CUBE_WIDTH	= 256;
+	static const GLint	CV_DEFORMED_CUBE_HEIGHT	= 9+7; // 7 more for the ceiling
+	static const GLint	CV_DEFORMED_CUBE_DEPTH	= 256;
 
 	#define CV_FBLR_FACE_VERT_FLOATS	(CV_BLOCK_RESOLUTION_XZ-1)*(CV_BLOCK_RESOLUTION_Y-1)*4*3
 	#define CV_TBWLC_FACE_VERT_FLOATS	(CV_BLOCK_RESOLUTION_XZ-1)*(CV_BLOCK_RESOLUTION_XZ-1)*4*3
@@ -54,21 +54,26 @@ namespace game_utils
 	#define CV_TBWLC_FACE_TEX_FLOATS	(CV_BLOCK_RESOLUTION_XZ-1)*(CV_BLOCK_RESOLUTION_XZ-1)*4*2
 
 	#define CV_FBLR_W_L_FACE_VERT_FLOATS	(CV_BLOCK_RESOLUTION_XZ-1)*4*3
-	#define CV_FBLR_W_L_FACE_TEX_FLOATS		(CV_BLOCK_RESOLUTION_XZ-1)*4*2	
+	#define CV_FBLR_W_L_FACE_TEX_FLOATS		(CV_BLOCK_RESOLUTION_XZ-1)*4*2
 
 	// camera settings
-	#define CV_CAMERA_INITIAL_HEIGHT		CV_BLOCK_HEIGHT*4.0f	
+	#define CV_CAMERA_INITIAL_HEIGHT		CV_BLOCK_HEIGHT*4.0f
 	#define CV_CAMERA_MAX_HEIGHT			CV_BLOCK_HEIGHT*15.0f
 	#define CV_CAMERA_MIN_HEIGHT			CV_BLOCK_HEIGHT*2.0f
 	#define CV_CAMERA_MIN_FPS_Y_POS			(CV_BLOCK_HEIGHT/10.0f)*3.0f
-	
+
 	extern cml::vector3f					CV_CAMERA_OLD_POSITION;
 
 	#define MAX_CEILING_HEIGHT	2
 
 	// commonst for window access
+#ifdef WIN32
 	extern HWND CV_WINDOW_HANDLE;
 	extern HDC	CV_DEVICE_CONTEXT;
+#else
+#define CV_WINDOW_HANDLE
+#define CV_DEVICE_CONTEXT
+#endif
 
 	// a very important variable stating the current player
 	extern GLint CV_CURRENT_PLAYER_ID;
@@ -81,13 +86,13 @@ namespace game_utils
 	static std::string	CV_CONFIG_EFFECTS		= "effects.conf";
 	static std::string	CV_CONFIG_ATLAS_COORDS	= "atlas_coordinates.conf";
 	static std::string	CV_CONFIG_SETTINGS		= "settings.conf";
-	static std::string	CV_RESOURCES_DIRECTORY	= "data\\resources\\";
+	static std::string	CV_RESOURCES_DIRECTORY	= "data" PATH_SEP "resources" PATH_SEP;
 
 	// common game lists texture list, model list...
-	extern lists::CTextureList		*CV_TEXTURE_LIST;	
+	extern lists::CTextureList		*CV_TEXTURE_LIST;
 
 	// common acces to game manager and from it all other modules it controls
-	extern managers::CGameManager	*CV_GAME_MANAGER;	
+	extern managers::CGameManager	*CV_GAME_MANAGER;
 
 	// blocks have owners and here are owners values
 	#define CV_PLAYER_0			0

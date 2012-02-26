@@ -27,6 +27,8 @@ using namespace DK_GUI;
 
 using namespace std;
 
+extern const char *room_class_names[];
+
 namespace DK_GUI
 {
 	class CPlayGUI: public control::CInputListener
@@ -113,7 +115,7 @@ namespace DK_GUI
 		GLvoid add_WORKSHOP_widgets();
 		GLvoid add_CREATURE_widgets();
 
-		static char *tab_item_class_name[];
+		static const char *tab_item_class_name[];
 
 		/* room and creature cound control variables */
 		CDKGUILabel *room_count_label[4];

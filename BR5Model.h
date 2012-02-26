@@ -1,7 +1,7 @@
 #ifndef BR5MODEL_H
 #define BR5MODEL_H
 
-#include "VBO.H"
+#include "VBO.h"
 #include <string>
 #include <map>
 #include "boundingBox.h"

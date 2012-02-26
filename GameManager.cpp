@@ -50,7 +50,7 @@ namespace game_utils
 
 		bool CGameManager::init()
 		{
-			CLogger::setEntryStart();		
+			CLogger::setEntryStart();
 
 			console = new CConsole();
 
@@ -60,55 +60,100 @@ namespace game_utils
 			textPrinter->setCharacterSize(12);
 			textPrinter->setColor(1.0f,1.0f,1.0f);
 
-			CV_TEXTURE_LIST = new lists::CTextureList();			
+			CV_TEXTURE_LIST = new lists::CTextureList();
 
 			bool result = true;
 
 			CLogger::setEntryStart();
 			settingsManager = new CSettingsManager();
-			result&=settingsManager->init();			
+			result&=settingsManager->init();
 			CLogger::setEntryEnd("Settings manager creation and init.");
+			if (!result)
+			{
+				CLogger::addEntry("[ERROR|INIT]: Settings manager failed\n");
+				return result;
+			}
 
 			CLogger::setEntryStart();
 			resourceManager = new CResourceManager();
-			result&=resourceManager->init();			
+			result&=resourceManager->init();
 			CLogger::setEntryEnd("Resource manager creation and init.");
+			if (!result)
+			{
+				CLogger::addEntry("[ERROR|INIT]: Resource manager failed\n");
+				return result;
+			}
 
 			CLogger::setEntryStart();
 			creatureManager = new CCreatureManager();
-			result&=creatureManager->init();			
+			result&=creatureManager->init();
 			CLogger::setEntryEnd("Creature manager creation and init.");
+			if (!result)
+			{
+				CLogger::addEntry("[ERROR|INIT]: Creature manager failed\n");
+				return result;
+			}
 
 			CLogger::setEntryStart();
 			blockManager = new CBlockManager();
 			result&=blockManager->init();
 			CLogger::setEntryEnd("Block manager creation and init.");
+			if (!result)
+			{
+				CLogger::addEntry("[ERROR|INIT]: Block manager failed\n");
+				return result;
+			}
 
 			CLogger::setEntryStart();
 			lightingManager = new CLightingManager();
 			result&=lightingManager->init();
 			CLogger::setEntryEnd("Lighting manager creation and init.");
+			if (!result)
+			{
+				CLogger::addEntry("[ERROR|INIT]: Lighting manager failed\n");
+				return result;
+			}
 
 			CLogger::setEntryStart();
 			levelManager = new CLevelManager();
 			result&=levelManager->init();
-			CLogger::setEntryEnd("Level manager creation and init.");			
+			CLogger::setEntryEnd("Level manager creation and init.");
+			if (!result)
+			{
+				CLogger::addEntry("[ERROR|INIT]: Level manager failed\n");
+				return result;
+			}
 
 			CLogger::setEntryStart();
 			collisionManager = new CCollisionManager();
 			result&=collisionManager->init();
 			CLogger::setEntryEnd("Collision manager creation and init.");
+			if (!result)
+			{
+				CLogger::addEntry("[ERROR|INIT]: Collision manager failed\n");
+				return result;
+			}
 
 			CLogger::setEntryStart();
 			controlManager = new CControlManager();
 			result&=controlManager->init();
 			CLogger::setEntryEnd("Control manager creation and init.");
+			if (!result)
+			{
+				CLogger::addEntry("[ERROR|INIT]: Control manager failed\n");
+				return result;
+			}
 
 			CLogger::setEntryStart();
 			//renderManager = new CRenderManager();
 			renderManager = new CRenderManager1();
 			result&=renderManager->init();
 			CLogger::setEntryEnd("Render manager creation and init.");
+			if (!result)
+			{
+				CLogger::addEntry("[ERROR|INIT]: Render manager failed\n");
+				return result;
+			}
 
 			/*newRenderer = new CNewRenderer();
 			result &= newRenderer->init();
@@ -117,36 +162,66 @@ namespace game_utils
 			CLogger::setEntryStart();
 			animatedTerrainManager = new CAnimatedTerrainManager();
 			result&=animatedTerrainManager->init();
-			CLogger::setEntryEnd("Animated terrain manager creation and init.");			
+			CLogger::setEntryEnd("Animated terrain manager creation and init.");
+			if (!result)
+			{
+				CLogger::addEntry("[ERROR|INIT]: Animated terrain manager failed\n");
+				return result;
+			}
 
 			CLogger::setEntryStart();
 			roomManager = new CRoomManager();
 			result&=roomManager->init();
-			CLogger::setEntryEnd("Room manager creation and init.");			
+			CLogger::setEntryEnd("Room manager creation and init.");
+			if (!result)
+			{
+				CLogger::addEntry("[ERROR|INIT]: Room manager failed\n");
+				return result;
+			}
 
 			CLogger::setEntryStart();
 			pickingManager = new CPickingManager();
 			result&=pickingManager->init();
-			CLogger::setEntryEnd("Picking manager creation and init.");			
+			CLogger::setEntryEnd("Picking manager creation and init.");
+			if (!result)
+			{
+				CLogger::addEntry("[ERROR|INIT]: Picking manager failed\n");
+				return result;
+			}
 
 			CLogger::setEntryStart();
 			economyManager = new CEconomyManager();
 			result&=economyManager->init();
-			CLogger::setEntryEnd("Economy manager creation and init.");			
+			CLogger::setEntryEnd("Economy manager creation and init.");
+			if (!result)
+			{
+				CLogger::addEntry("[ERROR|INIT]: Economy manager failed\n");
+				return result;
+			}
 
 			CLogger::setEntryStart();
 			guiManager = new CGUIManager();
 			result&=guiManager->init();
-			CLogger::setEntryEnd("GUI manager (wraper) creation and init.");			
+			CLogger::setEntryEnd("GUI manager (wraper) creation and init.");
+			if (!result)
+			{
+				CLogger::addEntry("[ERROR|INIT]: GUI manager failed\n");
+				return result;
+			}
 
 			CLogger::setEntryStart();
 			pathManager = new CPathManager();
 			result&=pathManager->init();
 			CLogger::setEntryEnd("Path manager creation and init.");
+			if (!result)
+			{
+				CLogger::addEntry("[ERROR|INIT]: Path manager failed\n");
+				return result;
+			}
 
 			console->init();
 
-			CLogger::setEntryEnd("Game managers (all above) init.");						
+			CLogger::setEntryEnd("Game managers (all above) init.");
 
 			return result;
 		}
@@ -157,9 +232,9 @@ namespace game_utils
 
 			deltaTime->beforeUpdate();
 
-			result&=settingsManager->update();			
-			result&=resourceManager->update();			
-			result&=creatureManager->update();	
+			result&=settingsManager->update();
+			result&=resourceManager->update();
+			result&=creatureManager->update();
 			result&=blockManager->update();
 			result&=levelManager->update();
 			result&=pathManager->update();
@@ -178,7 +253,7 @@ namespace game_utils
 			result&=animatedTerrainManager->update();
 			result&=lightingManager->update();
 			result&=roomManager->update();
-			result&=guiManager->update();	
+			result&=guiManager->update();
 			result&=economyManager->update();
 
 			deltaTime->afterUpdate();
@@ -203,10 +278,10 @@ namespace game_utils
 			result&=collisionManager->shutdown();
 			result&=controlManager->shutdown();
 			result&=animatedTerrainManager->shutdown();
-			result&=lightingManager->shutdown();			
-			result&=pickingManager->shutdown();			
-			result&=economyManager->shutdown();			
-			result&=guiManager->shutdown();			
+			result&=lightingManager->shutdown();
+			result&=pickingManager->shutdown();
+			result&=economyManager->shutdown();
+			result&=guiManager->shutdown();
 			result&=pathManager->shutdown();
 
 			delete CV_TEXTURE_LIST;
@@ -228,7 +303,7 @@ namespace game_utils
 			delete pathManager;
 			delete deltaTime;
 			delete textPrinter;
-			delete console;			
+			delete console;
 
 			return result;
 		}
@@ -331,7 +406,7 @@ namespace game_utils
 		CConsole *CGameManager::getConsole()
 		{
 			return console;
-		}	
+		}
 		CSpellManager *CGameManager::getSpellManager()
 		{
 			return spellManager;

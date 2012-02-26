@@ -36,7 +36,7 @@ namespace game_utils
 		GLvoid CSpellManager::castSpell(GLint spell, cml::vector2f position, GLubyte owner)
 		{
 			CBlock *block = CV_GAME_MANAGER->getLevelManager()->getBlock(position[0],position[1]);
-			cml:vector3f realposition = block->getRealPosition();
+			cml::vector3f realposition = block->getRealPosition();
 
 			if(spell == SPELL_BUTTON_SUMMON_IMP)
 			{
@@ -44,7 +44,7 @@ namespace game_utils
 				if(block->getOwner() == owner)
 					CV_GAME_MANAGER->getCreatureManager()->addCreature("IMP",cml::vector3f(realposition[0],CV_BLOCK_HEIGHT/4.0f,realposition[2]),owner);
 			}
-			else if(spell = SPELL_BUTTON_DESTROY_WALL)
+			else if(spell == SPELL_BUTTON_DESTROY_WALL)
 			{
 				// dont do this on the edge of the map. TODO: fix this for rock which is not on the edge of the map.
 				if(block->getType() == CV_BLOCK_TYPE_ROCK_ID)

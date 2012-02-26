@@ -38,12 +38,12 @@ namespace game_utils
 			/*
 				Returns block if x&y are in normal bounds else NULL.
 			*/
-			game_objects::CBlock *getBlock(GLint x, GLint y);
-			game_objects::CBlock *getBlockOld(GLint x, GLint y);
+			game_objects::CBlock *getBlock(GLuint x, GLuint y);
+			game_objects::CBlock *getBlockOld(GLuint x, GLuint y);
 			game_objects::CBlock *getBlock(cml::vector2i pos);
 
-			GLint getBlockType(GLint x, GLint y);
-			GLint getBlockTypeOld(GLint x, GLint y); // for being able to use old code
+			GLint getBlockType(GLuint x, GLuint y);
+			GLint getBlockTypeOld(GLuint x, GLuint y); // for being able to use old code
 
 			bool isBlockTypeNear(GLint blockType, GLint x, GLint y, bool diagonal, GLubyte owner, std::vector<game_objects::CBlock*> *blocks = NULL);
 			bool isBlockTypeNear(GLint blockType, cml::vector2i logicalPos, bool diagonal, GLubyte owner, std::vector<game_objects::CBlock*> *blocks = NULL);

@@ -1,5 +1,5 @@
-#include <windows.h>
-#include <gl\gl.h>
+#include "../system.h"
+#include <GL/gl.h>
 
 #include "Primitives.h"
 

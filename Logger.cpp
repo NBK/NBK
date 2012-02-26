@@ -1,5 +1,5 @@
-#include <windows.h>
-#include <gl\gl.h>
+#include "system.h"
+#include <GL/gl.h>
 #include <stdio.h>
 #include <fstream>
 #include "Logger.h"
@@ -40,14 +40,25 @@ namespace utils
 		GLint ref = getLastIndex();
 
 		static bool first_line=true;
-		
+
 		if (first_line)
 		{
+#ifdef WIN32
 			SYSTEMTIME systime;
 			GetSystemTime(&systime);
+#else
+			time_t currenttime;
+			struct tm *systime;
+			currenttime = time(NULL);
+			systime = localtime(&currenttime);
+#endif
 
 			char date[100];
+#ifdef WIN32
 			sprintf(date,"%d.%d.%d - %d:%d:%d",systime.wDay,systime.wMonth,systime.wYear,systime.wHour,systime.wMinute,systime.wSecond);
+#else
+			strftime(date,sizeof(date),"%d.%m.%Y - %H:%M:%S",systime);
+#endif
 
 			FILE *log_file=fopen("logger.log","wc");
 			if (!log_file)
@@ -82,11 +93,11 @@ namespace utils
 		if (ref==-1)
 		{
 			string[string_length]='\n';
-		}		
+		}
 
 		if (ref!=-1)
 		{
-			char line[256];	
+			char line[256];
 
 			for (int i=0; i<256; i++)
 			{
@@ -98,7 +109,7 @@ namespace utils
 				line[i] = string[i];
 			}
 
-			string_length=sprintf(string,"Time taken: %d ms\n",timeGetTime()-st[ref]);
+			string_length=sprintf(string,"Time taken: %ld ms\n",timeGetTime()-st[ref]);
 
 			memcpy(line+64,string,string_length);
 
@@ -110,7 +121,7 @@ namespace utils
 
 	GLvoid CLogger::addEntry(const char *text, ...)
 	{
-		
+
 		char string[256];
 		va_list	ap;
 
@@ -127,7 +138,7 @@ namespace utils
 		if (!log_file)
 		{
 			return;
-		}	
+		}
 
 		fwrite(string,1,string_length,log_file);
 

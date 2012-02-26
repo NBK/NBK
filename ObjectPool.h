@@ -3,6 +3,7 @@
 
 #include <stack>
 #include <vector>
+#include "system.h"
 
 namespace game_utils
 {

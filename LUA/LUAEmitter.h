@@ -1,8 +1,8 @@
 #ifndef LUA_EMITTER_H
 #define LUA_EMITTER_H
 
-#include <windows.h>
-#include <gl/gl.h>
+#include "../system.h"
+#include <GL/gl.h>
 #include "LUAParticle.h"
 #include <string>
 #include <vector>

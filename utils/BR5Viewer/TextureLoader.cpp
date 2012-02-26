@@ -74,7 +74,7 @@ namespace loaders
 		pPicture->get_Width(&lWidth);
 		lWidthPixels = MulDiv(lWidth, GetDeviceCaps(hdcTemp, LOGPIXELSX), 2540);
 		pPicture->get_Height(&lHeight);
-		lHeightPixels= MulDiv(lHeight, GetDeviceCaps(hdcTemp, LOGPIXELSY), 2540);	
+		lHeightPixels= MulDiv(lHeight, GetDeviceCaps(hdcTemp, LOGPIXELSY), 2540);
 
 		lr.texture_dimensions.x=lWidthPixels;
 		lr.texture_dimensions.y=lHeightPixels;

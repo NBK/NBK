@@ -5,8 +5,8 @@ namespace GUI
 {
 	CBasicGUIButton::CBasicGUIButton(GLfloat x_pos, GLfloat y_pos, GLfloat z_pos, GLfloat width, GLfloat height, char *caption)
 	: CAbstractGUIItem(x_pos,y_pos,z_pos,width,height)
-	{		
-		set_color(0.4f,0.4f,0.4f);		
+	{
+		set_color(0.4f,0.4f,0.4f);
 		text = new CDKText();
 		set_caption(caption);
 		set_caption_color(0.0f,0.0f,0.0f);
@@ -49,14 +49,14 @@ namespace GUI
 	}
 
 	GLvoid CBasicGUIButton::display_caption()
-	{		
+	{
 		calculate_caption_pos();
-		text->print((GLint)(extent.pixel_pos_x+text_x_pos),(GLint)(extent.pixel_pos_y+text_y_pos),caption);		
+		text->print((GLint)(extent.pixel_pos_x+text_x_pos),(GLint)(extent.pixel_pos_y+text_y_pos),caption);
 	}
 
 	GLvoid CBasicGUIButton::draw()
 	{
-		CAbstractGUIItem::draw();				
+		CAbstractGUIItem::draw();
 		display_caption();
 	}
 
@@ -65,7 +65,7 @@ namespace GUI
 		text->set_color(r,g,b);
 	}
 
-	GLvoid CBasicGUIButton::set_caption_color(GLfloat *rgb)
+	GLvoid CBasicGUIButton::set_caption_color(const GLfloat *rgb)
 	{
 		text->set_color(rgb[0],rgb[1],rgb[2]);
 	}

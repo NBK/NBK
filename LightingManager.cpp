@@ -2,7 +2,7 @@
 #include "LightingManager.h"
 #include <algorithm>
 #include "BasicLight.h"
-#include "COnversions.h"
+#include "Conversions.h"
 
 using namespace cml;
 using namespace game_objects;
@@ -57,9 +57,9 @@ namespace game_utils
 			lightSources.clear();
 
 			// handle clearing of light-block assignments
-			for (GLint y=0; y<CV_LEVEL_MAP_SIZE; y++)
+			for (GLuint y=0; y<CV_LEVEL_MAP_SIZE; y++)
 			{
-				for (GLint x=0; x<CV_LEVEL_MAP_SIZE; x++)
+				for (GLuint x=0; x<CV_LEVEL_MAP_SIZE; x++)
 				{
 					blockLightData[y][x].reset();
 				}
@@ -68,7 +68,7 @@ namespace game_utils
 			return true;
 		}
 
-		CBlockLightData *CLightingManager::getBlockLightData(vector2i &blockPos)
+		CBlockLightData *CLightingManager::getBlockLightData(vector2i blockPos)
 		{
 			return &blockLightData[blockPos[1]][blockPos[0]];
 		}
@@ -166,12 +166,12 @@ namespace game_utils
 			}
 		}
 
-		GLvoid CLightingManager::addLightSource(vector2i &position, string lightSourceName)
+		GLvoid CLightingManager::addLightSource(vector2i position, string lightSourceName)
 		{
 			addLightSource(position,lightSourceNameToTypeIndex(lightSourceName));
 		}
 
-		GLvoid CLightingManager::addLightSource(vector2i &position, GLint lightSourceType)
+		GLvoid CLightingManager::addLightSource(vector2i position, GLint lightSourceType)
 		{
 			// depending on the block position we need to setup from 1 to 4 lights
 			CLevelManager *lManager = CV_GAME_MANAGER->getLevelManager();
@@ -213,7 +213,7 @@ namespace game_utils
 
 					GLint lightRadius = (int)ceil(light->getRadius()/CV_BLOCK_WIDTH)+2; // +2 is there for extended radius comparison
 
-					vector2i lightPos = CConversions::realToLogical(light->getPosition());
+					//vector2i lightPos = CConversions::realToLogical(light->getPosition());
 
 					// now for every block of this light, add references of this light to influenced neighbour blocks.
 					for (GLint y=-lightRadius; y<=lightRadius; y++)

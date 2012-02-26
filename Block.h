@@ -2,10 +2,10 @@
 #define BLOCK_H
 
 #include "BlockObject.h"
-#include <windows.h>
-#include <gl/gl.h>
+#include "system.h"
+#include <GL/gl.h>
 #include <cml/cml.h>
-#include "BoundingBox.h"
+#include "boundingBox.h"
 
 /*
 	Games base building block. There are several types of blocks:
@@ -50,7 +50,7 @@ namespace game_objects
 		/*
 			Sets or returns block logical|real position.
 		*/
-		GLvoid			setLogicalPosition(cml::vector2i &position);
+		GLvoid			setLogicalPosition(cml::vector2i position);
 		cml::vector2i	getLogicalPosition();
 		cml::vector3f	getRealPosition();
 		cml::vector3f	getCenterPosition();
@@ -189,9 +189,9 @@ namespace game_objects
 		// removes a block object from the block object list. Usefull when selling traps, or picking gold...
 		GLvoid removeBlockObject(block_objects::CBlockObject *blockObject);
 
-		GLvoid CBlock::digBlock();
-		GLvoid CBlock::claimBlock(GLubyte owner);
-		GLvoid CBlock::fortifyBlock(GLubyte owner);
+		GLvoid digBlock();
+		GLvoid claimBlock(GLubyte owner);
+		GLvoid fortifyBlock(GLubyte owner);
 
 		GLvoid addLife(GLfloat life);
 		GLvoid decLife(GLfloat life);

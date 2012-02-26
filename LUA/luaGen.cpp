@@ -91,7 +91,7 @@ typename T3 = NullT,
 typename T4 = NullT
 >
 class  LuaCall
-	: public Duo<TR, typename LuaCall<T1,T2,T3,T4,NullT> > 
+	: public Duo<TR, typename LuaCall<T1,T2,T3,T4,NullT> >
 	, public LuaCallBase
 {
 public:

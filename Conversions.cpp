@@ -71,17 +71,17 @@ namespace game_utils
 		return ostr.str();
 	}
 
-	vector2i CConversions::realToLogical(vector3f &val)
+	vector2i CConversions::realToLogical(vector3f val)
 	{
 		return vector2i((GLint)(val[0]/CV_BLOCK_WIDTH),(GLint)(val[2]/CV_BLOCK_DEPTH));
 	}
 
-	GLvoid CConversions::vec3fToFloat_p(cml::vector3f &val, GLfloat *arr)
+	GLvoid CConversions::vec3fToFloat_p(cml::vector3f val, GLfloat *arr)
 	{
 		memcpy(arr,&val[0],sizeof(GLfloat)*3);
 	}
 
-	GLvoid CConversions::vec2fToFloat_p(cml::vector2f &val, GLfloat *arr)
+	GLvoid CConversions::vec2fToFloat_p(cml::vector2f val, GLfloat *arr)
 	{
 		memcpy(arr,&val[0],sizeof(GLfloat)*2);
 	}

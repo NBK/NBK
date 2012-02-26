@@ -9,7 +9,7 @@ using namespace game_utils;
 namespace DK_GUI
 {
 
-	char *CPlayGUI::tab_item_class_name[] =
+	const char *CPlayGUI::tab_item_class_name[] = 
 	{
 		"TI00","TI01","TI02","TI03",
 		"TI04","TI05","TI06","TI07",
@@ -18,7 +18,7 @@ namespace DK_GUI
 	};
 
 	CPlayGUI::CPlayGUI(GLint screen_width, GLint screen_height, CDKTextureList *game_textures): CInputListener()
-	{	
+	{
 		// TODO: read this from script
 		PLAYER0_MONEY=100000;
 
@@ -99,7 +99,7 @@ namespace DK_GUI
 
 		/* now init the GUI */
 		play_gui->init();
-		play_gui->force_file_alignment("Data/resources/GFX/GUI/alignment.gac");
+		play_gui->force_file_alignment("data/resources/GFX/GUI/alignment.gac");
 
 		/* fix te top texture because of force alignment */
 		/*for (GLint i=WOODEN_DOORS_NAME; i<=MAGIC_DOORS_NAME; i++)
@@ -108,7 +108,7 @@ namespace DK_GUI
 		}*/
 
 		action=GA_NONE;
-		last_built=-1;		
+		last_built=-1;
 	}
 
 	GLvoid CPlayGUI::add(CAbstractGUIItem *item, TAB_CONTROL_PART tcp, bool add_to_gui)
@@ -143,10 +143,10 @@ namespace DK_GUI
 		info->set_class_name("QUERY_TAB_INFO");
 
 		play_gui->add_item(info);
-		tab_control[TCP_QUERY].add_item(info);		
+		tab_control[TCP_QUERY].add_item(info);
 
 		/* add the CHICKEN button */
-		char *anim_names[]=	{"QUERY_TAB_CHICKEN_ANIM1","QUERY_TAB_CHICKEN_ANIM2"};
+		const char *anim_names[] = {"QUERY_TAB_CHICKEN_ANIM1","QUERY_TAB_CHICKEN_ANIM2"};
 		CAnimatedSpeedButton *chicken = new CAnimatedSpeedButton(game_textures,SPEED_BUTTON_CHICKEN,2,anim_names);
 		chicken->set_parent(this);
 		chicken->set_class_name("QUERY_TAB_CHICKEN");
@@ -154,7 +154,7 @@ namespace DK_GUI
 		add(chicken,TCP_QUERY);
 
 		/* add the PRISON button */
-		char *anim_names_[]= {"QUERY_TAB_PRISON_ANIM1","QUERY_TAB_PRISON_ANIM2"};
+		const char *anim_names_[] = {"QUERY_TAB_PRISON_ANIM1","QUERY_TAB_PRISON_ANIM2"};
 		CAnimatedSpeedButton *prison = new CAnimatedSpeedButton(game_textures,SPEED_BUTTON_PRISON,2,anim_names_);
 		prison->set_parent(this);
 		prison->set_class_name("QUERY_TAB_PRISON");
@@ -167,10 +167,11 @@ namespace DK_GUI
 
 		if (player_count>0)
 		{
-			char class_name_creatures[]="QUERY_TAB_CREATURE_COUNT_PLAYER_";
-			char class_name_rooms[]="QUERY_TAB_ROOM_COUNT_PLAYER1";
-			char class_name_rooms_label[]="QUERY_TAB_ROOM_COUNT_LABEL_PLAYER_";
-			char class_name_creature_label[]="QUERY_TAB_CREATURE_COUNT_LABEL_PLAYER_";
+			char class_name[64];
+			const char class_name_creatures[]="QUERY_TAB_CREATURE_COUNT_PLAYER";
+			const char class_name_rooms[]="QUERY_TAB_ROOM_COUNT_PLAYER";
+			const char class_name_rooms_label[]="QUERY_TAB_ROOM_COUNT_LABEL_PLAYER";
+			const char class_name_creature_label[]="QUERY_TAB_CREATURE_COUNT_LABEL_PLAYER";
 
 			CGUIBackground *cc = NULL, *rc = NULL;
 
@@ -182,28 +183,28 @@ namespace DK_GUI
 				}*/
 
 				/* the creature counter */
-				class_name_creatures[strlen(class_name_creatures)-1]=(char)((char)i+(int)'0');
+				sprintf(class_name, "%s%i", class_name_creatures, i);
 				cc = new CGUIBackground(0.0f,0.0f,0.0f,0.0f,0.0f,0);
-				cc->set_class_name(class_name_creatures);
+				cc->set_class_name(class_name);
 				cc->set_texture(game_textures->get_texture_by_name(cc->get_class_name()));
 				cc->set_parent(this);
 
 				add(cc,TCP_QUERY);
 
 				/* the room counter */
-				class_name_rooms[strlen(class_name_rooms)-1]=(char)((char)i+(int)'0');
+				sprintf(class_name, "%s%i", class_name_rooms, i);
 				rc = new CGUIBackground(0.0f,0.0f,0.0f,0.0f,0.0f,0);
-				rc->set_class_name(class_name_rooms);
+				rc->set_class_name(class_name);
 				rc->set_texture(game_textures->get_texture_by_name(rc->get_class_name()));
 				rc->set_parent(this);
 
 				add(rc,TCP_QUERY);
 
 				/* the room count label */
-				class_name_rooms_label[strlen(class_name_rooms_label)-1]=(char)((char)i+(int)'0');
+				sprintf(class_name, "%s%i", class_name_rooms_label, i);
 				room_count_label[i] = new CDKGUILabel("0");
 				room_count_label[i]->set_caption_color(CV_PLAYER_COLOR[i]);
-				room_count_label[i]->set_class_name(class_name_rooms_label);
+				room_count_label[i]->set_class_name(class_name);
 				room_count_label[i]->set_parent(this);
 				room_count_label[i]->set_caption("0");
 				room_count_label[i]->int_set(CV_GAME_MANAGER->getRoomManager()->getRoomCount(i));
@@ -211,10 +212,10 @@ namespace DK_GUI
 				add(room_count_label[i],TCP_QUERY);
 
 				/* the creature count label */
-				class_name_creature_label[strlen(class_name_creature_label)-1]=(char)((char)i+(int)'0');
+				sprintf(class_name, "%s%i", class_name_creature_label, i);
 				creature_count_label[i] = new CDKGUILabel("0");
 				creature_count_label[i]->set_caption_color(CV_PLAYER_COLOR[i]);
-				creature_count_label[i]->set_class_name(class_name_creature_label);
+				creature_count_label[i]->set_class_name(class_name);
 				creature_count_label[i]->set_parent(this);
 				creature_count_label[i]->set_caption("0");
 
@@ -243,7 +244,7 @@ namespace DK_GUI
 				research_progress_bar->set_color(0.0f,0.0f,0.0f);
 				research_progress_bar->set_class_name("QUERY_TAB_RESEARCH_PROGRESS_BAR");
 				research_progress_bar->set_parent(this);
-				research_progress_bar->set_style(CDKProgressBar::PBS_FROM_RIGHT);				
+				research_progress_bar->set_style(CDKProgressBar::PBS_FROM_RIGHT);
 				research_progress_bar->set_increment(0.00001f);
 				research_progress_bar->set_inverted(true);
 				add(research_progress_bar,TCP_QUERY);
@@ -267,7 +268,7 @@ namespace DK_GUI
 				workshop_progress_bar->set_color(0.0f,0.0f,0.0f);
 				workshop_progress_bar->set_class_name("QUERY_TAB_WORKSHOP_PROGRESS_BAR");
 				workshop_progress_bar->set_parent(this);
-				workshop_progress_bar->set_style(CDKProgressBar::PBS_FROM_RIGHT);				
+				workshop_progress_bar->set_style(CDKProgressBar::PBS_FROM_RIGHT);
 				workshop_progress_bar->set_increment(0.00001f);
 				workshop_progress_bar->set_inverted(true);
 				add(workshop_progress_bar,TCP_QUERY);
@@ -284,7 +285,7 @@ namespace DK_GUI
 				payday_progress_bar->set_color(0.0f,0.0f,0.0f);
 				payday_progress_bar->set_class_name("QUERY_TAB_PAYDAY_PROGRESS_BAR");
 				payday_progress_bar->set_parent(this);
-				payday_progress_bar->set_style(CDKProgressBar::PBS_FROM_RIGHT);				
+				payday_progress_bar->set_style(CDKProgressBar::PBS_FROM_RIGHT);
 				payday_progress_bar->set_increment(0.00001f);
 				payday_progress_bar->set_inverted(true);
 				add(payday_progress_bar,TCP_QUERY);
@@ -302,16 +303,16 @@ namespace DK_GUI
 	}
 
 	GLvoid CPlayGUI::add_BUILD_widgets()
-	{	
+	{
 		/* there are 16 item buttons */
 
 		/* can't use class name for getting texture, because class name is reserverd for positioning the item */
-		char texture_name[]="ROOM___BUTTON_TOP_TEXTURE";
-			
+		char texture_name[64];
+		const char texture_name_string_format[]="ROOM%02i_BUTTON_TOP_TEXTURE";
+
 		for (GLint i=ROOM_BUTTON_TREASURE; i<=ROOM_BUTTON_SELL; i++)
 		{
-			texture_name[4]=(i<10?'0':'1');
-			texture_name[5]=(char)((char)(i<10?i:i-10)+(int)'0');
+			sprintf(texture_name, texture_name_string_format, i);
 			room_buttons[i] = new CItemButton(game_textures,i);
 			room_buttons[i]->set_parent(this);
 			room_buttons[i]->set_class_name(tab_item_class_name[i]);
@@ -357,7 +358,7 @@ namespace DK_GUI
 		room_data_progress_bar->set_color(0.0f,0.0f,0.0f);
 		room_data_progress_bar->set_class_name("BUILD_TAB_ROOM_DATA_PROGRESS_BAR");
 		room_data_progress_bar->set_parent(this);
-		room_data_progress_bar->set_style(CDKProgressBar::PBS_FROM_RIGHT);				
+		room_data_progress_bar->set_style(CDKProgressBar::PBS_FROM_RIGHT);
 		room_data_progress_bar->set_increment(0.00001f);
 		room_data_progress_bar->set_inverted(true);
 		room_data_progress_bar->set_ready(false);
@@ -369,7 +370,7 @@ namespace DK_GUI
 		room_info_texture->set_parent(this);
 		room_info_texture->set_ready(false);
 		add(room_info_texture,TCP_BUILD);
-		
+
 		/* add the same type room count */
 		build_room_count_label = new CDKGUILabel("x0");
 		build_room_count_label->set_caption_color(1.0f,0.0f,0.0f);
@@ -391,16 +392,16 @@ namespace DK_GUI
 
 	GLvoid CPlayGUI::add_RESEARCH_widgets()
 	{
-		CItemButton *item=NULL;
+		//CItemButton *item=NULL;
 		CGUIBackground *info_panel=NULL;
 
-		char texture_name[]="SPELL___BUTTON_TOP_TEXTURE";
+		char texture_name[64];
+		const char texture_name_string_format[]="SPELL%02i_BUTTON_TOP_TEXTURE";
 
 		/* there are 16 item buttons */
 		for (GLint i=SPELL_BUTTON_POSSESS_MONSTER; i<=SPELL_BUTTON_DESTROY_WALL; i++)
 		{
-			texture_name[5]=(i<10?'0':'1');
-			texture_name[6]=(char)((char)(i<10?i:i-10)+(int)'0');
+			sprintf(texture_name, texture_name_string_format, i);
 			spell_buttons[i] = new CItemButton(game_textures,i);
 			spell_buttons[i]->set_parent(this);
 			spell_buttons[i]->set_class_name(tab_item_class_name[i]);
@@ -432,7 +433,7 @@ namespace DK_GUI
 		add(spell_info_texture,TCP_RESEARCH);
 
 		/* add the same type trap_door/door cost */
-		spell_cost_label = new CDKGUILabel("0");		
+		spell_cost_label = new CDKGUILabel("0");
 		spell_cost_label->set_caption_size(30);
 		spell_cost_label->set_caption_color(1.0f,0.8f,0.1f);
 		spell_cost_label->set_class_name("SPELL_COST_LABEL");
@@ -444,7 +445,7 @@ namespace DK_GUI
 
 	GLvoid CPlayGUI::add_WORKSHOP_widgets()
 	{
-		CItemButton *item=NULL;
+		//CItemButton *item=NULL;
 		CGUIBackground *info_panel=NULL;
 
 		/* there are 15 item buttons, last one (sell) gets copied from research tab */
@@ -474,7 +475,7 @@ namespace DK_GUI
 				workshop_buttons[i]->set_name(AEMG_LOCATE_TRAP,2);
 			}
 			else if (i>TRAP_BUTTON_LAVA+2 && i<=DOOR_BUTTON_MAGIC+TRAP_BUTTON_LAVA+3)
-			{				
+			{
 				/* here come doors */
 				workshop_buttons[i]->set_button_state(CItemButton::BS_AVAILABLE_USED);
 				workshop_buttons[i]->set_top_texture(game_textures->get_texture_by_name(texture_name_d));
@@ -486,7 +487,7 @@ namespace DK_GUI
 				workshop_buttons[i]->set_name(AEMG_LOCATE_DOOR,2);
 			}
 			else
-			{ 
+			{
 				/* everything else is unavailable */
 				workshop_buttons[i]->set_button_state(CItemButton::BS_UNAVAILABLE);
 				workshop_buttons[i]->set_name(AEMG_NONE,1);
@@ -508,7 +509,7 @@ namespace DK_GUI
 		trap_door_info_texture->set_parent(this);
 		trap_door_info_texture->set_ready(false);
 		add(trap_door_info_texture,TCP_WORKSHOP);
-		
+
 		/* add the same type trap_door/door count */
 		build_trap_door_count_label = new CDKGUILabel("x0");
 		build_trap_door_count_label->set_caption_color(1.0f,0.0f,0.0f);
@@ -536,10 +537,10 @@ namespace DK_GUI
 		if (create_new)
 		{
 			/* the tab controls. */
-			char class_name[]="TCP_";
+			char class_name[16];
 			for (GLint i=TCP_QUERY; i<=TCP_CREATURE; i++)
 			{
-				class_name[3]=(char)((char)i+(int)'0');
+				sprintf(class_name, "TCP%d", i);
 				tab_button[i] = new CTabButton();
 				tab_button[i]->set_class_name(class_name);
 				tab_button[i]->set_parent(this);
@@ -560,7 +561,7 @@ namespace DK_GUI
 
 			if (tab_control[i].active)
 			{
-				tmp[len]='E';				
+				tmp[len]='E';
 				tab_button[TCP_QUERY+i]->set_texture(game_textures->get_texture_data_by_name(tmp).texture);
 			}
 			else
@@ -616,7 +617,7 @@ namespace DK_GUI
 		play_gui->draw();
 		play_gui->do_actions();
 
-		// draw the jumping labels 
+		// draw the jumping labels
 		if (jumping_labels.size()>0)
 		{
 			CJumpLabel *jumpl=NULL;;
@@ -636,7 +637,7 @@ namespace DK_GUI
 				{
 					jl_iter++;
 				}
-			}	
+			}
 		}
 
 		/* check the tab buttons */
@@ -647,7 +648,7 @@ namespace DK_GUI
 
 			if (message_group==AEMG_TAB_CONTROL)
 			{
-				activate_control((GLint)(action_event.message-AEM_QUERY));				
+				activate_control((GLint)(action_event.message-AEM_QUERY));
 
 				/* reset the action only if we used it */
 				reset_action();
@@ -680,8 +681,8 @@ namespace DK_GUI
 				build_room_count_label->set_caption("x%d",CV_GAME_MANAGER->getRoomManager()->getRoomCount(CV_CURRENT_PLAYER_ID, CV_GAME_MANAGER->getEconomyManager()->roomTypes[message]));
 				build_room_count_label->set_ready(true);
 
-				char *room_class_name = room_class_names[message-AEM_BUILD_ROOM_TREASURE];
-				build_room_cost_label->set_caption("%d",GLOBAL_CREATURE_TXT_READER->get_room_propery(room_class_names[message-AEM_BUILD_ROOM_TREASURE],PROPERTY_ROOM_COST));
+				const char *room_class_name = room_class_names[message-AEM_BUILD_ROOM_TREASURE];
+				build_room_cost_label->set_caption("%d",GLOBAL_CREATURE_TXT_READER->get_room_propery(room_class_name,PROPERTY_ROOM_COST));
 				build_room_cost_label->set_ready(true);
 
 				action=GA_ROOMS;
@@ -701,18 +702,18 @@ namespace DK_GUI
 			{
 				trap_door_info_texture->set_ready(true);
 
-				GLint item_index = 0;
+				//GLint item_index = 0;
 
 				if (message_group==AEMG_BUILD_TRAPS)
 				{
-					item_index = message-AEM_BUILD_TRAP_BOULDER;
+					//item_index = message-AEM_BUILD_TRAP_BOULDER;
 					trap_door_info_texture->set_selected(tab_item_class_name[message-AEM_BUILD_TRAP_BOULDER],'T');
 					//build_trap_door_count_label->set_caption("x%d",CThingControler::get_item_count((CThingControler::ITEM_TYPE)item_index));
 					action=GA_TRAPS;
 				}
 				else
 				{
-					item_index = message-AEM_BUILD_DOOR_WOODEN+AEM_BUILD_TRAP_WORD_OF_POWER;
+					//item_index = message-AEM_BUILD_DOOR_WOODEN+AEM_BUILD_TRAP_WORD_OF_POWER;
 					trap_door_info_texture->set_selected(tab_item_class_name[message-AEM_BUILD_DOOR_WOODEN],'D');
 					//build_trap_door_count_label->set_caption("x%d",CThingControler::get_item_count((CThingControler::ITEM_TYPE)item_index));
 					action=GA_DOORS;
@@ -720,7 +721,7 @@ namespace DK_GUI
 
 				build_trap_door_count_label->set_ready(true);
 				build_trap_door_cost_label->set_ready(true);
-				
+
 				last_built=message;
 			}
 			else if (message_group==AEMG_LOCATE_ROOM)
@@ -745,7 +746,7 @@ namespace DK_GUI
 	CGUI *CPlayGUI::get_active_gui()
 	{
 		return play_gui;
-	}	
+	}
 
 	GLvoid CPlayGUI::set_action(bool clicked, bool event, GLint message, GLint message_group, GLvoid *sender)
 	{
@@ -788,7 +789,7 @@ namespace DK_GUI
 	void CPlayGUI::onKeyUp(int key)
 	{
 	}
-		
+
 	void CPlayGUI::onMouseClicked(int button)
 	{
 		// Get the last action

@@ -28,8 +28,8 @@ using namespace cml;
 #define E_ML_N	206
 #define E_M_N	207
 #define E_MR_N	208
-#define E_BL_N	209	
-#define E_BM_N	210	
+#define E_BL_N	209
+#define E_BM_N	210
 #define E_BR_N	211
 #define EARTH_TORCH_PLATE		212
 
@@ -84,7 +84,7 @@ using namespace cml;
 #define LAVA___0		316
 #define LAVA___1		317
 #define LAVA___2		318
-#define LAVA___3		319	
+#define LAVA___3		319
 #define LAVA_ANIM4_COUNT	4
 
 #define LAVA_ANIM_SPEED	0.015f
@@ -425,11 +425,11 @@ namespace game_utils
 		}
 
 		CBlockManager::~CBlockManager()
-		{		
+		{
 		}
 
 		bool CBlockManager::init()
-		{				
+		{
 			bool state = true;
 
 			CLogger::setEntryStart();
@@ -439,13 +439,13 @@ namespace game_utils
 			CLogger::setEntryEnd("\tGlobal deformed cube creation.");
 
 			// and texture atlas coordinates
-			state&=readTextureAtlasCoordinates();			
+			state&=readTextureAtlasCoordinates();
 
 			// create an instance of room constructor
 			roomConstructor = new CRoomConstructor();
 
 			// read texture atlas info from settings
-			CSettingsManager *sManager = game_utils::CV_GAME_MANAGER->getSettingsManager();			
+			CSettingsManager *sManager = game_utils::CV_GAME_MANAGER->getSettingsManager();
 
 			// read texture quality then proper options
 			string textureQuality = sManager->getSetting_String(CV_SETTINGS_TEXTURE_QUALITY);
@@ -469,7 +469,7 @@ namespace game_utils
 			// load texture coordinates from a file
 
 			FILE *in=NULL;
-			if (!(in=fopen((CV_RESOURCES_DIRECTORY+"\\"+CV_CONFIG_ATLAS_COORDS).c_str(),"rc")))
+			if (!(in=fopen((CV_RESOURCES_DIRECTORY+PATH_SEP+CV_CONFIG_ATLAS_COORDS).c_str(),"rc")))
 			{
 				return false;
 			}
@@ -483,6 +483,7 @@ namespace game_utils
 
 			GLint	linePos=0;
 			char	line[200];
+			GLint	maxPos=0;
 
 			while (!done)
 			{
@@ -495,9 +496,10 @@ namespace game_utils
 					bufferPos++;
 				}
 				linePos=0;
-				while (buff[bufferPos+linePos]!='\n')
+				maxPos=fileSize-bufferPos;
+				while (buff[bufferPos+linePos]!='\n'&&linePos<maxPos)
 				{
-					line[linePos ]=buff[bufferPos+linePos];
+					line[linePos]=buff[bufferPos+linePos];
 					linePos++;
 				}
 				line[linePos++]='\0';
@@ -532,7 +534,7 @@ namespace game_utils
 				earth_subtiles[i]=E_TL_N+1;
 				earth_subtiles[i+3]=E_ML_N+1;
 				earth_subtiles[i+6]=E_ML_N+1;
-				earth_subtiles[i+9]=E_BL_N+1;		
+				earth_subtiles[i+9]=E_BL_N+1;
 			}
 
 			////////////////////////////////////////////////////////////
@@ -639,7 +641,7 @@ namespace game_utils
 			room_wall_lair_middle[6]=rand()%3+WALL_MIDDLE0;		room_wall_lair_middle[7]=WALL_PAINTING_LAIR_7;		room_wall_lair_middle[8]=rand()%3+WALL_MIDDLE0;
 			room_wall_lair_middle[9]=WALL_PAINTING_LAIR_9;		room_wall_lair_middle[10]=WALL_PAINTING_LAIR_10;	room_wall_lair_middle[11]=WALL_PAINTING_LAIR_11;
 
-			// lair edge	
+			// lair edge
 			for (GLint i=0; i<12; i++)
 			{
 				if (i<3)
@@ -803,7 +805,7 @@ namespace game_utils
 				{
 					room_wall_torture_middle[i]=WALL_PAINTING_TORTURE_0+i;
 				}
-				else 
+				else
 				{
 					room_wall_torture_middle[i]=normal_wall_no_edge[i];
 				}
@@ -1134,7 +1136,7 @@ namespace game_utils
 			room_wall_right_edge[5]=room_wall_workshop_right_edge;
 
 			return true;
-		}		
+		}
 
 		GLvoid CBlockManager::fillSubtiles_BOTTOM(CBlock *block)
 		{
@@ -1147,7 +1149,7 @@ namespace game_utils
 
 			if (terrainType==CLAIMED_LAND)
 			{
-				// we set up the sub-tiles				
+				// we set up the sub-tiles
 				BTM_S[SR_M].create(getTexturePosInTextureAtlas(CLAIMED_LAND,owner));
 
 				if (ltype!=CLAIMED_LAND && utype!=CLAIMED_LAND)
@@ -1166,7 +1168,7 @@ namespace game_utils
 				{
 					BTM_S[SR_TL].create(getTexturePosInTextureAtlas(CLAIMED_LAND_TL,0));
 				}
-				
+
 				BTM_S[SR_TM].create(getTexturePosInTextureAtlas((utype==CLAIMED_LAND?CLAIMED_LAND_TM:CLAIMED_LAND_EDGE_T),0));
 
 				if (rtype!=CLAIMED_LAND && utype!=CLAIMED_LAND)
@@ -1242,7 +1244,7 @@ namespace game_utils
 					{
 						a=rand()%10;
 						if (a<=6)
-						{					
+						{
 							a=UNCLAIMED_LAND3;
 						}
 						else
@@ -1254,7 +1256,7 @@ namespace game_utils
 				}
 			}
 			else if (terrainType==CV_BLOCK_TYPE_LAVA_ID)
-			{		
+			{
 				GLint lava_animation1[]=
 				{
 					getTexturePosInTextureAtlas(LAVA0,0),
@@ -1518,7 +1520,7 @@ namespace game_utils
 						{
 							if (terrainType==CV_BLOCK_TYPE_BARRACKS_ID)
 							{
-								/* 
+								/*
 									Barracks are special since owner is not shown from top 3 tiles
 									but only from tile nr. 4.
 								*/
@@ -1526,7 +1528,7 @@ namespace game_utils
 							}
 							else
 							{
-								SUB_DATA[i].create(getTexturePosInTextureAtlas(room_wall_middle[i],(i<3)?owner:0));							
+								SUB_DATA[i].create(getTexturePosInTextureAtlas(room_wall_middle[i],(i<3)?owner:0));
 							}
 						}
 					}
@@ -1561,9 +1563,9 @@ namespace game_utils
 						{
 							if (terrainType==CV_BLOCK_TYPE_BARRACKS_ID)
 							{
-								/* 
+								/*
 									Barracks are special since owner is not shown from top 3 tiles
-									but only from tile nr. 4. No player has either no color or all 
+									but only from tile nr. 4. No player has either no color or all
 									colors randomly changing.
 								*/
 								SUB_DATA[i].create(getTexturePosInTextureAtlas(room_wall_middle[i],(i==4)?owner:0));
@@ -1605,7 +1607,7 @@ namespace game_utils
 						{
 							if (terrainType==CV_BLOCK_TYPE_BARRACKS_ID)
 							{
-								/* 
+								/*
 									Barracks are special since owner is not shown from top 3 tiles
 									but only from tile nr. 4.
 								*/
@@ -1648,7 +1650,7 @@ namespace game_utils
 						{
 							if (terrainType==CV_BLOCK_TYPE_BARRACKS_ID)
 							{
-								/* 
+								/*
 									Barracks are special since owner is not shown from top 3 tiles
 									but only from tile nr. 4.
 								*/
@@ -1684,7 +1686,7 @@ namespace game_utils
 			}
 			else
 			{
-				GLint a=rand()%3;				
+				GLint a=rand()%3;
 
 				if (a==0)
 				{
@@ -1714,7 +1716,7 @@ namespace game_utils
 		GLvoid CBlockManager::fillSubtiles_FRONT(CBlock *block)
 		{
 			GLint	terrainType = block->getType();
-			GLint	owner = block->getOwner();
+			//GLint	owner = block->getOwner();
 
 			CLevelManager *lManager = CV_GAME_MANAGER->getLevelManager();
 
@@ -1737,11 +1739,11 @@ namespace game_utils
 					if (!found)
 					{
 						for (GLint i=0; i<12; i++)
-						{							
+						{
 							FNT_S[i].create(getTexturePosInTextureAtlas(normal_wall_2_edges[i],0));
 						}
 					}
-				}				
+				}
 				else if (lManager->isSameTypeAndOwner(mapX-1,mapY,block) && lManager->isSameTypeAndOwner(mapX+1,mapY,block))
 				{
 					bool found=false;
@@ -1754,7 +1756,7 @@ namespace game_utils
 							break;
 						}
 					}
-					
+
 					if (!found)
 					{
 						//if not, we create the normal wall decoration
@@ -1803,7 +1805,7 @@ namespace game_utils
 				}
 			}
 			else if (terrainType==CV_BLOCK_TYPE_LAVA_ID || terrainType==CV_BLOCK_TYPE_WATER_ID)
-			{	
+			{
 				//if (!dk_map->is_full_square(dk_map->get_block_type(mapY+1,mapX)))
 				if (lManager->getBlock(mapX,mapY+1)->isLow())
 				{
@@ -1821,7 +1823,7 @@ namespace game_utils
 							FNT_S[i].create(getTexturePosInTextureAtlas(R_BL_N,0));
 						}
 					}
-					else 
+					else
 					{
 						GLint water_earth_animation[]=
 						{
@@ -1850,7 +1852,7 @@ namespace game_utils
 								FNT_S[i].setAnimSpeed(WATER_EARTH_ANIM_SPEED);
 							}
 						}
-					}			
+					}
 				}
 			}
 			else
@@ -1970,7 +1972,7 @@ namespace game_utils
 		GLvoid CBlockManager::fillSubtiles_BACK(CBlock *block)
 		{
 			GLint	terrainType = block->getType();
-			GLint	owner = block->getOwner();
+			//GLint	owner = block->getOwner();
 
 			CLevelManager *lManager = CV_GAME_MANAGER->getLevelManager();
 
@@ -2010,7 +2012,7 @@ namespace game_utils
 							break;
 						}
 					}
-					
+
 					if (!found)
 					{
 						//if not, we create the normal wall decoration
@@ -2059,7 +2061,7 @@ namespace game_utils
 				}
 			}
 			else if (terrainType==CV_BLOCK_TYPE_LAVA_ID || terrainType==CV_BLOCK_TYPE_WATER_ID)
-			{		
+			{
 				//if (!dk_map->is_full_square(dk_map->get_block_type(mapY-1,mapX)))
 				if (lManager->getBlock(mapX,mapY-1)->isLow())
 				{
@@ -2077,7 +2079,7 @@ namespace game_utils
 							BCK_S[i].create(getTexturePosInTextureAtlas(R_BL_N,0));
 						}
 					}
-					else 
+					else
 					{
 						GLint water_earth_animation[]=
 						{
@@ -2106,7 +2108,7 @@ namespace game_utils
 								BCK_S[i].setAnimSpeed(WATER_EARTH_ANIM_SPEED);
 							}
 						}
-					}			
+					}
 				}
 			}
 			else
@@ -2225,7 +2227,7 @@ namespace game_utils
 		GLvoid CBlockManager::fillSubtiles_LEFT(CBlock *block)
 		{
 			GLint	terrainType = block->getType();
-			GLint	owner = block->getOwner();
+			//GLint	owner = block->getOwner();
 
 			CLevelManager *lManager = CV_GAME_MANAGER->getLevelManager();
 
@@ -2265,7 +2267,7 @@ namespace game_utils
 							break;
 						}
 					}
-					
+
 					if (!found)
 					{
 						//if not, we create the normal wall decoration
@@ -2314,7 +2316,7 @@ namespace game_utils
 				}
 			}
 			else if (terrainType==CV_BLOCK_TYPE_LAVA_ID || terrainType==CV_BLOCK_TYPE_WATER_ID)
-			{		
+			{
 				//if (!dk_map->is_full_square(dk_map->get_block_type(mapY,mapX-1)))
 				if (lManager->getBlock(mapX-1,mapY)->isLow())
 				{
@@ -2332,7 +2334,7 @@ namespace game_utils
 							LFT_S[i].create(getTexturePosInTextureAtlas(R_BL_N,0));
 						}
 					}
-					else 
+					else
 					{
 						GLint water_earth_animation[]=
 						{
@@ -2361,7 +2363,7 @@ namespace game_utils
 								LFT_S[i].setAnimSpeed(WATER_EARTH_ANIM_SPEED);
 							}
 						}
-					}			
+					}
 				}
 			}
 			else
@@ -2480,7 +2482,7 @@ namespace game_utils
 		GLvoid CBlockManager::fillSubtiles_RIGHT(CBlock *block)
 		{
 			GLint	terrainType = block->getType();
-			GLint	owner = block->getOwner();
+			//GLint	owner = block->getOwner();
 
 			CLevelManager *lManager = CV_GAME_MANAGER->getLevelManager();
 
@@ -2520,7 +2522,7 @@ namespace game_utils
 							break;
 						}
 					}
-					
+
 					if (!found)
 					{
 						//if not, we create the normal wall decoration
@@ -2569,7 +2571,7 @@ namespace game_utils
 				}
 			}
 			else if (terrainType==CV_BLOCK_TYPE_LAVA_ID || terrainType==CV_BLOCK_TYPE_WATER_ID)
-			{		
+			{
 				//if (!dk_map->is_full_square(dk_map->get_block_type(mapY,mapX+1)))
 				if (lManager->getBlock(mapX+1,mapY)->isLow())
 				{
@@ -2587,7 +2589,7 @@ namespace game_utils
 							RGT_S[i].create(getTexturePosInTextureAtlas(R_BL_N,0));
 						}
 					}
-					else 
+					else
 					{
 						GLint water_earth_animation[]=
 						{
@@ -2616,7 +2618,7 @@ namespace game_utils
 								RGT_S[i].setAnimSpeed(WATER_EARTH_ANIM_SPEED);
 							}
 						}
-					}			
+					}
 				}
 			}
 			else
@@ -2791,7 +2793,7 @@ namespace game_utils
 			GLint	owner = block->getOwner();
 
 			CLevelManager *lManager = CV_GAME_MANAGER->getLevelManager();
-			
+
 			// If block is marked
 			if(block->isMarked())
 			{
@@ -2837,7 +2839,7 @@ namespace game_utils
 
 					// get the edge subtiles and correct if necesary
 					GLint count = block->getEdgeSubtiles(subtiles);
-			
+
 					for (GLint i=0; i<count; i++)
 					{
 						// the corner ones
@@ -2898,7 +2900,7 @@ namespace game_utils
 							TOP_S[subtiles[i]].create(getTexturePosInTextureAtlas(WALL_EDGE,0));
 							//set_top_wall_corner(TOP_S,subtiles[i]);
 							set[subtiles[i]]=1;
-						}			
+						}
 					}
 					// the center one goes manualy
 					TOP_S[4].create(getTexturePosInTextureAtlas(WALL_CENTER,owner));
@@ -2998,13 +3000,13 @@ namespace game_utils
 			dtype=lManager->getBlockType(mapX,mapY+1);
 			drtype=lManager->getBlockType(mapX+1,mapY+1);
 
-			/* 
+			/*
 				1. fill-in the *_S structure.
 				2. read texture coordinates from *_S into block->textureCoordinates
-					Important:	If this tile supports texture animation then 
+					Important:	If this tile supports texture animation then
 								we have to do step 2 every animation update.
 			*/
-			
+
 			fillSubtiles_FRONT(block);
 			fillSubtiles_BACK(block);
 			fillSubtiles_LEFT(block);
@@ -3014,16 +3016,16 @@ namespace game_utils
 			bool isRoom = block->isRoom();
 
 			if (isRoom)
-			{						
-				/* 
-					Room type gets handled differently. Floor textures and other room 
+			{
+				/*
+					Room type gets handled differently. Floor textures and other room
 					tile geometries get generated in RoomConstructor.
-				*/	
+				*/
 				roomConstructor->createRoomData(block);
 			}
 			else
 			{
-				fillSubtiles_BOTTOM(block);					
+				fillSubtiles_BOTTOM(block);
 			}
 
 			// a fix for torch plate
@@ -3054,7 +3056,7 @@ namespace game_utils
 
 						if (rtype!=CV_BLOCK_TYPE_LAVA_ID)
 						{
-							LFT_S[4].create(getTexturePosInTextureAtlas(terrainType==CV_BLOCK_TYPE_WALL_ID?WALL_TORCH_PLATE:EARTH_TORCH_PLATE,0));		
+							LFT_S[4].create(getTexturePosInTextureAtlas(terrainType==CV_BLOCK_TYPE_WALL_ID?WALL_TORCH_PLATE:EARTH_TORCH_PLATE,0));
 						}
 
 						if (ltype!=CV_BLOCK_TYPE_LAVA_ID)
@@ -3076,7 +3078,7 @@ namespace game_utils
 			updateTextureCoordinates(block,CBlock::BFS_LEFT);
 			updateTextureCoordinates(block,CBlock::BFS_RIGHT);
 			updateTextureCoordinates(block,CBlock::BFS_TOP);
-			
+
 		}
 
 		GLvoid CBlockManager::updateTextureCoordinates(CBlock *block, GLint face)
@@ -3130,16 +3132,16 @@ namespace game_utils
 							pos=tPos;
 						}
 						pos+=8;
-					}					
+					}
 				}
 			}
 			else if (face==CBlock::BFS_TOP)
-			{	
+			{
 				block->setNumberOfTextureFrames((CBlock::BLOCK_FACE_SELECTOR)face,TOP_S[4].getAnimCount());
 				for (GLint x=0; x<3; x++)
 				{
 					for (GLint y=0; y<3; y++)
-					{						
+					{
 						for (GLint f=0; f<TOP_S[4].getAnimCount(); f++)
 						{
 							if (f>=4)
@@ -3152,7 +3154,7 @@ namespace game_utils
 
 							texCoords = block->getTextureCoordinates()[face+8*f];
 
-							texCoord = TOP_S[3*y+x].getTextureAtlasPosition();										
+							texCoord = TOP_S[3*y+x].getTextureAtlasPosition();
 
 							texCoord_ = texCoord+vector2f(subtileWidth,0);
 							memcpy(texCoords+pos,&texCoord_[0],sizeof(GLfloat)*2);
@@ -3171,7 +3173,7 @@ namespace game_utils
 							pos+=2;
 
 							pos=tPos;
-						}						
+						}
 						pos+=8;
 					}
 				}
@@ -3195,7 +3197,7 @@ namespace game_utils
 
 							texCoords = block->getTextureCoordinates()[face+8*f];
 
-							texCoord = FNT_S[3*x+y].getTextureAtlasPosition();										
+							texCoord = FNT_S[3*x+y].getTextureAtlasPosition();
 
 							texCoord_ = texCoord+vector2f(0,subtileHeight);
 							memcpy(texCoords+pos,&texCoord_[0],sizeof(GLfloat)*2);
@@ -3214,7 +3216,7 @@ namespace game_utils
 							pos+=2;
 
 							pos=tPos;
-						}						
+						}
 						pos+=8;
 					}
 				}
@@ -3237,8 +3239,8 @@ namespace game_utils
 							BCK_S[3*x+y].setAnimPos(f);
 
 							texCoords = block->getTextureCoordinates()[face+8*f];
-			
-							texCoord = BCK_S[3*x+y].getTextureAtlasPosition();																																		
+
+							texCoord = BCK_S[3*x+y].getTextureAtlasPosition();
 
 							texCoord_ = texCoord+vector2f(0,subtileHeight);
 							memcpy(texCoords+pos,&texCoord_[0],sizeof(GLfloat)*2);
@@ -3257,7 +3259,7 @@ namespace game_utils
 							pos+=2;
 
 							pos=tPos;
-						}						
+						}
 						pos+=8;
 					}
 				}
@@ -3280,7 +3282,7 @@ namespace game_utils
 							LFT_S[3*x+y].setAnimPos(f);
 
 							texCoords = block->getTextureCoordinates()[face+8*f];
-							texCoord = LFT_S[3*x+y].getTextureAtlasPosition();																																		
+							texCoord = LFT_S[3*x+y].getTextureAtlasPosition();
 
 							texCoord_ = texCoord+vector2f(0,subtileHeight);
 							memcpy(texCoords+pos,&texCoord_[0],sizeof(GLfloat)*2);
@@ -3299,7 +3301,7 @@ namespace game_utils
 							pos+=2;
 
 							pos=tPos;
-						}						
+						}
 						pos+=8;
 					}
 				}
@@ -3322,7 +3324,7 @@ namespace game_utils
 							RGT_S[3*x+y].setAnimPos(f);
 
 							texCoords = block->getTextureCoordinates()[face+8*f];
-							texCoord = RGT_S[3*x+y].getTextureAtlasPosition();																																		
+							texCoord = RGT_S[3*x+y].getTextureAtlasPosition();
 
 							texCoord_ = texCoord+vector2f(0,subtileHeight);
 							memcpy(texCoords+pos,&texCoord_[0],sizeof(GLfloat)*2);
@@ -3341,7 +3343,7 @@ namespace game_utils
 							pos+=2;
 
 							pos=tPos;
-						}						
+						}
 						pos+=8;
 					}
 				}
@@ -3364,7 +3366,7 @@ namespace game_utils
 
 					for (GLint x=0; x<CV_DEFORMED_CUBE_WIDTH; x++)
 					{
-						GLfloat py = y<=5||y>6?(GLfloat)y*step_y:3.0f*step_y+(GLfloat)y*step_y*0.5f;						
+						GLfloat py = y<=5||y>6?(GLfloat)y*step_y:3.0f*step_y+(GLfloat)y*step_y*0.5f;
 
 						globalDeformedMap[z][y][x] = calculatePerlin3D(vector3f((GLfloat)x*step_xz,py,(GLfloat)z*step_xz));
 						//globalDeformedMap[z][y][x] = vector3f((GLfloat)x*step_xz,(GLfloat)y*step_y,(GLfloat)z*step_xz);
@@ -3391,7 +3393,7 @@ namespace game_utils
 			if (globalDeformedMap)
 			{
 				for (GLint z=0; z<CV_DEFORMED_CUBE_DEPTH; z++)
-				{					
+				{
 					for (GLint y=0; y<CV_DEFORMED_CUBE_HEIGHT; y++)
 					{
 						delete [] globalDeformedMap[z][y];
@@ -3429,7 +3431,7 @@ namespace game_utils
 				// no need to call calculateBlockCeilingHeight since it has alread been called in LevelManager
 				vector3f ceilingPatch[4][4];
 				calculateCeiling(lPos,ceilingPatch);
-				
+
 				// write vertics into blocks vertex buffers
 				GLfloat		**vertices = block->getVertices();
 				GLfloat		**texCoords = block->getTextureCoordinates();
@@ -3437,10 +3439,10 @@ namespace game_utils
 				GLint	vPos = 0,
 						tPos = 0;
 
-				GLint face = CBlock::BFS_CEILING;				
+				GLint face = CBlock::BFS_CEILING;
 
 				GLfloat pxW = (1.0f/(GLfloat)textureAtlasWidth)*pixelWidth;
-				GLfloat pxH = (1.0f/(GLfloat)textureAtlasHeight)*pixelHeight;				
+				GLfloat pxH = (1.0f/(GLfloat)textureAtlasHeight)*pixelHeight;
 
 				GLfloat subTexW = (GLfloat)textureAtlasSubtileSize/(GLfloat)textureAtlasWidth - pxW*2.0f;
 				GLfloat subTexH = (GLfloat)textureAtlasSubtileSize/(GLfloat)textureAtlasHeight - pxH*2.0f;
@@ -3451,11 +3453,11 @@ namespace game_utils
 
 				GLfloat ceilingX = (GLfloat)((textureAtlasPos%texturesPerRow)*textureAtlasSubtileSize)/textureAtlasWidth+pxW;
 				GLfloat ceilingY = (GLfloat)(1.0f-(textureAtlasPos/texturesPerRow)*textureAtlasSubtileSize)/textureAtlasHeight-pxH;
-		
+
 				for (int y=0; y<CV_BLOCK_RESOLUTION_XZ-1; y++)
 				{
 					for (int x=0; x<CV_BLOCK_RESOLUTION_XZ-1; x++)
-					{	
+					{
 						CConversions::vec3fToFloat_p(ceilingPatch[y][x],vertices[face]+vPos);
 						CConversions::vec2fToFloat_p(vector2f(ceilingX,ceilingY),texCoords[face]+tPos);
 						tPos+=2;
@@ -3483,21 +3485,21 @@ namespace game_utils
 		GLvoid CBlockManager::reloadSubLevelVertices(CBlock *block)
 		{
 			vector2i	logicalPosition = block->getLogicalPosition();
-			GLint		type = block->getType();
+			//GLint		type = block->getType();
 			GLfloat		**vertices = block->getVertices();
-			GLfloat		**texCoords = block->getTextureCoordinates();			
+			//GLfloat		**texCoords = block->getTextureCoordinates();
 
 			GLint gDEfCx = logicalPosition[0] * (CV_BLOCK_RESOLUTION_XZ-1);
 			GLint gDEfCz = logicalPosition[1] * (CV_BLOCK_RESOLUTION_XZ-1);
 
-			GLint level = (type == CV_BLOCK_TYPE_LAVA_ID || type == CV_BLOCK_TYPE_WATER_ID)?1:0;
+			//GLint level = (type == CV_BLOCK_TYPE_LAVA_ID || type == CV_BLOCK_TYPE_WATER_ID)?1:0;
 
 			GLint face = CBlock::BFS_WATER_LAVA;
 			GLint vPos = 0;
 			for (int y=0; y<CV_BLOCK_RESOLUTION_XZ-1; y++)
 			{
 				for (int x=0; x<CV_BLOCK_RESOLUTION_XZ-1; x++)
-				{					 
+				{
 					CConversions::vec3fToFloat_p(globalDeformedMap[gDEfCz+x][0][gDEfCx+y],vertices[face]+vPos);
 					vPos+=3;
 
@@ -3526,13 +3528,13 @@ namespace game_utils
 				bottom:
 						H--G
 						|  |
-						E--F				
-			*/	
+						E--F
+			*/
 
 			vector2i	logicalPosition = block->getLogicalPosition();
 			GLint		type = block->getType();
 			GLfloat		**vertices = block->getVertices();
-			GLfloat		**texCoords = block->getTextureCoordinates();			
+			//GLfloat		**texCoords = block->getTextureCoordinates();
 
 			GLint gDEfCx = logicalPosition[0] * (CV_BLOCK_RESOLUTION_XZ-1);
 			GLint gDEfCz = logicalPosition[1] * (CV_BLOCK_RESOLUTION_XZ-1);
@@ -3544,7 +3546,7 @@ namespace game_utils
 			for (int y=1-level; y<CV_BLOCK_RESOLUTION_Y-level; y++)
 			{
 				for (int x=0; x<CV_BLOCK_RESOLUTION_XZ-1; x++)
-				{		
+				{
 					CConversions::vec3fToFloat_p(globalDeformedMap[gDEfCz+(CV_BLOCK_RESOLUTION_XZ-1)][y][gDEfCx+x],vertices[face]+vPos);
 					vPos+=3;
 
@@ -3564,7 +3566,7 @@ namespace game_utils
 			for (int y=1-level; y<CV_BLOCK_RESOLUTION_Y-level; y++)
 			{
 				for (int x=0; x<CV_BLOCK_RESOLUTION_XZ-1; x++)
-				{	
+				{
 					CConversions::vec3fToFloat_p(globalDeformedMap[gDEfCz][y][gDEfCx+x],vertices[face]+vPos);
 					vPos+=3;
 
@@ -3584,7 +3586,7 @@ namespace game_utils
 			for (int y=1-level; y<CV_BLOCK_RESOLUTION_Y-level; y++)
 			{
 				for (int x=0; x<CV_BLOCK_RESOLUTION_XZ-1; x++)
-				{					 
+				{
 					CConversions::vec3fToFloat_p(globalDeformedMap[gDEfCz+x][y][gDEfCx],vertices[face]+vPos);
 					vPos+=3;
 
@@ -3604,7 +3606,7 @@ namespace game_utils
 			for (int y=1-level; y<CV_BLOCK_RESOLUTION_Y-level; y++)
 			{
 				for (int x=0; x<CV_BLOCK_RESOLUTION_XZ-1; x++)
-				{					 
+				{
 					CConversions::vec3fToFloat_p(globalDeformedMap[gDEfCz+x][y][gDEfCx+(CV_BLOCK_RESOLUTION_XZ-1)],vertices[face]+vPos);
 					vPos+=3;
 
@@ -3624,7 +3626,7 @@ namespace game_utils
 			for (int y=0; y<CV_BLOCK_RESOLUTION_XZ-1; y++)
 			{
 				for (int x=0; x<CV_BLOCK_RESOLUTION_XZ-1; x++)
-				{	
+				{
 					CConversions::vec3fToFloat_p(globalDeformedMap[gDEfCz+x][CV_BLOCK_RESOLUTION_Y-level][gDEfCx+y],vertices[face]+vPos);
 					vPos+=3;
 
@@ -3638,13 +3640,13 @@ namespace game_utils
 					vPos+=3;
 				}
 			}
-			
+
 			face = CBlock::BFS_BOTTOM;
 			vPos = 0;
 			for (int y=0; y<CV_BLOCK_RESOLUTION_XZ-1; y++)
 			{
 				for (int x=0; x<CV_BLOCK_RESOLUTION_XZ-1; x++)
-				{	
+				{
 					CConversions::vec3fToFloat_p(globalDeformedMap[gDEfCz+x][1][gDEfCx+y],vertices[face]+vPos);
 					vPos+=3;
 
@@ -3664,7 +3666,7 @@ namespace game_utils
 			for (int y=0; y<CV_BLOCK_RESOLUTION_XZ-1; y++)
 			{
 				for (int x=0; x<CV_BLOCK_RESOLUTION_XZ-1; x++)
-				{					 
+				{
 					CConversions::vec3fToFloat_p(globalDeformedMap[gDEfCz+x][0][gDEfCx+y],vertices[face]+vPos);
 					vPos+=3;
 
@@ -3678,7 +3680,7 @@ namespace game_utils
 					vPos+=3;
 				}
 			}
-		}			
+		}
 
 		#define SET_CSR(i,state) csr[i]=((csr[i]==CSR_NOT_EDGE)?state:csr[i]);
 
@@ -3687,7 +3689,7 @@ namespace game_utils
 			CLevelManager *lManager = CV_GAME_MANAGER->getLevelManager();
 
 			GLint dx = lPos[0];
-			GLint dy = lPos[1]; 
+			GLint dy = lPos[1];
 
 			GLint height=lManager->getBlock(dx,dy)->getCeilingHeight();
 			GLint lheight=lManager->getBlock(dx-1,dy)->getCeilingHeight();
@@ -3798,7 +3800,7 @@ namespace game_utils
 			CLevelManager *lManager = CV_GAME_MANAGER->getLevelManager();
 
 			GLint dx = lPos[0];
-			GLint dy = lPos[1]; 
+			GLint dy = lPos[1];
 
 			GLint height=lManager->getBlock(lPos)->getCeilingHeight();
 
@@ -3880,17 +3882,17 @@ namespace game_utils
 			CLevelManager *lManager = CV_GAME_MANAGER->getLevelManager();
 
 			GLint dx = lPos[0];
-			GLint dy = lPos[1]; 
+			GLint dy = lPos[1];
 
 			GLint height=lManager->getBlock(dx,dy)->getCeilingHeight();
-			GLint lheight=lManager->getBlock(dx-1,dy)->getCeilingHeight();
-			GLint rheight=lManager->getBlock(dx+1,dy)->getCeilingHeight();
-			GLint theight=lManager->getBlock(dx,dy-1)->getCeilingHeight();
-			GLint bheight=lManager->getBlock(dx,dy+1)->getCeilingHeight();
-			GLint rbheight=lManager->getBlock(dx+1,dy+1)->getCeilingHeight();
-			GLint lbheight=lManager->getBlock(dx-1,dy+1)->getCeilingHeight();
-			GLint rtheight=lManager->getBlock(dx+1,dy-1)->getCeilingHeight();
-			GLint ltheight=lManager->getBlock(dx-1,dy-1)->getCeilingHeight();
+			//GLint lheight=lManager->getBlock(dx-1,dy)->getCeilingHeight();
+			//GLint rheight=lManager->getBlock(dx+1,dy)->getCeilingHeight();
+			//GLint theight=lManager->getBlock(dx,dy-1)->getCeilingHeight();
+			//GLint bheight=lManager->getBlock(dx,dy+1)->getCeilingHeight();
+			//GLint rbheight=lManager->getBlock(dx+1,dy+1)->getCeilingHeight();
+			//GLint lbheight=lManager->getBlock(dx-1,dy+1)->getCeilingHeight();
+			//GLint rtheight=lManager->getBlock(dx+1,dy-1)->getCeilingHeight();
+			//GLint ltheight=lManager->getBlock(dx-1,dy-1)->getCeilingHeight();
 
 			for (GLint x=0; x<4; x++)
 			{
@@ -3902,7 +3904,7 @@ namespace game_utils
 
 			CEILING_SUBPATCH_RELATION csr[9];
 			getEdgeCeilingSubPatches(csr,lPos);
-			
+
 			if (csr[0]==CSR_LOWER)
 			{
 				ceilingPatch[0][0]=LOW_3(0,0)
@@ -4005,7 +4007,7 @@ namespace game_utils
 			else if (csr[2]==CSR_HIGHER)
 			{
 				ceilingPatch[1][2]=LOW_1(1,2)
-			
+
 				if (csr[1]!=CSR_HIGHER)
 				{
 					ceilingPatch[0][2]=LOW_1(0,2)

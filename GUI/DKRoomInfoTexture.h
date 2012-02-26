@@ -14,7 +14,7 @@ namespace DK_GUI
 		CDKRoomInfoTexture(CDKTextureList *texture_list);
 		~CDKRoomInfoTexture();
 
-		GLvoid set_selected(char *class_name, char leading);
+		GLvoid set_selected(const char *class_name, char leading);
 
 		virtual GLvoid draw();
 

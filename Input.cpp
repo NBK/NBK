@@ -1,5 +1,5 @@
-#include <windows.h>
-#include <gl\gl.h>
+#include "system.h"
+#include <GL/gl.h>
 #include "Input.h"
 
 using namespace cml;
@@ -9,7 +9,11 @@ namespace control
 {
 	CInput::CInput()
 	{
+#ifdef WIN32
 		ZeroMemory(keys,sizeof(bool)*256);
+#else
+		ZeroMemory(keys,sizeof(bool)*SDLK_LAST);
+#endif
 		lmbd=rmbd=mmbd=false;
 		mscroll=0;
 	}
@@ -40,6 +44,7 @@ namespace control
 
 	bool CInput::update()
 	{
+#ifdef WIN32
 		//update mouse positions
 		POINT p;
 		GetCursorPos(&p);
@@ -49,9 +54,20 @@ namespace control
 
 		xPos = p.x;
 		yPos = p.y;
+#else
+		GLint x, y;
+		SDL_GetMouseState(&x, &y);
+
+		xMove = x-xPos;
+		yMove = y-yPos;
+
+		xPos = x;
+		yPos = y;
+#endif
 		return true;
 	}
 
+#ifdef WIN32
 	GLvoid CInput::update(UINT message, WPARAM wParam, LPARAM lParam)
 	{
 		switch(message)
@@ -146,15 +162,128 @@ namespace control
 			}
 		}
 	}
+#else
+	GLvoid CInput::update(SDL_Event event)
+	{
+		switch(event.type)
+		{
+			case SDL_KEYDOWN:
+			{
+				keys[event.key.keysym.sym]=true;
 
-	bool CInput::isKeyDown(char key)
+				// update registered listeners
+				for (rlIter=registeredListeners.begin(); rlIter!=registeredListeners.end(); rlIter++)
+				{
+					(*rlIter)->onKeyDown(event.key.keysym.sym);
+				}
+
+				break;
+			}
+
+			case SDL_KEYUP:
+			{
+				keys[event.key.keysym.sym]=false;
+
+				// update registered listeners
+				for (rlIter=registeredListeners.begin(); rlIter!=registeredListeners.end(); rlIter++)
+				{
+					(*rlIter)->onKeyUp(event.key.keysym.sym);
+				}
+
+				break;
+			}
+
+			case SDL_MOUSEBUTTONDOWN:
+			{
+				switch (event.button.button)
+				{
+					case SDL_BUTTON_LEFT:
+					{
+						lmbd=true;
+
+						// update registered listeners
+						for (rlIter=registeredListeners.begin(); rlIter!=registeredListeners.end(); rlIter++)
+						{
+							(*rlIter)->onMouseClicked(0);
+						}
+						break;
+					}
+					case SDL_BUTTON_RIGHT:
+					{
+						rmbd=true;
+
+						// update registered listeners
+						for (rlIter=registeredListeners.begin(); rlIter!=registeredListeners.end(); rlIter++)
+						{
+							(*rlIter)->onMouseClicked(1);
+						}
+
+						break;
+					}
+					case SDL_BUTTON_MIDDLE:
+					{
+						mmbd=true;
+
+						// update registered listeners
+						for (rlIter=registeredListeners.begin(); rlIter!=registeredListeners.end(); rlIter++)
+						{
+							(*rlIter)->onMouseClicked(3);
+						}
+
+						break;
+					}
+					case SDL_BUTTON_WHEELUP:
+					{
+						mscroll ++;
+						break;
+					}
+					case SDL_BUTTON_WHEELDOWN:
+					{
+						mscroll --;
+						break;
+					}
+				}
+				break;
+			}
+
+			case SDL_MOUSEBUTTONUP:
+			{
+				switch (event.button.button)
+				{
+					case SDL_BUTTON_LEFT:
+					{
+						lmbd=false;
+						break;
+					}
+					case SDL_BUTTON_RIGHT:
+					{
+						rmbd=false;
+						break;
+					}
+					case SDL_BUTTON_MIDDLE:
+					{
+						mmbd=false;
+						break;
+					}
+				}
+				break;
+			}
+		}
+	}
+#endif
+
+	bool CInput::isKeyDown(int key)
 	{
 		return keys[key];
 	}
 
 	GLvoid CInput::setMousePos(GLint xpos, GLint ypos)
 	{
+#ifdef WIN32
 		SetCursorPos(xpos,ypos);
+#else
+		SDL_WarpMouse(xpos,ypos);
+#endif
 	}
 
 	bool CInput::isLeftMouseDown()

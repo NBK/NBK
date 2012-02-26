@@ -156,7 +156,7 @@ namespace game_objects
 		if(impState != IS_IDLE) return;
 		path.clear();
 		currBlock = CV_GAME_MANAGER->getLevelManager()->getMarkedBlock(this->getOwner(),cml::vector2i((int)floor(position[0]/CV_BLOCK_WIDTH),(int)floor(position[2]/CV_BLOCK_DEPTH)));
-		bool oldEndOnDiagonal = CV_GAME_MANAGER->getPathManager()->getAllowEndDiagonal();
+		//bool oldEndOnDiagonal = CV_GAME_MANAGER->getPathManager()->getAllowEndDiagonal();
 		CV_GAME_MANAGER->getPathManager()->setAllowEndDiagonal(false);
 		if (currBlock)
 		{
@@ -187,7 +187,7 @@ namespace game_objects
 		if(impState != IS_IDLE) return;
 		path.clear();
 		currBlock = CV_GAME_MANAGER->getLevelManager()->getUnfortifiedBlock(this->getOwner(),cml::vector2i((int)floor(position[0]/CV_BLOCK_WIDTH),(int)floor(position[2]/CV_BLOCK_DEPTH)));
-		bool oldEndOnDiagonal = CV_GAME_MANAGER->getPathManager()->getAllowEndDiagonal();
+		//bool oldEndOnDiagonal = CV_GAME_MANAGER->getPathManager()->getAllowEndDiagonal();
 		CV_GAME_MANAGER->getPathManager()->setAllowEndDiagonal(false);
 		if (currBlock)
 		{

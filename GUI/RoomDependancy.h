@@ -1,8 +1,8 @@
 #ifndef ROOM_DEPENDANCY_H
 #define ROOM_DEPENDANCY_H
 
-#include <windows.h>
-#include <gl/gl.h>
+#include "../system.h"
+#include <GL/gl.h>
 
 namespace DK_GUI
 {

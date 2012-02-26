@@ -1,8 +1,8 @@
 #ifndef LUA_EFFECT_H
 #define LUA_EFFECT_H
 
-#include <windows.h>
-#include <gl\gl.h>
+#include "../system.h"
+#include <GL/gl.h>
 #include <cml/cml.h>
 #include <vector>
 #include "LUAEmitter.h"
@@ -38,7 +38,7 @@ namespace LUA_effects
 
 		bool force_nonactive;
 
-		GLint dead_count;
+		GLuint dead_count;
 	};
 };
 

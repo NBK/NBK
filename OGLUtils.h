@@ -1,12 +1,14 @@
 #ifndef OGL_UTILS_H
 #define OGL_UTILS_H
 
-#include <windows.h>
-#include <gl/gl.h>
+#include "system.h"
+#include <GL/gl.h>
 #include <string>
 #include <cml/cml.h>
 
+#ifdef WIN32
 typedef BOOL (APIENTRY *PFNWGLSWAPINTERVALFARPROC)( int );
+#endif
 
 namespace utils
 {
@@ -22,7 +24,11 @@ namespace utils
 		static std::string	errorToString(GLint errorCode);
 		static GLvoid		setVSync(bool val = true);
 		static GLvoid		clear();
+#ifdef WIN32
 		static GLvoid		swapDC(HDC dc);
+#else
+		static GLvoid		swapDC();
+#endif
 	};
 };
 

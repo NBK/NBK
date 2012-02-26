@@ -1,6 +1,6 @@
 #include "commons.h"
-#include <windows.h>
-#include <gl\gl.h>
+#include "system.h"
+#include <GL/gl.h>
 #include <stdio.h>
 #include <stdio.h>
 #include "Text.h"

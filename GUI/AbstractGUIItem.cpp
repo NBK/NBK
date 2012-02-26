@@ -1,4 +1,5 @@
 #include "AbstractGUIItem.h"
+#include <string.h>
 
 namespace GUI
 {
@@ -208,7 +209,7 @@ namespace GUI
 		this->parent=parent;
 	}
 
-	GLvoid CAbstractGUIItem::set_class_name(char *class_name)
+	GLvoid CAbstractGUIItem::set_class_name(const char *class_name)
 	{
 		this->class_name = new char[strlen(class_name)+1];
 		strcpy(this->class_name,class_name);

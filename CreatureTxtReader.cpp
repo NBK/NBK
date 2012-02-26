@@ -19,6 +19,11 @@ namespace game_utils
 		buff = new char[45000];
 		char *_buff=buff;
 		size_t read=fread(buff,1,45000,file);
+		if (!read)
+		{
+			fprintf(stderr, "Can't read TextFiles/creature.txt\n");
+			return;
+		}
 		fclose(file);
 
 		skip(3);
@@ -131,7 +136,7 @@ namespace game_utils
 		}
 	}
 
-	GLint CCreatureTxtReader::get_room_propery(char *room_class_name, GLint property)
+	GLint CCreatureTxtReader::get_room_propery(const char *room_class_name, GLint property)
 	{
 		if (room_data[string(room_class_name)].size()>0)
 		{

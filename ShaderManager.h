@@ -3,8 +3,8 @@
 
 #include "glew.h"
 #include <stdio.h>
-#include <windows.h>
-#include <gl\gl.h>
+#include "system.h"
+#include <GL/gl.h>
 
 #include <map>
 #include <string>
@@ -41,8 +41,8 @@ namespace shaders
 
 			ShaderData()
 			{
-				handle=NULL;
-				object=NULL;
+				handle = (GLhandleARB) NULL;
+				object = (GLint) NULL;
 			}
 
 			ShaderData(GLhandleARB handle)

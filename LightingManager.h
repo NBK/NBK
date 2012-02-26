@@ -88,14 +88,14 @@ namespace game_utils
 				- all lights get picked out from a light sources pool
 				
 			*/
-			GLvoid			addLightSource(cml::vector2i &position, GLint lightSourceType);
-			GLvoid			addLightSource(cml::vector2i &position, std::string lightSourceName);
+			GLvoid			addLightSource(cml::vector2i position, GLint lightSourceType);
+			GLvoid			addLightSource(cml::vector2i position, std::string lightSourceName);
 
 			/*
 				Usually called by RenderManager to obtain light info
 				for currently proccessed block.
 			*/
-			CBlockLightData *getBlockLightData(cml::vector2i &blockPos);
+			CBlockLightData *getBlockLightData(cml::vector2i blockPos);
 
 			/*
 				Set a specified param for a light of a specified type.

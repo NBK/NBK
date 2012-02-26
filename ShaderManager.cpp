@@ -19,7 +19,7 @@ namespace shaders
 		GLhandleARB v,f;
 
 		v = glCreateShaderObjectARB(GL_VERTEX_SHADER_ARB);
-		f = glCreateShaderObjectARB(GL_FRAGMENT_SHADER_ARB);	
+		f = glCreateShaderObjectARB(GL_FRAGMENT_SHADER_ARB);
 
 		string _v = textFileRead(vertexFile);
 		string _f = textFileRead(fragmentFile);
@@ -40,11 +40,11 @@ namespace shaders
 		glCompileShaderARB(f);
 
 		GLhandleARB shaderProgram = glCreateProgramObjectARB();
-		
+
 		glAttachObjectARB(shaderProgram,v);
 		glAttachObjectARB(shaderProgram,f);
 
-		glLinkProgramARB(shaderProgram);		
+		glLinkProgramARB(shaderProgram);
 
 		shaderPrograms[shaderIndex]=ShaderData(shaderProgram);
 
@@ -77,19 +77,18 @@ namespace shaders
 		char *content = NULL;
 
 		int count=0;
-
 		if (fileName.length()>0)
 		{
 			const char *fn = fileName.c_str();
-			fp = fopen(fileName.c_str(),"rc");
+			fp = fopen(fn,"rc");
 
-			if (fp != NULL) 
-			{	      
+			if (fp != NULL)
+			{
 				fseek(fp, 0, SEEK_END);
 				count = ftell(fp);
 				rewind(fp);
 
-				if (count > 0) 
+				if (count > 0)
 				{
 					content = new char[sizeof(char) * (count+1)];
 					count = fread(content,sizeof(char),count,fp);
@@ -97,9 +96,13 @@ namespace shaders
 				}
 				fclose(fp);
 			}
+			else
+			{
+				fprintf(stderr,"Can't read %s shader file\n",fn);
+			}
 		}
 
-		string shaderSource = (content?string(content):"");		
+		string shaderSource = (content?string(content):"");
 
 		delete [] content;
 
@@ -108,7 +111,7 @@ namespace shaders
 
 	GLvoid CShaderManager::useFFPipeline()
 	{
-		glUseProgramObjectARB(NULL);
+		glUseProgramObjectARB(0);
 	}
 
 	bool CShaderManager::printInfoLog(GLhandleARB obj)
@@ -116,9 +119,9 @@ namespace shaders
 	    int infologLength = 0;
 	    int charsWritten  = 0;
 	    char *infoLog;
-	
+
 	    glGetObjectParameterivARB(obj, GL_OBJECT_INFO_LOG_LENGTH_ARB, &infologLength);
-	
+
 	    if (infologLength > 1)
 	    {
 			infoLog = new char[infologLength];

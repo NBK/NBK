@@ -2,7 +2,7 @@
 
 namespace DK_GUI
 {
-	CAnimatedSpeedButton::CAnimatedSpeedButton(CDKTextureList *game_textures, GLint name, GLint texture_count, char **texture_names)
+	CAnimatedSpeedButton::CAnimatedSpeedButton(CDKTextureList *game_textures, GLint name, GLint texture_count, const char **texture_names)
 	: CSpeedButton(game_textures,name)
 	{
 		on=false;

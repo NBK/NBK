@@ -130,7 +130,7 @@ namespace game_utils
 			status&=(levelFile=fopen((levelFileName+".own").c_str(),"rb"))!=NULL;
 			status&=(levelFile=fopen((levelFileName+".slb").c_str(),"rb"))!=NULL;
 			status&=(levelFile=fopen((levelFileName+".tng").c_str(),"rb"))!=NULL;
-			
+
 			return status;
 		}
 
@@ -139,9 +139,9 @@ namespace game_utils
 			CLogger::setEntryStart();
 
 			// Initialization: create the array of blocks.
-			for (GLint y=0; y<CV_LEVEL_MAP_SIZE; y++)
+			for (GLuint y=0; y<CV_LEVEL_MAP_SIZE; y++)
 			{
-				for (GLint x=0; x<CV_LEVEL_MAP_SIZE; x++)
+				for (GLuint x=0; x<CV_LEVEL_MAP_SIZE; x++)
 				{
 					levelMap[y][x] = new CBlock();
 					levelMap[y][x]->setLogicalPosition(vector2i(x,y));
@@ -160,6 +160,7 @@ namespace game_utils
 
 				if (!iFile)
 				{
+					CLogger::addEntry("[ERROR|LevelManager]: Failed to load %s\n",(CV_RESOURCES_DIRECTORY+CV_CONFIG_LEVELS).c_str());
 					return false;
 				}
 
@@ -173,7 +174,7 @@ namespace game_utils
 					{
 						levelFileNames.push_back(CV_RESOURCES_DIRECTORY+line);
 					}
-				}	
+				}
 
 				iFile.close();
 
@@ -186,15 +187,30 @@ namespace game_utils
 			}
 
 			bool result = true;
-			result&=loadSLB(fileName+".slb");
-			result&=loadOWN(fileName+".own");
-			result&=loadTNG(fileName+".tng");
+			result&=loadSLB(fileName+".SLB");
+			if (!result)
+			{
+				CLogger::addEntry("[ERROR|LevelManager]: Failed to load %s\n",(fileName+".slb").c_str());
+				return false;
+			}
+			result&=loadOWN(fileName+".OWN");
+			if (!result)
+			{
+				CLogger::addEntry("[ERROR|LevelManager]: Failed to load %s\n",(fileName+".own").c_str());
+				return false;
+			}
+			result&=loadTNG(fileName+".TNG");
+			if (!result)
+			{
+				CLogger::addEntry("[ERROR|LevelManager]: Failed to load %s\n",(fileName+".tng").c_str());
+				return false;
+			}
 
 			CLogger::setEntryStart();
 			// After everything has been properly loaded call INIT on all blocks.
-			for (GLint y=0; y<CV_LEVEL_MAP_SIZE; y++)
+			for (GLuint y=0; y<CV_LEVEL_MAP_SIZE; y++)
 			{
-				for (GLint x=0; x<CV_LEVEL_MAP_SIZE; x++)
+				for (GLuint x=0; x<CV_LEVEL_MAP_SIZE; x++)
 				{
 					levelMap[y][x]->init();
 				}
@@ -203,9 +219,9 @@ namespace game_utils
 
 			CLogger::setEntryStart();
 			// MUST: calculate height of the ceiling for every block
-			for (GLint y=0; y<CV_LEVEL_MAP_SIZE; y++)
+			for (GLuint y=0; y<CV_LEVEL_MAP_SIZE; y++)
 			{
-				for (GLint x=0; x<CV_LEVEL_MAP_SIZE; x++)
+				for (GLuint x=0; x<CV_LEVEL_MAP_SIZE; x++)
 				{
 					if (levelMap[y][x]->isLow())
 					{
@@ -219,9 +235,9 @@ namespace game_utils
 
 			// And only now can we call finalize.
 			CLightingManager *liManager = CV_GAME_MANAGER->getLightingManager();
-			for (GLint y=0; y<CV_LEVEL_MAP_SIZE; y++)
+			for (GLuint y=0; y<CV_LEVEL_MAP_SIZE; y++)
 			{
-				for (GLint x=0; x<CV_LEVEL_MAP_SIZE; x++)
+				for (GLuint x=0; x<CV_LEVEL_MAP_SIZE; x++)
 				{
 					levelMap[y][x]->finalize();
 
@@ -230,7 +246,7 @@ namespace game_utils
 					{
 						liManager->addLightSource(levelMap[y][x]->getLogicalPosition(), CV_LIGHT_TYPE_TORCH);
 					}
-					
+
 					for (std::vector<CBlockObject*>::iterator rmIter = levelMap[y][x]->getBlockObjects()->begin(); rmIter != levelMap[y][x]->getBlockObjects()->end(); rmIter++)
 					{
 						CBlockObject *bObject = *rmIter;
@@ -273,9 +289,9 @@ namespace game_utils
 
 		bool CLevelManager::shutdown()
 		{
-			for (GLint y=0; y<CV_LEVEL_MAP_SIZE; y++)
+			for (GLuint y=0; y<CV_LEVEL_MAP_SIZE; y++)
 			{
-				for (GLint x=0; x<CV_LEVEL_MAP_SIZE; x++)
+				for (GLuint x=0; x<CV_LEVEL_MAP_SIZE; x++)
 				{
 					delete levelMap[y][x];
 				}
@@ -310,26 +326,26 @@ namespace game_utils
 				}
 			}
 
-			fclose(inSLB);			
+			fclose(inSLB);
 
 			unclaimedBlocksList.clear();
 			unfortifiedBlocksList.clear();
 
 			// process the data
-			for (GLint y=0; y<CV_LEVEL_MAP_SIZE; y++)
+			for (GLuint y=0; y<CV_LEVEL_MAP_SIZE; y++)
 			{
-				for (GLint x=0; x<CV_LEVEL_MAP_SIZE; x++)
+				for (GLuint x=0; x<CV_LEVEL_MAP_SIZE; x++)
 				{
-					levelMap[y][x]->setType(slb[y][x].typeID);				
+					levelMap[y][x]->setType(slb[y][x].typeID);
 					if(slb[y][x].typeID == CV_BLOCK_TYPE_UNCLAIMED_LAND_ID)
 						unclaimedBlocksList[getBlock(x,y)] = getBlock(x,y);
 				}
 			}
 
 			std::vector<CBlock*> Blocks;
-			for (GLint y=0; y<CV_LEVEL_MAP_SIZE; y++)
+			for (GLuint y=0; y<CV_LEVEL_MAP_SIZE; y++)
 			{
-				for (GLint x=0; x<CV_LEVEL_MAP_SIZE; x++)
+				for (GLuint x=0; x<CV_LEVEL_MAP_SIZE; x++)
 				{	// If earth block is next to a peice of claimed land, add it to the unfortified list (todo: check land is yours)
 					if((slb[y][x].typeID == CV_BLOCK_TYPE_EARTH_ID || slb[y][x].typeID == CV_BLOCK_TYPE_EARTH_WITH_TORCH_PLATE_ID) && (slb[y+1][x].typeID == CV_BLOCK_TYPE_CLAIMED_LAND_ID || slb[y-1][x].typeID == CV_BLOCK_TYPE_CLAIMED_LAND_ID || slb[y][x+1].typeID == CV_BLOCK_TYPE_CLAIMED_LAND_ID || slb[y][x-1].typeID == CV_BLOCK_TYPE_CLAIMED_LAND_ID))
 						unfortifiedBlocksList[getBlock(x,y)] = getBlock(x,y);
@@ -357,11 +373,11 @@ namespace game_utils
 			sSLB slb[CV_LEVEL_MAP_SIZE][CV_LEVEL_MAP_SIZE];
 
 			// process the data
-			for (GLint y=0; y<CV_LEVEL_MAP_SIZE; y++)
+			for (GLuint y=0; y<CV_LEVEL_MAP_SIZE; y++)
 			{
-				for (GLint x=0; x<CV_LEVEL_MAP_SIZE; x++)
+				for (GLuint x=0; x<CV_LEVEL_MAP_SIZE; x++)
 				{
-					slb[y][x].typeID = levelMap[y][x]->getType();			
+					slb[y][x].typeID = levelMap[y][x]->getType();
 				}
 			}
 
@@ -373,7 +389,7 @@ namespace game_utils
 					return FALSE;
 				}
 			}
-			fclose(inSLB);	
+			fclose(inSLB);
 			return true;
 		}
 
@@ -394,9 +410,9 @@ namespace game_utils
 
 			fclose(inOWN);
 
-			for (GLint y=0; y<CV_LEVEL_MAP_SIZE; y++)
+			for (GLuint y=0; y<CV_LEVEL_MAP_SIZE; y++)
 			{
-				for (GLint x=0; x<CV_LEVEL_MAP_SIZE; x++)
+				for (GLuint x=0; x<CV_LEVEL_MAP_SIZE; x++)
 				{
 					levelMap[y][x]->setOwner(line[y*3][x*3]);
 				}
@@ -415,9 +431,9 @@ namespace game_utils
 			GLubyte line[256][256];
 
 
-			for (GLint y=0; y<CV_LEVEL_MAP_SIZE; y++)
+			for (GLuint y=0; y<CV_LEVEL_MAP_SIZE; y++)
 			{
-				for (GLint x=0; x<CV_LEVEL_MAP_SIZE; x++)
+				for (GLuint x=0; x<CV_LEVEL_MAP_SIZE; x++)
 				{
 					line[y*3][x*3]=levelMap[y][x]->getOwner();
 				}
@@ -427,7 +443,7 @@ namespace game_utils
 			{
 				fwrite(line[i],1,256,inOWN);
 			}
-			
+
 			fclose(inOWN);
 			return true;
 		}
@@ -455,9 +471,9 @@ namespace game_utils
 			GLfloat thing_x,thing_y;
 
 			srand((unsigned int)time(NULL));
-		    
+
 			// read the number of thing in the dk_map
-			fread(&things_count,1,2,f_tng);			
+			fread(&things_count,1,2,f_tng);
 
 			for (GLshort i=0; i<things_count; i++)
 			{
@@ -479,7 +495,7 @@ namespace game_utils
 				CBlock *block = getBlock(map_x,map_y);
 
 				GLfloat y = (block->isWater() || block->isLava())?0.0f:CV_BLOCK_HEIGHT/4.0f;
-		        
+
 				switch (thing_type)
 				{
 					case TNG_ITEM_DECORATION:
@@ -642,7 +658,7 @@ namespace game_utils
 						{
 							if (!getBlock(map_x,map_y)->isRoom())
 							{
-								block->addModel(new CLightingObject("MODEL_TORCH",vector3f(thing_x,CV_BLOCK_HEIGHT-CV_BLOCK_HEIGHT/7.0f,thing_y),TNG_LIT_TORCH?CLightingObject::LOT_TORCH_LIT:CLightingObject::LOT_TORCH_UNLIT));					
+								block->addModel(new CLightingObject("MODEL_TORCH",vector3f(thing_x,CV_BLOCK_HEIGHT-CV_BLOCK_HEIGHT/7.0f,thing_y),TNG_LIT_TORCH?CLightingObject::LOT_TORCH_LIT:CLightingObject::LOT_TORCH_UNLIT));
 							}
 						}
 
@@ -652,12 +668,12 @@ namespace game_utils
 					case TNG_CREATURE:
 					{
 						if (thing_subtype==TNG_CREATURE_BARBARIAN)
-						{							
+						{
 							CV_GAME_MANAGER->getConsole()->writeLine("CREATED BARBARIAN");
 							CV_GAME_MANAGER->getCreatureManager()->addCreature("BARBARIAN",vector3f(thing_x,y,thing_y),owner);
 						}
 						else if (thing_subtype==TNG_CREATURE_KNIGHT)
-						{							
+						{
 							CV_GAME_MANAGER->getConsole()->writeLine("CREATED KNIGHT");
 							CV_GAME_MANAGER->getCreatureManager()->addCreature("KNIGHT",vector3f(thing_x,y,thing_y),owner);
 						}
@@ -667,47 +683,47 @@ namespace game_utils
 							CV_GAME_MANAGER->getCreatureManager()->addCreature("HORNED_REAPER",vector3f(thing_x,y,thing_y),owner);
 						}
 						else if (thing_subtype==TNG_CREATURE_DRAGON)
- 						{							
+ 						{
 							CV_GAME_MANAGER->getConsole()->writeLine("CREATED DRAGON");
 							CV_GAME_MANAGER->getCreatureManager()->addCreature("DRAGON",vector3f(thing_x,y,thing_y),owner);
 						}
 						else if (thing_subtype==TNG_CREATURE_DEMON_SPAWN)
-						{							
+						{
 							CV_GAME_MANAGER->getConsole()->writeLine("CREATED DEMON SPAWN");
 							CV_GAME_MANAGER->getCreatureManager()->addCreature("DEMON_SPAWN",vector3f(thing_x,y,thing_y),owner);
 						}
 						else if (thing_subtype==TNG_CREATURE_FLY)
-						{							
+						{
 							CV_GAME_MANAGER->getConsole()->writeLine("CREATED FLY");
 							CV_GAME_MANAGER->getCreatureManager()->addCreature("FLY",vector3f(thing_x,y,thing_y),owner);
 						}
 						else if (thing_subtype==TNG_CREATURE_BILE_DEMON)
-						{							
+						{
 							CV_GAME_MANAGER->getConsole()->writeLine("CREATED BILE DEMON");
 							CV_GAME_MANAGER->getCreatureManager()->addCreature("BILE_DEMON",vector3f(thing_x,y,thing_y),owner);
 						}
 						else if (thing_subtype==TNG_CREATURE_IMP)
-						{							
+						{
 							CV_GAME_MANAGER->getConsole()->writeLine("CREATED IMP");
 							CV_GAME_MANAGER->getCreatureManager()->addCreature("IMP",vector3f(thing_x,y,thing_y),owner);
 						}
 						else if (thing_subtype==TNG_CREATURE_BEETLE)
-						{							
+						{
 							CV_GAME_MANAGER->getConsole()->writeLine("CREATED BEETLE");
 							CV_GAME_MANAGER->getCreatureManager()->addCreature("BEETLE",vector3f(thing_x,y,thing_y),owner);
  						}
 						else if (thing_subtype==TNG_CREATURE_VAMPIRE)
-						{							
+						{
 							CV_GAME_MANAGER->getConsole()->writeLine("CREATED VAMPIRE");
 							CV_GAME_MANAGER->getCreatureManager()->addCreature("VAMPIRE",vector3f(thing_x,y,thing_y),owner);
 						}
 						else if (thing_subtype==TNG_CREATURE_SPIDER)
-						{							
+						{
 							CV_GAME_MANAGER->getConsole()->writeLine("CREATED SPIDER");
 							CV_GAME_MANAGER->getCreatureManager()->addCreature("SPIDER",vector3f(thing_x,y,thing_y),owner);
  						}
  						else if (thing_subtype==TNG_CREATURE_HELL_HOUND)
-						{							
+						{
 							CV_GAME_MANAGER->getConsole()->writeLine("CREATED HELL HOUND");
 							CV_GAME_MANAGER->getCreatureManager()->addCreature("HELL_HOUND",vector3f(thing_x,y,thing_y),owner);
  						}
@@ -724,7 +740,7 @@ namespace game_utils
 					{
 						thing_x=(GLfloat)map_x*CV_BLOCK_WIDTH+CV_BLOCK_WIDTH/2.0f;
 						thing_y=(GLfloat)map_y*CV_BLOCK_DEPTH+CV_BLOCK_DEPTH/2.0f;
-						
+
 						if (thing_subtype==TNG_TRAP_ALARM)
 						{
 							//trap_class_name=CLASS_NAME_TRAP_ALARM;
@@ -771,22 +787,22 @@ namespace game_utils
 			return true;
 		}
 
-		CBlock *CLevelManager::getBlock(GLint x, GLint y)
+		CBlock *CLevelManager::getBlock(GLuint x, GLuint y)
 		{
 			return (x>=0&&y>=0&&x<CV_LEVEL_MAP_SIZE&&y<CV_LEVEL_MAP_SIZE?levelMap[y][x]:NULL);
 		}
 
-		CBlock *CLevelManager::getBlockOld(GLint x, GLint y)
+		CBlock *CLevelManager::getBlockOld(GLuint x, GLuint y)
 		{
 			return getBlock(y,x);
 		}
 
-		GLint CLevelManager::getBlockType(GLint x, GLint y)
+		GLint CLevelManager::getBlockType(GLuint x, GLuint y)
 		{
 			return (x>=0&&y>=0&&x<CV_LEVEL_MAP_SIZE&&y<CV_LEVEL_MAP_SIZE?levelMap[y][x]->getType():-1);
 		}
 
-		GLint CLevelManager::getBlockTypeOld(GLint x, GLint y)
+		GLint CLevelManager::getBlockTypeOld(GLuint x, GLuint y)
 		{
 			return getBlockType(y,x);
 		}
@@ -805,7 +821,7 @@ namespace game_utils
 		{
 			if (!(getBlock(x-1,y-1) && getBlock(x+1,y+1)))
 				return false;
-			
+
 			for(GLint x1 = -1; x1<=1; x1++)
 				for(GLint y1 = -1; y1<=1; y1++)
 					if ((diagonal || x1==0 || y1==0) && !(x1==0 && y1==0) &&
@@ -824,7 +840,7 @@ namespace game_utils
 				if(isSameTypeAndOwner(x+1,y,&block)){ if(!blocks) return true; else blocks->push_back(getBlock(x+1,y));}
 				if(isSameTypeAndOwner(x,y-1,&block)){ if(!blocks) return true; else blocks->push_back(getBlock(x,y-1));}
 				if(isSameTypeAndOwner(x,y+1,&block)){ if(!blocks) return true; else blocks->push_back(getBlock(x,y+1));}
-			
+
 				if(diagonal)
 				{
 					if(isSameTypeAndOwner(x-1,y-1,&block)){ if(!blocks) return true; else blocks->push_back(getBlock(x-1,y-1));}
@@ -837,7 +853,7 @@ namespace game_utils
 				if(isSameType(x+1,y,&block)){ if(!blocks) return true; else blocks->push_back(getBlock(x+1,y));}
 				if(isSameType(x,y-1,&block)){ if(!blocks) return true; else blocks->push_back(getBlock(x,y-1));}
 				if(isSameType(x,y+1,&block)){ if(!blocks) return true; else blocks->push_back(getBlock(x,y+1));}
-			
+
 				if(diagonal)
 				{
 					if(isSameType(x-1,y-1,&block)){ if(!blocks) return true; else blocks->push_back(getBlock(x-1,y-1));}
@@ -849,12 +865,12 @@ namespace game_utils
 
 			return (blocks?blocks->size()>0:false);
 		}
-		 
+
 		bool CLevelManager::isBlockClaimable(GLint x, GLint y, GLubyte owner, std::vector<CBlock*> *blocks)
 		{
 			if (!(getBlock(x-1,y-1) && getBlock(x+1,y+1)))
 				return false;
-			
+
 			for(GLint x1 = -1; x1<=1; x1++)
 				for(GLint y1 = -1; y1<=1; y1++)
 					if ((x1==0 || y1==0) && !(x1==0 && y1==0) &&
@@ -932,7 +948,7 @@ namespace game_utils
 			}
 			if(tempblock)
 				return tempblock;
-			
+
 			return NULL;
 		}
 
@@ -948,7 +964,7 @@ namespace game_utils
 				if(!((CBlock*)iter->second)->isTaken())
 				{
 					if(isBlockClaimable(((CBlock*)iter->second)->getLogicalPosition(),owner))
-					{	
+					{
 						if(CV_GAME_MANAGER->getPathManager()->findPath(position,((CBlock*)iter->second)->getLogicalPosition(),&path))
 						{
 							if((path.size() < currpath.size()) || (currpath.size() == 0))
@@ -1195,7 +1211,7 @@ namespace game_utils
 					return checkResult;
 				}
 
-				levelFileName = CV_RESOURCES_DIRECTORY+"levels\\"+tParams[0];
+				levelFileName = CV_RESOURCES_DIRECTORY+"levels"+PATH_SEP+tParams[0];
 
 				console->writeLine("Checking necessary level files...");
 				if (!levelExists(levelFileName))
@@ -1217,7 +1233,7 @@ namespace game_utils
 				console->setForceRedraw(os);
 
 				if (!this->init())
-				{					
+				{
 					return "Level "+tParams[0]+" loading failed!";
 				}
 				else
@@ -1230,7 +1246,7 @@ namespace game_utils
 					CV_GAME_MANAGER->getGUIManager()->getPlayGUI()->updateRoomInfo();
 
 					return "Level "+tParams[0]+" loaded.";
-				}				
+				}
 			}
 			else if (keyword==PLOG)
 			{
@@ -1251,7 +1267,7 @@ namespace game_utils
 					return checkResult;
 				}
 
-				levelFileName = CV_RESOURCES_DIRECTORY+"saves\\"+tParams[0];
+				levelFileName = CV_RESOURCES_DIRECTORY+"saves"+PATH_SEP+tParams[0];
 
 				console->writeLine("Checking if save exists...");
 				if (levelExists(levelFileName))

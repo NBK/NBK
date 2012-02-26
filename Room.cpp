@@ -59,7 +59,7 @@ namespace game_objects
 		GLvoid CRoom::rec(vector2i pos)
 		{
 			// check pos validity
-			if (pos[0]<0 || pos[1]<0 || pos[0]>=CV_LEVEL_MAP_SIZE || pos[1]>=CV_LEVEL_MAP_SIZE)
+			if (pos[0]<0 || pos[1]<0 || pos[0]>=(int)CV_LEVEL_MAP_SIZE || pos[1]>=(int)CV_LEVEL_MAP_SIZE)
 			{
 				return;
 			}

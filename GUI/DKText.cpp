@@ -1,5 +1,5 @@
-#include <windows.h>
-#include <gl\gl.h>
+#include "../system.h"
+#include <GL/gl.h>
 #include <stdio.h>
 #include "DKText.h"
 #include "DKTextureLoader.h"
@@ -12,9 +12,9 @@ CDKText::CDKText()
 	alpha=1.0f;
 	blend=false;
 	CDKTextureLoader tl;
-	tl.build_texture("data/resources/font/font.bmp",font_texture,true); 
+	tl.build_texture("data/resources/font/font.bmp",font_texture,true);
 	base=0;
-	build_normal_font();	
+	build_normal_font();
 }
 
 GLvoid CDKText::set_screen_extent(GLint screen_width, GLint screen_height)
@@ -40,7 +40,7 @@ GLvoid CDKText::set_alpha(GLfloat alpha)
 	this->alpha=alpha;
 }
 
-GLfloat CDKText::get_alpha() 
+GLfloat CDKText::get_alpha()
 {
 	return alpha;
 }
@@ -60,30 +60,30 @@ GLvoid CDKText::print(GLint x, GLint y, const char *fmt, ...)
 	va_end(ap);
 
 	glColor3f(r,g,b);
-	glEnable(GL_TEXTURE_2D);	
-	glBindTexture(GL_TEXTURE_2D, font_texture);	
-	//glDisable(GL_DEPTH_TEST);					
-	glMatrixMode(GL_PROJECTION);				
-	glPushMatrix();								
-	glLoadIdentity();								
-	glOrtho(0,screen_width,0,screen_height,-1,1);		
-	glMatrixMode(GL_MODELVIEW);						
-	glPushMatrix();									
-	glLoadIdentity();								
-	glTranslated(x,screen_height-y,0);					
-	glListBase(base-32+(128));					
-	glCallLists((GLsizei)strlen(string),GL_UNSIGNED_BYTE,string);
-	glMatrixMode(GL_PROJECTION);	
-	glPopMatrix();				
+	glEnable(GL_TEXTURE_2D);
+	glBindTexture(GL_TEXTURE_2D, font_texture);
+	//glDisable(GL_DEPTH_TEST);
+	glMatrixMode(GL_PROJECTION);
+	glPushMatrix();
+	glLoadIdentity();
+	glOrtho(0,screen_width,0,screen_height,-1,1);
 	glMatrixMode(GL_MODELVIEW);
-	glPopMatrix();			
+	glPushMatrix();
+	glLoadIdentity();
+	glTranslated(x,screen_height-y,0);
+	glListBase(base-32+(128));
+	glCallLists((GLsizei)strlen(string),GL_UNSIGNED_BYTE,string);
+	glMatrixMode(GL_PROJECTION);
+	glPopMatrix();
+	glMatrixMode(GL_MODELVIEW);
+	glPopMatrix();
 	//glEnable(GL_DEPTH_TEST);
-	glDisable(GL_TEXTURE_2D);	
+	glDisable(GL_TEXTURE_2D);
 }
 
 GLvoid CDKText::build_normal_font()
 {
-	float	cx;	
+	float	cx;
 	float	cy;
 
 	if (base!=0)
@@ -99,19 +99,19 @@ GLvoid CDKText::build_normal_font()
 		cx=float(loop%16)/16.0f;
 		cy=float(loop/16)/16.0f;
 
-		glNewList(base+loop,GL_COMPILE);	
-			glBegin(GL_QUADS);					
-				glTexCoord2f(cx,1-cy-0.0625f);	
-				glVertex2i(0,0);	
-				glTexCoord2f(cx+0.0625f,1-cy-0.0625f);	
+		glNewList(base+loop,GL_COMPILE);
+			glBegin(GL_QUADS);
+				glTexCoord2f(cx,1-cy-0.0625f);
+				glVertex2i(0,0);
+				glTexCoord2f(cx+0.0625f,1-cy-0.0625f);
 				glVertex2i(character_size,0);
 				glTexCoord2f(cx+0.0625f,1-cy);
 				glVertex2i(character_size,character_size);
-				glTexCoord2f(cx,1-cy);		
+				glTexCoord2f(cx,1-cy);
 				glVertex2i(0,character_size);
-			glEnd();							
+			glEnd();
 			glTranslated(character_spacing,0,0);
-		glEndList();				
+		glEndList();
 	}
 }
 

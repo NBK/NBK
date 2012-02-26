@@ -210,7 +210,7 @@ namespace GUI
 		}
 	}
 
-	bool CGUI::force_file_alignment(char *file)
+	bool CGUI::force_file_alignment(const char *file)
 	{
 		/* first check if we already opened the config file */
 		if (!config_control.config_exists(file))
@@ -219,6 +219,7 @@ namespace GUI
 
 			if (!(f=fopen(file,"r")))
 			{
+				fprintf(stderr, "Can't read %s file\n", file);
 				return false;
 			}
 

@@ -24,7 +24,7 @@ namespace LUA_effects
 		followPath=false;
 		pathPos=0;
 		pathMoveSpeed=0.0f;
-		transparent=true;	
+		transparent=true;
 		depthTest=true;
 		timeOut=false;
 		connectAlpha=false;
@@ -34,7 +34,7 @@ namespace LUA_effects
 		shakeStrength=1.0f;
 
 		initLUAFile = "data/LUA_effects/0/emitter0_init_test.lua";
-		updateLUAFile = "data/LUA_effects/0/emitter0_update_test.lua";	
+		updateLUAFile = "data/LUA_effects/0/emitter0_update_test.lua";
 	}
 
 	// update
@@ -112,7 +112,7 @@ namespace LUA_effects
 	}
 
 	int EMITTER_ADD_PARTICLE_GRAVITY_POINT(lua_State *L)
-	{		
+	{
 		vector3f position((GLfloat)lua_tonumber(L,1),(GLfloat)lua_tonumber(L,2),(GLfloat)lua_tonumber(L,3));
 		GLfloat strength = (GLfloat)lua_tonumber(L,4);
 		G_currentTempEmitter->addGravityPoint(new CLUAEmitter::GravityPoint(position,strength));
@@ -120,47 +120,47 @@ namespace LUA_effects
 	}
 
 	int EMITTER_ADD_PARTICLE_DEFLECTOR(lua_State *L)
-	{		
+	{
 		vector3f position((GLfloat)lua_tonumber(L,1),(GLfloat)lua_tonumber(L,2),(GLfloat)lua_tonumber(L,3));
 		GLfloat strength = (GLfloat)lua_tonumber(L,4);
 
 		G_currentTempEmitter->addDeflector(new CLUAEmitter::Deflector(position,strength));
-		
+
 		return 0;
 	}
 
 	int EMITTER_SET_PARTICLE_TEXTURE(lua_State *L)
-	{		
+	{
 		G_currentTempEmitter->setParticleTexture(string(lua_tostring(L,1)));
 		return 0;
 	}
 
 	int EMITTER_SET_PARTICLE_ANIMATED_TEXTURE(lua_State *L)
-	{				
+	{
 		G_currentTempEmitter->setParticleAnimatedTexture(string(lua_tostring(L,1)),(GLint)lua_tonumber(L,2),(GLint)lua_tonumber(L,3),(GLfloat)lua_tonumber(L,4));
 		return 0;
 	}
 
 	int EMITTER_LOAD_PARTICLE_START_POSITION(lua_State *L)
-	{		
+	{
 		G_currentTempEmitter->loadParticlePositions(string(lua_tostring(L,1)));
 		return 0;
 	}
 
 	int EMITTER_SET_PARTICLE_SCALE(lua_State *L)
-	{		
-		G_currentTempEmitter->setScale((GLfloat)lua_tonumber(L,1));		
+	{
+		G_currentTempEmitter->setScale((GLfloat)lua_tonumber(L,1));
 		return 0;
 	}
 
 	int EMITTER_SET_TIMEOUT(lua_State *L)
-	{		
+	{
 		G_currentTempEmitter->setTimeOut((GLfloat)lua_tonumber(L,1),(GLfloat)lua_tonumber(L,2));
 		return 0;
 	}
 
 	int EMITTER_SET_CAMERA_SHAKE(lua_State *L)
-	{		
+	{
 		G_currentTempEmitter->setCameraShake((GLfloat)lua_tonumber(L,1));
 		return 0;
 	}
@@ -207,13 +207,13 @@ namespace LUA_effects
 			if (particleInitLUAFile.length()!=0)
 			{
 				particles[i]->setEffectDirectory(getEffectDirectory());
-				particles[i]->setLUAFile(particleInitLUAFile);				
+				particles[i]->setLUAFile(particleInitLUAFile);
 			}
 
 			if (particleTexture!=0)
 			{
 				particles[i]->set_texture(particleTexture);
-			}			
+			}
 		}
 		setParticlePositions();
 	}
@@ -242,17 +242,17 @@ namespace LUA_effects
 		lua_register(LUA_init,"EMITTER_LOAD_PARTICLE_START_POSITION",EMITTER_LOAD_PARTICLE_START_POSITION);
 		lua_register(LUA_init,"EMITTER_SET_PARTICLE_SCALE",EMITTER_SET_PARTICLE_SCALE);
 		lua_register(LUA_init,"EMITTER_SET_TIMEOUT",EMITTER_SET_TIMEOUT);
-		lua_register(LUA_init,"EMITTER_SET_CAMERA_SHAKE",EMITTER_SET_CAMERA_SHAKE);		
+		lua_register(LUA_init,"EMITTER_SET_CAMERA_SHAKE",EMITTER_SET_CAMERA_SHAKE);
 
-		string fullPath = G_startDir+"\\"+initLUAFile;
+		string fullPath = G_startDir+PATH_SEP+initLUAFile;
 
-		__luaL_dofile(LUA_init, fullPath.c_str());		
-		lua_close(LUA_init);		
-		
+		__luaL_dofile(LUA_init, fullPath.c_str());
+		lua_close(LUA_init);
+
 		for (GLint i=0; i<pCount; i++)
 		{
 			particles[i]->set_start_position(particles[i]->get_start_position()+current_position);
-			particles[i]->init(i,pCount);			
+			particles[i]->init(i,pCount);
 		}
 
 		// update lua stuff
@@ -261,7 +261,7 @@ namespace LUA_effects
 		lua_register(LUA_update,"EMITTER_UPDATE_POSITION",EMITTER_UPDATE_POSITION);
 		lua_register(LUA_update,"EMITTER_SET_GLOBAL_PARAMS_COUNT",EMITTER_SET_GLOBAL_PARAMS_COUNT);
 
-		fullPath = G_startDir+"\\"+updateLUAFile;
+		fullPath = G_startDir+PATH_SEP+updateLUAFile;
 
 		// read initial values from LUA
 		__luaL_dofile(LUA_update, fullPath.c_str());
@@ -292,7 +292,7 @@ namespace LUA_effects
 
 		if (transparent)
 		{
-			glDepthMask(false);		
+			glDepthMask(false);
 			glEnable(GL_BLEND);
 			glBlendFunc(GL_SRC_ALPHA,GL_ONE);
 			glEnable(GL_TEXTURE_2D);
@@ -359,13 +359,13 @@ namespace LUA_effects
 	{
 		G_currentTempEmitter=this; // MUST
 
-		__luaL_dofile(LUA_update, (G_startDir+"\\"+updateLUAFile).c_str());
+		__luaL_dofile(LUA_update, (G_startDir+PATH_SEP+updateLUAFile).c_str());
 
 		__pushLuaGlobals();
 
 		__updateLUAEmitter();
 
-		__popLuaGlobals();	
+		__popLuaGlobals();
 	}
 
 	GLvoid CLUAEmitter::update()
@@ -434,7 +434,7 @@ namespace LUA_effects
 					diff*=F;
 
 					particles[i]->update_move_vector(diff*delta);
-				}			
+				}
 			}
 		}
 
@@ -457,7 +457,7 @@ namespace LUA_effects
 					diff*=F;
 
 					particles[i]->update_move_vector(diff*delta);
-				}			
+				}
 			}
 		}
 
@@ -499,15 +499,15 @@ namespace LUA_effects
 	}
 
 	GLvoid CLUAEmitter::reset()
-	{		
+	{
 		// reset time out
 		currentTimeOut=startTimeOut;
-		CLUAParticle::reset();		
-	
+		CLUAParticle::reset();
+
 		for (GLint i=0; i<pCount; i++)
 		{
 			particles[i]->set_start_position_only(particles[i]->get_start_position()+(current_position-oldPos));
-			particles[i]->reset();			
+			particles[i]->reset();
 		}
 		oldPos=current_position;
 
@@ -533,7 +533,7 @@ namespace LUA_effects
 			for (GLint i=0; i<pCount; i++)
 			{
 				particles[i]->setEffectDirectory(getEffectDirectory());
-				particles[i]->setLUAFile(particleInitLUAFile);							
+				particles[i]->setLUAFile(particleInitLUAFile);
 
 				if (particleTexture!=0)
 				{
@@ -565,26 +565,26 @@ namespace LUA_effects
 		string fullDirectory = sGeneralUtils::getCurrentDirectory();
 		string effectDir=fullDirectory.substr(fullDirectory.find_first_of(G_startDir)+G_startDir.length()+1);
 		this->setEffectDirectory(effectDir);
-		this->initLUAFile=effectDir+"\\"+initLUAFile;
+		this->initLUAFile=effectDir+PATH_SEP+initLUAFile;
 	}
 
 	GLvoid CLUAEmitter::setUpdateLUAFile(string updateLUAFile)
 	{
 		string fullDirectory = sGeneralUtils::getCurrentDirectory();
 		string effectDir=fullDirectory.substr(fullDirectory.find_first_of(G_startDir)+G_startDir.length()+1);
-		this->updateLUAFile=effectDir+"\\"+updateLUAFile;
+		this->updateLUAFile=effectDir+PATH_SEP+updateLUAFile;
 	}
 
 	GLvoid CLUAEmitter::setInitLUAFile(string effectDir, string initLUAFile)
 	{
 		this->setEffectDirectory(effectDir);
-		this->initLUAFile=effectDir+"\\"+initLUAFile;
+		this->initLUAFile=effectDir+PATH_SEP+initLUAFile;
 	}
 
 	GLvoid CLUAEmitter::setUpdateLUAFile(string effectDir, string updateLUAFile)
 	{
 		this->setEffectDirectory(effectDir);
-		this->updateLUAFile=effectDir+"\\"+updateLUAFile;
+		this->updateLUAFile=effectDir+PATH_SEP+updateLUAFile;
 	}
 
 	bool CLUAEmitter::doFollowPath()
@@ -599,7 +599,7 @@ namespace LUA_effects
 
 	GLvoid CLUAEmitter::setPathFile(string pathFile)
 	{
-		string _pathFile=G_startDir+"\\"+effectDirectory+"\\"+pathFile;
+		string _pathFile=G_startDir+PATH_SEP+effectDirectory+PATH_SEP+pathFile;
 
 		if (pathFile.find(".ms3d")!=string::npos)
 		{
@@ -645,7 +645,7 @@ namespace LUA_effects
 	{
 		if (particleTexture.length()>0)
 		{
-			CTextureLoader::buildTexture((char*)(G_startDir+"\\"+effectDirectory+"\\"+particleTexture).c_str(),this->particleTexture,true,GL_LINEAR);
+			CTextureLoader::buildTexture((char*)(G_startDir+PATH_SEP+effectDirectory+PATH_SEP+particleTexture).c_str(),this->particleTexture,true,GL_LINEAR);
 
 			for (GLint i=0; i<pCount; i++)
 			{
@@ -665,7 +665,7 @@ namespace LUA_effects
 	{
 		if (particleTexture.length()>0)
 		{
-			CTextureLoader::buildTexture((char*)(G_startDir+"\\"+effectDirectory+"\\"+particleTexture).c_str(),this->particleTexture,true,GL_LINEAR);
+			CTextureLoader::buildTexture((char*)(G_startDir+PATH_SEP+effectDirectory+PATH_SEP+particleTexture).c_str(),this->particleTexture,true,GL_LINEAR);
 
 			for (GLint i=0; i<pCount; i++)
 			{
@@ -685,11 +685,11 @@ namespace LUA_effects
 	{
 		particleStartPositions.clear();
 
-		string path=G_startDir+"\\"+effectDirectory+"\\"+fileName;
+		string path=G_startDir+PATH_SEP+effectDirectory+PATH_SEP+fileName;
 
 		if (fileName.find(".ms3d")!=string::npos)
 		{
-			// not 
+			// not
 		}
 		else
 		{
@@ -746,7 +746,7 @@ namespace LUA_effects
 		this->timeOut=true;
 		this->current_alpha=this->start_alpha;
 		this->alpha_mod=1.0f/startTimeOut;
-		this->connectAlpha=(connectAlpha<0.0f);				
+		this->connectAlpha=(connectAlpha<0.0f);
 	}
 
 	bool CLUAEmitter::doAlphaConnection()

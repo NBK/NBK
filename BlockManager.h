@@ -4,7 +4,7 @@
 #include "Block.h"
 #include "Manager.h"
 #include <map>
-#include "BoundingBox.h"
+#include "boundingBox.h"
 #include "SubtileData.h"
 #include "RoomConstructor.h"
 

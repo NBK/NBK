@@ -6,8 +6,8 @@ extern "C"
 }
 
 #include "../commons.h"
-#include <windows.h>
-#include <gl\gl.h>
+#include "../system.h"
+#include <GL/gl.h>
 #include <math.h>
 
 #include "../utils.h"
@@ -22,7 +22,7 @@ using namespace game_utils;
 #define NOSPAWN if (current_spawn_delay>0.0f) return;
 
 namespace LUA_effects
-{	
+{
 	CLUAParticle *G_currentTempParticle;
 
 	CLUAParticle::CLUAParticle()
@@ -40,14 +40,14 @@ namespace LUA_effects
 		set_start_position(NULL_VEC);
 		set_move_vector(NULL_VEC);
 		set_color(vector3f(1.0f,1.0f,1.0f));
-		
+
 		set_alpha_properties(1.0f,0.0f);
 		set_life_properties(1.0f,0.0f);
 		set_current_life(1.0f);
 		set_size_properties(1.0f,0.0f);
 
 		set_gravity(NULL_VEC);
-		
+
 		set_reborn(true);
 		dead=false;
 		set_billboard(true);
@@ -94,7 +94,7 @@ namespace LUA_effects
 
 	int PARTICLE_SET_ALPHA_PROPERTIES(lua_State *L)
 	{
-		GLfloat connectedWithLife = (GLfloat)lua_tonumber(L,3);		
+		GLfloat connectedWithLife = (GLfloat)lua_tonumber(L,3);
 		G_currentTempParticle->set_alpha_properties((GLfloat)lua_tonumber(L,1),(GLfloat)lua_tonumber(L,2));
 
 		if (connectedWithLife<0.0f)
@@ -111,7 +111,7 @@ namespace LUA_effects
 
 	int PARTICLE_SET_SIZE_PROPERTIES(lua_State *L)
 	{
-		GLfloat connectedWithLife = (GLfloat)lua_tonumber(L,3);		
+		GLfloat connectedWithLife = (GLfloat)lua_tonumber(L,3);
 		G_currentTempParticle->set_size_properties((GLfloat)lua_tonumber(L,1),(GLfloat)lua_tonumber(L,2));
 
 		if (connectedWithLife<0.0f)
@@ -175,17 +175,17 @@ namespace LUA_effects
 		lua_register(LUA_init,"PARTICLE_SET_GRAVITY",PARTICLE_SET_GRAVITY);
 		lua_register(LUA_init,"PARTICLE_SET_SIZE_PROPERTIES",PARTICLE_SET_SIZE_PROPERTIES);
 		lua_register(LUA_init,"PARTICLE_SET_RESET_ALPHA",PARTICLE_SET_RESET_ALPHA);
-		lua_register(LUA_init,"PARTICLE_SET_CONNECT_MOVEMENT_WITH_PARENT",PARTICLE_SET_CONNECT_MOVEMENT_WITH_PARENT);		
+		lua_register(LUA_init,"PARTICLE_SET_CONNECT_MOVEMENT_WITH_PARENT",PARTICLE_SET_CONNECT_MOVEMENT_WITH_PARENT);
 		lua_register(LUA_init,"PARTICLE_SET_SPAWN_PROPERTIES",PARTICLE_SET_SPAWN_PROPERTIES);
 
-		string fullPath = G_startDir+"\\"+initLUAFile;
+		string fullPath = G_startDir+PATH_SEP+initLUAFile;
 
 		__luaL_dofile(LUA_init, fullPath.c_str());
 		lua_getglobal(LUA_init,"onParticleInit");
 		lua_pushnumber(LUA_init,index);
 		lua_pushnumber(LUA_init,count);
 		lua_call(LUA_init,2,0);
-		lua_close(LUA_init);		
+		lua_close(LUA_init);
 	}
 
 #define GETX(i) (i%count_x)
@@ -196,7 +196,7 @@ namespace LUA_effects
 		NOSPAWN
 
 		vector3f pos = current_position;
-		
+
 		if (connect_movement_with_parent)
 		{
 			pos+=((CLUAEmitter*)parent)->get_current_position();
@@ -207,8 +207,8 @@ namespace LUA_effects
 		CCamera *G_camera = CV_GAME_MANAGER->getControlManager()->getCamera();
 
 		if (billboard)
-		{			
-			glRotatef(-G_camera->getRotateZ(),0.0f,0.0f,1.0f);			
+		{
+			glRotatef(-G_camera->getRotateZ(),0.0f,0.0f,1.0f);
 			glRotatef(-G_camera->getRotateY(),0.0f,1.0f,0.0f);
 			glRotatef(-G_camera->getRotateX(),1.0f,0.0f,0.0f);
 		}
@@ -247,7 +247,7 @@ namespace LUA_effects
 		{
 			glRotatef(G_camera->getRotateX(),1.0f,0.0f,0.0f);
 			glRotatef(G_camera->getRotateY(),0.0f,1.0f,0.0f);
-			glRotatef(G_camera->getRotateZ(),0.0f,0.0f,1.0f);							
+			glRotatef(G_camera->getRotateZ(),0.0f,0.0f,1.0f);
 		}
 
 		glTranslatef(-pos[0],-pos[1],-pos[2]);
@@ -266,7 +266,7 @@ namespace LUA_effects
 			{
 				current_spawn_delay=0.0f;
 			}
-		}	
+		}
 
 		NOSPAWN
 
@@ -285,7 +285,7 @@ namespace LUA_effects
 					current_frame=0;
 				}
 			}
-		}	
+		}
 
 		current_position+=current_move_vector*delta;
 
@@ -325,7 +325,7 @@ namespace LUA_effects
 	}
 
 	GLvoid CLUAParticle::reset()
-	{	
+	{
 		current_position=start_position;
 		current_move_vector=start_move_vector;
 		current_spawn_delay=start_spawn_delay;
@@ -482,7 +482,7 @@ namespace LUA_effects
 	{
 		this->initLUAFile=initLUAFile;
 
-		this->initLUAFile=effectDirectory+"\\"+this->initLUAFile;
+		this->initLUAFile=effectDirectory+PATH_SEP+this->initLUAFile;
 	}
 
 	GLvoid CLUAParticle::set_alpha_mod(GLfloat alpha_mod)
@@ -494,7 +494,7 @@ namespace LUA_effects
 	{
 		this->size_mod=size_mod;
 	}
-	
+
 	GLfloat CLUAParticle::get_start_size()
 	{
 		return start_size;

@@ -1,8 +1,8 @@
 #ifndef MANAGER_H
 #define MANAGER_H
 
-#include <windows.h>
-#include <gl/gl.h>
+#include "system.h"
+#include <GL/gl.h>
 #include <string>
 #include <cml/cml.h>
 

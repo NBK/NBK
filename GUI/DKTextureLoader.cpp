@@ -1,6 +1,10 @@
-#include <windows.h>
-#include <gl\gl.h>
+#include "../system.h"
+#include <GL/gl.h>
+#ifdef WIN32
 #include <olectl.h>
+#else
+#include "../SDLUtils.h"
+#endif
 #include <math.h>
 
 #include "DKTextureLoader.h"
@@ -12,7 +16,7 @@ CDKTextureLoader::CDKTextureLoader()
 }
 
 CDKTextureLoader::~CDKTextureLoader()
-{ 
+{
 
 }
 
@@ -24,11 +28,15 @@ CDKTextureLoader::LOADER_RESULT CDKTextureLoader::build_texture(char *file, GLui
 	{
 		return lr;
 	}
-	
+
+#ifdef WIN32
 	HDC			hdcTemp;												// The DC To Hold Our Bitmap
 	HBITMAP		hbmpTemp;												// Holds The Bitmap Temporarily
 	IPicture	*pPicture;												// IPicture Interface
 	OLECHAR		wszPath[MAX_PATH+1];									// Full Path To Picture (WCHAR)
+#else
+	SDL_Surface	*image = NULL;
+#endif
 	char		szPath[MAX_PATH+1];										// Full Path To Picture
 	long		lWidth;													// Width In Logical Units
 	long		lHeight;												// Height In Logical Units
@@ -36,17 +44,25 @@ CDKTextureLoader::LOADER_RESULT CDKTextureLoader::build_texture(char *file, GLui
 	long		lHeightPixels;											// Height In Pixels
 	GLint		glMaxTexDim ;											// Holds Maximum Texture Size
 
+#ifndef NDEBUG
+	//debug("About to load: %s\n", file);
+#endif
 	if (strstr(file, "http://"))									// If PathName Contains http:// Then...
 	{
 		strcpy(szPath, file);										// Append The PathName To szPath
 	}
-	else																// Otherwise... We Are Loading From A File
+	else															// Otherwise... We Are Loading From A File
 	{
-		GetCurrentDirectory(MAX_PATH, szPath);							// Get Our Working Directory
-		strcat(szPath, "\\");											// Append "\" After The Working Directory
+#ifdef WIN32
+		GetCurrentDirectory(MAX_PATH, szPath);						// Get Our Working Directory
+		strcat(szPath, PATH_SEP);									// Append "\" After The Working Directory
 		strcat(szPath, file);										// Append The PathName
+#else
+		strcpy(szPath, file);
+#endif
 	}
 
+#ifdef WIN32
 	MultiByteToWideChar(CP_ACP, 0, szPath, -1, wszPath, MAX_PATH);		// Convert From ASCII To Unicode
 	HRESULT hr = OleLoadPicturePath(wszPath, 0, 0, 0, IID_IPicture, (void**)&pPicture);
 
@@ -61,28 +77,36 @@ CDKTextureLoader::LOADER_RESULT CDKTextureLoader::build_texture(char *file, GLui
 		pPicture->Release();											// Decrements IPicture Reference Count
 		return lr;													// Return False (Failure)
 	}
+#else
+	image = IMG_Load(szPath);
+	if ( image == NULL ) {
+		fprintf(stderr, "Unable to load %s: %s\n", szPath, SDL_GetError());
+		return lr;
+	}
+#endif
 
 	glGetIntegerv(GL_MAX_TEXTURE_SIZE, &glMaxTexDim);					// Get Maximum Texture Size Supported
-	
+
+#ifdef WIN32
 	pPicture->get_Width(&lWidth);										// Get IPicture Width (Convert To Pixels)
 	lWidthPixels	= MulDiv(lWidth, GetDeviceCaps(hdcTemp, LOGPIXELSX), 2540);
 	pPicture->get_Height(&lHeight);										// Get IPicture Height (Convert To Pixels)
-	lHeightPixels	= MulDiv(lHeight, GetDeviceCaps(hdcTemp, LOGPIXELSY), 2540);	
+	lHeightPixels	= MulDiv(lHeight, GetDeviceCaps(hdcTemp, LOGPIXELSY), 2540);
 
 	lr.texture_dimensions.x=lWidthPixels;
 	lr.texture_dimensions.y=lHeightPixels;
 
 	// Resize Image To Closest Power Of Two
 	if (lWidthPixels <= glMaxTexDim) // Is Image Width Less Than Or Equal To Cards Limit
-		lWidthPixels = 1 << (int)floor((log((double)lWidthPixels)/log(2.0f)) + 0.5f); 
+		lWidthPixels = 1 << (int)floor((log((double)lWidthPixels)/log(2.0f)) + 0.5f);
 	else  // Otherwise  Set Width To "Max Power Of Two" That The Card Can Handle
 		lWidthPixels = glMaxTexDim;
- 
+
 	if (lHeightPixels <= glMaxTexDim) // Is Image Height Greater Than Cards Limit
 		lHeightPixels = 1 << (int)floor((log((double)lHeightPixels)/log(2.0f)) + 0.5f);
 	else  // Otherwise  Set Height To "Max Power Of Two" That The Card Can Handle
 		lHeightPixels = glMaxTexDim;
-	
+
 	//	Create A Temporary Bitmap
 	BITMAPINFO	bi = {0};												// The Type Of Bitmap We Request
 	DWORD		*pBits = 0;												// Pointer To The Bitmap Bits
@@ -96,7 +120,7 @@ CDKTextureLoader::LOADER_RESULT CDKTextureLoader::build_texture(char *file, GLui
 
 	//	Creating A Bitmap This Way Allows Us To Specify Color Depth And Gives Us Imediate Access To The Bits
 	hbmpTemp = CreateDIBSection(hdcTemp, &bi, DIB_RGB_COLORS, (void**)&pBits, 0, 0);
-	
+
 	if(!hbmpTemp)														// Did Creation Fail?
 	{
 		DeleteDC(hdcTemp);												// Delete The Device Context
@@ -159,6 +183,46 @@ CDKTextureLoader::LOADER_RESULT CDKTextureLoader::build_texture(char *file, GLui
 			pPixel[3]=255;
 		}
 	}
+#else
+	lWidth = image->w;
+	lHeight = image->h;
+	lWidthPixels = powerOfTwo( lWidth );
+	lHeightPixels = powerOfTwo( lHeight );
+
+	lr.texture_dimensions.x=lWidthPixels;
+	lr.texture_dimensions.y=lHeightPixels;
+
+	SDL_Surface *tmpbuf = SDL_DisplayFormatAlpha(image);
+	if ( tmpbuf == NULL ) {
+		fprintf(stderr, "Failed to prepare texture buffer for %s: %s\n", file, SDL_GetError());
+		return lr;
+	}
+
+	SDL_Surface *texbuf = tmpbuf;
+	if (lWidthPixels!=lWidth || lHeightPixels!=lHeight || trans)
+	{
+		// Convert image buffer for OpenGL or simply use tmpbuf
+		texbuf = SDL_CreateRGBSurface(0, lWidthPixels, lHeightPixels,
+			tmpbuf->format->BitsPerPixel,
+			tmpbuf->format->Rmask,
+			tmpbuf->format->Gmask,
+			tmpbuf->format->Bmask,
+			tmpbuf->format->Amask
+			);
+		SDL_SetAlpha(tmpbuf, 0, 255);
+		if ( texbuf == NULL ) {
+			fprintf(stderr, "Failed to get full GL buffer for %s texture: %s\n", file, SDL_GetError());
+			return lr;
+		}
+		if (trans)
+		{
+			SDL_SetColorKey(tmpbuf,SDL_SRCCOLORKEY,((Uint32 *)tmpbuf->pixels)[0]);
+		}
+		SDL_Rect texrect;
+		SDL_GetClipRect(tmpbuf, &texrect);
+		SDL_BlitSurface(tmpbuf, &texrect, texbuf, &texrect);
+	}
+#endif
 
 	glGenTextures(1, &texture);
 	glBindTexture(GL_TEXTURE_2D, texture);
@@ -166,12 +230,23 @@ CDKTextureLoader::LOADER_RESULT CDKTextureLoader::build_texture(char *file, GLui
 	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,texture_filter);
 /*	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_WRAP_S,GL_CLAMP_TO_EDGE);
 	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_WRAP_T,GL_CLAMP_TO_EDGE);*/
+
+#ifdef WIN32
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, lWidthPixels, lHeightPixels, 0, GL_RGBA, GL_UNSIGNED_BYTE, pBits);
 
 	DeleteObject(hbmpTemp);
 	DeleteDC(hdcTemp);
 
 	pPicture->Release();
+#else
+	//glMatrixMode( GL_TEXTURE ) ;
+	//glLoadIdentity() ;
+	//glScalef( 1, -1, 1 ) ;
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, lWidthPixels, lHeightPixels, 0, GL_BGRA, GL_UNSIGNED_BYTE, texbuf->pixels);
+
+	SDL_FreeSurface(image);
+	SDL_FreeSurface(tmpbuf);
+#endif
 
 	lr.result=true;
 	return lr;
