@@ -18,8 +18,23 @@ namespace game_objects
 			AA_WALK,
 			AA_DIG,
 			AA_CLAIM,
-			AA_DRAG
+			AA_DRAG,
 			// TODO, add the rest
+		};
+
+		enum CREATURE_STATE
+		{
+			IS_NONE,
+			IS_IDLE,
+			IS_GOING_TO_EAT,
+			IS_EATING,
+			IS_GOING_TO_MAKE_LAIR,
+			IS_MAKING_LAIR,
+			IS_GOING_TO_SLEEP,
+			IS_SLEEPING,
+
+			// utility enums
+			IS_ROTATING
 		};
 
 		GLvoid setName(std::string name);
@@ -32,7 +47,9 @@ namespace game_objects
 		GLvoid useAction(GLint action);
 		GLvoid Idle(GLfloat deltaTime);
 		GLvoid draw(GLfloat deltaTime);
+		GLvoid walkPath(GLfloat deltaTime);
 		virtual GLvoid update(GLfloat deltaTime);
+		CREATURE_STATE creatureState;
 
 		loaders::CBR5Model	*getModel();
 		std::string			getName();
@@ -56,12 +73,14 @@ namespace game_objects
 		GLfloat			moveSpeed;
 		GLfloat			count, change;
 		cml::vector3f	moveVector;
+		cml::vector2f	lair;
 
 		// Creature stats
 		GLubyte			owner;
 		GLint			level;
 		GLint			CurrentXP;
 		GLint			gold;
+		GLint			hunger;
 
 		/* holds the current path */
 		std::vector<cml::vector2i> path;
