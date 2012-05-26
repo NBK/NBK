@@ -1,0 +1,345 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectName>NBKE</ProjectName>
+    <ProjectGuid>{B7849B62-A5D0-424D-9661-96BAE1E2BA9E}</ProjectGuid>
+    <RootNamespace>NBKE</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30128.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\Debug\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\Debug\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</LinkIncremental>
+    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</GenerateManifest>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\Release\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\Release\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</LinkIncremental>
+    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</GenerateManifest>
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Midl>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MkTypLibCompatible>true</MkTypLibCompatible>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TargetEnvironment>Win32</TargetEnvironment>
+      <TypeLibraryName>.\Debug/project.tlb</TypeLibraryName>
+      <HeaderFileName>
+      </HeaderFileName>
+    </Midl>
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>C:\Program Files\lua5.1\include;.\externals;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATED;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <PrecompiledHeaderOutputFile>.\Debug/project.pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>.\Debug/</AssemblerListingLocation>
+      <ObjectFileName>.\Debug/</ObjectFileName>
+      <ProgramDataBaseFileName>.\Debug/</ProgramDataBaseFileName>
+      <WarningLevel>Level3</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <DisableSpecificWarnings>4996;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x1009</Culture>
+    </ResourceCompile>
+    <Link>
+      <AdditionalDependencies>winmm.lib;Externals\BugTrap\BugTrap.lib;opengl32.lib;glu32.lib;odbc32.lib;odbccp32.lib;wininet.lib;glew32.lib;LUA/lua5.1.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>.\Debug\NBKE.exe</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ProgramDatabaseFile>.\Debug/project.pdb</ProgramDatabaseFile>
+      <SubSystem>Windows</SubSystem>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <DataExecutionPrevention>
+      </DataExecutionPrevention>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Midl>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MkTypLibCompatible>true</MkTypLibCompatible>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TargetEnvironment>Win32</TargetEnvironment>
+      <TypeLibraryName>.\Release/project.tlb</TypeLibraryName>
+      <HeaderFileName>
+      </HeaderFileName>
+    </Midl>
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <AdditionalIncludeDirectories>C:\Program Files\lua5.1\include;.\externals;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATED;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <PrecompiledHeaderOutputFile>.\Release/project.pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>.\Release/</AssemblerListingLocation>
+      <ObjectFileName>.\Release/</ObjectFileName>
+      <ProgramDataBaseFileName>.\Release/</ProgramDataBaseFileName>
+      <WarningLevel>Level3</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <DisableSpecificWarnings>4996;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <AdditionalOptions>/EHsc %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x1009</Culture>
+    </ResourceCompile>
+    <Link>
+      <AdditionalDependencies>winmm.lib;Externals\BugTrap\BugTrap.lib;opengl32.lib;glu32.lib;odbc32.lib;odbccp32.lib;wininet.lib;glew32.lib;LUA/lua5.1.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>.\Release\NBKE.exe</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ProgramDatabaseFile>.\Release/project.pdb</ProgramDatabaseFile>
+      <SubSystem>Windows</SubSystem>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <DataExecutionPrevention>
+      </DataExecutionPrevention>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="CreatureTxtReader.cpp" />
+    <ClCompile Include="Gui\AbstractGUIItem.cpp" />
+    <ClCompile Include="Gui\AnimatedSpeedButton.cpp" />
+    <ClCompile Include="AnimatedTerrainManager.cpp" />
+    <ClCompile Include="BasicLight.cpp" />
+    <ClCompile Include="BinaryHeap.cpp" />
+    <ClCompile Include="Block.cpp" />
+    <ClCompile Include="BlockManager.cpp" />
+    <ClCompile Include="BlockObject.cpp" />
+    <ClCompile Include="BR5Model.cpp" />
+    <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="CollisionManager.cpp" />
+    <ClCompile Include="Console.cpp" />
+    <ClCompile Include="ConsoleListener.cpp" />
+    <ClCompile Include="ControlManager.cpp" />
+    <ClCompile Include="Conversions.cpp" />
+    <ClCompile Include="Creature.cpp" />
+    <ClCompile Include="CreatureManager.cpp" />
+    <ClCompile Include="DeltaTime.cpp" />
+    <ClCompile Include="Gui\DKGUILabel.cpp" />
+    <ClCompile Include="Gui\DKInput.cpp" />
+    <ClCompile Include="Gui\DKProgressBar.cpp" />
+    <ClCompile Include="Gui\DKRoomInfoTexture.cpp" />
+    <ClCompile Include="Gui\DKSelectProgressBar.cpp" />
+    <ClCompile Include="Gui\DKText.cpp" />
+    <ClCompile Include="Gui\DKTextureList.cpp" />
+    <ClCompile Include="Gui\DKTextureLoader.cpp" />
+    <ClCompile Include="EconomyManager.cpp" />
+    <ClCompile Include="Entity.cpp" />
+    <ClCompile Include="EntityManager.cpp" />
+    <ClCompile Include="Frustum.cpp" />
+    <ClCompile Include="GameManager.cpp" />
+    <ClCompile Include="Gui\GUI.cpp" />
+    <ClCompile Include="Gui\GUIBackground.cpp" />
+    <ClCompile Include="Gui\GUIButton.cpp" />
+    <ClCompile Include="Gui\GUILabel.cpp" />
+    <ClCompile Include="GUIManager.cpp" />
+    <ClCompile Include="HeroGate.cpp" />
+    <ClCompile Include="Imp.cpp" />
+    <ClCompile Include="Input.cpp" />
+    <ClCompile Include="InputListener.cpp" />
+    <ClCompile Include="Gui\ItemButton.cpp" />
+    <ClCompile Include="Gui\JumpLabel.cpp" />
+    <ClCompile Include="LevelManager.cpp" />
+    <ClCompile Include="LightingManager.cpp" />
+    <ClCompile Include="LightingObject.cpp" />
+    <ClCompile Include="LightSource.cpp" />
+    <ClCompile Include="Logger.cpp" />
+    <ClCompile Include="Lua\LUAEffect.cpp" />
+    <ClCompile Include="Lua\LUAEffectLoader.cpp" />
+    <ClCompile Include="Lua\LUAEmitter.cpp" />
+    <ClCompile Include="Lua\luaGen.cpp" />
+    <ClCompile Include="Lua\LUAParticle.cpp" />
+    <ClCompile Include="Gui\MainMenu.cpp" />
+    <ClCompile Include="Manager.cpp" />
+    <ClCompile Include="Gui\MenuButton.cpp" />
+    <ClCompile Include="Gui\MoneyLabel.cpp" />
+    <ClCompile Include="NewRenderer.cpp" />
+    <ClCompile Include="ObjectPool.cpp" />
+    <ClCompile Include="OGLUtils.cpp" />
+    <ClCompile Include="PathManager.cpp" />
+    <ClCompile Include="PathManager1.cpp" />
+    <ClCompile Include="PickingManager.cpp" />
+    <ClCompile Include="Gui\PlayGUI.cpp" />
+    <ClCompile Include="Gui\Primitives.cpp">
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)%(Filename)1.obj</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)%(Filename)1.obj</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="Primitives.cpp" />
+    <ClCompile Include="Gui\ProgressBar.cpp" />
+    <ClCompile Include="project.cpp" />
+    <ClCompile Include="RenderManager.cpp" />
+    <ClCompile Include="RenderManager1.cpp" />
+    <ClCompile Include="ResourceManager.cpp" />
+    <ClCompile Include="Room.cpp" />
+    <ClCompile Include="RoomConstructor.cpp" />
+    <ClCompile Include="Gui\RoomDependancy.cpp" />
+    <ClCompile Include="RoomManager.cpp" />
+    <ClCompile Include="SettingsManager.cpp" />
+    <ClCompile Include="ShaderManager.cpp" />
+    <ClCompile Include="ShaderObject.cpp" />
+    <ClCompile Include="Gui\SpeedButton.cpp" />
+    <ClCompile Include="SpellManager.cpp" />
+    <ClCompile Include="SubtileData.cpp" />
+    <ClCompile Include="Gui\TabButton.cpp" />
+    <ClCompile Include="Text.cpp" />
+    <ClCompile Include="Gui\TexturedGUIButton.cpp" />
+    <ClCompile Include="TextureList.cpp" />
+    <ClCompile Include="TextureLoader.cpp" />
+    <ClCompile Include="Trap.cpp" />
+    <ClCompile Include="VBO.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="project.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="CreatureTxtReader.h" />
+    <ClInclude Include="Gui\AbstractGUIItem.h" />
+    <ClInclude Include="Gui\AnimatedSpeedButton.h" />
+    <ClInclude Include="AnimatedTerrainManager.h" />
+    <ClInclude Include="BasicLight.h" />
+    <ClInclude Include="BinaryHeap.h" />
+    <ClInclude Include="Block.h" />
+    <ClInclude Include="BlockManager.h" />
+    <ClInclude Include="BlockObject.h" />
+    <ClInclude Include="boundingBox.h" />
+    <ClInclude Include="BR5Model.h" />
+    <ClInclude Include="Camera.h" />
+    <ClInclude Include="CollisionManager.h" />
+    <ClInclude Include="Lua\common.h" />
+    <ClInclude Include="commons.h" />
+    <ClInclude Include="Console.h" />
+    <ClInclude Include="ConsoleListener.h" />
+    <ClInclude Include="ControlManager.h" />
+    <ClInclude Include="Conversions.h" />
+    <ClInclude Include="Creature.h" />
+    <ClInclude Include="CreatureManager.h" />
+    <ClInclude Include="DeltaTime.h" />
+    <ClInclude Include="Gui\DKcommons.h" />
+    <ClInclude Include="Gui\DKGUILabel.h" />
+    <ClInclude Include="Gui\DKInput.h" />
+    <ClInclude Include="Gui\DKProgressBar.h" />
+    <ClInclude Include="Gui\DKRoomInfoTexture.h" />
+    <ClInclude Include="Gui\DKSelectProgressBar.h" />
+    <ClInclude Include="Gui\DKText.h" />
+    <ClInclude Include="Gui\DKTextureList.h" />
+    <ClInclude Include="Gui\DKTextureLoader.h" />
+    <ClInclude Include="EconomyManager.h" />
+    <ClInclude Include="Entity.h" />
+    <ClInclude Include="EntityManager.h" />
+    <ClInclude Include="Frustum.h" />
+    <ClInclude Include="GameManager.h" />
+    <ClInclude Include="Gui\GUI.h" />
+    <ClInclude Include="Gui\GUIBackground.h" />
+    <ClInclude Include="Gui\GUIButton.h" />
+    <ClInclude Include="Gui\GUILabel.h" />
+    <ClInclude Include="GUIManager.h" />
+    <ClInclude Include="HeroGate.h" />
+    <ClInclude Include="Imp.h" />
+    <ClInclude Include="Input.h" />
+    <ClInclude Include="InputListener.h" />
+    <ClInclude Include="Gui\ItemButton.h" />
+    <ClInclude Include="Gui\JumpLabel.h" />
+    <ClInclude Include="LevelManager.h" />
+    <ClInclude Include="LightingManager.h" />
+    <ClInclude Include="LightingObject.h" />
+    <ClInclude Include="LightSource.h" />
+    <ClInclude Include="Logger.h" />
+    <ClInclude Include="Lua\LUAEffect.h" />
+    <ClInclude Include="Lua\LUAEffectLoader.h" />
+    <ClInclude Include="Lua\LUAEmitter.h" />
+    <ClInclude Include="Lua\LUAParticle.h" />
+    <ClInclude Include="Gui\MainMenu.h" />
+    <ClInclude Include="Manager.h" />
+    <ClInclude Include="Gui\MenuButton.h" />
+    <ClInclude Include="Gui\MoneyLabel.h" />
+    <ClInclude Include="NewRenderer.h" />
+    <ClInclude Include="ObjectPool.h" />
+    <ClInclude Include="OGLUtils.h" />
+    <ClInclude Include="PathManager.h" />
+    <ClInclude Include="PathManager1.h" />
+    <ClInclude Include="PickingManager.h" />
+    <ClInclude Include="Gui\PlayGUI.h" />
+    <ClInclude Include="Primitives.h" />
+    <ClInclude Include="Gui\Primitives.h" />
+    <ClInclude Include="Gui\ProgressBar.h" />
+    <ClInclude Include="RenderManager.h" />
+    <ClInclude Include="RenderManager1.h" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="ResourceManager.h" />
+    <ClInclude Include="Room.h" />
+    <ClInclude Include="RoomConstructor.h" />
+    <ClInclude Include="Gui\RoomDependancy.h" />
+    <ClInclude Include="RoomManager.h" />
+    <ClInclude Include="settings.h" />
+    <ClInclude Include="SettingsManager.h" />
+    <ClInclude Include="ShaderManager.h" />
+    <ClInclude Include="ShaderObject.h" />
+    <ClInclude Include="Gui\SpeedButton.h" />
+    <ClInclude Include="SpellManager.h" />
+    <ClInclude Include="SubtileData.h" />
+    <ClInclude Include="Gui\TabButton.h" />
+    <ClInclude Include="Text.h" />
+    <ClInclude Include="Gui\TexturedGUIButton.h" />
+    <ClInclude Include="TextureList.h" />
+    <ClInclude Include="TextureLoader.h" />
+    <ClInclude Include="Trap.h" />
+    <ClInclude Include="triangle.h" />
+    <ClInclude Include="utils.h" />
+    <ClInclude Include="VBO.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
