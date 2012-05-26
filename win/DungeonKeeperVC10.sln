@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "NBKE", "project.vcxproj", "{B7849B62-A5D0-424D-9661-96BAE1E2BA9E}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DungeonKeeper", "VC10\DungeonKeeper.vcxproj", "{B7849B62-A5D0-424D-9661-96BAE1E2BA9E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

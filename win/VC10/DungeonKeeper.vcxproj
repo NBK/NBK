@@ -11,7 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectName>NBKE</ProjectName>
+    <ProjectName>DungeonKeeper</ProjectName>
     <ProjectGuid>{B7849B62-A5D0-424D-9661-96BAE1E2BA9E}</ProjectGuid>
     <RootNamespace>NBKE</RootNamespace>
   </PropertyGroup>
