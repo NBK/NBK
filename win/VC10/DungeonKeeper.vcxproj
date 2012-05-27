@@ -36,6 +36,32 @@
     <ClCompile Include="..\..\src\Game\Frustum.cpp" />
     <ClCompile Include="..\..\src\Game\GameManager.cpp" />
     <ClCompile Include="..\..\src\Game\GUIManager.cpp" />
+    <ClCompile Include="..\..\src\Game\GUI\AbstractGUIItem.cpp" />
+    <ClCompile Include="..\..\src\Game\GUI\AnimatedSpeedButton.cpp" />
+    <ClCompile Include="..\..\src\Game\GUI\DKGUILabel.cpp" />
+    <ClCompile Include="..\..\src\Game\GUI\DKInput.cpp" />
+    <ClCompile Include="..\..\src\Game\GUI\DKProgressBar.cpp" />
+    <ClCompile Include="..\..\src\Game\GUI\DKRoomInfoTexture.cpp" />
+    <ClCompile Include="..\..\src\Game\GUI\DKSelectProgressBar.cpp" />
+    <ClCompile Include="..\..\src\Game\GUI\DKText.cpp" />
+    <ClCompile Include="..\..\src\Game\GUI\DKTextureList.cpp" />
+    <ClCompile Include="..\..\src\Game\GUI\DKTextureLoader.cpp" />
+    <ClCompile Include="..\..\src\Game\GUI\GUI.cpp" />
+    <ClCompile Include="..\..\src\Game\GUI\GUIBackground.cpp" />
+    <ClCompile Include="..\..\src\Game\GUI\GUIButton.cpp" />
+    <ClCompile Include="..\..\src\Game\GUI\GUILabel.cpp" />
+    <ClCompile Include="..\..\src\Game\GUI\ItemButton.cpp" />
+    <ClCompile Include="..\..\src\Game\GUI\JumpLabel.cpp" />
+    <ClCompile Include="..\..\src\Game\GUI\MainMenu.cpp" />
+    <ClCompile Include="..\..\src\Game\GUI\MenuButton.cpp" />
+    <ClCompile Include="..\..\src\Game\GUI\MoneyLabel.cpp" />
+    <ClCompile Include="..\..\src\Game\GUI\PlayGUI.cpp" />
+    <ClCompile Include="..\..\src\Game\GUI\CPrimitives.cpp" />
+    <ClCompile Include="..\..\src\Game\GUI\ProgressBar.cpp" />
+    <ClCompile Include="..\..\src\Game\GUI\RoomDependancy.cpp" />
+    <ClCompile Include="..\..\src\Game\GUI\SpeedButton.cpp" />
+    <ClCompile Include="..\..\src\Game\GUI\TabButton.cpp" />
+    <ClCompile Include="..\..\src\Game\GUI\TexturedGUIButton.cpp" />
     <ClCompile Include="..\..\src\Game\HeroGate.cpp" />
     <ClCompile Include="..\..\src\Game\Imp.cpp" />
     <ClCompile Include="..\..\src\Game\Input.cpp" />
@@ -45,6 +71,11 @@
     <ClCompile Include="..\..\src\Game\LightingObject.cpp" />
     <ClCompile Include="..\..\src\Game\LightSource.cpp" />
     <ClCompile Include="..\..\src\Game\Logger.cpp" />
+    <ClCompile Include="..\..\src\Game\LUA\LUAEffect.cpp" />
+    <ClCompile Include="..\..\src\Game\LUA\LUAEffectLoader.cpp" />
+    <ClCompile Include="..\..\src\Game\LUA\LUAEmitter.cpp" />
+    <ClCompile Include="..\..\src\Game\LUA\luaGen.cpp" />
+    <ClCompile Include="..\..\src\Game\LUA\LUAParticle.cpp" />
     <ClCompile Include="..\..\src\Game\Manager.cpp" />
     <ClCompile Include="..\..\src\Game\NewRenderer.cpp" />
     <ClCompile Include="..\..\src\Game\ObjectPool.cpp" />
@@ -55,7 +86,6 @@
     <ClCompile Include="..\..\src\Game\PickingManager.cpp" />
     <ClCompile Include="..\..\src\Game\Primitives.cpp" />
     <ClCompile Include="..\..\src\Game\project.cpp" />
-    <ClCompile Include="..\..\src\Game\project_unix.cpp" />
     <ClCompile Include="..\..\src\Game\RenderManager.cpp" />
     <ClCompile Include="..\..\src\Game\RenderManager1.cpp" />
     <ClCompile Include="..\..\src\Game\ResourceManager.cpp" />
@@ -101,6 +131,33 @@
     <ClInclude Include="..\..\src\Game\Frustum.h" />
     <ClInclude Include="..\..\src\Game\GameManager.h" />
     <ClInclude Include="..\..\src\Game\GUIManager.h" />
+    <ClInclude Include="..\..\src\Game\GUI\AbstractGUIItem.h" />
+    <ClInclude Include="..\..\src\Game\GUI\AnimatedSpeedButton.h" />
+    <ClInclude Include="..\..\src\Game\GUI\DKcommons.h" />
+    <ClInclude Include="..\..\src\Game\GUI\DKGUILabel.h" />
+    <ClInclude Include="..\..\src\Game\GUI\DKInput.h" />
+    <ClInclude Include="..\..\src\Game\GUI\DKProgressBar.h" />
+    <ClInclude Include="..\..\src\Game\GUI\DKRoomInfoTexture.h" />
+    <ClInclude Include="..\..\src\Game\GUI\DKSelectProgressBar.h" />
+    <ClInclude Include="..\..\src\Game\GUI\DKText.h" />
+    <ClInclude Include="..\..\src\Game\GUI\DKTextureList.h" />
+    <ClInclude Include="..\..\src\Game\GUI\DKTextureLoader.h" />
+    <ClInclude Include="..\..\src\Game\GUI\GUI.h" />
+    <ClInclude Include="..\..\src\Game\GUI\GUIBackground.h" />
+    <ClInclude Include="..\..\src\Game\GUI\GUIButton.h" />
+    <ClInclude Include="..\..\src\Game\GUI\GUILabel.h" />
+    <ClInclude Include="..\..\src\Game\GUI\ItemButton.h" />
+    <ClInclude Include="..\..\src\Game\GUI\JumpLabel.h" />
+    <ClInclude Include="..\..\src\Game\GUI\MainMenu.h" />
+    <ClInclude Include="..\..\src\Game\GUI\MenuButton.h" />
+    <ClInclude Include="..\..\src\Game\GUI\MoneyLabel.h" />
+    <ClInclude Include="..\..\src\Game\GUI\PlayGUI.h" />
+    <ClInclude Include="..\..\src\game\gui\CPrimitives.h" />
+    <ClInclude Include="..\..\src\Game\GUI\ProgressBar.h" />
+    <ClInclude Include="..\..\src\Game\GUI\RoomDependancy.h" />
+    <ClInclude Include="..\..\src\Game\GUI\SpeedButton.h" />
+    <ClInclude Include="..\..\src\Game\GUI\TabButton.h" />
+    <ClInclude Include="..\..\src\Game\GUI\TexturedGUIButton.h" />
     <ClInclude Include="..\..\src\Game\HeroGate.h" />
     <ClInclude Include="..\..\src\Game\Imp.h" />
     <ClInclude Include="..\..\src\Game\Input.h" />
@@ -110,6 +167,11 @@
     <ClInclude Include="..\..\src\Game\LightingObject.h" />
     <ClInclude Include="..\..\src\Game\LightSource.h" />
     <ClInclude Include="..\..\src\Game\Logger.h" />
+    <ClInclude Include="..\..\src\Game\LUA\LUAEffect.h" />
+    <ClInclude Include="..\..\src\Game\LUA\LUAEffectLoader.h" />
+    <ClInclude Include="..\..\src\Game\LUA\LUAEmitter.h" />
+    <ClInclude Include="..\..\src\Game\LUA\LUAParticle.h" />
+    <ClInclude Include="..\..\src\Game\LUA\lua_common.h" />
     <ClInclude Include="..\..\src\Game\Manager.h" />
     <ClInclude Include="..\..\src\Game\NewRenderer.h" />
     <ClInclude Include="..\..\src\Game\ObjectPool.h" />
@@ -172,10 +234,10 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <_ProjectFileVersion>10.0.30128.1</_ProjectFileVersion>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\Debug\</OutDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\Debug\</IntDir>
-    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</LinkIncremental>
-    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</GenerateManifest>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(Configuration)\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</LinkIncremental>
+    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</GenerateManifest>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\Release\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\Release\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</LinkIncremental>
@@ -199,7 +261,7 @@
     </Midl>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\..\dep;..\..\dep\glew\include;..\..\dep\lua\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\dep\bugtrap\include;..\..\dep;..\..\dep\glew\include;..\..\dep\lua\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATED;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -211,24 +273,26 @@
       <ProgramDataBaseFileName>.\Debug/</ProgramDataBaseFileName>
       <WarningLevel>Level3</WarningLevel>
       <SuppressStartupBanner>true</SuppressStartupBanner>
-      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <DisableSpecificWarnings>4996;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <Culture>0x1009</Culture>
     </ResourceCompile>
     <Link>
-      <AdditionalDependencies>winmm.lib;Externals\BugTrap\BugTrap.lib;opengl32.lib;glu32.lib;odbc32.lib;odbccp32.lib;wininet.lib;glew32.lib;LUA/lua5.1.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>.\Debug\NBKE.exe</OutputFile>
+      <AdditionalDependencies>Dbghelp.lib;winmm.lib;BugTrap.lib;opengl32.lib;glu32.lib;odbc32.lib;odbccp32.lib;wininet.lib;glew32.lib;lua5.1.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>..\bin\dkeeper_d.exe</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <ProgramDatabaseFile>.\Debug/project.pdb</ProgramDatabaseFile>
-      <SubSystem>Windows</SubSystem>
-      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <ProgramDatabaseFile>$(TargetDir)$(TargetName).pdb</ProgramDatabaseFile>
+      <SubSystem>NotSet</SubSystem>
+      <RandomizedBaseAddress>true</RandomizedBaseAddress>
       <DataExecutionPrevention>
       </DataExecutionPrevention>
       <TargetMachine>MachineX86</TargetMachine>
+      <AdditionalLibraryDirectories>..\..\dep\lua\lib;..\..\dep\bugtrap\lib;..\..\dep\glew\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">

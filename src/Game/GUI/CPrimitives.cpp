@@ -1,7 +1,7 @@
 #include "../system.h"
 #include <GL/gl.h>
 
-#include "Primitives.h"
+#include "CPrimitives.h"
 
 CDKPrimitives::CDKPrimitives()
 {

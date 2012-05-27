@@ -4,7 +4,7 @@
 #include "../system.h"
 #include <GL/gl.h>
 
-#include "Primitives.h"
+#include "CPrimitives.h"
 
 #define MAX_NAMES	5
 
