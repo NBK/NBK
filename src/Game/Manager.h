@@ -19,6 +19,7 @@ namespace game_utils
 			virtual bool init() = 0;
 			virtual bool update() = 0;
 			virtual bool shutdown() = 0;
+
 		};
 	};
 };
