@@ -21,13 +21,15 @@ namespace DK_GUI
 
 	GLvoid CDKRoomInfoTexture::set_selected(const char *class_name, char leading)
 	{
-		char *info_texture_class_name=strdup(class_name);
+		char info_texture_class_name[255];
+		strncpy(info_texture_class_name, class_name, 255);
+		
 		info_texture_class_name[0]=leading;
 		info_texture_class_name[1]='E';
 		textures[0]=texture_list->get_texture_by_name(info_texture_class_name);
 		info_texture_class_name[1]='D';
 		textures[1]=texture_list->get_texture_by_name(info_texture_class_name);
-		delete info_texture_class_name;
+		
 		set_ready(true);
 
 		blink=true;

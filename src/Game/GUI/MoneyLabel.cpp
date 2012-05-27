@@ -5,32 +5,26 @@ namespace DK_GUI
 {
 	CMoneyLabel::CMoneyLabel(): CAbstractGUIItem(0.0f,0.0f,0.0f,0.0f,0.0f)
 	{
-		set_class_name(MONEY_LABEL);
+		char number_texture[255];
+		strncpy(number_texture, NUMBER_TEXTURE_0, 255);
 
-		char *NUMBER_TEXTURE = strdup(NUMBER_TEXTURE_0);
+		set_class_name(MONEY_LABEL);
 
 		/* get the number textures. BEWARE: map object must already exist */
 		for (GLint i=0; i<10; i++)
 		{
-			NUMBER_TEXTURE[strlen(NUMBER_TEXTURE)-1]=(char)(i+(GLint)'0');
-			number_texture[i]=GLOBAL_TEXTURE_LIST->get_texture_by_name(NUMBER_TEXTURE);
+			number_texture[strlen(number_texture)-1]=(char)(i+(GLint)'0');
+			number_texture[i]=GLOBAL_TEXTURE_LIST->get_texture_by_name(number_texture);
 		}
-
-		delete NUMBER_TEXTURE;
 
 		value=12345;
 
-		string_value=NULL;
-
-		check_updated_value=true;
+		check_updated_value = true;
 	}
 
 	CMoneyLabel::~CMoneyLabel()
 	{
-		if (string_value)
-		{
-			delete []string_value;
-		}
+		
 	}
 
 	GLvoid CMoneyLabel::draw()
@@ -56,12 +50,8 @@ namespace DK_GUI
 	{
 		value+=amount;
 
-		if (string_value)
-		{
-			delete []string_value;
-		}
-		string_value = IntToStrDK(value);
-		count = strlen(string_value);
+		string_value = value;
+		count = string_value.size();
 	}
 
 	GLvoid CMoneyLabel::set_value(GLint amount)

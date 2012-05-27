@@ -19,10 +19,13 @@ namespace DK_GUI
 
 	GLvoid CDKGUILabel::int_update(GLint x)
 	{
+		// a integer is max 10 char's big but its okey for now...
+		char tmp[20];
+
 		GLint new_val = StrToIntDK(get_caption())+x;
-		char *tmp = IntToStrDK(new_val);
+		sprintf(tmp, "%d", new_val);
+
 		set_caption(tmp);
-		delete [] tmp;
 	}
 
 	GLvoid CDKGUILabel::int_set(GLint x)

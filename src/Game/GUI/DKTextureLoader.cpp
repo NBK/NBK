@@ -9,6 +9,8 @@
 
 #include "DKTextureLoader.h"
 
+#include <string>
+
 
 CDKTextureLoader::CDKTextureLoader()
 {
@@ -20,12 +22,11 @@ CDKTextureLoader::~CDKTextureLoader()
 
 }
 
-CDKTextureLoader::LOADER_RESULT CDKTextureLoader::build_texture(char *file, GLuint &texture, bool trans, GLint texture_filter, bool auto_transparent, GLubyte R, GLubyte G, GLubyte B)
+CDKTextureLoader::LOADER_RESULT CDKTextureLoader::build_texture(std::string &file, GLuint &texture, bool trans, GLint texture_filter, bool auto_transparent, GLubyte R, GLubyte G, GLubyte B)
 {
 	LOADER_RESULT lr;
 
-	if (!file)
-	{
+	if (file.empty()) {
 		return lr;
 	}
 
@@ -47,16 +48,16 @@ CDKTextureLoader::LOADER_RESULT CDKTextureLoader::build_texture(char *file, GLui
 #ifndef NDEBUG
 	//debug("About to load: %s\n", file);
 #endif
-	if (strstr(file, "http://"))									// If PathName Contains http:// Then...
+	if (file.find("http://") != file.npos)									// If PathName Contains http:// Then...
 	{
-		strcpy(szPath, file);										// Append The PathName To szPath
+		strcpy(szPath, file.c_str());										// Append The PathName To szPath
 	}
 	else															// Otherwise... We Are Loading From A File
 	{
 #ifdef WIN32
 		GetCurrentDirectory(MAX_PATH, szPath);						// Get Our Working Directory
 		strcat(szPath, PATH_SEP);									// Append "\" After The Working Directory
-		strcat(szPath, file);										// Append The PathName
+		strcat(szPath, file.c_str());										// Append The PathName
 #else
 		strcpy(szPath, file);
 #endif

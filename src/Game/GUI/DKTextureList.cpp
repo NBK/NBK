@@ -21,12 +21,10 @@ CDKTextureList::CDKTextureList()
 
 CDKTextureList::~CDKTextureList()
 {
-	for (map<const char*,TEX_DATA*,cmp_str>::iterator iter = textures.begin(); iter != textures.end(); iter++)
+	TexMapItr itr = textures.begin();
+	for ( ; itr != textures.end(); itr++ )
 	{
-		TEX_DATA *tmp = (*iter).second;
-		const char *dup_str = tmp->file_name;
-		if (dup_str) free((void *)dup_str);
-		delete tmp;
+		delete itr->second;
 	}
 }
 
@@ -50,7 +48,8 @@ GLvoid CDKTextureList::build_textures()
 {
 	CDKTextureLoader tl;
 
-	for (map<const char*,TEX_DATA*,cmp_str>::iterator iter = textures.begin(); iter != textures.end(); iter++)
+	TexMapItr iter = textures.begin();
+	for (; iter != textures.end(); iter++)
 	{
 		TEX_DATA *tex_data = (*iter).second;
 

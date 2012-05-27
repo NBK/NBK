@@ -385,13 +385,6 @@ inline GLint StrToIntDK(const char *str)
 	return atoi(str);
 }
 
-inline char *IntToStrDK(GLint x)
-{
-	char buff[128];
-	return strdup(itoa(x,buff,10));
-}
-
-
 /* extern game variables */
 extern GLint PLAYER0_MONEY;
 

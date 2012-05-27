@@ -12,7 +12,7 @@ CDKText::CDKText()
 	alpha=1.0f;
 	blend=false;
 	CDKTextureLoader tl;
-	tl.build_texture("data/resources/font/font.bmp",font_texture,true);
+	tl.build_texture(std::string("data/resources/font/font.bmp"), font_texture,true);
 	base=0;
 	build_normal_font();
 }

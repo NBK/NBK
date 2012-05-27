@@ -3,6 +3,9 @@
 
 #include "AbstractGUIItem.h"
 
+/* crappy includes this way but for now... its okey */
+#include <string>
+
 namespace DK_GUI
 {
 	class CMoneyLabel: public GUI::CAbstractGUIItem
@@ -23,7 +26,7 @@ namespace DK_GUI
 		GLuint number_texture[10];
 		GLint value;
 
-		char *string_value;
+		std::string string_value;
 		GLint count;
 
 		bool check_updated_value;
