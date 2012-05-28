@@ -19,6 +19,10 @@ namespace game_objects
 			AA_DIG,
 			AA_CLAIM,
 			AA_DRAG,
+			AA_ATTACK1,
+			AA_SLEEP,
+			AA_EAT,
+
 			// TODO, add the rest
 		};
 
@@ -27,11 +31,17 @@ namespace game_objects
 			IS_NONE,
 			IS_IDLE,
 			IS_GOING_TO_EAT,
+			IS_AT_EATING,
 			IS_EATING,
 			IS_GOING_TO_MAKE_LAIR,
+			IS_AT_MAKING_LAIR,
 			IS_MAKING_LAIR,
-			IS_GOING_TO_SLEEP,
+			IS_GOING_TO_SLEEPING,
+			IS_AT_SLEEPING,
 			IS_SLEEPING,
+			IS_GOING_TO_TRAIN,
+			IS_AT_TRAINING,
+			IS_TRAINING,
 
 			// utility enums
 			IS_ROTATING
@@ -48,8 +58,10 @@ namespace game_objects
 		GLvoid Idle(GLfloat deltaTime);
 		GLvoid draw(GLfloat deltaTime);
 		GLvoid walkPath(GLfloat deltaTime);
+		GLvoid faceBlock(CBlock *block);
 		virtual GLvoid update(GLfloat deltaTime);
 		CREATURE_STATE creatureState;
+		CBlock *currBlock;
 
 		loaders::CBR5Model	*getModel();
 		std::string			getName();
@@ -81,6 +93,8 @@ namespace game_objects
 		GLint			CurrentXP;
 		GLint			gold;
 		GLint			hunger;
+		GLint			health;
+		GLint			sleep;
 
 		/* holds the current path */
 		std::vector<cml::vector2i> path;
