@@ -233,24 +233,51 @@ namespace game_objects
 		if(creatureState == IS_IDLE)
 		{
 			Idle(deltaTime);
-			
+
 			//HAVE I GOT A LAIR??!?!?!
 			if(lair[0] == 0 && lair[1] == 0)
 			{
 				path.clear();
+
 				CBlock *destBlock;
 				destBlock = CV_GAME_MANAGER->getRoomManager()->getRoom(CV_BLOCK_TYPE_LAIR_ID, this->getOwner());
-				if (destBlock)
+				if(destBlock != NULL)
 				{
-					cml::vector2i currPos = cml::vector2i((int)floor(position[0]/CV_BLOCK_WIDTH),(int)floor(position[2]/CV_BLOCK_DEPTH));
-					if(CV_GAME_MANAGER->getPathManager()->findPath(currPos,destBlock->getLogicalPosition(),&path))
+					rooms::CRoom *currRoom = CV_GAME_MANAGER->getRoomManager()->getRoom(destBlock->getRoomIndex());
+
+					for (std::vector<CBlock*>::iterator rmIter = currRoom->getRoomTilesVector()->begin(); rmIter != currRoom->getRoomTilesVector()->end(); rmIter++)
 					{
-						creatureState = IS_GOING_TO_MAKE_LAIR;
-						return;
+						CBlock *thisBlock = *rmIter;
+						bool foundbed = false;
+
+						for (std::vector<block_objects::CBlockObject*>::iterator rmIter = thisBlock->getBlockObjects()->begin(); rmIter != thisBlock->getBlockObjects()->end(); rmIter++)
+						{
+							block_objects::CBlockObject *bObject = *rmIter;
+
+							if (bObject->getClassName() == "BED")
+								foundbed = true;
+
+						}
+						if(!foundbed)
+						{
+							currBlock = thisBlock;
+							break;
+						}
 					}
-				}				
+
+					if(currBlock)
+					{
+						CV_GAME_MANAGER->getConsole()->writeLine("2222");
+						cml::vector2i currPos = cml::vector2i((int)floor(position[0]/CV_BLOCK_WIDTH),(int)floor(position[2]/CV_BLOCK_DEPTH));
+						if(CV_GAME_MANAGER->getPathManager()->findPath(currPos,currBlock->getLogicalPosition(),&path))
+						{
+							creatureState = IS_GOING_TO_MAKE_LAIR;
+							return;
+						}
+					}
+				}
 			}
-			
+			//////////////////////////////////
 			if(sleep < 3000.0f)
 			{
 				if(lair[0] != 0 && lair[1] != 0)
@@ -294,33 +321,35 @@ namespace game_objects
 				path.clear();
 
 				currBlock = CV_GAME_MANAGER->getRoomManager()->getRoom(CV_BLOCK_TYPE_TRAINING_ROOM_ID, this->getOwner());
-				if(currBlock == NULL)
-					return;
-				rooms::CRoom *currRoom = CV_GAME_MANAGER->getRoomManager()->getRoom(currBlock->getRoomIndex());
-				currBlock = NULL;
-				for (std::vector<CBlock*>::iterator rmIter = currRoom->getRoomTilesVector()->begin(); rmIter != currRoom->getRoomTilesVector()->end(); rmIter++)
+				if(currBlock != NULL)
 				{
-					CBlock *thisBlock = *rmIter;
-					
-					for (std::vector<block_objects::CBlockObject*>::iterator rmIter = thisBlock->getBlockObjects()->begin(); rmIter != thisBlock->getBlockObjects()->end(); rmIter++)
+					rooms::CRoom *currRoom = CV_GAME_MANAGER->getRoomManager()->getRoom(currBlock->getRoomIndex());
+					currBlock = NULL;
+					for (std::vector<CBlock*>::iterator rmIter = currRoom->getRoomTilesVector()->begin(); rmIter != currRoom->getRoomTilesVector()->end(); rmIter++)
 					{
-						block_objects::CBlockObject *bObject = *rmIter;
-
-						if (bObject->getName() == "MODEL_ROD")
+						CBlock *thisBlock = *rmIter;
+						
+						for (std::vector<block_objects::CBlockObject*>::iterator rmIter = thisBlock->getBlockObjects()->begin(); rmIter != thisBlock->getBlockObjects()->end(); rmIter++)
 						{
-							currBlock = thisBlock;
-							CV_GAME_MANAGER->getConsole()->writeLine("Found somewhere to train!");
-							break;
+							block_objects::CBlockObject *bObject = *rmIter;
+
+							if (bObject->getName() == "MODEL_ROD")
+							{
+								currBlock = thisBlock;
+								CV_GAME_MANAGER->getConsole()->writeLine("Found somewhere to train!");
+								break;
+							}
 						}
 					}
-				}
 
-				if(currBlock)
-				{
-					cml::vector2i currPos = cml::vector2i((int)floor(position[0]/CV_BLOCK_WIDTH),(int)floor(position[2]/CV_BLOCK_DEPTH));
-					if(CV_GAME_MANAGER->getPathManager()->findPath(currPos,currBlock->getLogicalPosition(),&path))
+					if(currBlock)
 					{
-						creatureState = IS_GOING_TO_TRAIN;
+						cml::vector2i currPos = cml::vector2i((int)floor(position[0]/CV_BLOCK_WIDTH),(int)floor(position[2]/CV_BLOCK_DEPTH));
+						if(CV_GAME_MANAGER->getPathManager()->findPath(currPos,currBlock->getLogicalPosition(),&path))
+						{
+							creatureState = IS_GOING_TO_TRAIN;
+							return;
+						}
 					}
 				}
 			}
@@ -335,6 +364,39 @@ namespace game_objects
 			useAction(AA_WALK);
 			walkPath(deltaTime);
 		}
+
+		else if (creatureState == IS_GOING_TO_MAKE_LAIR)
+		{
+			useAction(AA_WALK);
+			walkPath(deltaTime);
+		}
+		else if (creatureState == IS_GOING_TO_TRAIN)
+		{
+			//little hacky fix so creature isnt INSIDE THE ROD
+			//if(CV_GAME_MANAGER->getLevelManager()->getBlock((int)floor(position[0]/CV_BLOCK_WIDTH),(int)floor(position[2]/CV_BLOCK_DEPTH))->getType() == CV_BLOCK_TYPE_TRAINING_ROOM_ID)
+			//	creatureState = IS_AT_TRAINING;
+			useAction(AA_WALK);
+			walkPath(deltaTime);
+		}
+		else if (creatureState == IS_AT_EATING)
+		{
+			creatureState = IS_EATING;
+		}
+		else if (creatureState == IS_AT_SLEEPING)
+		{
+			useAction(AA_SLEEP);
+			creatureState = IS_SLEEPING;	
+		}
+		else if (creatureState == IS_AT_MAKING_LAIR)
+		{
+			creatureState = IS_MAKING_LAIR;
+		}
+		else if (creatureState == IS_AT_TRAINING)
+		{
+			faceBlock(currBlock);
+			useAction(AA_ATTACK1);
+			creatureState = IS_TRAINING;
+		}
 		else if (creatureState == IS_EATING)
 		{
 			//todo pick up chicken and eat ect..
@@ -345,28 +407,28 @@ namespace game_objects
 				creatureState = IS_IDLE;
 			count=change;
 		}
-		else if (creatureState == IS_GOING_TO_MAKE_LAIR)
+		else if (creatureState == IS_SLEEPING)
 		{
-			useAction(AA_WALK);
-			walkPath(deltaTime);
+			CV_GAME_MANAGER->getConsole()->writeLine(CConversions::floatToStr(sleep) + " sleep " + CConversions::floatToStr(deltaTime));
+			creatureState = IS_SLEEPING;
+			// moan if no lair ect
+			this->sleep+=(deltaTime);
+			if(sleep >= 5000.0f)
+			{
+				creatureState = IS_IDLE;
+			}
 		}
 		else if (creatureState == IS_MAKING_LAIR)
 		{
-			//add the lair on the floor, meh a temp model
-			CV_GAME_MANAGER->getLevelManager()->getBlock((int)floor(position[0]/CV_BLOCK_WIDTH), (int)floor(position[2]/CV_BLOCK_DEPTH))->addModel("MODEL_GRAVE",position);
+			block_objects::CBlockObject *obj = new block_objects::CBlockObject("MODEL_GRAVE",position, CV_GAME_MANAGER->getResourceManager()->getModel("MODEL_GRAVE"));
+			obj->setClassName("BED");
+			CV_GAME_MANAGER->getLevelManager()->getBlock((int)floor(position[0]/CV_BLOCK_WIDTH), (int)floor(position[2]/CV_BLOCK_DEPTH))->addModel(obj);
+
 			lair[0] = position[0]/CV_BLOCK_WIDTH;
 			lair[1] = position[2]/CV_BLOCK_DEPTH;
 			count=change;
 			CV_GAME_MANAGER->getConsole()->writeLine("Lair has been made");
 			creatureState = IS_IDLE;
-		}	
-		else if (creatureState == IS_GOING_TO_TRAIN)
-		{
-			//little hacky fix so creature isnt INSIDE THE ROD
-			//if(CV_GAME_MANAGER->getLevelManager()->getBlock((int)floor(position[0]/CV_BLOCK_WIDTH),(int)floor(position[2]/CV_BLOCK_DEPTH))->getType() == CV_BLOCK_TYPE_TRAINING_ROOM_ID)
-			//	creatureState = IS_AT_TRAINING;
-			useAction(AA_WALK);
-			walkPath(deltaTime);
 		}
 		else if (creatureState == IS_TRAINING)
 		{
@@ -381,37 +443,6 @@ namespace game_objects
 				creatureState = IS_IDLE;
 				useAction(AA_WALK);
 			}
-		}	
-		else if (creatureState == IS_AT_TRAINING)
-		{
-			faceBlock(currBlock);
-			useAction(AA_ATTACK1);
-			creatureState = IS_TRAINING;
-		}
-		else if (creatureState == IS_AT_MAKING_LAIR)
-		{
-			creatureState = IS_MAKING_LAIR;
-		}
-		else if (creatureState == IS_AT_EATING)
-		{
-			creatureState = IS_EATING;
-		}
-		else if (creatureState == IS_AT_SLEEPING)
-		{
-			useAction(AA_SLEEP);
-			creatureState = IS_SLEEPING;	
-		}
-		else if (creatureState == IS_SLEEPING)
-		{
-			CV_GAME_MANAGER->getConsole()->writeLine(CConversions::floatToStr(sleep) + " sleep " + CConversions::floatToStr(deltaTime));
-			creatureState = IS_SLEEPING;
-			// moan if no lair ect
-			this->sleep+=(deltaTime);
-			if(sleep >= 5000.0f)
-			{
-				creatureState = IS_IDLE;
-			}
-			
 		}
 	}
 };
