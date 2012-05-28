@@ -85,7 +85,7 @@
     <ClCompile Include="..\..\src\Game\perlin.c" />
     <ClCompile Include="..\..\src\Game\PickingManager.cpp" />
     <ClCompile Include="..\..\src\Game\Primitives.cpp" />
-    <ClCompile Include="..\..\src\Game\project.cpp" />
+    <ClCompile Include="..\..\src\Game\main.cpp" />
     <ClCompile Include="..\..\src\Game\RenderManager.cpp" />
     <ClCompile Include="..\..\src\Game\RenderManager1.cpp" />
     <ClCompile Include="..\..\src\Game\ResourceManager.cpp" />
@@ -234,7 +234,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <_ProjectFileVersion>10.0.30128.1</_ProjectFileVersion>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)$(Configuration)\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">..\..\bin\$(Configuration)\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(Configuration)\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</LinkIncremental>
     <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</GenerateManifest>
@@ -264,7 +264,7 @@
       <AdditionalIncludeDirectories>..\..\dep\bugtrap\include;..\..\dep;..\..\dep\glew\include;..\..\dep\lua\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATED;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
-      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <PrecompiledHeader>
       </PrecompiledHeader>
       <PrecompiledHeaderOutputFile>.\Debug/project.pch</PrecompiledHeaderOutputFile>
@@ -282,12 +282,12 @@
       <Culture>0x1009</Culture>
     </ResourceCompile>
     <Link>
-      <AdditionalDependencies>Dbghelp.lib;winmm.lib;BugTrap.lib;opengl32.lib;glu32.lib;odbc32.lib;odbccp32.lib;wininet.lib;glew32.lib;lua5.1.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>..\bin\dkeeper_d.exe</OutputFile>
+      <AdditionalDependencies>Dbghelp.lib;winmm.lib;opengl32.lib;glu32.lib;odbc32.lib;odbccp32.lib;wininet.lib;glew32.lib;lua.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(TargetDir)$(TargetName).exe</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ProgramDatabaseFile>$(TargetDir)$(TargetName).pdb</ProgramDatabaseFile>
-      <SubSystem>NotSet</SubSystem>
+      <SubSystem>Windows</SubSystem>
       <RandomizedBaseAddress>true</RandomizedBaseAddress>
       <DataExecutionPrevention>
       </DataExecutionPrevention>

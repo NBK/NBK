@@ -12,7 +12,7 @@
 #include <stdio.h>
 #include <time.h>
 #include "Resource.h"
-#include "BugTrap\BugTrap.h"
+//#include "BugTrap\BugTrap.h"
 
 HDC			hDC=NULL;
 HGLRC		hRC=NULL;
@@ -426,6 +426,7 @@ int WINAPI WinMain(	HINSTANCE	hInstance,
 					LPSTR		lpCmdLine,			
 					int			nCmdShow)			
 {
+	/*
 	// Setup exception handler
 	BT_SetAppName("nbk");
 	BT_SetSupportEMail("nbk@maxhayman.co.uk");
@@ -433,6 +434,7 @@ int WINAPI WinMain(	HINSTANCE	hInstance,
 	BT_SetSupportURL("http://forum.keeperklan.com");
     BT_SetSupportServer("bugs.keeperklan.com", 9999);
 	BT_InstallSehFilter();
+	*/
 
 	MSG		msg;									
 	BOOL	done=FALSE;
@@ -449,7 +451,7 @@ int WINAPI WinMain(	HINSTANCE	hInstance,
 
 	while(!done)									
 	{
-		if (PeekMessage(&msg,NULL,0,0,PM_REMOVE))	
+		if (PeekMessage(&msg,NULL,0,0,PM_REMOVE))
 		{
 			if (msg.message==WM_QUIT)				
 			{
@@ -457,8 +459,8 @@ int WINAPI WinMain(	HINSTANCE	hInstance,
 			}
 			else									
 			{
-				TranslateMessage(&msg);				
-				DispatchMessage(&msg);				
+				TranslateMessage(&msg);
+				DispatchMessage(&msg);
 			}
 		}
 		else										
@@ -478,6 +480,8 @@ int WINAPI WinMain(	HINSTANCE	hInstance,
 
 	// cleanup
 	cleanupGameSystems();
+
+	system("pause");
 
 	return (msg.wParam);							
 }

@@ -5,17 +5,18 @@ namespace DK_GUI
 {
 	CMoneyLabel::CMoneyLabel(): CAbstractGUIItem(0.0f,0.0f,0.0f,0.0f,0.0f)
 	{
-		char number_texture[255];
-		strncpy(number_texture, NUMBER_TEXTURE_0, 255);
-
 		set_class_name(MONEY_LABEL);
 
-		/* get the number textures. BEWARE: map object must already exist */
-		for (GLint i=0; i<10; i++)
-		{
-			number_texture[strlen(number_texture)-1]=(char)(i+(GLint)'0');
-			number_texture[i]=GLOBAL_TEXTURE_LIST->get_texture_by_name(number_texture);
-		}
+		number_texture[0]=GLOBAL_TEXTURE_LIST->get_texture_by_name(NUMBER_TEXTURE_0);
+		number_texture[1]=GLOBAL_TEXTURE_LIST->get_texture_by_name(NUMBER_TEXTURE_1);
+		number_texture[2]=GLOBAL_TEXTURE_LIST->get_texture_by_name(NUMBER_TEXTURE_2);
+		number_texture[3]=GLOBAL_TEXTURE_LIST->get_texture_by_name(NUMBER_TEXTURE_3);
+		number_texture[4]=GLOBAL_TEXTURE_LIST->get_texture_by_name(NUMBER_TEXTURE_4);
+		number_texture[5]=GLOBAL_TEXTURE_LIST->get_texture_by_name(NUMBER_TEXTURE_5);
+		number_texture[6]=GLOBAL_TEXTURE_LIST->get_texture_by_name(NUMBER_TEXTURE_6);
+		number_texture[7]=GLOBAL_TEXTURE_LIST->get_texture_by_name(NUMBER_TEXTURE_7);
+		number_texture[8]=GLOBAL_TEXTURE_LIST->get_texture_by_name(NUMBER_TEXTURE_8);
+		number_texture[9]=GLOBAL_TEXTURE_LIST->get_texture_by_name(NUMBER_TEXTURE_9);
 
 		value=12345;
 

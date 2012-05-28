@@ -30,17 +30,19 @@ CDKTextureList::~CDKTextureList()
 
 GLvoid CDKTextureList::add_texture(const char *name, const char *file, bool trans, GLint texture_filter, bool auto_transparent, GLubyte R, GLubyte G, GLubyte B)
 {
+	std::string texture_name = name;
+
 	TEX_DATA *new_texture_info = new TEX_DATA();
 
 	if (!file)
 	{
-		new_texture_info->file_name[0]='\0';
-		textures[name]=new_texture_info;
+		new_texture_info->file_name ='\0';
+		textures[texture_name]=new_texture_info;
 	}
 	else
 	{
 		new_texture_info->set(file,trans,texture_filter,auto_transparent,R,G,B);
-		textures[name]=new_texture_info;
+		textures[texture_name]=new_texture_info;
 	}
 }
 
@@ -53,10 +55,8 @@ GLvoid CDKTextureList::build_textures()
 	{
 		TEX_DATA *tex_data = (*iter).second;
 
-		if (tex_data->file_name[0]=='\0')
-		{
+		if (tex_data->file_name.empty())
 			continue;
-		}
 
 		CDKTextureLoader::LOADER_RESULT lr = tl.build_texture(tex_data->file_name,tex_data->texture,tex_data->trans,tex_data->texture_filter,tex_data->auto_transparent,tex_data->R,tex_data->G,tex_data->B);
 
@@ -93,7 +93,10 @@ GLuint CDKTextureList::get_texture_by_name(const char *name)
 	if (!textures[name])
 	{
 #ifdef WIN32
-		MessageBox(hwnd,"The texture by this name does not exist!","ERROR",MB_OK|MB_ICONERROR | MB_SETFOREGROUND);
+		char msg[255];
+		sprintf(msg, "The texture by this name (%s) does not exist!", name);
+
+		MessageBox(hwnd,msg,"ERROR",MB_OK|MB_ICONERROR | MB_SETFOREGROUND);
 #else
 		printf("[ERROR|TEXTURE] The texture by this name does not exist!\n");
 #endif
