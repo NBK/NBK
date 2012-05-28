@@ -36,8 +36,8 @@ namespace DK_GUI
 			set_value(PLAYER0_MONEY);
 		}
 
-		GLfloat tx=extent.pixel_pos_x + extent.pixel_width / 2.0f - (20.0f*(GLfloat)count)/2.0f;
-		for (GLint i=0; i<count; i++)
+		GLfloat tx=extent.pixel_pos_x + extent.pixel_width / 2.0f - (20.0f*(GLfloat)string_value.size())/2.0f;
+		for (GLint i=0; i<string_value.size(); i++)
 		{
 			glPushMatrix();
 			shape->draw_textured_quad(tx,extent.pixel_pos_y,20.0f,extent.pixel_height,number_texture[(GLint)(string_value[i])-(GLint)'0']);
@@ -51,8 +51,10 @@ namespace DK_GUI
 	{
 		value+=amount;
 
-		string_value = value;
-		count = string_value.size();
+		char numstr[20];
+		sprintf(numstr, "%d", value);
+
+		string_value = numstr;
 	}
 
 	GLvoid CMoneyLabel::set_value(GLint amount)

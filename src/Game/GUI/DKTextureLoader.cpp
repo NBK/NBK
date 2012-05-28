@@ -26,9 +26,8 @@ CDKTextureLoader::LOADER_RESULT CDKTextureLoader::build_texture(std::string &fil
 {
 	LOADER_RESULT lr;
 
-	if (file.empty()) {
+	if (file.empty())
 		return lr;
-	}
 
 #ifdef WIN32
 	HDC			hdcTemp;												// The DC To Hold Our Bitmap

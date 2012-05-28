@@ -27,7 +27,6 @@ namespace DK_GUI
 		GLint value;
 
 		std::string string_value;
-		GLint count;
 
 		bool check_updated_value;
 	};
