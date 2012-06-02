@@ -232,6 +232,8 @@ namespace game_objects
 
 		if(creatureState == IS_IDLE)
 		{
+			//TODO: if standing still and idling use the idle animation for now use WALK (because he is moving)
+			useAction(AA_WALK);
 			Idle(deltaTime);
 
 			//HAVE I GOT A LAIR??!?!?!
@@ -256,7 +258,6 @@ namespace game_objects
 
 							if (bObject->getClassName() == "BED")
 								foundbed = true;
-
 						}
 						if(!foundbed)
 						{
@@ -267,7 +268,6 @@ namespace game_objects
 
 					if(currBlock)
 					{
-						CV_GAME_MANAGER->getConsole()->writeLine("2222");
 						cml::vector2i currPos = cml::vector2i((int)floor(position[0]/CV_BLOCK_WIDTH),(int)floor(position[2]/CV_BLOCK_DEPTH));
 						if(CV_GAME_MANAGER->getPathManager()->findPath(currPos,currBlock->getLogicalPosition(),&path))
 						{
@@ -336,7 +336,6 @@ namespace game_objects
 							if (bObject->getName() == "MODEL_ROD")
 							{
 								currBlock = thisBlock;
-								CV_GAME_MANAGER->getConsole()->writeLine("Found somewhere to train!");
 								break;
 							}
 						}
@@ -427,7 +426,6 @@ namespace game_objects
 			lair[0] = position[0]/CV_BLOCK_WIDTH;
 			lair[1] = position[2]/CV_BLOCK_DEPTH;
 			count=change;
-			CV_GAME_MANAGER->getConsole()->writeLine("Lair has been made");
 			creatureState = IS_IDLE;
 		}
 		else if (creatureState == IS_TRAINING)
@@ -439,7 +437,6 @@ namespace game_objects
 			 //(todo change this to be spercific for every creature)
 			if((hunger < 2000.0f) || (sleep < 1000.0f))
 			{
-				CV_GAME_MANAGER->getConsole()->writeLine("BINGO");
 				creatureState = IS_IDLE;
 				useAction(AA_WALK);
 			}

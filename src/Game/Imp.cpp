@@ -24,13 +24,39 @@ namespace game_objects
 			path.clear();
 			CBlock *destBlock;
 			destBlock = CV_GAME_MANAGER->getRoomManager()->getRoom(CV_BLOCK_TYPE_TREASURE_ROOM_ID, this->getOwner());
-			if (destBlock)
+
+			if(destBlock != NULL)
 			{
-				cml::vector2i currPos = cml::vector2i((int)floor(position[0]/CV_BLOCK_WIDTH),(int)floor(position[2]/CV_BLOCK_DEPTH));
-				if(CV_GAME_MANAGER->getPathManager()->findPath(currPos,destBlock->getLogicalPosition(),&path))
+				rooms::CRoom *currRoom = CV_GAME_MANAGER->getRoomManager()->getRoom(destBlock->getRoomIndex());
+
+				for (std::vector<CBlock*>::iterator rmIter = currRoom->getRoomTilesVector()->begin(); rmIter != currRoom->getRoomTilesVector()->end(); rmIter++)
 				{
-					impState = IS_GOING_TO_DEPOSITING_GOLD_DESTINATION;
-					return;
+					CBlock *thisBlock = *rmIter;
+					bool found = false;
+
+					for (std::vector<block_objects::CBlockObject*>::iterator rmIter = thisBlock->getBlockObjects()->begin(); rmIter != thisBlock->getBlockObjects()->end(); rmIter++)
+					{
+						block_objects::CBlockObject *bObject = *rmIter;
+
+						if (bObject->getName() == "MODEL_GOLD250")
+							found = true;
+
+					}
+					if(!found)
+					{
+						currBlock = thisBlock;
+						break;
+					}
+				}
+
+				if(currBlock)
+				{
+					cml::vector2i currPos = cml::vector2i((int)floor(position[0]/CV_BLOCK_WIDTH),(int)floor(position[2]/CV_BLOCK_DEPTH));
+					if(CV_GAME_MANAGER->getPathManager()->findPath(currPos,currBlock->getLogicalPosition(),&path))
+					{
+						impState = IS_GOING_TO_DEPOSITING_GOLD_DESTINATION;
+						return;
+					}
 				}
 			}
 			currBlock->addModel("MODEL_GOLD250",position);
@@ -309,11 +335,28 @@ namespace game_objects
 			useAction(AA_CLAIM);
 		} else if (impState == IS_DEPOSITING_GOLD)
 		{
-			// TODO: Do this depending on team.....
-			PLAYER0_MONEY = PLAYER0_MONEY + this->getGold();
-			this->setGold(0);
-			impState = IS_IDLE;
-			useAction(AA_IDLE);
+			//Todo: if a block has a 250 gold, upp it to 500...
+			bool found = false;
+			for (std::vector<block_objects::CBlockObject*>::iterator rmIter = currBlock->getBlockObjects()->begin(); rmIter != currBlock->getBlockObjects()->end(); rmIter++)
+			{
+				block_objects::CBlockObject *bObject = *rmIter;
+
+				if (bObject->getName() == "MODEL_GOLD250")
+					found = true;
+
+			}
+			if(!found)
+			{
+				currBlock->addModel("MODEL_GOLD250",position);
+				PLAYER0_MONEY = PLAYER0_MONEY + this->getGold();//do for other teams
+				this->setGold(0);	
+				impState = IS_IDLE;
+				useAction(AA_IDLE);
+			}
+			else
+			{
+				checkGoldLevels();
+			}
 		} else if (impState == IS_DIGGING)
 		{
 			if(currBlock->isLow() || !currBlock->isMarked())
