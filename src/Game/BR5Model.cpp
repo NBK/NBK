@@ -108,7 +108,8 @@ namespace loaders
 		byte *tmp = data;
 
 		// read the full model data
-		size_t read = fread(data,sizeof(byte),fileSize,br5);
+		size_t read = fread(data, fileSize, 1, br5);
+		read = read * fileSize;
 
 		if (read!=fileSize)
 		{
