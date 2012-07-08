@@ -272,7 +272,7 @@ namespace game_utils
 			result&=creatureManager->shutdown();
 			result&=roomManager->shutdown();
 			result&=blockManager->shutdown();
-			result&=levelManager->shutdown(); // TODO: fix error when shutting down
+			result&=levelManager->shutdown();
 			//result&=newRenderer->shutdown();
 			result&=renderManager->shutdown();
 			result&=collisionManager->shutdown();

@@ -115,6 +115,15 @@ namespace game_utils
 				bile_demon->setName(creatureName);
 				bile_demon->setOwner(owner);
 				bile_demon->setModel(CV_GAME_MANAGER->getResourceManager()->getModel("MODEL_BILE_DEMON"));
+				bile_demon->setAction(CCreature::AA_WALK,0,29);
+				bile_demon->setAction(CCreature::AA_IDLE,30,59);
+				bile_demon->setAction(CCreature::AA_ATTACK1,60,119);
+				//bile_demon->setAction(CCreature::AA_GO_TO_SLEEP,120,149);
+				//bile_demon->setAction(CCreature::AA_CHEER,150,179);
+				bile_demon->setAction(CCreature::AA_EAT,180,209);
+				//bile_demon->setAction(CCreature::AA_FLY,210,239);
+				bile_demon->setAction(CCreature::AA_SLEEP,240,269);
+				//bile_demon->setAction(CCreature::AA_YAWN,270,299);
 				allCreatures.push_back(bile_demon);
 			}
 			else if (creatureName == "IMP")
