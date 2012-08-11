@@ -65,7 +65,7 @@ namespace game_utils
 					}
 				}
 			}
-			else if(spell = SPELL_BUTTON_CHICKEN)
+			else if(spell == SPELL_BUTTON_CHICKEN)
 			{
 				// Check that the spell is being casted on land you own in a hatchery
 				if(block->getOwner() == owner && block->getType()==CV_BLOCK_TYPE_HATCHERY_ID)

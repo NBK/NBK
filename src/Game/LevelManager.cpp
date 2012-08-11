@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <fstream>
 #include <iostream>
+#include <assert.h>
 #include <time.h>
 #include "Trap.h"
 #include "HeroGate.h"
@@ -25,6 +26,7 @@ using namespace control;
 #define SAVE	"SAVE"
 
 // things
+/* \note these "things" should get there own enums and maybe there own files... */
 #define HERO_GATE		52
 #define LEVEL_TEXTURE	4
 #define TEXTURE_ATLAS			0
@@ -346,9 +348,18 @@ namespace game_utils
 			for (GLuint y=0; y<CV_LEVEL_MAP_SIZE; y++)
 			{
 				for (GLuint x=0; x<CV_LEVEL_MAP_SIZE; x++)
-				{	// If earth block is next to a peice of claimed land, add it to the unfortified list (todo: check land is yours)
-					if((slb[y][x].typeID == CV_BLOCK_TYPE_EARTH_ID || slb[y][x].typeID == CV_BLOCK_TYPE_EARTH_WITH_TORCH_PLATE_ID) && (slb[y+1][x].typeID == CV_BLOCK_TYPE_CLAIMED_LAND_ID || slb[y-1][x].typeID == CV_BLOCK_TYPE_CLAIMED_LAND_ID || slb[y][x+1].typeID == CV_BLOCK_TYPE_CLAIMED_LAND_ID || slb[y][x-1].typeID == CV_BLOCK_TYPE_CLAIMED_LAND_ID))
-						unfortifiedBlocksList[getBlock(x,y)] = getBlock(x,y);
+				{	// If earth block is next to a piece of claimed land, add it to the unfortified list (todo: check land is yours)
+					if( slb[y][x].typeID == CV_BLOCK_TYPE_EARTH_ID || slb[y][x].typeID == CV_BLOCK_TYPE_EARTH_WITH_TORCH_PLATE_ID )
+					{
+						// buffer overrun.. checking..
+						assert (x+1 != CV_LEVEL_MAP_SIZE && y+1 != CV_LEVEL_MAP_SIZE);
+						
+
+						if ((slb[y+1][x].typeID == CV_BLOCK_TYPE_CLAIMED_LAND_ID || slb[y-1][x].typeID == CV_BLOCK_TYPE_CLAIMED_LAND_ID || slb[y][x+1].typeID == CV_BLOCK_TYPE_CLAIMED_LAND_ID || slb[y][x-1].typeID == CV_BLOCK_TYPE_CLAIMED_LAND_ID))
+						{
+							unfortifiedBlocksList[getBlock(x,y)] = getBlock(x,y);
+						}			
+					}
 				}
 			}
 			return true;
@@ -787,22 +798,25 @@ namespace game_utils
 			return true;
 		}
 
-		CBlock *CLevelManager::getBlock(GLuint x, GLuint y)
+		CBlock *CLevelManager::getBlock(unsigned int x, unsigned int y)
 		{
-			return (x>=0&&y>=0&&x<CV_LEVEL_MAP_SIZE&&y<CV_LEVEL_MAP_SIZE?levelMap[y][x]:NULL);
+			if ( x >= 0 && y >= 0 && x < CV_LEVEL_MAP_SIZE && y < CV_LEVEL_MAP_SIZE )
+				return levelMap[y][x];
+			else
+				return NULL;
 		}
 
-		CBlock *CLevelManager::getBlockOld(GLuint x, GLuint y)
+		CBlock *CLevelManager::getBlockOld(unsigned int x, unsigned int y)
 		{
 			return getBlock(y,x);
 		}
 
-		GLint CLevelManager::getBlockType(GLuint x, GLuint y)
+		GLint CLevelManager::getBlockType(unsigned int x, unsigned int y)
 		{
 			return (x>=0&&y>=0&&x<CV_LEVEL_MAP_SIZE&&y<CV_LEVEL_MAP_SIZE?levelMap[y][x]->getType():-1);
 		}
 
-		GLint CLevelManager::getBlockTypeOld(GLuint x, GLuint y)
+		GLint CLevelManager::getBlockTypeOld(unsigned int x, unsigned int y)
 		{
 			return getBlockType(y,x);
 		}

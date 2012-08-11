@@ -63,7 +63,7 @@ GLvoid CDKTextureList::build_textures()
 		if (!lr.result)
 		{
 			char err[512];
-			sprintf(err,"Texture error: %s",tex_data->file_name);
+			sprintf(err,"Texture error: %s",tex_data->file_name.c_str());
 #ifdef WIN32
 			MessageBox( hwnd, err, "Error", MB_OK | MB_ICONERROR | MB_SETFOREGROUND);
 #else

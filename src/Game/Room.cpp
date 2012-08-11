@@ -45,7 +45,7 @@ namespace game_objects
 
 			if (rtIter!=roomTiles.end())
 			{
-				// this should allways work!
+				// this should always work!
 				roomTiles.erase(rtIter);
 			}
 

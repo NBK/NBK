@@ -18,7 +18,7 @@ namespace game_objects
 		mCreatureState = IS_IDLE;
 		mModel = NULL;
 		mName = "";
-		mMoveSpeed = 0.00015f;
+		m_MoveSpeed = 0.00015f;
 		
 		mMoveVector = vector3f(0.0f,0.0f,0.0f);
 		mLair = vector2f(0,0);
@@ -148,7 +148,7 @@ namespace game_objects
 		mRotation[1] = 90.0f-(float)(atan2(mMoveVector[2],mMoveVector[0])*180.0f/M_PI);
 
 		cml::vector3f oldPos = mPosition;
-		mPosition += mMoveVector*mMoveSpeed*deltaTime;
+		mPosition += mMoveVector*m_MoveSpeed*deltaTime;
 
 		if ((mPosition[0]-tX > 0.0f && oldPos[0]-tX<0.0f)
 			|| (mPosition[0]-tX < 0.0f && oldPos[0]-tX>0.0f))
@@ -177,12 +177,12 @@ namespace game_objects
 		GLint Y = (GLint)(mPosition[2]/CV_BLOCK_DEPTH);
 		if(CV_GAME_MANAGER->getLevelManager()->getBlock(X,Y)->isWalkable(false))
 		{
-			mPosition += mMoveVector*mMoveSpeed*deltaTime;
+			mPosition += mMoveVector*m_MoveSpeed*deltaTime;
 			mCount+=0.5f;
 		}
 		else
 		{
-			mPosition -= mMoveVector*mMoveSpeed*deltaTime;
+			mPosition -= mMoveVector*m_MoveSpeed*deltaTime;
 			mCount=mChange;
 		}
 

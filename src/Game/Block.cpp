@@ -255,7 +255,7 @@ namespace game_objects
 			// if we were are a part of a room, we need to inform this room that we are being modified
 			CV_GAME_MANAGER->getRoomManager()->getRoom(roomIndex)->removeBlock(this,true);
 		}
-		else if (finalized && room && roomIndex==-1)
+		else if (finalized && room)
 		{
 			// we are a room, notify the RoomManager
 			CV_GAME_MANAGER->getRoomManager()->addRoomTile(this);

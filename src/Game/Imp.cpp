@@ -8,9 +8,9 @@ namespace game_objects
 {
 	CImp::CImp(): CCreature()
 	{
-		impState = IS_IDLE;
-		mMoveSpeed = 0.0005f;
-		maxgold = 250;
+		m_impState = IS_IDLE;
+		m_MoveSpeed = 0.0005f;
+		m_maxgold = 250;
 	}
 
 	CImp::~CImp()
@@ -19,68 +19,38 @@ namespace game_objects
 
 	GLvoid CImp::checkGoldLevels()
 	{
-		if(this->getGold() >= this->maxgold)
+		if(this->getGold() >= this->m_maxgold)
 		{
-			path.clear();
-			CBlock *destBlock;
-			destBlock = CV_GAME_MANAGER->getRoomManager()->getRoom(CV_BLOCK_TYPE_TREASURE_ROOM_ID, this->getOwner());
-
-			if(destBlock != NULL)
-			{
-				rooms::CRoom *currRoom = CV_GAME_MANAGER->getRoomManager()->getRoom(destBlock->getRoomIndex());
-
-				for (std::vector<CBlock*>::iterator rmIter = currRoom->getRoomTilesVector()->begin(); rmIter != currRoom->getRoomTilesVector()->end(); rmIter++)
-				{
-					CBlock *thisBlock = *rmIter;
-					bool found = false;
-
-					block_objects::CBlockObject *bObject = thisBlock->GetBlockByName( "MODEL_GOLD250" );
-					if (bObject != NULL)
-					{
-						found = true;
-						mCurrentBlock = (game_objects::CBlock *)bObject;
-						break;
-					}
-				}
-
-				if(mCurrentBlock)
-				{
-					cml::vector2i currPos = cml::vector2i((int)floor(mPosition[0]/CV_BLOCK_WIDTH),(int)floor(mPosition[2]/CV_BLOCK_DEPTH));
-					if(CV_GAME_MANAGER->getPathManager()->findPath(currPos,mCurrentBlock->getLogicalPosition(),&path))
-					{
-						impState = IS_GOING_TO_DEPOSITING_GOLD_DESTINATION;
-						return;
-					}
-				}
-			}
-			mCurrentBlock->addModel("MODEL_GOLD250",mPosition);
-			this->setGold(0);
+			depositGold();
 		}
 	}
 
 	GLvoid CImp::checkNearestForDigging()
 	{
-		if(impState != IS_IDLE) return;
+		if(m_impState != IS_IDLE) return;
 
 		std::vector<CBlock*> markedBlocks,possBlocks;
 		std::vector<CBlock*>::iterator markedBlocksIter;
 		CBlock *block;
 
-		if(CV_GAME_MANAGER->getLevelManager()->isBlockTypeNear(CV_BLOCK_TYPE_EARTH_ID,cml::vector2i((int)floor(mPosition[0]/CV_BLOCK_WIDTH),(int)floor(mPosition[2]/CV_BLOCK_DEPTH)),true,CV_PLAYER_UNDEFINED,&markedBlocks))
+		if(CV_GAME_MANAGER->getLevelManager()->isBlockTypeNear(CV_BLOCK_TYPE_EARTH_ID, cml::vector2i((int)floor(mPosition[0]/CV_BLOCK_WIDTH),
+			(int)floor(mPosition[2]/CV_BLOCK_DEPTH)),true,CV_PLAYER_UNDEFINED,&markedBlocks))
 		{
 			int oldSearchLimit = CV_GAME_MANAGER->getPathManager()->getSearchLimit();
 			CV_GAME_MANAGER->getPathManager()->setSearchLimit(2);
 			bool oldDiagonalMoves = CV_GAME_MANAGER->getPathManager()->getDiagonalMoves();
 			CV_GAME_MANAGER->getPathManager()->setDiagonalMoves(false);
+			
 			for(markedBlocksIter=markedBlocks.begin(); markedBlocksIter!=markedBlocks.end(); markedBlocksIter++)
 			{
 				block = *markedBlocksIter;
 				if(!block->isMarked())
 					continue;
 				path.clear();
-					if(CV_GAME_MANAGER->getPathManager()->findPath(cml::vector2i((int)floor(mPosition[0]/CV_BLOCK_WIDTH),(int)floor(mPosition[2]/CV_BLOCK_DEPTH)),block->getLogicalPosition(),&path))
-						possBlocks.push_back(block);
+				if(CV_GAME_MANAGER->getPathManager()->findPath(cml::vector2i((int)floor(mPosition[0]/CV_BLOCK_WIDTH),(int)floor(mPosition[2]/CV_BLOCK_DEPTH)),block->getLogicalPosition(),&path))
+					possBlocks.push_back(block);
 			}
+
 			CV_GAME_MANAGER->getPathManager()->setSearchLimit(oldSearchLimit);
 			CV_GAME_MANAGER->getPathManager()->setDiagonalMoves(oldDiagonalMoves);
 			if(possBlocks.size()>0)
@@ -88,7 +58,7 @@ namespace game_objects
 				GLint blockNum = rand()%possBlocks.size();
 				mCurrentBlock = possBlocks[blockNum];
 				path.clear();
-				impState = IS_AT_DIGGING_BLOCK;
+				m_impState = IS_AT_DIGGING_BLOCK;
 				return;
 			}
 		}
@@ -96,7 +66,7 @@ namespace game_objects
 
 	GLvoid CImp::checkNearestForClaiming()
 	{
-		if(impState != IS_IDLE) return;
+		if(m_impState != IS_IDLE) return;
 
 		std::vector<CBlock*> unclaimedBlocks,claimedBlocks,possBlocks;
 		std::vector<CBlock*>::iterator unclaimedBlocksIter, claimedBlocksIter;
@@ -127,7 +97,7 @@ namespace game_objects
 				mCurrentBlock = possBlocks[blockNum];
 				path.push_back(mCurrentBlock->getLogicalPosition());
 				mCurrentBlock->setTaken(true);
-				impState = IS_GOING_TO_CLAIMING_DESTINATION;
+				m_impState = IS_GOING_TO_CLAIMING_DESTINATION;
 				return;
 			}
 		}
@@ -135,7 +105,7 @@ namespace game_objects
 
 	GLvoid CImp::checkNearestForWalling()
 	{
-		if(impState != IS_IDLE) return;
+		if(m_impState != IS_IDLE) return;
 
 		std::vector<CBlock*> unfortifiedBlocks,claimedBlocks,possBlocks;
 		std::vector<CBlock*>::iterator unfortifiedBlocksIter;
@@ -165,7 +135,7 @@ namespace game_objects
 				GLint blockNum = rand()%possBlocks.size();
 				mCurrentBlock = possBlocks[blockNum];
 				path.clear();
-				impState = IS_AT_WALLING_BLOCK;
+				m_impState = IS_AT_WALLING_BLOCK;
 				return;
 			}
 		}
@@ -173,7 +143,7 @@ namespace game_objects
 
 	GLvoid CImp::checkForDigging()
 	{
-		if(impState != IS_IDLE) return;
+		if(m_impState != IS_IDLE) return;
 		path.clear();
 		mCurrentBlock = CV_GAME_MANAGER->getLevelManager()->getMarkedBlock(this->getOwner(),cml::vector2i((int)floor(mPosition[0]/CV_BLOCK_WIDTH),(int)floor(mPosition[2]/CV_BLOCK_DEPTH)));
 		//bool oldEndOnDiagonal = CV_GAME_MANAGER->getPathManager()->getAllowEndDiagonal();
@@ -182,21 +152,21 @@ namespace game_objects
 		{
 			cml::vector2i currPos = cml::vector2i((int)floor(mPosition[0]/CV_BLOCK_WIDTH),(int)floor(mPosition[2]/CV_BLOCK_DEPTH));
 			if(CV_GAME_MANAGER->getPathManager()->findPath(currPos,mCurrentBlock->getLogicalPosition(),&path) && !mCurrentBlock->isLow())
-				impState = IS_GOING_TO_DIGGING_DESTINATION;
+				m_impState = IS_GOING_TO_DIGGING_DESTINATION;
 		}
 		CV_GAME_MANAGER->getPathManager()->setAllowEndDiagonal(true);
 	}
 
 	GLvoid CImp::checkForClaiming()
 	{
-		if(impState != IS_IDLE) return;
+		if(m_impState != IS_IDLE) return;
 		path.clear();
 		mCurrentBlock = CV_GAME_MANAGER->getLevelManager()->getUnclaimedBlock(this->getOwner(),cml::vector2i((int)floor(mPosition[0]/CV_BLOCK_WIDTH),(int)floor(mPosition[2]/CV_BLOCK_DEPTH)));
 		if (mCurrentBlock)
 		{
 			cml::vector2i currPos = cml::vector2i((int)floor(mPosition[0]/CV_BLOCK_WIDTH),(int)floor(mPosition[2]/CV_BLOCK_DEPTH));
 			if(CV_GAME_MANAGER->getPathManager()->findPath(currPos,mCurrentBlock->getLogicalPosition(),&path))
-				impState = IS_GOING_TO_CLAIMING_DESTINATION;
+				m_impState = IS_GOING_TO_CLAIMING_DESTINATION;
 			else
 				mCurrentBlock->setTaken(false);
 		}
@@ -204,7 +174,7 @@ namespace game_objects
 
 	GLvoid CImp::checkForWalling()
 	{
-		if(impState != IS_IDLE) return;
+		if(m_impState != IS_IDLE) return;
 		path.clear();
 		mCurrentBlock = CV_GAME_MANAGER->getLevelManager()->getUnfortifiedBlock(this->getOwner(),cml::vector2i((int)floor(mPosition[0]/CV_BLOCK_WIDTH),(int)floor(mPosition[2]/CV_BLOCK_DEPTH)));
 		//bool oldEndOnDiagonal = CV_GAME_MANAGER->getPathManager()->getAllowEndDiagonal();
@@ -213,7 +183,7 @@ namespace game_objects
 		{
 			cml::vector2i currPos = cml::vector2i((int)floor(mPosition[0]/CV_BLOCK_WIDTH),(int)floor(mPosition[2]/CV_BLOCK_DEPTH));
 			if(CV_GAME_MANAGER->getPathManager()->findPath(currPos,mCurrentBlock->getLogicalPosition(),&path) && !mCurrentBlock->isLow())
-				impState = IS_GOING_TO_WALLING_DESTINATION;
+				m_impState = IS_GOING_TO_WALLING_DESTINATION;
 		}
 		CV_GAME_MANAGER->getPathManager()->setAllowEndDiagonal(true);
 	}
@@ -227,14 +197,14 @@ namespace game_objects
 	{
 		if(path.size() == 0)
 		{
-			if(impState == IS_GOING_TO_DEPOSITING_GOLD_DESTINATION)
-				impState = IS_AT_DEPOSITING_GOLD;
-			else if(impState == IS_GOING_TO_CLAIMING_DESTINATION)
-				impState = IS_AT_CLAIMING_BLOCK;
-			else if (impState == IS_GOING_TO_DIGGING_DESTINATION)
-				impState = IS_AT_DIGGING_BLOCK;
-			else if (impState == IS_GOING_TO_WALLING_DESTINATION)
-				impState = IS_AT_WALLING_BLOCK;
+			if(m_impState == IS_GOING_TO_DEPOSITING_GOLD_DESTINATION)
+				m_impState = IS_AT_DEPOSITING_GOLD;
+			else if(m_impState == IS_GOING_TO_CLAIMING_DESTINATION)
+				m_impState = IS_AT_CLAIMING_BLOCK;
+			else if (m_impState == IS_GOING_TO_DIGGING_DESTINATION)
+				m_impState = IS_AT_DIGGING_BLOCK;
+			else if (m_impState == IS_GOING_TO_WALLING_DESTINATION)
+				m_impState = IS_AT_WALLING_BLOCK;
 			return;
 		}
 		cml::vector2i point = path.back();
@@ -263,7 +233,7 @@ namespace game_objects
 		mRotation[1] = 90.0f-(float)(atan2(mMoveVector[2],mMoveVector[0])*180.0f/M_PI);
 
 		cml::vector3f oldPos = mPosition;
-		mPosition += mMoveVector*mMoveSpeed*deltaTime;
+		mPosition += mMoveVector*m_MoveSpeed*deltaTime;
 
 		if ((mPosition[0]-tX > 0.0f && oldPos[0]-tX<0.0f)
 			|| (mPosition[0]-tX < 0.0f && oldPos[0]-tX>0.0f))
@@ -276,7 +246,7 @@ namespace game_objects
 
 	GLvoid CImp::update(GLfloat deltaTime)
 	{
-		if (impState == IS_IDLE)
+		if (m_impState == IS_IDLE)
 		{
 			Idle(deltaTime);
 			//check for next space digging
@@ -294,40 +264,40 @@ namespace game_objects
 			checkForDigging();
 			checkForClaiming();
 			checkForWalling();
-		} else if (impState == IS_GOING_TO_DEPOSITING_GOLD_DESTINATION)
+		} else if (m_impState == IS_GOING_TO_DEPOSITING_GOLD_DESTINATION)
 		{
 			useAction(AA_WALK);
 			walkPath(deltaTime);		
-		} else if (impState == IS_GOING_TO_DIGGING_DESTINATION)
+		} else if (m_impState == IS_GOING_TO_DIGGING_DESTINATION)
 		{
 			useAction(AA_WALK);
 			walkPath(deltaTime);
-		} else if (impState == IS_GOING_TO_CLAIMING_DESTINATION)
+		} else if (m_impState == IS_GOING_TO_CLAIMING_DESTINATION)
 		{
 			useAction(AA_WALK);
 			walkPath(deltaTime);
-		} else if (impState == IS_GOING_TO_WALLING_DESTINATION)
+		} else if (m_impState == IS_GOING_TO_WALLING_DESTINATION)
 		{
 			useAction(AA_WALK);
 			walkPath(deltaTime);
-		} else if (impState == IS_AT_DEPOSITING_GOLD)
+		} else if (m_impState == IS_AT_DEPOSITING_GOLD)
 		{
-			impState = IS_DEPOSITING_GOLD;
-		} else if (impState == IS_AT_DIGGING_BLOCK)
+			m_impState = IS_DEPOSITING_GOLD;
+		} else if (m_impState == IS_AT_DIGGING_BLOCK)
 		{
 			faceBlock(mCurrentBlock);
-			impState = IS_DIGGING;
+			m_impState = IS_DIGGING;
 			useAction(AA_DIG);
-		} else if (impState == IS_AT_CLAIMING_BLOCK)
+		} else if (m_impState == IS_AT_CLAIMING_BLOCK)
 		{
-			impState = IS_CLAIMING;
+			m_impState = IS_CLAIMING;
 			useAction(AA_CLAIM);
-		} else if (impState == IS_AT_WALLING_BLOCK)
+		} else if (m_impState == IS_AT_WALLING_BLOCK)
 		{
 			faceBlock(mCurrentBlock);
-			impState = IS_WALLING;
+			m_impState = IS_WALLING;
 			useAction(AA_CLAIM);
-		} else if (impState == IS_DEPOSITING_GOLD)
+		} else if (m_impState == IS_DEPOSITING_GOLD)
 		{
 			//Todo: if a block has a 250 gold, upp it to 500...
 			bool found = false;
@@ -344,59 +314,98 @@ namespace game_objects
 				mCurrentBlock->addModel("MODEL_GOLD250",mPosition);
 				PLAYER0_MONEY = PLAYER0_MONEY + this->getGold();//do for other teams
 				this->setGold(0);	
-				impState = IS_IDLE;
+				m_impState = IS_IDLE;
 				useAction(AA_IDLE);
 			}
 			else
 			{
 				checkGoldLevels();
 			}
-		} else if (impState == IS_DIGGING)
+		} else if (m_impState == IS_DIGGING)
 		{
 			if(mCurrentBlock->isLow() || !mCurrentBlock->isMarked())
 			{
-				impState = IS_IDLE;
+				m_impState = IS_IDLE;
 				useAction(AA_IDLE);
 				return;
 			}
 			if(mCurrentBlock->getType() == CV_BLOCK_TYPE_GOLD_ID)
 				//TODO: use a new formula
 				this->setGold(this->getGold() + 1);
-			mCurrentBlock->decLife(deltaTime*mMoveSpeed);
+			mCurrentBlock->decLife(deltaTime*m_MoveSpeed);
 			if (mCurrentBlock->getLife()<=0.0f)
 			{
 				mCurrentBlock->digBlock();
 
-				impState = IS_IDLE;
+				m_impState = IS_IDLE;
 				useAction(AA_IDLE);
 			}
 			//Check if you have gold :)
 			checkGoldLevels();
-		} else if (impState == IS_CLAIMING)
+		} else if (m_impState == IS_CLAIMING)
 		{
-			mCurrentBlock->decLife(deltaTime*mMoveSpeed);
+			mCurrentBlock->decLife(deltaTime*m_MoveSpeed);
 			if (mCurrentBlock->getLife()<=0.0f)
 			{
 				mCurrentBlock->claimBlock(this->getOwner());
-				impState = IS_IDLE;
+				m_impState = IS_IDLE;
 				useAction(AA_IDLE);
 			}
-		} else if (impState == IS_WALLING)
+		} else if (m_impState == IS_WALLING)
 		{
 			if(mCurrentBlock->isLow() || mCurrentBlock->isMarked())
 			{
-				impState = IS_IDLE;
+				m_impState = IS_IDLE;
 				useAction(AA_IDLE);
 				return;
 			}
-			mCurrentBlock->addLife(deltaTime*mMoveSpeed);
+			mCurrentBlock->addLife(deltaTime*m_MoveSpeed);
 			if (mCurrentBlock->getLife()>=9.0f)
 			{
 				mCurrentBlock->fortifyBlock(this->getOwner());
 
-				impState = IS_IDLE;
+				m_impState = IS_IDLE;
 				useAction(AA_IDLE);
 			}
 		}
 	}
+
+	void CImp::depositGold()
+	{
+		path.clear();
+		CBlock *destBlock;
+		destBlock = CV_GAME_MANAGER->getRoomManager()->getRoom(CV_BLOCK_TYPE_TREASURE_ROOM_ID, this->getOwner());
+
+		if(destBlock != NULL)
+		{
+			rooms::CRoom *currRoom = CV_GAME_MANAGER->getRoomManager()->getRoom(destBlock->getRoomIndex());
+
+			for (std::vector<CBlock*>::iterator rmIter = currRoom->getRoomTilesVector()->begin(); rmIter != currRoom->getRoomTilesVector()->end(); rmIter++)
+			{
+				CBlock *thisBlock = *rmIter;
+				bool found = false;
+
+				block_objects::CBlockObject *bObject = thisBlock->GetBlockByName( "MODEL_GOLD250" );
+				if (bObject != NULL)
+				{
+					found = true;
+					mCurrentBlock = (game_objects::CBlock *)bObject;
+					break;
+				}
+			}
+
+			if(mCurrentBlock)
+			{
+				cml::vector2i currPos = cml::vector2i((int)floor(mPosition[0]/CV_BLOCK_WIDTH),(int)floor(mPosition[2]/CV_BLOCK_DEPTH));
+				if(CV_GAME_MANAGER->getPathManager()->findPath(currPos,mCurrentBlock->getLogicalPosition(),&path))
+				{
+					m_impState = IS_GOING_TO_DEPOSITING_GOLD_DESTINATION;
+					return;
+				}
+			}
+		}
+		mCurrentBlock->addModel("MODEL_GOLD250",mPosition);
+		this->setGold(0);
+	}
+
 };

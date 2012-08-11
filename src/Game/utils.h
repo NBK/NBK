@@ -206,7 +206,7 @@ namespace utils
 			{
 				cml::vector3f p_s(0.0f,0.0f,0.0f);
 				GLfloat p_i=0.0f;
-				for (std::vector<cml::vector3f>::iterator iter = inPoints.begin(); iter != inPoints.end(); iter++)
+				for (std::vector<cml::vector3f>::iterator iter = inPoints.begin(); iter != inPoints.end(); ++iter)
 				{
 					GLfloat n=N(distance(inPoints.begin(),iter),degree,(GLfloat)r/(GLfloat)resolution,U);
 					p_s+=(*iter)*n;

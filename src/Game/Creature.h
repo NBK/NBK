@@ -83,19 +83,19 @@ namespace game_objects
 		std::map<int, int> actions;
 
 		// creature params, TODO add more
-		float			mMoveSpeed;
+		float			m_MoveSpeed;
 		float			mCount; // lol count what?
 		float			mChange;
 		cml::vector3f	mMoveVector;
 		cml::vector2f	mLair;
 
 		// Creature stats
-		GLubyte			mOwner;
-		int			mLevel;
-		int			mCurrentXP;
-		int			mGold;
-		float		mHunger;
-		float		mHealth;
+		byte			mOwner;
+		int				mLevel;
+		int				mCurrentXP;
+		int				mGold;
+		float			mHunger;
+		float			mHealth;
 		float			mSleep;
 
 		/* holds the current path */

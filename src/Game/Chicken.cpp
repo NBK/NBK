@@ -8,7 +8,7 @@ namespace game_objects
 {
 	CChicken::CChicken(): CCreature()
 	{
-		mMoveSpeed = 0.00025f;
+		m_MoveSpeed = 0.00025f;
 	}
 
 	CChicken::~CChicken()
@@ -33,12 +33,12 @@ namespace game_objects
 		GLint Y = (GLint)(mPosition[2]/CV_BLOCK_DEPTH);
 		if(CV_GAME_MANAGER->getLevelManager()->getBlock(X,Y)->isWalkable(false) && CV_GAME_MANAGER->getLevelManager()->getBlock(X,Y)->getType()==CV_BLOCK_TYPE_HATCHERY_ID)
 		{
-			mPosition += mMoveVector*mMoveSpeed*deltaTime;
+			mPosition += mMoveVector*m_MoveSpeed*deltaTime;
 			mCount+=0.5f;
 		}
 		else
 		{
-			mPosition -= mMoveVector*mMoveSpeed*deltaTime;
+			mPosition -= mMoveVector*m_MoveSpeed*deltaTime;
 			mCount=mChange;
 		}
 	}

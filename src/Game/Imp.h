@@ -39,20 +39,24 @@ namespace game_objects
 			IS_ROTATING
 		};
 	private:
-		GLvoid checkGoldLevels();
-		GLvoid checkNearestForDigging();
-		GLvoid checkNearestForClaiming();
-		GLvoid checkNearestForWalling();
-		GLvoid checkForDigging();
-		GLvoid checkForClaiming();
-		GLvoid checkForWalling();
-		GLvoid walkPath(GLfloat deltaTime);
-		GLvoid faceBlock(CBlock *block);
-		IMP_STATE impState;
+		void checkGoldLevels();
+		void checkNearestForDigging();
+		void checkNearestForClaiming();
+		void checkNearestForWalling();
+		void checkForDigging();
+		void checkForClaiming();
+		void checkForWalling();
+
+		void depositGold();
+		void walkPath(float deltaTime);
+		void faceBlock(CBlock *block);
+
+	private:
+		IMP_STATE m_impState;
 		CBlock *mCurrentBlock;
 	protected:
 		//max gold creature can carry
-		GLint maxgold;
+		GLint m_maxgold;
 	};
 };
 
