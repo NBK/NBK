@@ -275,7 +275,7 @@ namespace loaders
 
 							GLint nextFrameIndex = currentFrame+1;
 
-							if (connected && currentFrame == endFrame)
+							if (connected && nextFrameIndex == endFrame)
 							{
 								nextFrameIndex = startFrame;
 							}
