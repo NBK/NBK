@@ -23,7 +23,7 @@ namespace game_utils
 		{
 		public:
 			CResourceManager();
-			~CResourceManager();
+			virtual ~CResourceManager();
 
 			GLvoid loadSelectedTexture(GLint textureIndex);
 

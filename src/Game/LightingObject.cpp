@@ -20,13 +20,13 @@ namespace game_objects
 			// load effect according to the type
 			if (lot == LOT_CANDLE)
 			{
-				effectName = "EFFECTS_CANDLE";
-				setEffect(CV_GAME_MANAGER->getResourceManager()->getEffect(effectName));
+				m_effectName = "EFFECTS_CANDLE";
+				setEffect(CV_GAME_MANAGER->getResourceManager()->getEffect(m_effectName));
 			}
 			else if (lot == LOT_TORCH_LIT)
 			{
-				effectName = "EFFECTS_TORCH";
-				setEffect(CV_GAME_MANAGER->getResourceManager()->getEffect(effectName));
+				m_effectName = "EFFECTS_TORCH";
+				setEffect(CV_GAME_MANAGER->getResourceManager()->getEffect(m_effectName));
 			}
 		}
 

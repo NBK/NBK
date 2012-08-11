@@ -10,7 +10,7 @@ namespace game_objects
 	{
 	public:
 		CCreature();
-		~CCreature();		
+		virtual ~CCreature();
 
 		enum ACTION_ANIMATIONS
 		{
@@ -47,58 +47,59 @@ namespace game_objects
 			IS_ROTATING
 		};
 
-		GLvoid setName(std::string name);
-		GLvoid setOwner(GLubyte owner);
-		GLvoid setLevel(GLint level);
-		GLvoid setGold(GLint gold);
-		GLvoid addCurrentXP(GLint CurrentXP);
-		GLvoid setModel(loaders::CBR5Model *model);
-		GLvoid setAction(GLint action, GLint startFrame, GLint endFrame);
-		GLvoid useAction(GLint action);
-		GLvoid Idle(GLfloat deltaTime);
-		GLvoid draw(GLfloat deltaTime);
-		GLvoid walkPath(GLfloat deltaTime);
-		GLvoid faceBlock(CBlock *block);
-		virtual GLvoid update(GLfloat deltaTime);
-		CREATURE_STATE creatureState;
-		CBlock *currBlock;
+		void setName(std::string name);
+		void setOwner(GLubyte owner);
+		void setLevel(GLint level);
+		void setGold(GLint gold);
+		void addCurrentXP(GLint CurrentXP);
+		void setModel(loaders::CBR5Model *model);
+		void setAction(GLint action, GLint startFrame, GLint endFrame);
+		void useAction(GLint action);
+		void Idle(GLfloat deltaTime);
+		void draw(GLfloat deltaTime);
+		void walkPath(GLfloat deltaTime);
+		void faceBlock(CBlock *block);
+		virtual void update(GLfloat deltaTime);
+		
+		CREATURE_STATE mCreatureState;
+		CBlock *mCurrentBlock;
 
-		loaders::CBR5Model	*getModel();
+		loaders::CBR5Model*	getModel();
 		std::string			getName();
-		GLubyte				getOwner();
-		GLint				getLevel();
-		GLint				getCurrentXP();
-		GLint				getGold();
+		unsigned char		getOwner();
+		int					getLevel();
+		int					getCurrentXP();
+		int					getGold();
 
 	protected:
 
-		std::string			name;
+		std::string			mName;
 
-		loaders::CBR5Model	*model;
+		loaders::CBR5Model	*mModel;
 
-		GLint				currentAction;
+		int				mCurrentAction;
 
 		// mapping for action -> model action 
-		std::map<GLint, GLint> actions;
+		std::map<int, int> actions;
 
 		// creature params, TODO add more
-		GLfloat			moveSpeed;
-		GLfloat			count, change;
-		cml::vector3f	moveVector;
-		cml::vector2f	lair;
+		float			mMoveSpeed;
+		float			mCount; // lol count what?
+		float			mChange;
+		cml::vector3f	mMoveVector;
+		cml::vector2f	mLair;
 
 		// Creature stats
-		GLubyte			owner;
-		GLint			level;
-		GLint			CurrentXP;
-		GLint			gold;
-		GLint			hunger;
-		GLint			health;
-		GLint			sleep;
+		GLubyte			mOwner;
+		int			mLevel;
+		int			mCurrentXP;
+		int			mGold;
+		float		mHunger;
+		float		mHealth;
+		float			mSleep;
 
 		/* holds the current path */
 		std::vector<cml::vector2i> path;
-		
 	};
 };
 

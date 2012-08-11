@@ -37,7 +37,7 @@ namespace game_utils
 		{
 		public:
 			CGameManager();
-			~CGameManager();
+			virtual ~CGameManager();
 
 			virtual bool init();
 			virtual bool update();

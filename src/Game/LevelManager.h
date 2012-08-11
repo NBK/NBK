@@ -20,7 +20,7 @@ namespace game_utils
 		{
 		public:
 			CLevelManager();
-			~CLevelManager();
+			virtual ~CLevelManager();
 
 			// from CManager
 			virtual bool init();

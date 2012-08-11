@@ -14,7 +14,7 @@ namespace game_objects
 	{
 	public:
 		CImp();
-		~CImp();
+		virtual ~CImp();
 
 		virtual GLvoid update(GLfloat deltaTime);
 
@@ -49,7 +49,7 @@ namespace game_objects
 		GLvoid walkPath(GLfloat deltaTime);
 		GLvoid faceBlock(CBlock *block);
 		IMP_STATE impState;
-		CBlock *currBlock;
+		CBlock *mCurrentBlock;
 	protected:
 		//max gold creature can carry
 		GLint maxgold;

@@ -14,7 +14,7 @@ namespace game_utils
 		{
 		public:
 			CManager();
-			~CManager();
+			virtual ~CManager();
 
 			virtual bool init() = 0;
 			virtual bool update() = 0;

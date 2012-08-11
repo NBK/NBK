@@ -8,7 +8,7 @@ namespace game_objects
 {
 	CChicken::CChicken(): CCreature()
 	{
-		moveSpeed = 0.00025f;
+		mMoveSpeed = 0.00025f;
 	}
 
 	CChicken::~CChicken()
@@ -17,29 +17,29 @@ namespace game_objects
 
 	GLvoid CChicken::Idle(GLfloat deltaTime)
 	{
-		if (count>=change)
+		if (mCount>=mChange)
 		{
 			GLfloat tX = (GLfloat)(rand()%100-50);
 			GLfloat tZ = (GLfloat)(rand()%100-50);
-			moveVector[0] = tX-position[0];
-			moveVector[2] = tZ-position[2];
-			moveVector.normalize();
-			rotation[1] = 90.0f+(float)(atan2(moveVector[2],moveVector[0])*180.0f/M_PI);
-			change=(GLfloat)((rand()%100))+300.0f;
-			count = 0.0f;
+			mMoveVector[0] = tX-mPosition[0];
+			mMoveVector[2] = tZ-mPosition[2];
+			mMoveVector.normalize();
+			mRotation[1] = 90.0f+(float)(atan2(mMoveVector[2],mMoveVector[0])*180.0f/M_PI);
+			mChange=(GLfloat)((rand()%100))+300.0f;
+			mCount = 0.0f;
 		}
 
-		GLint X = (GLint)(position[0]/CV_BLOCK_WIDTH);
-		GLint Y = (GLint)(position[2]/CV_BLOCK_DEPTH);
+		GLint X = (GLint)(mPosition[0]/CV_BLOCK_WIDTH);
+		GLint Y = (GLint)(mPosition[2]/CV_BLOCK_DEPTH);
 		if(CV_GAME_MANAGER->getLevelManager()->getBlock(X,Y)->isWalkable(false) && CV_GAME_MANAGER->getLevelManager()->getBlock(X,Y)->getType()==CV_BLOCK_TYPE_HATCHERY_ID)
 		{
-			position += moveVector*moveSpeed*deltaTime;
-			count+=0.5f;
+			mPosition += mMoveVector*mMoveSpeed*deltaTime;
+			mCount+=0.5f;
 		}
 		else
 		{
-			position -= moveVector*moveSpeed*deltaTime;
-			count=change;
+			mPosition -= mMoveVector*mMoveSpeed*deltaTime;
+			mCount=mChange;
 		}
 	}
 

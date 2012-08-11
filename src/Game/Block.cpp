@@ -787,6 +787,18 @@ namespace game_objects
 		return &blockObjects;
 	}
 
+	block_objects::CBlockObject* CBlock::GetBlockByName( std::string name )
+	{
+		BlockObjListItr itr = blockObjects.begin();
+		for (;itr != blockObjects.end(); itr++)
+		{
+			if ((*itr)->getName() == name)
+				return *itr;
+		}
+		return NULL;
+	}
+
+
 	GLvoid CBlock::disposeDisplayLists()
 	{
 		for (std::vector<GLuint>::iterator dsIter = displayLists.begin(); dsIter != displayLists.end(); dsIter++)

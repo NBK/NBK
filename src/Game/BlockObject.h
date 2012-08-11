@@ -19,10 +19,10 @@ namespace game_objects
 		{
 		public:
 			CBlockObject(std::string name, cml::vector3f position, loaders::CBR5Model *model, GLfloat rotateY = 0.0f);
-			~CBlockObject();
+			virtual ~CBlockObject();
 
-			virtual GLvoid					drawModel(GLfloat deltaTime = 1.0f);
-			virtual GLvoid					drawEffect();
+			virtual void					drawModel(GLfloat deltaTime = 1.0f);
+			virtual void					drawEffect();
 
 			virtual std::string				getName();
 			virtual std::string				getEffectName();
@@ -31,33 +31,33 @@ namespace game_objects
 			virtual loaders::CBR5Model		*getModel();
 			virtual LUA_effects::CLUAEffect	*getEffect();
 
-			virtual GLvoid				setName(std::string name);
-			virtual GLvoid				setRotateY(GLfloat rotateY);
-			virtual GLvoid				setModel(loaders::CBR5Model	*model);
-			virtual GLvoid				setEffect(LUA_effects::CLUAEffect *effect);
-			virtual GLvoid				setEffectName(std::string effectName);
-			virtual GLvoid				setClassName(std::string className);
-			GLvoid						setMarked(bool marked);
+			virtual void				setName(std::string name);
+			virtual void				setRotateY(GLfloat rotateY);
+			virtual void				setModel(loaders::CBR5Model	*model);
+			virtual void				setEffect(LUA_effects::CLUAEffect *effect);
+			virtual void				setEffectName(std::string effectName);
+			virtual void				setClassName(std::string className);
+			void						setMarked(bool marked);
 
 			bool						isMarked();
 
 		protected:
 
-			std::string			name,		// name for the model resource
-								effectName,	// name for the effect resource
-								className;	// not a must to use. only some object use this (traps)
+			std::string			m_name,		// name for the model resource
+								m_effectName,	// name for the effect resource
+								m_className;	// not a must to use. only some object use this (traps)
 			
 			// every block object MUST have a model (that's why the model param is in the constructor)
-			loaders::CBR5Model	*model;
+			loaders::CBR5Model	*m_model;
 
 			// every block object may have an effect
-			LUA_effects::CLUAEffect	*effect;
+			LUA_effects::CLUAEffect	*m_effect;
 
 			// used for statues in the temple
-			GLfloat				rotateY;
+			GLfloat				m_rotateY;
 
 			// is true, the object will get deleted upon room selling and similar
-			bool				marked;			
+			bool				m_marked;			
 
 		};
 	};

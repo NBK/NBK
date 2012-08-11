@@ -14,7 +14,7 @@ namespace LUA_effects
 	{
 	public:
 		CLUAEmitter();
-		~CLUAEmitter();
+		virtual ~CLUAEmitter();
 
 		virtual GLvoid init();
 		virtual GLvoid draw();

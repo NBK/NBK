@@ -421,11 +421,17 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	return DefWindowProc(hWnd,uMsg,wParam,lParam);
 }
 
-int WINAPI WinMain(	HINSTANCE	hInstance,			
+/*int WINAPI WinMain(	HINSTANCE	hInstance,			
 					HINSTANCE	hPrevInstance,		
 					LPSTR		lpCmdLine,			
 					int			nCmdShow)			
 {
+*/
+
+int main()
+{
+	
+
 	/*
 	// Setup exception handler
 	BT_SetAppName("nbk");

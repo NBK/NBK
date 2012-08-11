@@ -16,7 +16,7 @@ namespace game_utils
 		{
 		public:
 			CGUIManager();
-			~CGUIManager();
+			virtual ~CGUIManager();
 
 			// from CManager
 			virtual bool init();

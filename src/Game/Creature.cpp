@@ -13,123 +13,126 @@ namespace game_objects
 {
 	CCreature::CCreature(): CEntity()
 	{
-		owner = CV_PLAYER_UNDEFINED;
-		currentAction = NULL;
-		creatureState = IS_IDLE;
-		model = NULL;
-		name = "";
-		moveSpeed = 0.00015f;
-		moveVector = vector3f(0.0f,0.0f,0.0f);
-		level = 1;
-		gold = 0;
-		count = 0.0f;
-		change = 100.0f;
-		hunger = 1.0f;
-		lair = vector2f(0,0);
-		health = 100.0f;
-		sleep = 3000.0f;
+		mOwner = CV_PLAYER_UNDEFINED;
+		mCurrentAction = NULL;
+		mCreatureState = IS_IDLE;
+		mModel = NULL;
+		mName = "";
+		mMoveSpeed = 0.00015f;
+		
+		mMoveVector = vector3f(0.0f,0.0f,0.0f);
+		mLair = vector2f(0,0);
+
+		mLevel = 1;
+		mGold = 0;
+		mCount = 0.0f;
+		mChange = 100.0f;
+		mHunger = 1.0f;
+
+		mHealth = 100.0f;
+		mSleep = 3000.0f;
 	}
 
 	CCreature::~CCreature()
 	{
-		if (model)
+		if (mModel)
 		{
-			CV_GAME_MANAGER->getResourceManager()->returnModel(name,model);
+			CV_GAME_MANAGER->getResourceManager()->returnModel(mName,mModel);
 		}
 	}
 
-	GLvoid CCreature::setName(string name)
+	void CCreature::setName(string name)
 	{
-		this->name = name;
+		this->mName = name;
 	}
 
-	GLvoid CCreature::setOwner(GLubyte owner)
+	void CCreature::setOwner(GLubyte owner)
 	{
-		this->owner=owner;
+		this->mOwner=owner;
 	}
 
-	GLvoid CCreature::setLevel(GLint level)
+	void CCreature::setLevel(GLint level)
 	{
 		if (this->getLevel() < 10) // cant level if already level 10
 		{
-			this->level = level;
+			this->mLevel = level;
 			CV_GAME_MANAGER->getConsole()->writeLine(this->getName()+" has leveled up to "+CConversions::intToStr(this->getLevel()));
 		}
 	}
 
-	GLvoid CCreature::setGold(GLint gold)
+	void CCreature::setGold(GLint gold)
 	{
-		this->gold=gold;
+		this->mGold=gold;
 	}
 
-	GLvoid CCreature::addCurrentXP(GLint CurrentXP)
+	void CCreature::addCurrentXP(GLint CurrentXP)
 	{
 		// add the experiance
-		this->CurrentXP = (this->getCurrentXP() + CurrentXP);
+		this->mCurrentXP = (this->getCurrentXP() + CurrentXP);
 
 		// if the creature has enough experiance to level
 		if (this->getCurrentXP() >= this->getLevel()*100) //some forumla
 		{
-			this->CurrentXP = this->getCurrentXP() - (this->getLevel()*100); // reset xp and add remaining xp from level
+			this->mCurrentXP = this->getCurrentXP() - (this->getLevel()*100); // reset xp and add remaining xp from level
 			this->setLevel(this->getLevel() + 1);// level up
 		}
 	}
 
-	GLvoid CCreature::setModel(loaders::CBR5Model *model)
+	void CCreature::setModel(loaders::CBR5Model *model)
 	{
-		this->model = model;
-		this->model->setInterpolate(true);
-		this->model->setConnected(true);
+		this->mModel = model;
+		this->mModel->setInterpolate(true);
+		this->mModel->setConnected(true);
 	}
 
-	GLvoid CCreature::setAction(GLint action, GLint startFrame, GLint endFrame)
+	void CCreature::setAction(GLint action, GLint startFrame, GLint endFrame)
 	{
-		actions[action] = model->registerAction(startFrame,endFrame);
+		actions[action] = mModel->registerAction(startFrame,endFrame);
 	}
 
-	GLvoid CCreature::useAction(GLint action)
+	void CCreature::useAction(GLint action)
 	{
-		if(this->currentAction != action)
+		if(this->mCurrentAction != action)
 		{
-			this->currentAction = action;
+			this->mCurrentAction = action;
 
-			if (model)
+			if (mModel)
 			{
-				model->doAction(actions[action]);
+				mModel->doAction(actions[action]);
 			}
 		}
 	}
 
-	GLvoid CCreature::faceBlock(CBlock *block)
+	void CCreature::faceBlock(CBlock *block)
 	{
-		rotation[1] = 90.0f-(float)(atan2(block->getLogicalPosition()[1]-floor(position[2]/CV_BLOCK_WIDTH),block->getLogicalPosition()[0]-floor(position[0]/CV_BLOCK_WIDTH))*180.0f/M_PI);
+		mRotation[1] = 90.0f-(float)(atan2(block->getLogicalPosition()[1]-floor(mPosition[2]/CV_BLOCK_WIDTH),block->getLogicalPosition()[0]-floor(mPosition[0]/CV_BLOCK_WIDTH))*180.0f/M_PI);
 	}
 
-	GLvoid CCreature::walkPath(GLfloat deltaTime)
+	void CCreature::walkPath(GLfloat deltaTime)
 	{
 		if(path.size() == 0)
 		{
-			if(creatureState == IS_GOING_TO_EAT)
-				creatureState = IS_AT_EATING;
-			if(creatureState == IS_GOING_TO_MAKE_LAIR)
-				creatureState = IS_AT_MAKING_LAIR;
-			if(creatureState == IS_GOING_TO_TRAIN)
-				creatureState = IS_AT_TRAINING;
-			if(creatureState == IS_GOING_TO_SLEEPING)
-				creatureState = IS_AT_SLEEPING;
+			if(mCreatureState == IS_GOING_TO_EAT)
+				mCreatureState = IS_AT_EATING;
+			if(mCreatureState == IS_GOING_TO_MAKE_LAIR)
+				mCreatureState = IS_AT_MAKING_LAIR;
+			if(mCreatureState == IS_GOING_TO_TRAIN)
+				mCreatureState = IS_AT_TRAINING;
+			if(mCreatureState == IS_GOING_TO_SLEEPING)
+				mCreatureState = IS_AT_SLEEPING;
 			return;
 		}
 		cml::vector2i point = path.back();
 		GLfloat tX = (GLfloat)point[0]*CV_BLOCK_WIDTH+CV_BLOCK_WIDTH/2.0f;
 		GLfloat tZ = (GLfloat)point[1]*CV_BLOCK_DEPTH+CV_BLOCK_DEPTH/2.0f;
 
-		if (fabs(position[0]-tX)<=0.01f && fabs(position[2]-tZ)<=0.01f)
+		if (fabs(mPosition[0]-tX)<=0.01f && fabs(mPosition[2]-tZ)<=0.01f)
 		{
 			path.pop_back();
 			if(path.size()==0)
 			{
-				moveVector[0] = 0.0f;
-				moveVector[2] = 0.0f;
+				mMoveVector[0] = 0.0f;
+				mMoveVector[2] = 0.0f;
 				return;
 			}
 			point = path.back();
@@ -138,60 +141,60 @@ namespace game_objects
 		}
 		
 		//calculate new movement direction
-		moveVector[0] = tX-position[0];
-		moveVector[2] = tZ-position[2];
-		moveVector.normalize();
+		mMoveVector[0] = tX-mPosition[0];
+		mMoveVector[2] = tZ-mPosition[2];
+		mMoveVector.normalize();
 		
-		rotation[1] = 90.0f-(float)(atan2(moveVector[2],moveVector[0])*180.0f/M_PI);
+		mRotation[1] = 90.0f-(float)(atan2(mMoveVector[2],mMoveVector[0])*180.0f/M_PI);
 
-		cml::vector3f oldPos = position;
-		position += moveVector*moveSpeed*deltaTime;
+		cml::vector3f oldPos = mPosition;
+		mPosition += mMoveVector*mMoveSpeed*deltaTime;
 
-		if ((position[0]-tX > 0.0f && oldPos[0]-tX<0.0f)
-			|| (position[0]-tX < 0.0f && oldPos[0]-tX>0.0f))
-			position[0] = tX;
-		if ((position[2]-tZ > 0.0f && oldPos[2]-tZ<0.0f)
-			|| (position[2]-tZ < 0.0f && oldPos[2]-tZ>0.0f))
-			position[2] = tZ;
+		if ((mPosition[0]-tX > 0.0f && oldPos[0]-tX<0.0f)
+			|| (mPosition[0]-tX < 0.0f && oldPos[0]-tX>0.0f))
+			mPosition[0] = tX;
+		if ((mPosition[2]-tZ > 0.0f && oldPos[2]-tZ<0.0f)
+			|| (mPosition[2]-tZ < 0.0f && oldPos[2]-tZ>0.0f))
+			mPosition[2] = tZ;
 			
 	}
 
-	GLvoid CCreature::Idle(GLfloat deltaTime)
+	void CCreature::Idle(GLfloat deltaTime)
 	{
-		if (count>=change)
+		if (mCount>=mChange)
 		{
 			GLfloat tX = (GLfloat)(rand()%100-50);
 			GLfloat tZ = (GLfloat)(rand()%100-50);
-			moveVector[0] = tX-position[0];
-			moveVector[2] = tZ-position[2];
-			moveVector.normalize();
-			rotation[1] = 90.0f-(float)(atan2(moveVector[2],moveVector[0])*180.0f/M_PI);
-			change=(GLfloat)((rand()%100))+300.0f;
-			count = 0.0f;
+			mMoveVector[0] = tX-mPosition[0];
+			mMoveVector[2] = tZ-mPosition[2];
+			mMoveVector.normalize();
+			mRotation[1] = 90.0f-(float)(atan2(mMoveVector[2],mMoveVector[0])*180.0f/M_PI);
+			mChange=(GLfloat)((rand()%100))+300.0f;
+			mCount = 0.0f;
 		}
 
-		GLint X = (GLint)(position[0]/CV_BLOCK_WIDTH);
-		GLint Y = (GLint)(position[2]/CV_BLOCK_DEPTH);
+		GLint X = (GLint)(mPosition[0]/CV_BLOCK_WIDTH);
+		GLint Y = (GLint)(mPosition[2]/CV_BLOCK_DEPTH);
 		if(CV_GAME_MANAGER->getLevelManager()->getBlock(X,Y)->isWalkable(false))
 		{
-			position += moveVector*moveSpeed*deltaTime;
-			count+=0.5f;
+			mPosition += mMoveVector*mMoveSpeed*deltaTime;
+			mCount+=0.5f;
 		}
 		else
 		{
-			position -= moveVector*moveSpeed*deltaTime;
-			count=change;
+			mPosition -= mMoveVector*mMoveSpeed*deltaTime;
+			mCount=mChange;
 		}
 
 	}
 
-	GLvoid CCreature::draw(GLfloat deltaTime)
+	void CCreature::draw(GLfloat deltaTime)
 	{
-		if (model)
+		if (mModel)
 		{
 			CEntity::moveTo();
 			CEntity::rotateTo();
-			model->draw(deltaTime);
+			mModel->draw(deltaTime);
 			CEntity::rotateBack();
 			CEntity::moveBack();
 		}
@@ -199,45 +202,45 @@ namespace game_objects
 
 	CBR5Model *CCreature::getModel()
 	{
-		return model;
+		return mModel;
 	}
 
 	string CCreature::getName()
 	{
-		return name;
+		return mName;
 	}
 
-	GLubyte CCreature::getOwner()
+	unsigned char CCreature::getOwner()
 	{
-		return owner;
+		return mOwner;
 	}
 
-	GLint CCreature::getLevel()
+	int CCreature::getLevel()
 	{
-		return level;
+		return mLevel;
 	}
 
-	GLint CCreature::getCurrentXP()
+	int CCreature::getCurrentXP()
 	{
-		return CurrentXP;
+		return mCurrentXP;
 	}
 
-	GLint CCreature::getGold()
+	int CCreature::getGold()
 	{
-		return gold;
+		return mGold;
 	}
 
-	GLvoid CCreature::update(GLfloat deltaTime)
+	void CCreature::update(GLfloat deltaTime)
 	{
 
-		if(creatureState == IS_IDLE)
+		if(mCreatureState == IS_IDLE)
 		{
 			//TODO: if standing still and idling use the idle animation for now use WALK (because he is moving)
 			useAction(AA_WALK);
 			Idle(deltaTime);
 
 			//HAVE I GOT A LAIR??!?!?!
-			if(lair[0] == 0 && lair[1] == 0)
+			if(mLair[0] == 0 && mLair[1] == 0)
 			{
 				path.clear();
 
@@ -261,36 +264,36 @@ namespace game_objects
 						}
 						if(!foundbed)
 						{
-							currBlock = thisBlock;
+							mCurrentBlock = thisBlock;
 							break;
 						}
 					}
 
-					if(currBlock)
+					if(mCurrentBlock)
 					{
-						cml::vector2i currPos = cml::vector2i((int)floor(position[0]/CV_BLOCK_WIDTH),(int)floor(position[2]/CV_BLOCK_DEPTH));
-						if(CV_GAME_MANAGER->getPathManager()->findPath(currPos,currBlock->getLogicalPosition(),&path))
+						cml::vector2i currPos = cml::vector2i((int)floor(mPosition[0]/CV_BLOCK_WIDTH),(int)floor(mPosition[2]/CV_BLOCK_DEPTH));
+						if(CV_GAME_MANAGER->getPathManager()->findPath(currPos,mCurrentBlock->getLogicalPosition(),&path))
 						{
-							creatureState = IS_GOING_TO_MAKE_LAIR;
+							mCreatureState = IS_GOING_TO_MAKE_LAIR;
 							return;
 						}
 					}
 				}
 			}
 			//////////////////////////////////
-			if(sleep < 3000.0f)
+			if(mSleep < 3000.0f)
 			{
-				if(lair[0] != 0 && lair[1] != 0)
+				if(mLair[0] != 0 && mLair[1] != 0)
 				{
 					path.clear();
 					CBlock *destBlock;
-					destBlock = CV_GAME_MANAGER->getLevelManager()->getBlock(lair[0], lair[1]);
+					destBlock = CV_GAME_MANAGER->getLevelManager()->getBlock(mLair[0], mLair[1]);
 					if (destBlock)
 					{
-						cml::vector2i currPos = cml::vector2i((int)floor(position[0]/CV_BLOCK_WIDTH),(int)floor(position[2]/CV_BLOCK_DEPTH));
+						cml::vector2i currPos = cml::vector2i((int)floor(mPosition[0]/CV_BLOCK_WIDTH),(int)floor(mPosition[2]/CV_BLOCK_DEPTH));
 						if(CV_GAME_MANAGER->getPathManager()->findPath(currPos,destBlock->getLogicalPosition(),&path))
 						{
-							creatureState = IS_GOING_TO_SLEEPING;
+							mCreatureState = IS_GOING_TO_SLEEPING;
 							return;
 						}
 					}
@@ -298,17 +301,17 @@ namespace game_objects
 			}
 
 			//TODO SEPERATE FUNCTION CHECK IF HUNGRY
-			if(hunger < 2100.0f)
+			if(mHunger < 2100.0f)
 			{
 				path.clear();
 				CBlock *destBlock;
 				destBlock = CV_GAME_MANAGER->getRoomManager()->getRoom(CV_BLOCK_TYPE_HATCHERY_ID, this->getOwner());
 				if (destBlock)
 				{
-					cml::vector2i currPos = cml::vector2i((int)floor(position[0]/CV_BLOCK_WIDTH),(int)floor(position[2]/CV_BLOCK_DEPTH));
+					cml::vector2i currPos = cml::vector2i((int)floor(mPosition[0]/CV_BLOCK_WIDTH),(int)floor(mPosition[2]/CV_BLOCK_DEPTH));
 					if(CV_GAME_MANAGER->getPathManager()->findPath(currPos,destBlock->getLogicalPosition(),&path))
 					{
-						creatureState = IS_GOING_TO_EAT;
+						mCreatureState = IS_GOING_TO_EAT;
 						return;
 					}
 				}
@@ -316,15 +319,15 @@ namespace game_objects
 			//END CHECK IF HUNGRY
 
 			// training check
-			if(hunger > 5000.0f && health > 50 /*some other checke */)
+			if(mHunger > 5000.0f && mHealth > 50 /*some other checke */)
 			{
 				path.clear();
 
-				currBlock = CV_GAME_MANAGER->getRoomManager()->getRoom(CV_BLOCK_TYPE_TRAINING_ROOM_ID, this->getOwner());
-				if(currBlock != NULL)
+				mCurrentBlock = CV_GAME_MANAGER->getRoomManager()->getRoom(CV_BLOCK_TYPE_TRAINING_ROOM_ID, this->getOwner());
+				if(mCurrentBlock != NULL)
 				{
-					rooms::CRoom *currRoom = CV_GAME_MANAGER->getRoomManager()->getRoom(currBlock->getRoomIndex());
-					currBlock = NULL;
+					rooms::CRoom *currRoom = CV_GAME_MANAGER->getRoomManager()->getRoom(mCurrentBlock->getRoomIndex());
+					mCurrentBlock = NULL;
 					for (std::vector<CBlock*>::iterator rmIter = currRoom->getRoomTilesVector()->begin(); rmIter != currRoom->getRoomTilesVector()->end(); rmIter++)
 					{
 						CBlock *thisBlock = *rmIter;
@@ -335,41 +338,41 @@ namespace game_objects
 
 							if (bObject->getName() == "MODEL_ROD")
 							{
-								currBlock = thisBlock;
+								mCurrentBlock = thisBlock;
 								break;
 							}
 						}
 					}
 
-					if(currBlock)
+					if(mCurrentBlock)
 					{
-						cml::vector2i currPos = cml::vector2i((int)floor(position[0]/CV_BLOCK_WIDTH),(int)floor(position[2]/CV_BLOCK_DEPTH));
-						if(CV_GAME_MANAGER->getPathManager()->findPath(currPos,currBlock->getLogicalPosition(),&path))
+						cml::vector2i currPos = cml::vector2i((int)floor(mPosition[0]/CV_BLOCK_WIDTH),(int)floor(mPosition[2]/CV_BLOCK_DEPTH));
+						if(CV_GAME_MANAGER->getPathManager()->findPath(currPos,mCurrentBlock->getLogicalPosition(),&path))
 						{
-							creatureState = IS_GOING_TO_TRAIN;
+							mCreatureState = IS_GOING_TO_TRAIN;
 							return;
 						}
 					}
 				}
 			}
 		}
-		else if (creatureState == IS_GOING_TO_EAT)
+		else if (mCreatureState == IS_GOING_TO_EAT)
 		{
 			useAction(AA_WALK);
 			walkPath(deltaTime);
 		}
-		else if (creatureState == IS_GOING_TO_SLEEPING)
+		else if (mCreatureState == IS_GOING_TO_SLEEPING)
 		{
 			useAction(AA_WALK);
 			walkPath(deltaTime);
 		}
 
-		else if (creatureState == IS_GOING_TO_MAKE_LAIR)
+		else if (mCreatureState == IS_GOING_TO_MAKE_LAIR)
 		{
 			useAction(AA_WALK);
 			walkPath(deltaTime);
 		}
-		else if (creatureState == IS_GOING_TO_TRAIN)
+		else if (mCreatureState == IS_GOING_TO_TRAIN)
 		{
 			//little hacky fix so creature isnt INSIDE THE ROD
 			//if(CV_GAME_MANAGER->getLevelManager()->getBlock((int)floor(position[0]/CV_BLOCK_WIDTH),(int)floor(position[2]/CV_BLOCK_DEPTH))->getType() == CV_BLOCK_TYPE_TRAINING_ROOM_ID)
@@ -377,67 +380,67 @@ namespace game_objects
 			useAction(AA_WALK);
 			walkPath(deltaTime);
 		}
-		else if (creatureState == IS_AT_EATING)
+		else if (mCreatureState == IS_AT_EATING)
 		{
-			creatureState = IS_EATING;
+			mCreatureState = IS_EATING;
 		}
-		else if (creatureState == IS_AT_SLEEPING)
+		else if (mCreatureState == IS_AT_SLEEPING)
 		{
 			useAction(AA_SLEEP);
-			creatureState = IS_SLEEPING;	
+			mCreatureState = IS_SLEEPING;	
 		}
-		else if (creatureState == IS_AT_MAKING_LAIR)
+		else if (mCreatureState == IS_AT_MAKING_LAIR)
 		{
-			creatureState = IS_MAKING_LAIR;
+			mCreatureState = IS_MAKING_LAIR;
 		}
-		else if (creatureState == IS_AT_TRAINING)
+		else if (mCreatureState == IS_AT_TRAINING)
 		{
-			faceBlock(currBlock);
+			faceBlock(mCurrentBlock);
 			useAction(AA_ATTACK1);
-			creatureState = IS_TRAINING;
+			mCreatureState = IS_TRAINING;
 		}
-		else if (creatureState == IS_EATING)
+		else if (mCreatureState == IS_EATING)
 		{
 			//todo pick up chicken and eat ect..
 			useAction(AA_EAT);
-			CV_GAME_MANAGER->getConsole()->writeLine(CConversions::floatToStr(hunger) + " " + CConversions::floatToStr(deltaTime));
-			this->hunger+=(deltaTime);
-			if(hunger >= 10000.0f)
-				creatureState = IS_IDLE;
-			count=change;
+			CV_GAME_MANAGER->getConsole()->writeLine(CConversions::floatToStr(mHunger) + " " + CConversions::floatToStr(deltaTime));
+			this->mHunger+=(deltaTime);
+			if(mHunger >= 10000.0f)
+				mCreatureState = IS_IDLE;
+			mCount=mChange;
 		}
-		else if (creatureState == IS_SLEEPING)
+		else if (mCreatureState == IS_SLEEPING)
 		{
-			CV_GAME_MANAGER->getConsole()->writeLine(CConversions::floatToStr(sleep) + " sleep " + CConversions::floatToStr(deltaTime));
-			creatureState = IS_SLEEPING;
+			CV_GAME_MANAGER->getConsole()->writeLine(CConversions::floatToStr(mSleep) + " sleep " + CConversions::floatToStr(deltaTime));
+			mCreatureState = IS_SLEEPING;
 			// moan if no lair ect
-			this->sleep+=(deltaTime);
-			if(sleep >= 5000.0f)
+			this->mSleep+=(deltaTime);
+			if(mSleep >= 5000.0f)
 			{
-				creatureState = IS_IDLE;
+				mCreatureState = IS_IDLE;
 			}
 		}
-		else if (creatureState == IS_MAKING_LAIR)
+		else if (mCreatureState == IS_MAKING_LAIR)
 		{
-			block_objects::CBlockObject *obj = new block_objects::CBlockObject("MODEL_GRAVE",position, CV_GAME_MANAGER->getResourceManager()->getModel("MODEL_GRAVE"));
+			block_objects::CBlockObject *obj = new block_objects::CBlockObject("MODEL_GRAVE",mPosition, CV_GAME_MANAGER->getResourceManager()->getModel("MODEL_GRAVE"));
 			obj->setClassName("BED");
-			CV_GAME_MANAGER->getLevelManager()->getBlock((int)floor(position[0]/CV_BLOCK_WIDTH), (int)floor(position[2]/CV_BLOCK_DEPTH))->addModel(obj);
+			CV_GAME_MANAGER->getLevelManager()->getBlock((int)floor(mPosition[0]/CV_BLOCK_WIDTH), (int)floor(mPosition[2]/CV_BLOCK_DEPTH))->addModel(obj);
 
-			lair[0] = position[0]/CV_BLOCK_WIDTH;
-			lair[1] = position[2]/CV_BLOCK_DEPTH;
-			count=change;
-			creatureState = IS_IDLE;
+			mLair[0] = mPosition[0]/CV_BLOCK_WIDTH;
+			mLair[1] = mPosition[2]/CV_BLOCK_DEPTH;
+			mCount=mChange;
+			mCreatureState = IS_IDLE;
 		}
-		else if (creatureState == IS_TRAINING)
+		else if (mCreatureState == IS_TRAINING)
 		{
-			count=change;
-			CV_GAME_MANAGER->getConsole()->writeLine(CConversions::floatToStr(hunger) + " " + CConversions::floatToStr(sleep) + " " + CConversions::floatToStr(deltaTime));
-			this->hunger-=(deltaTime*0.0001f);
-			this->sleep-=(deltaTime*0.001f);
+			mCount=mChange;
+			CV_GAME_MANAGER->getConsole()->writeLine(CConversions::floatToStr(mHunger) + " " + CConversions::floatToStr(mSleep) + " " + CConversions::floatToStr(deltaTime));
+			this->mHunger-=(deltaTime*0.0001f);
+			this->mSleep-=(deltaTime*0.001f);
 			 //(todo change this to be spercific for every creature)
-			if((hunger < 2000.0f) || (sleep < 1000.0f))
+			if((mHunger < 2000.0f) || (mSleep < 1000.0f))
 			{
-				creatureState = IS_IDLE;
+				mCreatureState = IS_IDLE;
 				useAction(AA_WALK);
 			}
 		}

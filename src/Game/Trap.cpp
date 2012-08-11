@@ -36,15 +36,20 @@ namespace game_objects
 
 			if (trapType!=TT_BOULDER)
 			{
-				effectName = "EFFECTS_TRAP_INNER";
-				setEffect(CV_GAME_MANAGER->getResourceManager()->getEffect(effectName));
+				m_effectName = "EFFECTS_TRAP_INNER";
+				setEffect(CV_GAME_MANAGER->getResourceManager()->getEffect(m_effectName));
 				
 				// set the effect collor according to the trap type
-				if (effect)
+				if (m_effect)
 				{
-					effect->getEmittter(0)->setColor(colors[trapType-TT_BOULDER-1]);
+					m_effect->getEmittter(0)->setColor(colors[trapType-TT_BOULDER-1]);
 				}
 			}
+		}
+
+		CTrap::~CTrap()
+		{
+
 		}
 	};
 };

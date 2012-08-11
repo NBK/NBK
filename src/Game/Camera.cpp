@@ -13,15 +13,9 @@ namespace control
 {
 	#define D2R(deg) deg*3.1415926535f/180.0f
 
-	CCamera::CCamera(): CEntity()
+	CCamera::CCamera(): CEntity(), direction(0.0f, 0.0f, -1.0f), up(0.0f, 1.0f, 0.0f), normAll(0),
+		posScale(1.0f), tmp_angle_x(0.0f), tmp_angle_y(0.0f), tmp_angle_z(0.0f)
 	{
-		position = vector3f();
-		direction = vector3f(0.0f,0.0f,-1.0f);
-		up = vector3f(0.0f,1.0f,0.0f);
-		normAll = 0;
-		posScale=1.0f;
-
-		tmp_angle_x=tmp_angle_y=tmp_angle_z=0.0f;
 	}
 
 	CCamera::~CCamera()
@@ -31,8 +25,8 @@ namespace control
 	GLvoid CCamera::transformView()
 	{
 		glLoadIdentity();
-		vector3f target = position+direction;
-		gluLookAt(position[0],position[1],position[2],target[0],target[1],target[2],up[0],up[1],up[2]);
+		vector3f target = mPosition+direction;
+		gluLookAt(mPosition[0],mPosition[1],mPosition[2],target[0],target[1],target[2],up[0],up[1],up[2]);
 
 		normAll++;
 		if (normAll>1000)
@@ -45,7 +39,7 @@ namespace control
 
 	GLvoid CCamera::move(vector3f vec)
 	{
-		position+=vec;
+		mPosition+=vec;
 	}
 
 	vector3f CCamera::rotateAroundArbitrary(const vector3f &v, vector3f &axis, GLfloat angle)
@@ -120,12 +114,12 @@ namespace control
 
 	GLvoid CCamera::strafeLeft(GLfloat a)
 	{
-		position+=cross(up,direction)*a;
+		mPosition+=cross(up,direction)*a;
 	}
 
 	GLvoid CCamera::moveForward(GLfloat a)
 	{
-		position+=direction*a;
+		mPosition+=direction*a;
 	}
 
 	/*vector3f CCamera::getPosition()
@@ -145,7 +139,7 @@ namespace control
 
 	vector3f CCamera::getTargetPoint()
 	{
-		return position+direction;
+		return mPosition+direction;
 	}
 
 	GLvoid CCamera::setPosScale(GLfloat posScale)
@@ -175,7 +169,7 @@ namespace control
 
 	GLvoid CCamera::rotateAroundTargetOnY(cml::vector3f target, GLfloat angle)
 	{
-		vector3f oldPos = position;
+		vector3f oldPos = mPosition;
 		this->setPosition(target);
 		this->rotateY(angle);
 		this->setPosition(-normalize(direction)*oldPos.length());
@@ -183,7 +177,7 @@ namespace control
 
 	GLvoid CCamera::rotateAroundTargetOnX(cml::vector3f target, GLfloat angle)
 	{
-		vector3f oldPos = position;
+		vector3f oldPos = mPosition;
 		this->setPosition(target);
 		this->rotateX(angle);
 		this->setPosition(-normalize(direction)*oldPos.length());
@@ -191,12 +185,12 @@ namespace control
 
 	GLvoid CCamera::pushPosition()
 	{
-		tempPosition=position;
+		tempPosition=mPosition;
 	}
 
 	GLvoid CCamera::popPosition()
 	{
-		position=tempPosition;
+		mPosition=tempPosition;
 	}
 
 	GLvoid CCamera::setFollowPath(string pathFile)
@@ -230,25 +224,25 @@ namespace control
 
 	GLvoid CCamera::followPath(CDeltaTime *deltaTime)
 	{
-		vector3f dir = vector3f((*pathPos)[0],0.0f,(*pathPos)[2])-vector3f(position[0],0.0f,position[2]);
+		vector3f dir = vector3f((*pathPos)[0],0.0f,(*pathPos)[2])-vector3f(mPosition[0],0.0f,mPosition[2]);
 
 		GLfloat speed = 0.05f*deltaTime->getDelta();
 
 		if (dir.length()<speed)
 		{
-			position=*pathPos;
+			mPosition=*pathPos;
 			pathPos++;
 			if (pathPos==path.end())
 			{
 				path.clear();
 				return;
 			}
-			direction = normalize(*pathPos-position);
+			direction = normalize(*pathPos-mPosition);
 		}
 		else
 		{
 			dir=dir.normalize();
-			position+=dir*speed;
+			mPosition+=dir*speed;
 		}
 	}
 
@@ -259,9 +253,9 @@ namespace control
 			if (pathPos==path.begin())
 			{
 				// calc direction
-				position = *pathPos;				
+				mPosition = *pathPos;				
 				pathPos++;
-				direction = normalize(*pathPos-position);
+				direction = normalize(*pathPos-mPosition);
 			}
 			followPath(deltaTime);
 		}

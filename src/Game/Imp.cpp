@@ -9,7 +9,7 @@ namespace game_objects
 	CImp::CImp(): CCreature()
 	{
 		impState = IS_IDLE;
-		moveSpeed = 0.0005f;
+		mMoveSpeed = 0.0005f;
 		maxgold = 250;
 	}
 
@@ -34,32 +34,26 @@ namespace game_objects
 					CBlock *thisBlock = *rmIter;
 					bool found = false;
 
-					for (std::vector<block_objects::CBlockObject*>::iterator rmIter = thisBlock->getBlockObjects()->begin(); rmIter != thisBlock->getBlockObjects()->end(); rmIter++)
+					block_objects::CBlockObject *bObject = thisBlock->GetBlockByName( "MODEL_GOLD250" );
+					if (bObject != NULL)
 					{
-						block_objects::CBlockObject *bObject = *rmIter;
-
-						if (bObject->getName() == "MODEL_GOLD250")
-							found = true;
-
-					}
-					if(!found)
-					{
-						currBlock = thisBlock;
+						found = true;
+						mCurrentBlock = (game_objects::CBlock *)bObject;
 						break;
 					}
 				}
 
-				if(currBlock)
+				if(mCurrentBlock)
 				{
-					cml::vector2i currPos = cml::vector2i((int)floor(position[0]/CV_BLOCK_WIDTH),(int)floor(position[2]/CV_BLOCK_DEPTH));
-					if(CV_GAME_MANAGER->getPathManager()->findPath(currPos,currBlock->getLogicalPosition(),&path))
+					cml::vector2i currPos = cml::vector2i((int)floor(mPosition[0]/CV_BLOCK_WIDTH),(int)floor(mPosition[2]/CV_BLOCK_DEPTH));
+					if(CV_GAME_MANAGER->getPathManager()->findPath(currPos,mCurrentBlock->getLogicalPosition(),&path))
 					{
 						impState = IS_GOING_TO_DEPOSITING_GOLD_DESTINATION;
 						return;
 					}
 				}
 			}
-			currBlock->addModel("MODEL_GOLD250",position);
+			mCurrentBlock->addModel("MODEL_GOLD250",mPosition);
 			this->setGold(0);
 		}
 	}
@@ -72,7 +66,7 @@ namespace game_objects
 		std::vector<CBlock*>::iterator markedBlocksIter;
 		CBlock *block;
 
-		if(CV_GAME_MANAGER->getLevelManager()->isBlockTypeNear(CV_BLOCK_TYPE_EARTH_ID,cml::vector2i((int)floor(position[0]/CV_BLOCK_WIDTH),(int)floor(position[2]/CV_BLOCK_DEPTH)),true,CV_PLAYER_UNDEFINED,&markedBlocks))
+		if(CV_GAME_MANAGER->getLevelManager()->isBlockTypeNear(CV_BLOCK_TYPE_EARTH_ID,cml::vector2i((int)floor(mPosition[0]/CV_BLOCK_WIDTH),(int)floor(mPosition[2]/CV_BLOCK_DEPTH)),true,CV_PLAYER_UNDEFINED,&markedBlocks))
 		{
 			int oldSearchLimit = CV_GAME_MANAGER->getPathManager()->getSearchLimit();
 			CV_GAME_MANAGER->getPathManager()->setSearchLimit(2);
@@ -84,7 +78,7 @@ namespace game_objects
 				if(!block->isMarked())
 					continue;
 				path.clear();
-					if(CV_GAME_MANAGER->getPathManager()->findPath(cml::vector2i((int)floor(position[0]/CV_BLOCK_WIDTH),(int)floor(position[2]/CV_BLOCK_DEPTH)),block->getLogicalPosition(),&path))
+					if(CV_GAME_MANAGER->getPathManager()->findPath(cml::vector2i((int)floor(mPosition[0]/CV_BLOCK_WIDTH),(int)floor(mPosition[2]/CV_BLOCK_DEPTH)),block->getLogicalPosition(),&path))
 						possBlocks.push_back(block);
 			}
 			CV_GAME_MANAGER->getPathManager()->setSearchLimit(oldSearchLimit);
@@ -92,7 +86,7 @@ namespace game_objects
 			if(possBlocks.size()>0)
 			{
 				GLint blockNum = rand()%possBlocks.size();
-				currBlock = possBlocks[blockNum];
+				mCurrentBlock = possBlocks[blockNum];
 				path.clear();
 				impState = IS_AT_DIGGING_BLOCK;
 				return;
@@ -108,7 +102,7 @@ namespace game_objects
 		std::vector<CBlock*>::iterator unclaimedBlocksIter, claimedBlocksIter;
 		CBlock *block;
 
-		if(CV_GAME_MANAGER->getLevelManager()->isBlockTypeNear(CV_BLOCK_TYPE_UNCLAIMED_LAND_ID,cml::vector2i((int)floor(position[0]/CV_BLOCK_WIDTH),(int)floor(position[2]/CV_BLOCK_DEPTH)),true,CV_PLAYER_UNDEFINED,&unclaimedBlocks))
+		if(CV_GAME_MANAGER->getLevelManager()->isBlockTypeNear(CV_BLOCK_TYPE_UNCLAIMED_LAND_ID,cml::vector2i((int)floor(mPosition[0]/CV_BLOCK_WIDTH),(int)floor(mPosition[2]/CV_BLOCK_DEPTH)),true,CV_PLAYER_UNDEFINED,&unclaimedBlocks))
 		{
 			int oldSearchLimit = CV_GAME_MANAGER->getPathManager()->getSearchLimit();
 			CV_GAME_MANAGER->getPathManager()->setSearchLimit(2);
@@ -121,7 +115,7 @@ namespace game_objects
 				if(CV_GAME_MANAGER->getLevelManager()->isBlockClaimable(block->getLogicalPosition(),this->getOwner(),&claimedBlocks))
 				{
 					path.clear();
-					if(CV_GAME_MANAGER->getPathManager()->findPath(cml::vector2i((int)floor(position[0]/CV_BLOCK_WIDTH),(int)floor(position[2]/CV_BLOCK_DEPTH)),block->getLogicalPosition(),&path))
+					if(CV_GAME_MANAGER->getPathManager()->findPath(cml::vector2i((int)floor(mPosition[0]/CV_BLOCK_WIDTH),(int)floor(mPosition[2]/CV_BLOCK_DEPTH)),block->getLogicalPosition(),&path))
 						possBlocks.push_back(block);
 				}
 			}
@@ -130,9 +124,9 @@ namespace game_objects
 			{
 				GLint blockNum = rand()%possBlocks.size();
 				path.clear();
-				currBlock = possBlocks[blockNum];
-				path.push_back(currBlock->getLogicalPosition());
-				currBlock->setTaken(true);
+				mCurrentBlock = possBlocks[blockNum];
+				path.push_back(mCurrentBlock->getLogicalPosition());
+				mCurrentBlock->setTaken(true);
 				impState = IS_GOING_TO_CLAIMING_DESTINATION;
 				return;
 			}
@@ -147,7 +141,7 @@ namespace game_objects
 		std::vector<CBlock*>::iterator unfortifiedBlocksIter;
 		CBlock *block;
 
-		if(CV_GAME_MANAGER->getLevelManager()->isBlockTypeNear(CV_BLOCK_TYPE_EARTH_ID,cml::vector2i((int)floor(position[0]/CV_BLOCK_WIDTH),(int)floor(position[2]/CV_BLOCK_DEPTH)),true,CV_PLAYER_UNDEFINED,&unfortifiedBlocks))
+		if(CV_GAME_MANAGER->getLevelManager()->isBlockTypeNear(CV_BLOCK_TYPE_EARTH_ID,cml::vector2i((int)floor(mPosition[0]/CV_BLOCK_WIDTH),(int)floor(mPosition[2]/CV_BLOCK_DEPTH)),true,CV_PLAYER_UNDEFINED,&unfortifiedBlocks))
 		{
 			int oldSearchLimit = CV_GAME_MANAGER->getPathManager()->getSearchLimit();
 			CV_GAME_MANAGER->getPathManager()->setSearchLimit(2);
@@ -160,7 +154,7 @@ namespace game_objects
 				if(CV_GAME_MANAGER->getLevelManager()->isBlockClaimable(block->getLogicalPosition(),this->getOwner(),&claimedBlocks))
 				{
 					path.clear();
-					if(CV_GAME_MANAGER->getPathManager()->findPath(cml::vector2i((int)floor(position[0]/CV_BLOCK_WIDTH),(int)floor(position[2]/CV_BLOCK_DEPTH)),block->getLogicalPosition(),&path))
+					if(CV_GAME_MANAGER->getPathManager()->findPath(cml::vector2i((int)floor(mPosition[0]/CV_BLOCK_WIDTH),(int)floor(mPosition[2]/CV_BLOCK_DEPTH)),block->getLogicalPosition(),&path))
 						possBlocks.push_back(block);
 				}
 			}
@@ -169,7 +163,7 @@ namespace game_objects
 			if(possBlocks.size()>0)
 			{
 				GLint blockNum = rand()%possBlocks.size();
-				currBlock = possBlocks[blockNum];
+				mCurrentBlock = possBlocks[blockNum];
 				path.clear();
 				impState = IS_AT_WALLING_BLOCK;
 				return;
@@ -181,13 +175,13 @@ namespace game_objects
 	{
 		if(impState != IS_IDLE) return;
 		path.clear();
-		currBlock = CV_GAME_MANAGER->getLevelManager()->getMarkedBlock(this->getOwner(),cml::vector2i((int)floor(position[0]/CV_BLOCK_WIDTH),(int)floor(position[2]/CV_BLOCK_DEPTH)));
+		mCurrentBlock = CV_GAME_MANAGER->getLevelManager()->getMarkedBlock(this->getOwner(),cml::vector2i((int)floor(mPosition[0]/CV_BLOCK_WIDTH),(int)floor(mPosition[2]/CV_BLOCK_DEPTH)));
 		//bool oldEndOnDiagonal = CV_GAME_MANAGER->getPathManager()->getAllowEndDiagonal();
 		CV_GAME_MANAGER->getPathManager()->setAllowEndDiagonal(false);
-		if (currBlock)
+		if (mCurrentBlock)
 		{
-			cml::vector2i currPos = cml::vector2i((int)floor(position[0]/CV_BLOCK_WIDTH),(int)floor(position[2]/CV_BLOCK_DEPTH));
-			if(CV_GAME_MANAGER->getPathManager()->findPath(currPos,currBlock->getLogicalPosition(),&path) && !currBlock->isLow())
+			cml::vector2i currPos = cml::vector2i((int)floor(mPosition[0]/CV_BLOCK_WIDTH),(int)floor(mPosition[2]/CV_BLOCK_DEPTH));
+			if(CV_GAME_MANAGER->getPathManager()->findPath(currPos,mCurrentBlock->getLogicalPosition(),&path) && !mCurrentBlock->isLow())
 				impState = IS_GOING_TO_DIGGING_DESTINATION;
 		}
 		CV_GAME_MANAGER->getPathManager()->setAllowEndDiagonal(true);
@@ -197,14 +191,14 @@ namespace game_objects
 	{
 		if(impState != IS_IDLE) return;
 		path.clear();
-		currBlock = CV_GAME_MANAGER->getLevelManager()->getUnclaimedBlock(this->getOwner(),cml::vector2i((int)floor(position[0]/CV_BLOCK_WIDTH),(int)floor(position[2]/CV_BLOCK_DEPTH)));
-		if (currBlock)
+		mCurrentBlock = CV_GAME_MANAGER->getLevelManager()->getUnclaimedBlock(this->getOwner(),cml::vector2i((int)floor(mPosition[0]/CV_BLOCK_WIDTH),(int)floor(mPosition[2]/CV_BLOCK_DEPTH)));
+		if (mCurrentBlock)
 		{
-			cml::vector2i currPos = cml::vector2i((int)floor(position[0]/CV_BLOCK_WIDTH),(int)floor(position[2]/CV_BLOCK_DEPTH));
-			if(CV_GAME_MANAGER->getPathManager()->findPath(currPos,currBlock->getLogicalPosition(),&path))
+			cml::vector2i currPos = cml::vector2i((int)floor(mPosition[0]/CV_BLOCK_WIDTH),(int)floor(mPosition[2]/CV_BLOCK_DEPTH));
+			if(CV_GAME_MANAGER->getPathManager()->findPath(currPos,mCurrentBlock->getLogicalPosition(),&path))
 				impState = IS_GOING_TO_CLAIMING_DESTINATION;
 			else
-				currBlock->setTaken(false);
+				mCurrentBlock->setTaken(false);
 		}
 	}
 
@@ -212,13 +206,13 @@ namespace game_objects
 	{
 		if(impState != IS_IDLE) return;
 		path.clear();
-		currBlock = CV_GAME_MANAGER->getLevelManager()->getUnfortifiedBlock(this->getOwner(),cml::vector2i((int)floor(position[0]/CV_BLOCK_WIDTH),(int)floor(position[2]/CV_BLOCK_DEPTH)));
+		mCurrentBlock = CV_GAME_MANAGER->getLevelManager()->getUnfortifiedBlock(this->getOwner(),cml::vector2i((int)floor(mPosition[0]/CV_BLOCK_WIDTH),(int)floor(mPosition[2]/CV_BLOCK_DEPTH)));
 		//bool oldEndOnDiagonal = CV_GAME_MANAGER->getPathManager()->getAllowEndDiagonal();
 		CV_GAME_MANAGER->getPathManager()->setAllowEndDiagonal(false);
-		if (currBlock)
+		if (mCurrentBlock)
 		{
-			cml::vector2i currPos = cml::vector2i((int)floor(position[0]/CV_BLOCK_WIDTH),(int)floor(position[2]/CV_BLOCK_DEPTH));
-			if(CV_GAME_MANAGER->getPathManager()->findPath(currPos,currBlock->getLogicalPosition(),&path) && !currBlock->isLow())
+			cml::vector2i currPos = cml::vector2i((int)floor(mPosition[0]/CV_BLOCK_WIDTH),(int)floor(mPosition[2]/CV_BLOCK_DEPTH));
+			if(CV_GAME_MANAGER->getPathManager()->findPath(currPos,mCurrentBlock->getLogicalPosition(),&path) && !mCurrentBlock->isLow())
 				impState = IS_GOING_TO_WALLING_DESTINATION;
 		}
 		CV_GAME_MANAGER->getPathManager()->setAllowEndDiagonal(true);
@@ -226,7 +220,7 @@ namespace game_objects
 
 	GLvoid CImp::faceBlock(CBlock *block)
 	{
-		rotation[1] = 90.0f-(float)(atan2(block->getLogicalPosition()[1]-floor(position[2]/CV_BLOCK_WIDTH),block->getLogicalPosition()[0]-floor(position[0]/CV_BLOCK_WIDTH))*180.0f/M_PI);
+		mRotation[1] = 90.0f-(float)(atan2(block->getLogicalPosition()[1]-floor(mPosition[2]/CV_BLOCK_WIDTH),block->getLogicalPosition()[0]-floor(mPosition[0]/CV_BLOCK_WIDTH))*180.0f/M_PI);
 	}
 
 	GLvoid CImp::walkPath(GLfloat deltaTime)
@@ -247,13 +241,13 @@ namespace game_objects
 		GLfloat tX = (GLfloat)point[0]*CV_BLOCK_WIDTH+CV_BLOCK_WIDTH/2.0f;
 		GLfloat tZ = (GLfloat)point[1]*CV_BLOCK_DEPTH+CV_BLOCK_DEPTH/2.0f;
 
-		if (fabs(position[0]-tX)<=0.01f && fabs(position[2]-tZ)<=0.01f)
+		if (fabs(mPosition[0]-tX)<=0.01f && fabs(mPosition[2]-tZ)<=0.01f)
 		{
 			path.pop_back();
 			if(path.size()==0)
 			{
-				moveVector[0] = 0.0f;
-				moveVector[2] = 0.0f;
+				mMoveVector[0] = 0.0f;
+				mMoveVector[2] = 0.0f;
 				return;
 			}
 			point = path.back();
@@ -262,21 +256,21 @@ namespace game_objects
 		}
 		
 		//calculate new movement direction
-		moveVector[0] = tX-position[0];
-		moveVector[2] = tZ-position[2];
-		moveVector.normalize();
+		mMoveVector[0] = tX-mPosition[0];
+		mMoveVector[2] = tZ-mPosition[2];
+		mMoveVector.normalize();
 		
-		rotation[1] = 90.0f-(float)(atan2(moveVector[2],moveVector[0])*180.0f/M_PI);
+		mRotation[1] = 90.0f-(float)(atan2(mMoveVector[2],mMoveVector[0])*180.0f/M_PI);
 
-		cml::vector3f oldPos = position;
-		position += moveVector*moveSpeed*deltaTime;
+		cml::vector3f oldPos = mPosition;
+		mPosition += mMoveVector*mMoveSpeed*deltaTime;
 
-		if ((position[0]-tX > 0.0f && oldPos[0]-tX<0.0f)
-			|| (position[0]-tX < 0.0f && oldPos[0]-tX>0.0f))
-			position[0] = tX;
-		if ((position[2]-tZ > 0.0f && oldPos[2]-tZ<0.0f)
-			|| (position[2]-tZ < 0.0f && oldPos[2]-tZ>0.0f))
-			position[2] = tZ;
+		if ((mPosition[0]-tX > 0.0f && oldPos[0]-tX<0.0f)
+			|| (mPosition[0]-tX < 0.0f && oldPos[0]-tX>0.0f))
+			mPosition[0] = tX;
+		if ((mPosition[2]-tZ > 0.0f && oldPos[2]-tZ<0.0f)
+			|| (mPosition[2]-tZ < 0.0f && oldPos[2]-tZ>0.0f))
+			mPosition[2] = tZ;
 			
 	}
 
@@ -321,7 +315,7 @@ namespace game_objects
 			impState = IS_DEPOSITING_GOLD;
 		} else if (impState == IS_AT_DIGGING_BLOCK)
 		{
-			faceBlock(currBlock);
+			faceBlock(mCurrentBlock);
 			impState = IS_DIGGING;
 			useAction(AA_DIG);
 		} else if (impState == IS_AT_CLAIMING_BLOCK)
@@ -330,14 +324,14 @@ namespace game_objects
 			useAction(AA_CLAIM);
 		} else if (impState == IS_AT_WALLING_BLOCK)
 		{
-			faceBlock(currBlock);
+			faceBlock(mCurrentBlock);
 			impState = IS_WALLING;
 			useAction(AA_CLAIM);
 		} else if (impState == IS_DEPOSITING_GOLD)
 		{
 			//Todo: if a block has a 250 gold, upp it to 500...
 			bool found = false;
-			for (std::vector<block_objects::CBlockObject*>::iterator rmIter = currBlock->getBlockObjects()->begin(); rmIter != currBlock->getBlockObjects()->end(); rmIter++)
+			for (std::vector<block_objects::CBlockObject*>::iterator rmIter = mCurrentBlock->getBlockObjects()->begin(); rmIter != mCurrentBlock->getBlockObjects()->end(); rmIter++)
 			{
 				block_objects::CBlockObject *bObject = *rmIter;
 
@@ -347,7 +341,7 @@ namespace game_objects
 			}
 			if(!found)
 			{
-				currBlock->addModel("MODEL_GOLD250",position);
+				mCurrentBlock->addModel("MODEL_GOLD250",mPosition);
 				PLAYER0_MONEY = PLAYER0_MONEY + this->getGold();//do for other teams
 				this->setGold(0);	
 				impState = IS_IDLE;
@@ -359,19 +353,19 @@ namespace game_objects
 			}
 		} else if (impState == IS_DIGGING)
 		{
-			if(currBlock->isLow() || !currBlock->isMarked())
+			if(mCurrentBlock->isLow() || !mCurrentBlock->isMarked())
 			{
 				impState = IS_IDLE;
 				useAction(AA_IDLE);
 				return;
 			}
-			if(currBlock->getType() == CV_BLOCK_TYPE_GOLD_ID)
+			if(mCurrentBlock->getType() == CV_BLOCK_TYPE_GOLD_ID)
 				//TODO: use a new formula
 				this->setGold(this->getGold() + 1);
-			currBlock->decLife(deltaTime*moveSpeed);
-			if (currBlock->getLife()<=0.0f)
+			mCurrentBlock->decLife(deltaTime*mMoveSpeed);
+			if (mCurrentBlock->getLife()<=0.0f)
 			{
-				currBlock->digBlock();
+				mCurrentBlock->digBlock();
 
 				impState = IS_IDLE;
 				useAction(AA_IDLE);
@@ -380,25 +374,25 @@ namespace game_objects
 			checkGoldLevels();
 		} else if (impState == IS_CLAIMING)
 		{
-			currBlock->decLife(deltaTime*moveSpeed);
-			if (currBlock->getLife()<=0.0f)
+			mCurrentBlock->decLife(deltaTime*mMoveSpeed);
+			if (mCurrentBlock->getLife()<=0.0f)
 			{
-				currBlock->claimBlock(this->getOwner());
+				mCurrentBlock->claimBlock(this->getOwner());
 				impState = IS_IDLE;
 				useAction(AA_IDLE);
 			}
 		} else if (impState == IS_WALLING)
 		{
-			if(currBlock->isLow() || currBlock->isMarked())
+			if(mCurrentBlock->isLow() || mCurrentBlock->isMarked())
 			{
 				impState = IS_IDLE;
 				useAction(AA_IDLE);
 				return;
 			}
-			currBlock->addLife(deltaTime*moveSpeed);
-			if (currBlock->getLife()>=9.0f)
+			mCurrentBlock->addLife(deltaTime*mMoveSpeed);
+			if (mCurrentBlock->getLife()>=9.0f)
 			{
-				currBlock->fortifyBlock(this->getOwner());
+				mCurrentBlock->fortifyBlock(this->getOwner());
 
 				impState = IS_IDLE;
 				useAction(AA_IDLE);

@@ -7,109 +7,111 @@ using namespace LUA_effects;
 
 namespace game_objects
 {
-	namespace block_objects
+namespace block_objects
+{
+CBlockObject::CBlockObject(string name, vector3f position, CBR5Model *model, GLfloat rotateY): CEntity()	
+{
+	this->m_name = name;
+	this->mPosition = position;
+	this->m_model = model;
+	this->m_rotateY = rotateY;
+
+	m_effect = NULL;
+
+	m_marked = false;
+	m_className = "";
+}
+
+CBlockObject::~CBlockObject()
+{
+}
+
+void CBlockObject::drawModel(GLfloat deltaTime)
+{
+	if (m_model)
 	{
-		CBlockObject::CBlockObject(string name, vector3f position, CBR5Model *model, GLfloat rotateY): CEntity()	
-		{
-			this->name = name;
-			this->position = position;
-			this->model = model;
-			this->rotateY = rotateY;
+		m_model->draw(deltaTime);
+	}
+}
 
-			effect = NULL;
+void CBlockObject::drawEffect()
+{
+	if (m_effect)
+	{
+		m_effect->draw();
+	}
+}
 
-			marked = false;
-			className = "";
-		}
+string CBlockObject::getName()
+{
+	return m_name;
+}
 
-		CBlockObject::~CBlockObject()
-		{
-		}
+GLfloat CBlockObject::getRotateY()
+{
+	return m_rotateY;
+}
 
-		GLvoid CBlockObject::drawModel(GLfloat deltaTime)
-		{
-			if (model)
-			{
-				model->draw(deltaTime);
-			}
-		}
+CBR5Model *CBlockObject::getModel()
+{
+	return m_model;
+}
 
-		GLvoid CBlockObject::drawEffect()
-		{
-			if (effect)
-			{
-				effect->draw();
-			}
-		}
+void CBlockObject::setName(std::string name)
+{
+	this->m_name = name;
+}
 
-		string CBlockObject::getName()
-		{
-			return name;
-		}
+void CBlockObject::setRotateY(GLfloat rotateY)
+{
+	this->m_rotateY = rotateY;
+}
 
-		GLfloat CBlockObject::getRotateY()
-		{
-			return rotateY;
-		}
+void CBlockObject::setModel(CBR5Model *model)
+{
+	this->m_model = model;
+}
 
-		CBR5Model *CBlockObject::getModel()
-		{
-			return model;
-		}
+CLUAEffect *CBlockObject::getEffect()
+{
+	return m_effect;
+}
 
-		GLvoid	CBlockObject::setName(std::string name)
-		{
-			this->name = name;
-		}
+void CBlockObject::setEffect(CLUAEffect *effect)
+{
+	this->m_effect = effect;
+}
 
-		GLvoid CBlockObject::setRotateY(GLfloat rotateY)
-		{
-			this->rotateY = rotateY;
-		}
+string CBlockObject::getEffectName()
+{
+	return m_effectName;
+}
 
-		GLvoid CBlockObject::setModel(CBR5Model *model)
-		{
-			this->model = model;
-		}
+void CBlockObject::setEffectName(string effectName)
+{
+	this->m_effectName = effectName;
+}
 
-		CLUAEffect *CBlockObject::getEffect()
-		{
-			return effect;
-		}
+bool CBlockObject::isMarked()
+{
+	return m_marked;
+}
 
-		GLvoid	CBlockObject::setEffect(CLUAEffect *effect)
-		{
-			this->effect = effect;
-		}
+void CBlockObject::setMarked(bool marked)
+{
+	this->m_marked = marked;
+}
 
-		string CBlockObject::getEffectName()
-		{
-			return effectName;
-		}
+void CBlockObject::setClassName(string className)
+{
+	this->m_className = className;
+}
 
-		GLvoid CBlockObject::setEffectName(string effectName)
-		{
-			this->effectName = effectName;
-		}
+string CBlockObject::getClassName()
+{
+	return m_className;
+}
 
-		bool CBlockObject::isMarked()
-		{
-			return marked;
-		}
-
-		GLvoid CBlockObject::setMarked(bool marked)
-		{
-			this->marked = marked;
-		}
-
-		GLvoid CBlockObject::setClassName(string className)
-		{
-			this->className = className;
-		}
-
-		string CBlockObject::getClassName()
-		{
-			return className;
-		}
-	};
-};
+} //namespace block_objects
+} //namespace game_objects
+	

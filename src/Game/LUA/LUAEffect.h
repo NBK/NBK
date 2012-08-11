@@ -14,7 +14,7 @@ namespace LUA_effects
 	public:
 		CLUAEffect();
 		CLUAEffect(const CLUAEffect &luaEffect);
-		~CLUAEffect();
+		virtual ~CLUAEffect();
 
 		virtual GLvoid init();
 		virtual bool draw(bool update=true);

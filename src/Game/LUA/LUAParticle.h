@@ -17,7 +17,7 @@ namespace LUA_effects
 	{
 	public:
 		CLUAParticle();	
-		~CLUAParticle();
+		virtual ~CLUAParticle();
 
 		virtual GLvoid init(GLint index, GLint count);
 		virtual GLvoid draw();

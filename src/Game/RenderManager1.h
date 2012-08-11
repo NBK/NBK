@@ -20,7 +20,7 @@ namespace game_utils
 		{
 		public:
 			CRenderManager1();
-			~CRenderManager1();
+			virtual ~CRenderManager1();
 
 			// from CManager
 			virtual bool init();

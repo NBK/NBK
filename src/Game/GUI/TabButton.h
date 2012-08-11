@@ -11,7 +11,7 @@ namespace DK_GUI
 	{
 	public:
 		CTabButton();
-		~CTabButton();
+		virtual ~CTabButton();
 
 		virtual GLvoid on_mouse_down();
 	};

@@ -9,7 +9,7 @@ namespace DK_GUI
 	{
 	public:
 		CAnimatedSpeedButton(CDKTextureList *game_textures, GLint name, GLint texture_count, const char **texture_names);
-		~CAnimatedSpeedButton();
+		virtual ~CAnimatedSpeedButton();
 
 		virtual GLvoid on_mouse_up();
 		virtual GLvoid on_mouse_down();

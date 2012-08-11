@@ -20,7 +20,7 @@ namespace game_utils
 		{
 		public:
 			CPathManager();
-			~CPathManager();
+			virtual ~CPathManager();
 
 			// from CManager
 			virtual bool init();

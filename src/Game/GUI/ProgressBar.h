@@ -9,7 +9,7 @@ namespace GUI
 	{
 	public:
 		CProgressBar(GLfloat x_pos, GLfloat y_pos, GLfloat z_pos, GLfloat width, GLfloat height);
-		~CProgressBar();
+		virtual ~CProgressBar();
 
 		virtual GLvoid update();
 		virtual GLvoid set_extent(EXTENT extent);

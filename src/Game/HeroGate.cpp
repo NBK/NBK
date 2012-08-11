@@ -23,9 +23,9 @@ namespace game_objects
 				its VBO to make it reupload data every frame.
 			*/
 
-			if (model)
+			if (m_model)
 			{
-				model->getVBO()->setBufferType(CVBO::BT_STREAM_DRAW);
+				m_model->getVBO()->setBufferType(CVBO::BT_STREAM_DRAW);
 			}
 
 			time = 0.0f;
@@ -39,10 +39,10 @@ namespace game_objects
 		{
 			// before we return the model we deform the plane using perlin noise
 
-			float	*vertices = model->getVertexCoordinates(),
+			float	*vertices = m_model->getVertexCoordinates(),
 					x=0.0f,y=0.0f;
 
-			for (GLuint v=0; v<model->getVertexCount()*3; v+=3)
+			for (GLuint v=0; v<m_model->getVertexCount()*3; v+=3)
 			{
 				x = *(vertices+v+0);
 				y = *(vertices+v+1);			
@@ -53,9 +53,9 @@ namespace game_objects
 				*(vertices+v+2) = (GLfloat)PerlinNoise3D(x*details,y*details,time,2.0,2.0,1)/scale;
 			}
 
-			time += model->getAnimSpeed()*CV_GAME_MANAGER->getDeltaTime();
+			time += m_model->getAnimSpeed()*CV_GAME_MANAGER->getDeltaTime();
 
-			return model;
+			return m_model;
 		}
 	};
 };

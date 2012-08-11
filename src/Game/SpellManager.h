@@ -11,7 +11,7 @@ namespace game_utils
 		{
 		public:
 			CSpellManager();
-			~CSpellManager();
+			virtual ~CSpellManager();
 
 			// from CManager
 			virtual bool init();

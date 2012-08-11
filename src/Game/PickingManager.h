@@ -18,7 +18,7 @@ namespace game_utils
 		{
 		public:
 			CPickingManager();
-			~CPickingManager();
+			virtual ~CPickingManager();
 
 			virtual bool init();
 			virtual bool update();

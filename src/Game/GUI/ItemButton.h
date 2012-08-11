@@ -12,7 +12,7 @@ namespace DK_GUI
 	{
 	public:
 		CItemButton(CDKTextureList *game_textures, GLint name);
-		~CItemButton();
+		virtual ~CItemButton();
 
 		virtual GLvoid on_mouse_over();
 		virtual GLvoid on_not_mouse_over();

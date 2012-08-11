@@ -37,7 +37,7 @@ namespace game_objects
 		*/
 		enum OBJECT_DISPOSE_TYPE
 		{
-			ODT_REMOVE_ALL = 0,	
+			ODT_REMOVE_ALL = 0,
 			ODT_REMOVE_MARKED
 		};
 
@@ -167,6 +167,9 @@ namespace game_objects
 
 		std::vector<block_objects::CBlockObject*> *getBlockObjects();
 
+		block_objects::CBlockObject* GetBlockByName( std::string name );
+
+
 		GLvoid disposeDisplayLists();
 		GLvoid disposeBlockObjects(OBJECT_DISPOSE_TYPE odt = ODT_REMOVE_MARKED);
 
@@ -281,7 +284,10 @@ namespace game_objects
 		*/
 		std::vector<GLuint> displayLists;
 
-		std::vector<block_objects::CBlockObject*> blockObjects;
+		typedef std::vector<block_objects::CBlockObject*> BlockObjList;
+		typedef BlockObjList::iterator BlockObjListItr;
+
+		BlockObjList blockObjects;
 	};
 };
 

@@ -11,7 +11,7 @@ namespace DK_GUI
 	{
 	public:
 		CDKGUILabel(char *caption);
-		~CDKGUILabel();
+		virtual ~CDKGUILabel();
 
 		virtual GLvoid update();
 

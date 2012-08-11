@@ -15,7 +15,7 @@ namespace game_objects
 		public:
 			CBasicLight(std::string name);
 			CBasicLight(CBasicLight &basicLight);
-			~CBasicLight(void);
+			virtual ~CBasicLight(void);
 		};
 	};
 };

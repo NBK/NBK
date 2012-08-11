@@ -10,7 +10,7 @@ namespace DK_GUI
 	{
 	public:
 		CRoomDependancy();
-		~CRoomDependancy();
+		virtual ~CRoomDependancy();
 		
 		virtual GLvoid set_selected_room(GLvoid *object);
 

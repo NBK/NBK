@@ -20,7 +20,7 @@ namespace game_utils
 		public:
 
 			CSettingsManager();
-			~CSettingsManager();
+			virtual ~CSettingsManager();
 
 			/*
 				Description:

@@ -12,7 +12,7 @@ namespace DK_GUI
 	{
 	public:
 		CDKRoomInfoTexture(CDKTextureList *texture_list);
-		~CDKRoomInfoTexture();
+		virtual ~CDKRoomInfoTexture();
 
 		GLvoid set_selected(const char *class_name, char leading);
 

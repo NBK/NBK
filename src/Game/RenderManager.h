@@ -18,7 +18,7 @@ namespace game_utils
 		{
 		public:
 			CRenderManager();
-			~CRenderManager();
+			virtual ~CRenderManager();
 
 			virtual bool init();
 			virtual bool update();	

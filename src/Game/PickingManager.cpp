@@ -4,8 +4,8 @@
 #include <cml/cml.h>
 #include "OGLUtils.h"
 
-#define _HAS_ITERATOR_DEBUGGING 0
-#define _SECURE_SCL 0
+//#define _HAS_ITERATOR_DEBUGGING 0
+//#define _SECURE_SCL 0
 
 
 using namespace std;
@@ -31,11 +31,11 @@ namespace game_utils
 			return true;
 		}
 
-bool CPickingManager::update()
+		bool CPickingManager::update()
 		{
 			// 1. block picking
 
-			// 1.1 draw pickable blocks
+			// 1.1 draw pick able blocks
 			std::vector<CBlock*> *rBlocks = CV_GAME_MANAGER->getRenderManager()->getRenderedBlocks();
 
 			if (rBlocks->size()==0)
@@ -123,7 +123,7 @@ bool CPickingManager::update()
 				glEnd();
 			}
 		
-			// 1.2 pick from backbuffer
+			// 1.2 pick from back buffer
 			vector2i mousePos = CV_GAME_MANAGER->getControlManager()->getInput()->getMousePos();
 			
 			//convert mouse pos to relative to this window

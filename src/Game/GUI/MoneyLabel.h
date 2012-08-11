@@ -12,7 +12,7 @@ namespace DK_GUI
 	{
 	public:
 		CMoneyLabel();
-		~CMoneyLabel();
+		virtual ~CMoneyLabel();
 
 		virtual GLvoid draw();
 		virtual GLvoid set_extent(EXTENT extent);

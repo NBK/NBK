@@ -419,7 +419,7 @@ namespace game_utils
 {
 	namespace managers
 	{
-		CBlockManager::CBlockManager(): CManager(), globalDeformedMap(NULL)
+		CBlockManager::CBlockManager(): CManager(), globalDeformedMap(NULL), roomConstructor(NULL)
 		{
 			srand((unsigned int)time(NULL));
 		}
@@ -440,6 +440,9 @@ namespace game_utils
 
 			// and texture atlas coordinates
 			state&=readTextureAtlasCoordinates();
+
+			if (roomConstructor != NULL)
+				delete roomConstructor;
 
 			// create an instance of room constructor
 			roomConstructor = new CRoomConstructor();
@@ -3083,6 +3086,8 @@ namespace game_utils
 
 		GLvoid CBlockManager::updateTextureCoordinates(CBlock *block, GLint face)
 		{
+			printf("updateTextureCoordinates\n");
+
 			GLfloat *texCoords = block->getTextureCoordinates()[face];
 
 			GLint	pos = 0;

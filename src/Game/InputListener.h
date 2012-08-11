@@ -11,7 +11,7 @@ namespace control
 	{
 	public:
 		CInputListener();
-		~CInputListener();
+		virtual ~CInputListener();
 
 		virtual void onKeyDown(int key)=0;
 		virtual void onKeyUp(int key)=0;

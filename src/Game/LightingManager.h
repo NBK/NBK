@@ -61,7 +61,7 @@ namespace game_utils
 		{
 		public:
 			CLightingManager();
-			~CLightingManager();
+			virtual ~CLightingManager();
 
 			// from CManager
 			virtual bool	init();

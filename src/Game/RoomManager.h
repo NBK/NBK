@@ -14,7 +14,7 @@ namespace game_utils
 		{
 		public:
 			CRoomManager();
-			~CRoomManager();
+			virtual ~CRoomManager();
 
 			// from CManager
 			virtual bool init();

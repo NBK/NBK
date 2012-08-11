@@ -35,7 +35,7 @@ namespace DK_GUI
 	{
 	public:
 		CPlayGUI(GLint screen_width, GLint screen_height, CDKTextureList *game_textures);
-		~CPlayGUI();
+		virtual ~CPlayGUI();
 
 		GLvoid draw_and_do_actions();
 
