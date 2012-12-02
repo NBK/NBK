@@ -403,7 +403,7 @@ namespace game_objects
 		{
 			//todo pick up chicken and eat ect..
 			useAction(AA_EAT);
-			CV_GAME_MANAGER->getConsole()->writeLine(CConversions::floatToStr(mHunger) + " " + CConversions::floatToStr(deltaTime));
+			//CV_GAME_MANAGER->getConsole()->writeLine(CConversions::floatToStr(mHunger) + " " + CConversions::floatToStr(deltaTime));
 			this->mHunger+=(deltaTime);
 			if(mHunger >= 10000.0f)
 				mCreatureState = IS_IDLE;
@@ -411,7 +411,7 @@ namespace game_objects
 		}
 		else if (mCreatureState == IS_SLEEPING)
 		{
-			CV_GAME_MANAGER->getConsole()->writeLine(CConversions::floatToStr(mSleep) + " sleep " + CConversions::floatToStr(deltaTime));
+			//CV_GAME_MANAGER->getConsole()->writeLine(CConversions::floatToStr(mSleep) + " sleep " + CConversions::floatToStr(deltaTime));
 			mCreatureState = IS_SLEEPING;
 			// moan if no lair ect
 			this->mSleep+=(deltaTime);
@@ -434,7 +434,8 @@ namespace game_objects
 		else if (mCreatureState == IS_TRAINING)
 		{
 			mCount=mChange;
-			CV_GAME_MANAGER->getConsole()->writeLine(CConversions::floatToStr(mHunger) + " " + CConversions::floatToStr(mSleep) + " " + CConversions::floatToStr(deltaTime));
+
+			//CV_GAME_MANAGER->getConsole()->writeLine(CConversions::floatToStr(mHunger) + " " + CConversions::floatToStr(mSleep) + " " + CConversions::floatToStr(deltaTime));
 			this->mHunger-=(deltaTime*0.0001f);
 			this->mSleep-=(deltaTime*0.001f);
 			 //(todo change this to be spercific for every creature)

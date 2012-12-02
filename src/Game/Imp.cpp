@@ -195,6 +195,7 @@ namespace game_objects
 
 	GLvoid CImp::walkPath(GLfloat deltaTime)
 	{
+		//TODO: if imps are high enough level - teleport them
 		if(path.size() == 0)
 		{
 			if(m_impState == IS_GOING_TO_DEPOSITING_GOLD_DESTINATION)
