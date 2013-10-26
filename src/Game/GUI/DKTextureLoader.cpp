@@ -58,7 +58,7 @@ CDKTextureLoader::LOADER_RESULT CDKTextureLoader::build_texture(std::string &fil
 		strcat(szPath, PATH_SEP);									// Append "\" After The Working Directory
 		strcat(szPath, file.c_str());										// Append The PathName
 #else
-		strcpy(szPath, file);
+		strcpy(szPath, file.c_str());
 #endif
 	}
 
@@ -194,7 +194,7 @@ CDKTextureLoader::LOADER_RESULT CDKTextureLoader::build_texture(std::string &fil
 
 	SDL_Surface *tmpbuf = SDL_DisplayFormatAlpha(image);
 	if ( tmpbuf == NULL ) {
-		fprintf(stderr, "Failed to prepare texture buffer for %s: %s\n", file, SDL_GetError());
+		fprintf(stderr, "Failed to prepare texture buffer for %s: %s\n", file.c_str(), SDL_GetError());
 		return lr;
 	}
 
@@ -211,7 +211,7 @@ CDKTextureLoader::LOADER_RESULT CDKTextureLoader::build_texture(std::string &fil
 			);
 		SDL_SetAlpha(tmpbuf, 0, 255);
 		if ( texbuf == NULL ) {
-			fprintf(stderr, "Failed to get full GL buffer for %s texture: %s\n", file, SDL_GetError());
+			fprintf(stderr, "Failed to get full GL buffer for %s texture: %s\n", file.c_str(), SDL_GetError());
 			return lr;
 		}
 		if (trans)

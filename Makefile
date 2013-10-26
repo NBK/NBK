@@ -480,6 +480,7 @@ NBKEOBJ = \
 	$(B)/Core/BlockObject.o \
 	$(B)/Core/BR5Model.o \
 	$(B)/Core/Camera.o \
+	$(B)/Core/Chicken.o \
 	$(B)/Core/CollisionManager.o \
 	$(B)/Core/Console.o \
 	$(B)/Core/ConsoleListener.o \
@@ -531,6 +532,7 @@ NBKEOBJ = \
 
 NBKEGUIOBJ  = $(B)/Gui/AbstractGUIItem.o \
 	$(B)/Gui/AnimatedSpeedButton.o \
+	$(B)/Gui/CPrimitives.o \
 	$(B)/Gui/DKGUILabel.o \
 	$(B)/Gui/DKInput.o \
 	$(B)/Gui/DKProgressBar.o \
@@ -549,7 +551,6 @@ NBKEGUIOBJ  = $(B)/Gui/AbstractGUIItem.o \
 	$(B)/Gui/MenuButton.o \
 	$(B)/Gui/MoneyLabel.o \
 	$(B)/Gui/PlayGUI.o \
-	$(B)/Gui/Primitives.o \
 	$(B)/Gui/ProgressBar.o \
 	$(B)/Gui/RoomDependancy.o \
 	$(B)/Gui/SpeedButton.o \
