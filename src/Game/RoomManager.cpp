@@ -2,6 +2,7 @@
 #include "RoomManager.h"
 #include "Block.h"
 #include "boundingBox.h"
+#include "Treasury.h"
 
 using namespace std;
 using namespace cml;
@@ -165,6 +166,12 @@ namespace game_utils
 
 			CV_GAME_MANAGER->getGUIManager()->getPlayGUI()->updateRoomInfo();
 
+
+			for (roomIter=allRooms.begin(); roomIter!=allRooms.end(); roomIter++)
+			{
+				CRoom *room = roomIter->second;
+				room->update();
+			}
 			return true;
 		}
 
@@ -237,8 +244,13 @@ namespace game_utils
 
 			if (cnt==0)
 			{
+				CRoom *newRoom;
 				// create a new room
-				CRoom *newRoom = new CRoom();
+				if(block->getType() == CV_BLOCK_TYPE_TREASURE_ROOM_ID)
+					newRoom = new CTreasury();
+				else
+					newRoom = new CRoom();
+
 				newRoom->getRoomTilesVector()->push_back(block);
 				newRoom->reownTiles();
 				allRooms[newRoom->getIndex()] = newRoom;

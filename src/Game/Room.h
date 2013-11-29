@@ -35,6 +35,8 @@ namespace game_objects
 			// if we released tiles but not cleared references we can reown them
 			GLvoid reownTiles();
 
+			virtual GLvoid update();
+
 		private:
 
 			// hold references to all room tiles

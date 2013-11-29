@@ -129,5 +129,9 @@ namespace game_objects
 			}
 			recalcBBOX();
 		}
+
+		GLvoid CRoom::update()
+		{
+		}
 	};
 };

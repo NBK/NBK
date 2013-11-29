@@ -1,8 +1,10 @@
 #include "commons.h"
 #include "Imp.h"
+#include "GoldStack.h"
 #include <math.h>
 
 using namespace game_utils;
+using namespace game_objects::block_objects;
 
 namespace game_objects
 {
@@ -373,6 +375,7 @@ namespace game_objects
 
 	void CImp::depositGold()
 	{
+		/*
 		path.clear();
 		CBlock *destBlock;
 		destBlock = CV_GAME_MANAGER->getRoomManager()->getRoom(CV_BLOCK_TYPE_TREASURE_ROOM_ID, this->getOwner());
@@ -406,7 +409,9 @@ namespace game_objects
 			}
 		}
 		mCurrentBlock->addModel("MODEL_GOLD250",mPosition);
-		this->setGold(0);
+		this->setGold(0);*/
+		mCurrentBlock->addModel(new CGoldStack(mPosition,CGoldStack::TT_GOLD_250));
+
 	}
 
 };

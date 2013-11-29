@@ -3086,7 +3086,7 @@ namespace game_utils
 
 		GLvoid CBlockManager::updateTextureCoordinates(CBlock *block, GLint face)
 		{
-			printf("updateTextureCoordinates\n");
+			//printf("updateTextureCoordinates\n");
 
 			GLfloat *texCoords = block->getTextureCoordinates()[face];
 
