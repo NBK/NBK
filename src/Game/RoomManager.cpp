@@ -3,6 +3,7 @@
 #include "Block.h"
 #include "boundingBox.h"
 #include "Treasury.h"
+#include "Hatchery.h"
 
 using namespace std;
 using namespace cml;
@@ -248,6 +249,8 @@ namespace game_utils
 				// create a new room
 				if(block->getType() == CV_BLOCK_TYPE_TREASURE_ROOM_ID)
 					newRoom = new CTreasury();
+				else if(block->getType() == CV_BLOCK_TYPE_HATCHERY_ID)
+					newRoom = new CHatchery();
 				else
 					newRoom = new CRoom();
 

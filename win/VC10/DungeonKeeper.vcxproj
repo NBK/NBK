@@ -35,6 +35,7 @@
     <ClCompile Include="..\..\src\Game\EntityManager.cpp" />
     <ClCompile Include="..\..\src\Game\Frustum.cpp" />
     <ClCompile Include="..\..\src\Game\GameManager.cpp" />
+    <ClCompile Include="..\..\src\Game\GoldStack.cpp" />
     <ClCompile Include="..\..\src\Game\GUIManager.cpp" />
     <ClCompile Include="..\..\src\Game\GUI\AbstractGUIItem.cpp" />
     <ClCompile Include="..\..\src\Game\GUI\AnimatedSpeedButton.cpp" />
@@ -62,6 +63,7 @@
     <ClCompile Include="..\..\src\Game\GUI\SpeedButton.cpp" />
     <ClCompile Include="..\..\src\Game\GUI\TabButton.cpp" />
     <ClCompile Include="..\..\src\Game\GUI\TexturedGUIButton.cpp" />
+    <ClCompile Include="..\..\src\Game\Hatchery.cpp" />
     <ClCompile Include="..\..\src\Game\HeroGate.cpp" />
     <ClCompile Include="..\..\src\Game\Imp.cpp" />
     <ClCompile Include="..\..\src\Game\Input.cpp" />
@@ -101,6 +103,7 @@
     <ClCompile Include="..\..\src\Game\TextureList.cpp" />
     <ClCompile Include="..\..\src\Game\TextureLoader.cpp" />
     <ClCompile Include="..\..\src\Game\Trap.cpp" />
+    <ClCompile Include="..\..\src\Game\Treasury.cpp" />
     <ClCompile Include="..\..\src\Game\VBO.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -130,6 +133,7 @@
     <ClInclude Include="..\..\src\Game\EntityManager.h" />
     <ClInclude Include="..\..\src\Game\Frustum.h" />
     <ClInclude Include="..\..\src\Game\GameManager.h" />
+    <ClInclude Include="..\..\src\Game\GoldStack.h" />
     <ClInclude Include="..\..\src\Game\GUIManager.h" />
     <ClInclude Include="..\..\src\Game\GUI\AbstractGUIItem.h" />
     <ClInclude Include="..\..\src\Game\GUI\AnimatedSpeedButton.h" />
@@ -158,6 +162,7 @@
     <ClInclude Include="..\..\src\Game\GUI\SpeedButton.h" />
     <ClInclude Include="..\..\src\Game\GUI\TabButton.h" />
     <ClInclude Include="..\..\src\Game\GUI\TexturedGUIButton.h" />
+    <ClInclude Include="..\..\src\Game\Hatchery.h" />
     <ClInclude Include="..\..\src\Game\HeroGate.h" />
     <ClInclude Include="..\..\src\Game\Imp.h" />
     <ClInclude Include="..\..\src\Game\Input.h" />
@@ -200,6 +205,7 @@
     <ClInclude Include="..\..\src\Game\TextureList.h" />
     <ClInclude Include="..\..\src\Game\TextureLoader.h" />
     <ClInclude Include="..\..\src\Game\Trap.h" />
+    <ClInclude Include="..\..\src\Game\Treasury.h" />
     <ClInclude Include="..\..\src\Game\triangle.h" />
     <ClInclude Include="..\..\src\Game\utils.h" />
     <ClInclude Include="..\..\src\Game\VBO.h" />
@@ -341,7 +347,7 @@
       <DataExecutionPrevention>
       </DataExecutionPrevention>
       <TargetMachine>MachineX86</TargetMachine>
-     <AdditionalLibraryDirectories>..\..\dep\lua\lib;..\..\dep\bugtrap\lib;..\..\dep\glew\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\dep\lua\lib;..\..\dep\bugtrap\lib;..\..\dep\glew\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
