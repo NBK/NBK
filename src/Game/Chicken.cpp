@@ -8,7 +8,7 @@ namespace game_objects
 {
 	CChicken::CChicken(): CCreature()
 	{
-		m_MoveSpeed = 0.00025f;
+		m_MoveSpeed = 0.00005f;
 	}
 
 	CChicken::~CChicken()

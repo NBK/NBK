@@ -22,6 +22,7 @@ namespace game_objects
 
 		private:
 			std::vector<game_objects::CCreature*>			chickens;
+			GLfloat lastSpawn;
 		};
 	};
 };

@@ -42,7 +42,7 @@ namespace game_utils
 			{
 				// Check that the spell is being casted on land you own.
 				if(block->getOwner() == owner)
-					CV_GAME_MANAGER->getCreatureManager()->addCreature("IMP",cml::vector3f(realposition[0],CV_BLOCK_HEIGHT/4.0f,realposition[2]),owner);
+					CV_GAME_MANAGER->getCreatureManager()->addCreature("IMP",cml::vector3f(realposition[0]+CV_BLOCK_WIDTH/2.0f,CV_BLOCK_HEIGHT/4.0f,realposition[2]+CV_BLOCK_DEPTH/2.0f),owner);
 			}
 			else if(spell == SPELL_BUTTON_DESTROY_WALL)
 			{
@@ -69,7 +69,7 @@ namespace game_utils
 			{
 				// Check that the spell is being casted on land you own in a hatchery
 				if(block->getOwner() == owner && block->getType()==CV_BLOCK_TYPE_HATCHERY_ID)
-					CV_GAME_MANAGER->getCreatureManager()->addCreature("CHICKEN",cml::vector3f(realposition[0],CV_BLOCK_HEIGHT/4.0f,realposition[2]),owner);
+					CV_GAME_MANAGER->getCreatureManager()->addCreature("CHICKEN",cml::vector3f(realposition[0]+CV_BLOCK_WIDTH/2.0f,CV_BLOCK_HEIGHT/4.0f,realposition[2]+CV_BLOCK_DEPTH/2.0f),owner);
 			}
 			else // Spell not implanted
 			{
