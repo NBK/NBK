@@ -69,7 +69,7 @@ namespace game_utils
 				camPos[1] = CV_CAMERA_MAX_HEIGHT;
 				camera.setPosition(camPos);
 			}
-			else if (camera.getPosition()[1]<CV_CAMERA_MIN_HEIGHT)
+			else if (!FPS && camera.getPosition()[1]<CV_CAMERA_MIN_HEIGHT)
 			{
 				camPos[1] = CV_CAMERA_MIN_HEIGHT;
 				camera.setPosition(camPos);

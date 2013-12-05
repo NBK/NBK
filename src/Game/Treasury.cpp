@@ -20,7 +20,7 @@ namespace game_objects
 
 		GLvoid CTreasury::update()
 		{
-			CV_GAME_MANAGER->getConsole()->writeLine("I AM A TREASURY UPDATING");
+			//CV_GAME_MANAGER->getConsole()->writeLine("I AM A TREASURY UPDATING");
 		}
 
 	}

@@ -52,7 +52,7 @@ namespace game_utils
 							CV_GAME_MANAGER->getControlManager()->getCamera()->setPosition(cml::vector3f(position[0]+0.3, CV_CAMERA_INITIAL_HEIGHT, position[2]+1));
 						}
 						// we found a room tile that isn't in a room yet. we create a new room.
-						CRoom *newRoom = new CRoom();
+						CRoom *newRoom = this->getNewRoom(block->getType());
 						newRoom->init(block);
 						allRooms[newRoom->getIndex()] = newRoom;
 						roomColors[newRoom->getIndex()] = vector3f((GLfloat)(rand()%101)/100.0f,(GLfloat)(rand()%101)/100.0f,(GLfloat)(rand()%101)/100.0f);
@@ -148,7 +148,7 @@ namespace game_utils
 						// the new rooms
 						for (GLuint r=0; r<splits.size(); r++)
 						{
-							CRoom *newRoom = new CRoom();
+							CRoom *newRoom = this->getNewRoom(this->getType(room));
 
 							for (GLuint t=0; t<splits[r].size(); t++)
 							{
@@ -245,14 +245,7 @@ namespace game_utils
 
 			if (cnt==0)
 			{
-				CRoom *newRoom;
-				// create a new room
-				if(block->getType() == CV_BLOCK_TYPE_TREASURE_ROOM_ID)
-					newRoom = new CTreasury();
-				else if(block->getType() == CV_BLOCK_TYPE_HATCHERY_ID)
-					newRoom = new CHatchery();
-				else
-					newRoom = new CRoom();
+				CRoom *newRoom = this->getNewRoom(block->getType());
 
 				newRoom->getRoomTilesVector()->push_back(block);
 				newRoom->reownTiles();
@@ -379,6 +372,18 @@ namespace game_utils
 			return count;
 		}
 
+		GLubyte CRoomManager::getOwner(CRoom *room)
+		{
+			CBlock *roomTile = (*room->getRoomTilesVector())[0];
+			return roomTile->getOwner();
+		}
+
+		GLint CRoomManager::getType(CRoom *room)
+		{
+			CBlock *roomTile = (*room->getRoomTilesVector())[0];
+			return roomTile->getType();
+		}
+
 		CBlock *CRoomManager::getRoom(GLint roomType, GLubyte owner)
 		{
 			for (roomIter=allRooms.begin(); roomIter!=allRooms.end(); roomIter++)
@@ -421,6 +426,21 @@ namespace game_utils
 				return "Room area "+string(showRoomArea?"enabled.":"disabled");
 			}
 			return "<>";
+		}
+
+
+		CRoom *CRoomManager::getNewRoom(GLint roomType)
+		{
+			CRoom *newRoom;
+			// create a new room
+			if(roomType == CV_BLOCK_TYPE_TREASURE_ROOM_ID)
+				newRoom = new CTreasury();
+			else if(roomType == CV_BLOCK_TYPE_HATCHERY_ID)
+				newRoom = new CHatchery();
+			else
+				newRoom = new CRoom();
+
+			return newRoom;
 		}
 	};
 };

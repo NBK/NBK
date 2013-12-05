@@ -65,6 +65,11 @@ namespace game_utils
 			// draws simple quads where the room area is
 			GLvoid drawRoomArea();
 
+			// Return a new specialised room
+			game_objects::rooms::CRoom *getNewRoom(GLint roomIndex);
+			GLubyte getOwner(game_objects::rooms::CRoom *room);
+			GLint getType(game_objects::rooms::CRoom *room);
+
 			/* 
 				Checks the room for possible splits as a result of the tile selling.
 				Returns true if we have a split and the properly split tiles int the vector.
